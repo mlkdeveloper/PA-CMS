@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0ab6cef8-9aca-432b-a148-ecf3888e64d7" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1jpra6oRU0dDOXfsL6BHp9cY6lT" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/view" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="web-ide.project.structure" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/view" />
+      <recent name="$PROJECT_DIR$/Core" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/view" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="template" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner directory="$PROJECT_DIR$/view/template" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="PHPUnit.template" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0ab6cef8-9aca-432b-a148-ecf3888e64d7" name="Default Changelist" comment="" />
+      <created>1604511935996</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1604511935996</updated>
+      <workItem from="1604511937700" duration="258000" />
+      <workItem from="1604522499955" duration="113000" />
+      <workItem from="1604581541420" duration="51000" />
+      <workItem from="1604658780691" duration="4276000" />
+      <workItem from="1604680032768" duration="5016000" />
+      <workItem from="1606047051593" duration="2992000" />
+      <workItem from="1606235537946" duration="1387000" />
+      <workItem from="1606321787641" duration="8346000" />
+      <workItem from="1608136094131" duration="8510000" />
+      <workItem from="1608274604926" duration="14000" />
+      <workItem from="1608275801844" duration="1095000" />
+      <workItem from="1608288546770" duration="12863000" />
+      <workItem from="1609262002322" duration="298000" />
+      <workItem from="1610442587367" duration="8000" />
+      <workItem from="1610468074660" duration="10552000" />
+      <workItem from="1610715008667" duration="234000" />
+      <workItem from="1610715351743" duration="2496000" />
+      <workItem from="1610718155352" duration="385000" />
+      <workItem from="1610718551218" duration="616000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="679" y="314" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1610477445865">
+      <screen x="0" y="25" width="1920" height="966" />
+    </state>
+    <state x="679" y="314" key="#com.intellij.fileTypes.FileTypeChooser/-1920.25.1920.1055/1920.25.1792.1095/0.25.1920.966@0.25.1920.966" timestamp="1610477445865" />
+    <state x="679" y="314" key="#com.intellij.fileTypes.FileTypeChooser/0.25.1920.966/1920.25.1792.1095/-1920.25.1920.1055@0.25.1920.966" timestamp="1608144207244" />
+    <state x="773" y="228" key="#com.intellij.ide.util.MemberChooser" timestamp="1610718092303">
+      <screen x="0" y="25" width="1920" height="966" />
+    </state>
+    <state x="773" y="228" key="#com.intellij.ide.util.MemberChooser/-1920.25.1920.1055/1920.25.1792.1095/0.25.1920.966@0.25.1920.966" timestamp="1610718092303" />
+    <state x="773" y="228" key="#com.intellij.ide.util.MemberChooser/0.25.1920.966/1920.25.1792.1095/-1920.25.1920.1055@0.25.1920.966" timestamp="1608143986813" />
+    <state x="698" y="267" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1608143959929">
+      <screen x="0" y="25" width="1920" height="966" />
+    </state>
+    <state x="698" y="267" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.25.1920.966/1920.25.1792.1095/-1920.25.1920.1055@0.25.1920.966" timestamp="1608143959929" />
+    <state x="711" y="370" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1608139487644">
+      <screen x="0" y="25" width="1920" height="966" />
+    </state>
+    <state x="711" y="371" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/-1920.23.1920.1057/1920.23.1792.1097/0.23.1920.973@0.23.1920.973" timestamp="1604682697773" />
+    <state x="711" y="370" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.25.1920.966/1920.25.1792.1095/-1920.25.1920.1055@0.25.1920.966" timestamp="1608139487644" />
+    <state x="669" y="242" key="NewPhpClassDialog" timestamp="1610717690966">
+      <screen x="0" y="25" width="1920" height="966" />
+    </state>
+    <state x="669" y="242" key="NewPhpClassDialog/-1920.23.1920.1057/1920.23.1792.1097/0.23.1920.973@0.23.1920.973" timestamp="1604663465873" />
+    <state x="669" y="242" key="NewPhpClassDialog/-1920.25.1920.1055/1920.25.1792.1095/0.25.1920.966@0.25.1920.966" timestamp="1610717690966" />
+    <state x="669" y="242" key="NewPhpClassDialog/0.25.1920.966/1920.25.1792.1095/-1920.25.1920.1055@0.25.1920.966" timestamp="1606323466554" />
+    <state x="797" y="439" key="NewPhpFileDialog" timestamp="1606322491128">
+      <screen x="0" y="25" width="1920" height="966" />
+    </state>
+    <state x="797" y="440" key="NewPhpFileDialog/-1920.23.1920.1057/1920.23.1792.1097/0.23.1920.973@0.23.1920.973" timestamp="1604663479271" />
+    <state x="797" y="439" key="NewPhpFileDialog/0.25.1920.966/1920.25.1792.1095/-1920.25.1920.1055@0.25.1920.966" timestamp="1606322491128" />
+    <state x="469" y="144" key="SettingsEditor" timestamp="1610478092716">
+      <screen x="0" y="25" width="1920" height="966" />
+    </state>
+    <state x="469" y="144" key="SettingsEditor/-1920.25.1920.1055/1920.25.1792.1095/0.25.1920.966@0.25.1920.966" timestamp="1610478092716" />
+    <state width="500" height="445" key="SwitcherDM" timestamp="1608300364992">
+      <screen x="0" y="25" width="1920" height="966" />
+    </state>
+    <state width="500" height="445" key="SwitcherDM/0.25.1920.966/1920.25.1792.1095/-1920.25.1920.1055@0.25.1920.966" timestamp="1608300364992" />
+    <state x="766" y="426" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1610718307153">
+      <screen x="0" y="25" width="1920" height="966" />
+    </state>
+    <state x="766" y="426" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-1920.25.1920.1055/1920.25.1792.1095/0.25.1920.966@0.25.1920.966" timestamp="1610718307153" />
+    <state x="667" y="142" width="586" height="735" key="find.popup" timestamp="1604683542827">
+      <screen x="0" y="23" width="1920" height="973" />
+    </state>
+    <state x="667" y="142" width="586" height="735" key="find.popup/-1920.23.1920.1057/1920.23.1792.1097/0.23.1920.973@0.23.1920.973" timestamp="1604683542827" />
+    <state width="600" height="428" key="javadoc.popup" timestamp="1608146105213">
+      <screen x="0" y="25" width="1920" height="966" />
+    </state>
+    <state width="600" height="428" key="javadoc.popup/0.25.1920.966/1920.25.1792.1095/-1920.25.1920.1055@0.25.1920.966" timestamp="1608146105213" />
+  </component>
+</project>
