@@ -44,11 +44,19 @@ class Database{
 						(:".implode(',:', array_keys($column)).") "); //1 
 			
 		}else{
-			//UPDATE
-			
-		}
+            //UPDATE
+            $keySql = [];
+            foreach ($column as $key=>$value){
+                if ($value == null){
+                    unset($column[$key]);
+                }else{
+                    array_push($keySql,$key." = :".$key);
+                }
+            }
+            print_r($column);
+            $query = $this->pdo->prepare("UPDATE ".$this->table." SET ".implode(',',$keySql)." WHERE id = ".$this->getId().";");
 
-
+        }
 		$query->execute($column);
 
 	}

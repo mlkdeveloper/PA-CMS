@@ -12,7 +12,12 @@ class User
 
 	//Method : Action
 	public function defaultAction(){
-		echo "User default";
+        $user = new UserModel();
+        //$user->selectAll(2);
+        /*
+        $user->setFirstname("Toto");
+        $user->save();
+        */
 	}
 
 
