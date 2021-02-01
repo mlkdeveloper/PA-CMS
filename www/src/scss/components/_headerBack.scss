@@ -1,6 +1,11 @@
 .headerBack{
-  padding: 60px;
+  padding: 10px;
   text-align: center;
   background: $white;
-  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.headerBack h1{
+  color: $black;
 }

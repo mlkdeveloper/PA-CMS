@@ -8,6 +8,7 @@
 	color: $white;
 	text-transform: uppercase;
 	transition: all 0.5s;
+	border-radius: 15px;
 	@media screen and (max-width: $phone-width){
 		font-size: rem(14);
 	}
@@ -18,6 +19,13 @@
 		background-color: $green;
 		&:hover{
 			background-color: lighten($green, 10%);
+		}
+	}
+	&--blue{
+		background-color: $blue;
+		height: 4em;
+		&:hover{
+			background-color: lighten($blue, 10%);
 		}
 	}
 	&--alert{

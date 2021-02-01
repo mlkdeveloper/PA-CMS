@@ -278,6 +278,7 @@ p {
   color: #FFF;
   text-transform: uppercase;
   transition: all 0.5s;
+  border-radius: 15px;
 }
 
 @media screen and (max-width: 800px) {
@@ -296,6 +297,15 @@ p {
 
 .button--success:hover {
   background-color: #45c97f;
+}
+
+.button--blue {
+  background-color: #64b0dc;
+  height: 4em;
+}
+
+.button--blue:hover {
+  background-color: #8ec5e5;
 }
 
 .button--alert {
@@ -424,9 +434,15 @@ p {
 }
 
 .headerBack {
-  padding: 60px;
+  padding: 10px;
   text-align: center;
   background: #FFF;
-  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headerBack h1 {
+  color: #000000;
 }
 
