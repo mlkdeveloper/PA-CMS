@@ -6,9 +6,21 @@
 	<meta name="description" content="description de la page de back">
 </head>
 <body>
-	<header>
-		<h1>Template de back</h1>
-	</header>
+    <header>
+        <div class="sidenav">
+            <a href="#about">Dashboard</a>
+            <a href="#services">Commandes</a>
+            <a class="dropdown-btn">Produit
+                <i class="fa fa-caret-down"></i>
+            </a>
+            <div class="dropdown-container">
+                <a href="#">Categories</a>
+                <a href="#">Promotions</a>
+                <a href="#">Link 3</a>
+            </div>
+            <a href="#contact">Contact</a>
+        </div>
+    </header>
 
 	<!-- afficher la vue -->
 	<?php include $this->view ?>
