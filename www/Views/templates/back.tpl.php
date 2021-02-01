@@ -4,9 +4,12 @@
 	<meta charset="UTF-8">
 	<title>Template de back</title>
 	<meta name="description" content="description de la page de back">
+    <link rel="stylesheet" href="../../dist/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
     <header>
+
         <div class="sidenav">
             <a href="#about">Dashboard</a>
             <a href="#services">Commandes</a>

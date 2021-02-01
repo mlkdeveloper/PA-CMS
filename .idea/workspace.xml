@@ -20,12 +20,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="610fc305-b0f2-4a16-9f0e-2b5982e1bcb6" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/www/src/scss/components/_headerBack.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/Controllers/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/Controllers/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/Core/Database.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/Core/Database.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/Views/templates/front.tpl.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/Views/templates/front.tpl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/Views/templates/back.tpl.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/Views/templates/back.tpl.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/www/dist/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/www/dist/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/src/scss/components/_sidebar.scss" beforeDir="false" afterPath="$PROJECT_DIR$/www/src/scss/components/_sidebar.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/src/scss/main.scss" beforeDir="false" afterPath="$PROJECT_DIR$/www/src/scss/main.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,6 +72,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state width="600" height="428" key="javadoc.popup" timestamp="1612124592051">
