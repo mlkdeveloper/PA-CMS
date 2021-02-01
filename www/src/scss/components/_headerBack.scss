@@ -1,0 +1,11 @@
+.headerBack{
+  padding: 10px;
+  text-align: center;
+  background: $white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.headerBack h1{
+  color: $black;
+}
