@@ -421,7 +421,7 @@ p {
 .sidenav a:hover,
 .dropdown-container a:hover {
   color: #f1f1f1;
-  background-color: #2D9CDB;
+  background-color: #0e3343;
   cursor: pointer;
 }
 
@@ -429,10 +429,15 @@ p {
   display: none;
   background-color: #64b0dc;
   padding-left: 8px;
+  flex-direction: column;
+  align-items: center;
+  border-left: solid 10px #260f12;
+  opacity: 0.8;
 }
 
 .dropdown-container a {
   padding: 1em;
+  font-size: 0.8em;
 }
 
 .fa-caret-down {

@@ -16,20 +16,24 @@
     <ul>
         <li><a href="#">Dashboard</a></li>
         <li><a href="#">Commandes</a></li>
-        <li><a href="#">Produits</a></li>
+        <a class="dropdown-btn">Produit<i class="fa fa-caret-down"></i></a>
+        <ul class="dropdown-container">
+            <li><a href="#">Categories</a>
+            <li><a href="#">Promotions</a>
+            <li><a href="#">Link 3</a>
+        </ul>
         <li><a href="#">Pages</a></li>
         <li><a href="#">Clients</a></li>
         <li><a href="#">Avis</a></li>
     </ul>
     <ul>
         <hr>
-        <li><a href="#">Paramètres du site</a></li>
+        <a href="#">Paramètres du site</a>
         <li><a href="#">Paramètres du CMS</a></li>
     </ul>
 </nav>
 
 <div class="container-body">
-
     <header>
         <div class="headerBack">
             <h1>Header</h1>
@@ -41,5 +45,6 @@
 <?php include $this->view ?>
 
 </div>
+<script src="../../public/js/dropdowns.js"></script>
 </body>
 </html>
