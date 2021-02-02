@@ -16,7 +16,8 @@
 }
 
 .main-doc {
-  margin-left: 14.6875rem;
+  margin-left: 14.0625rem;
+  margin-right: 0.625rem;
 }
 
 .container {
@@ -242,7 +243,7 @@
 
 body {
   margin: 0;
-  background-color: #F2F2F2;
+  background-color: #dedede;
   font-family: "Montserrat", sans-serif, sans-serif;
 }
 
@@ -277,12 +278,14 @@ p {
   border: none;
   outline: none;
   display: inline-block;
-  background-color: #AAA;
+  background-color: #64B0DC;
   padding: 1em 2em;
   color: #FFF;
   text-transform: uppercase;
   transition: all 0.5s;
   border-radius: 15px;
+  box-shadow: 0px 4px 15px rgba(46, 80, 114, 0.41);
+  border-radius: 5px;
 }
 
 @media screen and (max-width: 800px) {
@@ -292,7 +295,7 @@ p {
 }
 
 .button:hover {
-  background-color: #c4c4c4;
+  background-color: #8ec5e5;
 }
 
 .button--success {
@@ -382,7 +385,7 @@ p {
 
 .jumbotron {
   padding: 30px;
-  background-color: #AAA;
+  background-color: #FFF;
   border-radius: 15px;
 }
 

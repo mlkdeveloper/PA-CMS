@@ -27,3 +27,7 @@
 /afficher-les-utilisateurs:
   controller: User
   action: showAll
+
+/admin/liste-magasin:
+  controller: User
+  action: displayShop
