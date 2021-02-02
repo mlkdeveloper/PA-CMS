@@ -103,5 +103,10 @@ class User
 		$view = new View("users", "back"); 
 		
 	}
+
+	public function showReviewsAction(){
+	    $view = new View("reviews", "back");
+	    $view->assign("title", "Avis");
+    }
 	
 }

@@ -27,3 +27,7 @@
 /afficher-les-utilisateurs:
   controller: User
   action: showAll
+
+/reviews:
+  controller: User
+  action: showReviews
