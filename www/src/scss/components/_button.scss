@@ -23,7 +23,6 @@
 	}
 	&--blue{
 		background-color: $blue;
-		height: 4em;
 		&:hover{
 			background-color: lighten($blue, 10%);
 		}

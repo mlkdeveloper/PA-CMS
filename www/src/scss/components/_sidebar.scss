@@ -1,30 +1,34 @@
 .sidenav {
   height: 100vh;
-  width: rem(220);
   position: fixed;
-  z-index: 1;
+  width: 15%;
+  z-index: 5;
   top: 0;
   left: 0;
   background-color: $blue;
   overflow-x: hidden;
-  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 .sidenav a {
-  padding: 6px 8px 6px 16px;
+  padding: 1em;
   text-decoration: none;
-  font-size: 25px;
   color: $white;
   display: block;
+  font-size: 1em;
+}
+
+.sidenav ul{
+  list-style: none;
+  padding: 0;
 }
 
 .sidenav a:hover, .dropdown-container a:hover{
   color: #f1f1f1;
-  background-color: $dark-blue; 
-}
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
+  background-color: $dark-blue;
+  cursor: pointer;
 }
 
 .dropdown-container {
@@ -33,9 +37,10 @@
   padding-left: 8px;
 }
 .dropdown-container a{
-  font-size: rem(17);
+  padding: 1em;
 }
 .fa-caret-down {
   float: right;
   padding-right: 8px;
 }
+

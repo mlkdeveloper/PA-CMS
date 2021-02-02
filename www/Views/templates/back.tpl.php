@@ -11,13 +11,6 @@
     <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
 </head>
 <body>
-<header>
-    <div class="headerBack">
-        <h1>Header</h1>
-        <button class="button button--blue">Deconnexion</button>
-    </div>
-
-</header>
 
 <nav class="sidenav">
     <ul>
@@ -35,7 +28,15 @@
     </ul>
 </nav>
 
-<div class="container">
+<div class="container-body">
+
+    <header>
+        <div class="headerBack">
+            <h1>Header</h1>
+            <button class="button button--blue">Deconnexion</button>
+        </div>
+
+    </header>
 <!-- afficher la vue -->
 <?php include $this->view ?>
 

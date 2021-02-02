@@ -17,12 +17,17 @@ $lg-width:992px;
 }
 .col-inner{
 	padding: 15px;
-	background-color: grey;
 }
 .container{
 	margin: 0 auto;
 	max-width: $container-width;
 	overflow-x: hidden;
+}
+
+.container-body{
+	position: relative;
+	width: 85%;
+	left: 15%;
 }
 
 .col {

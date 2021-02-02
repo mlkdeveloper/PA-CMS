@@ -1,11 +1,22 @@
-.headerBack{
+.headerBack {
+  position: relative;
   padding: 10px;
-  text-align: center;
+  margin: 0;
   background: $white;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: center;
+  width: auto;
 }
-.headerBack h1{
+
+.headerBack h1 {
   color: $black;
+}
+
+.headerBack button{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+  cursor: pointer;
 }
