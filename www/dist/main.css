@@ -15,6 +15,10 @@
   background-color: grey;
 }
 
+.main-doc {
+  margin-left: 14.6875rem;
+}
+
 .container {
   margin: 0 auto;
   max-width: 1140px;
@@ -248,11 +252,11 @@ h2 {
 }
 
 h1 {
-  font-size: rem(24);
+  font-size: 1.5rem;
 }
 
 h2 {
-  font-size: rem(16);
+  font-size: 1rem;
 }
 
 .container {
