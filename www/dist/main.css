@@ -12,7 +12,6 @@
 
 .col-inner {
   padding: 15px;
-  background-color: grey;
 }
 
 .main-doc {
@@ -24,6 +23,12 @@
   margin: 0 auto;
   max-width: 1140px;
   overflow-x: hidden;
+}
+
+.container-body {
+  position: relative;
+  width: 85%;
+  left: 15%;
 }
 
 .col {
@@ -273,6 +278,11 @@ p {
   line-height: 1.4em;
 }
 
+.centered {
+  display: flex;
+  justify-content: center;
+}
+
 .button {
   text-decoration: none;
   border: none;
@@ -308,7 +318,6 @@ p {
 
 .button--blue {
   background-color: #64b0dc;
-  height: 4em;
 }
 
 .button--blue:hover {
@@ -391,48 +400,51 @@ p {
 
 .sidenav {
   height: 100vh;
-  width: 13.75rem;
   position: fixed;
-  z-index: 1;
+  width: 15%;
+  z-index: 5;
   top: 0;
   left: 0;
-  background-color: #64b0dc;
+  background: #64b0dc;
   overflow-x: hidden;
-  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 .sidenav a {
-  padding: 6px 8px 6px 16px;
+  padding: 1em;
   text-decoration: none;
-  font-size: 25px;
   color: #FFF;
   display: block;
+  font-size: 1em;
+}
+
+.sidenav ul {
+  list-style: none;
+  padding: 0;
 }
 
 .sidenav a:hover,
 .dropdown-container a:hover {
   color: #f1f1f1;
   background-color: #2D9CDB;
-}
-
-@media screen and (max-height: 450px) {
-  .sidenav {
-    padding-top: 15px;
-  }
-
-  .sidenav a {
-    font-size: 18px;
-  }
+  cursor: pointer;
 }
 
 .dropdown-container {
   display: none;
   background-color: #64b0dc;
   padding-left: 8px;
+  flex-direction: column;
+  align-items: center;
+  border-left: solid 5px #260f12;
+  opacity: 0.8;
 }
 
 .dropdown-container a {
-  font-size: 1.0625rem;
+  padding: 1em;
+  font-size: 0.8em;
 }
 
 .fa-caret-down {
@@ -441,15 +453,25 @@ p {
 }
 
 .headerBack {
+  position: relative;
   padding: 10px;
-  text-align: center;
+  margin: 0;
   background: #FFF;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: center;
+  width: auto;
 }
 
 .headerBack h1 {
   color: #000000;
+}
+
+.headerBack button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+  cursor: pointer;
 }
 

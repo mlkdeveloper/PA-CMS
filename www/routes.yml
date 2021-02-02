@@ -31,3 +31,8 @@
 /admin/liste-magasin:
   controller: User
   action: displayShop
+
+/reviews:
+  controller: User
+  action: showReviews
+
