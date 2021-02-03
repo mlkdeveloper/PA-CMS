@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col">
         <div class="jumbotron">
-            <canvas id="turnover" width="300" height="100"></canvas>
+            <canvas id="turnover" width="200" height="80"></canvas>
         </div>
     </div>
     </div>
