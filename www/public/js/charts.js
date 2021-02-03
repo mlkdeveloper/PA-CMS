@@ -14,14 +14,25 @@ var myChart = new Chart(ctx, {
     },
     options: {
         scales: {
+            xAxes: [{
+                ticks: {
+                    fontSize: 18
+                }
+            }],
             yAxes: [{
                 ticks: {
                     beginAtZero: true,
                     max: 50,
                     responsive: true,
                     maintainAspectRatio: false,
+                    fontSize: 18
                 }
             }]
+        },
+        legend: {
+            labels: {
+                fontSize: 25
+            }
         }
     }
 });
@@ -42,14 +53,25 @@ var myChart = new Chart(ctx, {
     },
     options: {
         scales: {
+            xAxes: [{
+                ticks: {
+                    fontSize: 18
+                }
+            }],
             yAxes: [{
                 ticks: {
                     beginAtZero: true,
                     max: 50,
                     responsive: true,
                     maintainAspectRatio: false,
+                    fontSize: 18
                 }
             }]
+        },
+        legend: {
+            labels: {
+                fontSize: 25
+            }
         }
     }
 });
@@ -71,14 +93,25 @@ var myChart = new Chart(ctx, {
     },
     options: {
         scales: {
+            xAxes: [{
+                ticks: {
+                    fontSize: 18
+                }
+            }],
             yAxes: [{
                 ticks: {
                     beginAtZero: true,
                     max: 50,
                     responsive: true,
                     maintainAspectRatio: false,
+                    fontSize: 18
                 }
             }]
+        },
+        legend: {
+            labels: {
+                fontSize: 25
+            }
         }
     }
 });
