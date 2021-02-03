@@ -1,7 +1,7 @@
 <h1 class="centered">Avis</h1>
 
 <div class="container">
-    <div class="row col-inner">
+    <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="jumbotron">
                 <table id="table" class="display">
@@ -154,7 +154,7 @@
         </div>
     </div>
 
-    <div class="row col-inner">
+    <div class="row">
         <div class="col col-md-5 col-sm-5">
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias beatae debitis esse,
                 exercitationem modi molestiae natus pariatur possimus quia quisquam quo sapiente ut? Accusamus autem

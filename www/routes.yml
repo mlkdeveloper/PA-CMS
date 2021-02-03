@@ -32,8 +32,8 @@
   controller: User
   action: displayShop
 
-/reviews:
-  controller: User
+/admin/reviews:
+  controller: Reviews
   action: showReviews
 
 /admin/dashboard:

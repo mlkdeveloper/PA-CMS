@@ -8,12 +8,12 @@ for (i = 0; i < dropdown.length; i++) {
         if (dropdownContent.style.display === "flex") {
             dropdownContent.style.display = "none";
             $("nav ul a i").css({
-                    transform: "rotate(0deg)"
+                    transform: "rotate(0deg)",
             })
         } else {
             dropdownContent.style.display = "flex";
             $("nav ul a i").css({
-                transform: "rotate(180deg)"
+                transform: "rotate(180deg)",
             })
         }
     });
