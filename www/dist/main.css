@@ -248,7 +248,7 @@
 
 body {
   margin: 0;
-  background-color: #dedede;
+  background-color: #F1F4F9;
   font-family: "Montserrat", sans-serif, sans-serif;
 }
 
@@ -395,7 +395,8 @@ p {
 .jumbotron {
   padding: 30px;
   background-color: #FFF;
-  border-radius: 15px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
 }
 
 .sidenav {
