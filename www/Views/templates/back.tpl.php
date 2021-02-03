@@ -30,7 +30,12 @@
         </ul>
         <ul>
             <hr>
-            <a href="#">Paramètres du site</a>
+            <a class="dropdown-btn">Paramètres du site<i class="fa fa-caret-down"></i></a>
+            <ul class="dropdown-container">
+                <li><a href="/admin/liste-magasin">Magasin</a>
+                <li><a href="#">Theme</a>
+                <li><a href="#">Navigation</a>
+            </ul>
             <li><a href="#">Paramètres du CMS</a></li>
         </ul>
     </nav>

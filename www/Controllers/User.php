@@ -104,8 +104,6 @@ class User
 		
 	}
 
-	public function displayShopAction(){
-        $view = new View("shopList.back", "back");
-    }
+
 
 }

@@ -29,7 +29,7 @@
   action: showAll
 
 /admin/liste-magasin:
-  controller: User
+  controller: Shop
   action: displayShop
 
 /admin/reviews:
@@ -39,3 +39,7 @@
 /admin/dashboard:
   controller: Dashboard
   action: dashboard
+
+/admin/nouveau-magasin:
+  controller: Shop
+  action: newShop

@@ -3,7 +3,7 @@
         <div class="col col-lg-12">
             <h1 style="text-align: center;font-size: 40px">Gestion des magasins</h1>
             <div class="jumbotron">
-                <button class="button">Nouveau magasin</button>
+                <button class="button"><a href="/admin/nouveau-magasin">Nouveau magasin</a></button>
                 <table id="table-shop" class="display" style="width:100%">
                     <thead>
                     <tr>
