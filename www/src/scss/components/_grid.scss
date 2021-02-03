@@ -48,6 +48,7 @@ $columns: $col-nb;
 	@for $i from 1 through $columns {
 		.col-sm-#{$i} {
 		flex-basis: ((100 / $columns) * $i) * 1%;
+		width: ((100 / $columns) * $i) * 1%;
 		padding: 10px $gutter-width/2;
 		}
 	}
@@ -58,6 +59,7 @@ $columns: $col-nb;
 	@for $i from 1 through $columns {
 		.col-md-#{$i} {
 		flex-basis: ((100 / $columns) * $i) * 1%;
+		width: ((100 / $columns) * $i) * 1%;
 		padding: 10px $gutter-width/2;
 		}
 	}
@@ -68,6 +70,7 @@ $columns: $col-nb;
 	@for $i from 1 through $columns {
 		.col-lg-#{$i} {
 		flex-basis: ((100 / $columns) * $i) * 1%;
+		width: ((100 / $columns) * $i) * 1%;
 		padding: 10px $gutter-width/2;
 		}
 	}
