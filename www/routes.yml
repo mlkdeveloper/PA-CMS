@@ -39,3 +39,7 @@
 /admin/dashboard:
   controller: Dashboard
   action: dashboard
+
+/admin/display-category:
+  controller: Category
+  action: show
