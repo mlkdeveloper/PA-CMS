@@ -25,7 +25,9 @@ var myChart = new Chart(ctx, {
                 }
             }]
         }
-    }
+    },
+    responsive: true,
+    maintainAspectRatio: false,
 });
 
 
@@ -63,6 +65,8 @@ var myChart = new Chart(ctx, {
                 }
             }]
         }
-    }
+    },
+    responsive: true,
+    maintainAspectRatio: false,
 });
 
