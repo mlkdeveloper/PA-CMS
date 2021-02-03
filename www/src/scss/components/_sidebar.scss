@@ -1,12 +1,12 @@
 .sidenav {
   height: 100vh;
   position: fixed;
-  width: 15%;
-  z-index: 5;
+  width: 200px;
+  z-index: 1;
   top: 0;
   left: 0;
   background: $blue;
-  overflow-x: hidden;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: space-around;

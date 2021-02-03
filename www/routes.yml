@@ -36,3 +36,6 @@
   controller: User
   action: showReviews
 
+/admin/dashboard:
+  controller: Dashboard
+  action: dashboard
