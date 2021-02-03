@@ -10,9 +10,31 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-4 col-sm-12 col">
+        <div class="col-md-6 col-sm-12 col">
             <div class="jumbotron">
                 <canvas id="myChart" width="400" height="400"></canvas>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12 col">
+            <div class="jumbotron">
+                <canvas id="myChart2" width="400" height="400"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-sm-12 col">
+            <div class="jumbotron">
+                <p>Test</p>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12 col">
+            <div class="jumbotron">
+                <p>Test</p>
             </div>
         </div>
     </div>
