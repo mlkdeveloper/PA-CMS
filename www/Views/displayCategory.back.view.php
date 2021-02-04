@@ -18,139 +18,19 @@
                     </tr>
                     </thead>
                     <tbody>
+                    <?php
+                        foreach ($array as $value):
+                    ?>
                     <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
+                        <td><?= $value['id'] ?></td>
+                        <td><?= $value['id'] ?></td>
+                        <td><?= $value['id'] ?></td>
+                        <td><?= $value['id'] ?></td>
+                        <td><?= $value['id'] ?></td>
+
                     </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
+                    <?php endforeach;?>
+
                     </tbody>
                 </table>
             </div>

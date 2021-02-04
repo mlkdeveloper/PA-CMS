@@ -7,6 +7,7 @@ class Database{
 	private $pdo;
 	private $table;
 
+
 	public function __construct(){
 		try{
 			$this->pdo = new \PDO( DBDRIVER.":host=".DBHOST.";dbname=".DBNAME.";port=".DBPORT , DBUSER , DBPWD );
@@ -60,5 +61,17 @@ class Database{
 		$query->execute($column);
 
 	}
+
+	public function select(){
+
+        if(func_num_args()){
+             $args = func_get_args();
+             $query = $this->pdo->query("SELECT " . implode(',',$args) . " FROM " . $this->table );
+        }else{
+            $column = array_diff_key(get_object_vars($this), get_class_vars(get_class()));
+            $query = $this->pdo->query("SELECT id," . implode(',',array_keys($column)) . " FROM " . $this->table );
+        }
+        return $query === false ?  die("Erreur colonne inconnue") : $query->fetchAll(\PDO::FETCH_ASSOC);
+    }
 
 }
