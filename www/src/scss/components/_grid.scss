@@ -15,6 +15,10 @@ $lg-width:992px;
 	margin-right: -$gutter-width/2;
 	margin-left: -$gutter-width/2;
 }
+.align{
+	display: flex;
+	justify-content: space-between;
+}
 .col-inner{
 	padding: 15px;
 }

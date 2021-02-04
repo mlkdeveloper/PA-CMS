@@ -1,6 +1,4 @@
-@import url(https://fonts.googleapis.com/css2?family=Lato&family=Montserrat&display=swap);
-
-* {
+@import url(https://fonts.googleapis.com/css2?family=Lato&family=Montserrat&display=swap);* {
   box-sizing: border-box;
 }
 
@@ -10,6 +8,11 @@
   flex-wrap: wrap;
   margin-right: -10px;
   margin-left: -10px;
+}
+
+.align {
+  display: flex;
+  justify-content: space-between;
 }
 
 .col-inner {
@@ -312,6 +315,14 @@ p {
   background-color: #45c97f;
 }
 
+.button--black {
+  background-color: #000000;
+}
+
+.button--black:hover {
+  background-color: #1a1a1a;
+}
+
 .button--blue {
   background-color: #64b0dc;
 }
@@ -326,6 +337,11 @@ p {
 
 .button--alerthover {
   background-color: #f41717;
+}
+
+.button a {
+  text-decoration: none;
+  color: #FFF;
 }
 
 .banner {
