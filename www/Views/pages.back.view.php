@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-12 col-sm-12 col">
                 <div class="jumbotron">
-                    <table id="table" class="display">
+                    <table id="table" class="row-border hover">
                         <thead>
                         <tr>
                             <th>Nom</th>
