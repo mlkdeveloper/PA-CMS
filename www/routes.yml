@@ -29,17 +29,23 @@
   action: showAll
 
 /admin/liste-magasin:
-  controller: User
+  controller: Shop
   action: displayShop
 
-/reviews:
-  controller: User
+/admin/reviews:
+  controller: Reviews
   action: showReviews
 
 /admin/dashboard:
   controller: Dashboard
   action: dashboard
 
+
 /admin/display-category:
   controller: Category
   action: show
+
+/admin/nouveau-magasin:
+  controller: Shop
+  action: newShop
+

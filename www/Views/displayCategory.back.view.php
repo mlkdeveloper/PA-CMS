@@ -10,10 +10,9 @@
                 <table id="table" class="display">
                     <thead>
                     <tr>
-                        <th>N° produit</th>
-                        <th>Image</th>
-                        <th>Commentaire</th>
-                        <th>Email</th>
+                        <th>N° catégorie</th>
+                        <th>Nom</th>
+                        <th>Statut</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -23,11 +22,9 @@
                     ?>
                     <tr>
                         <td><?= $value['id'] ?></td>
-                        <td><?= $value['id'] ?></td>
-                        <td><?= $value['id'] ?></td>
-                        <td><?= $value['id'] ?></td>
-                        <td><?= $value['id'] ?></td>
-
+                        <td><?= $value['name'] ?></td>
+                        <td><?= $value['status'] == 1 ? "Actif" : "Inactif"; ?></td>
+                        <td><a href="#" class="button button--success">Edit</a></td>
                     </tr>
                     <?php endforeach;?>
 

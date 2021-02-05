@@ -104,13 +104,6 @@ class User
 		
 	}
 
-	public function displayShopAction(){
-        $view = new View("shopList.back", "back");
-    }
 
-	public function showReviewsAction(){
-	    $view = new View("reviews", "back");
-	    $view->assign("title", "Avis");
-    }
-	
+
 }
