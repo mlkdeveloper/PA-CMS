@@ -10,6 +10,7 @@ class Category{
     public function showAction(){
 
         $category = new Categ();
+
         $array = $category->select();
 
         $view = new View("displayCategory.back", "back");
@@ -18,6 +19,16 @@ class Category{
 
 
     }
+
+    public function newCategoryAction(){
+
+        $view = new View("createCategory.back", "back");
+        $view->assign("title", "Admin - catégorie");
+
+    }
+
+
+
 
 }
 

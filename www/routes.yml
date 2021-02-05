@@ -45,6 +45,10 @@
   controller: Category
   action: show
 
+/admin/nouvelle-categorie:
+  controller: Category
+  action: newCategory
+
 /admin/nouveau-magasin:
   controller: Shop
   action: newShop
