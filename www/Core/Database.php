@@ -58,7 +58,5 @@ class Database{
 
         }
 		$query->execute($column);
-
 	}
-
 }

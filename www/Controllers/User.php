@@ -23,32 +23,6 @@ class User
 
 	//Method : Action
 	public function registerAction(){
-		
-		/*
-			$user->setFirstname("Yves");
-			$user->setLastname("SKRZYPCZYK");
-			$user->setEmail("y.skrzypczyk@gmail.com");
-			$user->setPwd("Test1234");
-			$user->setCountry("fr");
-
-			$user->save();
-
-
-
-			$page = new Page();
-			$page->setTitle("Nous contacter");
-			$page->setSlug("/contact");
-			$page->save();
-
-
-
-			$user = new User();
-			$user->setId(2); //Attention on doit populate
-			$user->setFirstname("Toto");
-			$user->save();
-
-		*/
-
 
 		$user = new UserModel();
 		$view = new View("register"); 
