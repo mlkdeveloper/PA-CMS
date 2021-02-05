@@ -47,3 +47,7 @@
 /admin/pages:
   controller: Pages
   action: pages
+
+/admin/publisher:
+  controller: Publisher
+  action: publisher
