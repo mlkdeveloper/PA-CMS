@@ -10,7 +10,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../../dist/main.css">
+
 </head>
 <body>
 
@@ -44,7 +46,7 @@
         <header>
             <div class="headerBack">
                 <h1>Header</h1>
-                <button class="button button--blue">Deconnexion</button>
+                <button class="button button--blue">Déconnexion</button>
             </div>
         </header>
 

@@ -15,139 +15,26 @@
                     </tr>
                     </thead>
                     <tbody>
+                    <?php for($i=1; $i <= 100; $i++): ?>
+
                     <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
+                        <td><?= $i; ?></td>
+                        <td>Image</td>
+                        <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias aliquid architecto atque
+                            dolores ducimus eaque ex excepturi id, ipsum iste labore molestias, perspiciatis quod
+                            reiciendis similique vero voluptate. Beatae, libero.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias aliquid architecto atque
+                            dolores ducimus eaque ex excepturi id, ipsum iste labore molestias, perspiciatis quod
+                            reiciendis similique vero voluptate. Beatae, libero.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias aliquid architecto atque
+                            dolores ducimus eaque ex excepturi id, ipsum iste labore molestias, perspiciatis quod
+                            reiciendis similique vero voluptate. Beatae, libero.</td>
+                        <td>test@gmail.com</td>
+                        <td style="display: flex; justify-content: space-between; align-items: center">
+                            <button class="button button--warning"><i class="bi bi-pencil-square"></i></button>
+                            <button class="button button--alert"><i class="bi bi-trash-fill"></i></button>
+                        </td>
                     </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
+
+                    <?php endfor;?>
                     </tbody>
                 </table>
             </div>
