@@ -481,5 +481,14 @@ p {
 
 #table tr td {
   padding: 15px 0;
+  color: #2F80ED;
+}
+
+.dataTables_paginate .paginate_button:hover {
+  background: #8ec5e5 !important;
+}
+
+.dataTables_paginate .disabled:hover {
+  background: none !important;
 }
 

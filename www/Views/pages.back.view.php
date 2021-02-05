@@ -8,7 +8,7 @@
                         <tr>
                             <th>Nom</th>
                             <th>Date de création</th>
-                            <th>Slug</th>
+                            <th>Chemin d'accès</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
