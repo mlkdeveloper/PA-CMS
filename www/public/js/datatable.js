@@ -1,20 +1,21 @@
 $(document).ready(function () {
     $('#table').DataTable({
         responsive: true,
-        "paging": true,
-        "ordering": true,
-        "info": true,
-        "language": {
-            "lengthMenu": "Affiche _MENU_ entrées par page",
-            "zeroRecords": "Aucun résultat ...",
-            "info": "Montre la page _PAGE_ sur _PAGES_",
-            "infoEmpty": "",
-            "infoFiltered": "(Filtrer à partir de _MAX_ total enregistrés)",
-            "paginate": {
+        paging: true,
+        ordering: true,
+        info: true,
+        language: {
+            lengthMenu: "Nombre d'éléments par page: _MENU_",
+            zeroRecords: "Aucun résultat ...",
+            info: "Page _PAGE_ sur _PAGES_",
+            infoEmpty: "",
+            infoFiltered: "(Filtrer à partir de _MAX_ total enregistrés)",
+            paginate: {
                 "next": "Suivant",
                 "previous": "Précédent"
             },
-            "search": "Rechercher"
+            search: "",
+            searchPlaceholder: "Rechercher"
         }
     });
 });

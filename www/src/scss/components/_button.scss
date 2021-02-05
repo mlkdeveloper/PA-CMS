@@ -23,6 +23,12 @@
 			background-color: lighten($green, 10%);
 		}
 	}
+	&--black{
+		background-color: $black;
+		&:hover{
+			background-color: lighten($black, 10%);
+		}
+	}
 	&--blue{
 		background-color: $blue;
 		&:hover{
@@ -35,4 +41,8 @@
 			background-color: lighten($red, 10%);
 		}
 	}
+}
+.button a {
+	text-decoration: none;
+	color: $white;
 }

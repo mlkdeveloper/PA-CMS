@@ -59,8 +59,8 @@ class Database{
 
         }
 		$query->execute($column);
-
 	}
+
 
 	public function select(){
 
@@ -73,5 +73,6 @@ class Database{
         }
         return $query === false ?  die("Erreur colonne inconnue") : $query->fetchAll(\PDO::FETCH_ASSOC);
     }
+
 
 }

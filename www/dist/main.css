@@ -1,6 +1,4 @@
-@import url(https://fonts.googleapis.com/css2?family=Lato&family=Montserrat&display=swap);
-
-* {
+@import url(https://fonts.googleapis.com/css2?family=Lato&family=Montserrat&display=swap);* {
   box-sizing: border-box;
 }
 
@@ -10,6 +8,12 @@
   flex-wrap: wrap;
   margin-right: -10px;
   margin-left: -10px;
+}
+
+.align {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .col-inner {
@@ -22,7 +26,7 @@
 }
 
 .container {
-  padding: 0 2rem;
+  padding: 50px 2rem 0 2rem;
   width: 100%;
   margin: auto;
 }
@@ -44,61 +48,73 @@
 @media only screen and (min-width: 576px) {
   .col-sm-1 {
     flex-basis: 8.3333333333%;
+    width: 8.3333333333%;
     padding: 10px 10px;
   }
 
   .col-sm-2 {
     flex-basis: 16.6666666667%;
+    width: 16.6666666667%;
     padding: 10px 10px;
   }
 
   .col-sm-3 {
     flex-basis: 25%;
+    width: 25%;
     padding: 10px 10px;
   }
 
   .col-sm-4 {
     flex-basis: 33.3333333333%;
+    width: 33.3333333333%;
     padding: 10px 10px;
   }
 
   .col-sm-5 {
     flex-basis: 41.6666666667%;
+    width: 41.6666666667%;
     padding: 10px 10px;
   }
 
   .col-sm-6 {
     flex-basis: 50%;
+    width: 50%;
     padding: 10px 10px;
   }
 
   .col-sm-7 {
     flex-basis: 58.3333333333%;
+    width: 58.3333333333%;
     padding: 10px 10px;
   }
 
   .col-sm-8 {
     flex-basis: 66.6666666667%;
+    width: 66.6666666667%;
     padding: 10px 10px;
   }
 
   .col-sm-9 {
     flex-basis: 75%;
+    width: 75%;
     padding: 10px 10px;
   }
 
   .col-sm-10 {
     flex-basis: 83.3333333333%;
+    width: 83.3333333333%;
     padding: 10px 10px;
   }
 
   .col-sm-11 {
     flex-basis: 91.6666666667%;
+    width: 91.6666666667%;
     padding: 10px 10px;
   }
 
   .col-sm-12 {
     flex-basis: 100%;
+    width: 100%;
     padding: 10px 10px;
   }
 }
@@ -106,61 +122,73 @@
 @media only screen and (min-width: 768px) {
   .col-md-1 {
     flex-basis: 8.3333333333%;
+    width: 8.3333333333%;
     padding: 10px 10px;
   }
 
   .col-md-2 {
     flex-basis: 16.6666666667%;
+    width: 16.6666666667%;
     padding: 10px 10px;
   }
 
   .col-md-3 {
     flex-basis: 25%;
+    width: 25%;
     padding: 10px 10px;
   }
 
   .col-md-4 {
     flex-basis: 33.3333333333%;
+    width: 33.3333333333%;
     padding: 10px 10px;
   }
 
   .col-md-5 {
     flex-basis: 41.6666666667%;
+    width: 41.6666666667%;
     padding: 10px 10px;
   }
 
   .col-md-6 {
     flex-basis: 50%;
+    width: 50%;
     padding: 10px 10px;
   }
 
   .col-md-7 {
     flex-basis: 58.3333333333%;
+    width: 58.3333333333%;
     padding: 10px 10px;
   }
 
   .col-md-8 {
     flex-basis: 66.6666666667%;
+    width: 66.6666666667%;
     padding: 10px 10px;
   }
 
   .col-md-9 {
     flex-basis: 75%;
+    width: 75%;
     padding: 10px 10px;
   }
 
   .col-md-10 {
     flex-basis: 83.3333333333%;
+    width: 83.3333333333%;
     padding: 10px 10px;
   }
 
   .col-md-11 {
     flex-basis: 91.6666666667%;
+    width: 91.6666666667%;
     padding: 10px 10px;
   }
 
   .col-md-12 {
     flex-basis: 100%;
+    width: 100%;
     padding: 10px 10px;
   }
 }
@@ -168,61 +196,73 @@
 @media only screen and (min-width: 992px) {
   .col-lg-1 {
     flex-basis: 8.3333333333%;
+    width: 8.3333333333%;
     padding: 10px 10px;
   }
 
   .col-lg-2 {
     flex-basis: 16.6666666667%;
+    width: 16.6666666667%;
     padding: 10px 10px;
   }
 
   .col-lg-3 {
     flex-basis: 25%;
+    width: 25%;
     padding: 10px 10px;
   }
 
   .col-lg-4 {
     flex-basis: 33.3333333333%;
+    width: 33.3333333333%;
     padding: 10px 10px;
   }
 
   .col-lg-5 {
     flex-basis: 41.6666666667%;
+    width: 41.6666666667%;
     padding: 10px 10px;
   }
 
   .col-lg-6 {
     flex-basis: 50%;
+    width: 50%;
     padding: 10px 10px;
   }
 
   .col-lg-7 {
     flex-basis: 58.3333333333%;
+    width: 58.3333333333%;
     padding: 10px 10px;
   }
 
   .col-lg-8 {
     flex-basis: 66.6666666667%;
+    width: 66.6666666667%;
     padding: 10px 10px;
   }
 
   .col-lg-9 {
     flex-basis: 75%;
+    width: 75%;
     padding: 10px 10px;
   }
 
   .col-lg-10 {
     flex-basis: 83.3333333333%;
+    width: 83.3333333333%;
     padding: 10px 10px;
   }
 
   .col-lg-11 {
     flex-basis: 91.6666666667%;
+    width: 91.6666666667%;
     padding: 10px 10px;
   }
 
   .col-lg-12 {
     flex-basis: 100%;
+    width: 100%;
     padding: 10px 10px;
   }
 }
@@ -312,6 +352,14 @@ p {
   background-color: #45c97f;
 }
 
+.button--black {
+  background-color: #000000;
+}
+
+.button--black:hover {
+  background-color: #1a1a1a;
+}
+
 .button--blue {
   background-color: #64b0dc;
 }
@@ -326,6 +374,11 @@ p {
 
 .button--alerthover {
   background-color: #f41717;
+}
+
+.button a {
+  text-decoration: none;
+  color: #FFF;
 }
 
 .banner {
@@ -470,5 +523,27 @@ p {
   transform: translateY(-50%);
   right: 10px;
   cursor: pointer;
+}
+
+#table {
+  padding-top: 50px;
+  margin-bottom: 40px;
+}
+
+#table tr {
+  text-align: center;
+}
+
+#table tr td {
+  padding: 15px 0;
+  color: #2F80ED;
+}
+
+.dataTables_paginate .paginate_button:hover {
+  background: #8ec5e5 !important;
+}
+
+.dataTables_paginate .disabled:hover {
+  background: none !important;
 }
 

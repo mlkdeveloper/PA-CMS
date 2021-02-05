@@ -53,3 +53,8 @@
   controller: Shop
   action: newShop
 
+
+/admin/pages:
+  controller: Pages
+  action: pages
+

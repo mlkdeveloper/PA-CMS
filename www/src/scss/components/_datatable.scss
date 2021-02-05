@@ -1,0 +1,28 @@
+#table{
+  padding-top: 50px;
+  margin-bottom: 40px;
+}
+
+#table{
+  & tr {
+    text-align: center;
+  }
+}
+
+#table {
+  & tr{
+    & td{
+      padding: 15px 0;
+      color: #2F80ED;
+    }
+  }
+}
+
+.dataTables_paginate{
+  & .paginate_button:hover{
+    background: #8ec5e5 !important;
+  }
+  & .disabled:hover{
+    background: none !important;
+  }
+}
