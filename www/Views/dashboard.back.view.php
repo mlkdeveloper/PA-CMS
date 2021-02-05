@@ -1,40 +1,21 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-12 col-sm-12">
-            <div class="jumbotron">
-                Test
-            </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col">
+        <div class="jumbotron">
+            <canvas id="turnover" width="200" height="80"></canvas>
         </div>
     </div>
-</div>
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-6 col-sm-12 col">
-            <div class="jumbotron">
-                <canvas id="myChart" width="400" height="400"></canvas>
-            </div>
-        </div>
-
-        <div class="col-md-6 col-sm-12 col">
-            <div class="jumbotron">
-                <canvas id="myChart2" width="400" height="400"></canvas>
-            </div>
-        </div>
     </div>
-</div>
-
-<div class="container">
     <div class="row">
-        <div class="col-md-6 col-sm-12 col">
+        <div class="col-lg-6 col-md-6 col-sm-12 col">
             <div class="jumbotron">
-                <p>Test</p>
+                <canvas id="sales" width="300" height="200"></canvas>
             </div>
         </div>
 
-        <div class="col-md-6 col-sm-12 col">
+        <div class="col-lg-6 col-md-6 col-sm-12 col">
             <div class="jumbotron">
-                <p>Test</p>
+                <canvas id="visitors" width="300" height="200"></canvas>
             </div>
         </div>
     </div>

@@ -28,7 +28,7 @@ $lg-width:992px;
 	margin-right: rem(10);
 }
 .container{
-	padding: 0 2rem;
+	padding: 50px 2rem 0 2rem;
 	width: 100%;
 	margin: auto;
 }
@@ -53,6 +53,7 @@ $columns: $col-nb;
 	@for $i from 1 through $columns {
 		.col-sm-#{$i} {
 		flex-basis: ((100 / $columns) * $i) * 1%;
+		width: ((100 / $columns) * $i) * 1%;
 		padding: 10px $gutter-width/2;
 		}
 	}
@@ -63,6 +64,7 @@ $columns: $col-nb;
 	@for $i from 1 through $columns {
 		.col-md-#{$i} {
 		flex-basis: ((100 / $columns) * $i) * 1%;
+		width: ((100 / $columns) * $i) * 1%;
 		padding: 10px $gutter-width/2;
 		}
 	}
@@ -73,6 +75,7 @@ $columns: $col-nb;
 	@for $i from 1 through $columns {
 		.col-lg-#{$i} {
 		flex-basis: ((100 / $columns) * $i) * 1%;
+		width: ((100 / $columns) * $i) * 1%;
 		padding: 10px $gutter-width/2;
 		}
 	}
