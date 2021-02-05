@@ -1,0 +1,18 @@
+#table{
+  padding-top: 50px;
+  margin-bottom: 40px;
+}
+
+#table{
+  & tr {
+    text-align: center;
+  }
+}
+
+#table {
+  & tr{
+    & td{
+      padding: 15px 0;
+    }
+  }
+}
