@@ -22,3 +22,11 @@ p{
 	display: flex;
 	justify-content: center;
 }
+
+.container{
+	max-width: 1140px;
+	margin: auto;
+	& > section{
+		padding: 20px 0;
+	}
+}

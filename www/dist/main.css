@@ -319,6 +319,15 @@ p {
   justify-content: center;
 }
 
+.container {
+  max-width: 1140px;
+  margin: auto;
+}
+
+.container > section {
+  padding: 20px 0;
+}
+
 .button {
   display: inline-block;
   width: auto;
@@ -387,6 +396,11 @@ p {
 
 .button--warning:hover {
   background-color: #ffd333;
+}
+
+.button a {
+  text-decoration: none;
+  color: #FFF;
 }
 
 .banner {
@@ -553,5 +567,49 @@ p {
 
 .dataTables_paginate .disabled:hover {
   background: none !important;
+}
+
+.input {
+  background: #FFF;
+  border: 1px solid #CFD8F4;
+  border-radius: 5px;
+  width: auto;
+  display: inline-block;
+  font-family: "Montserrat", sans-serif;
+  height: 2.1875rem;
+  padding: 1em;
+}
+
+.input--textarea {
+  height: 133.76px;
+}
+
+.label {
+  font-family: "Lato", sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1rem;
+  line-height: 2em;
+  color: #000000;
+}
+
+.checkboxes {
+  display: flex;
+}
+
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.form_align {
+  display: flex;
+  padding-bottom: 1.25rem;
+}
+
+.form_align--top {
+  display: flex;
+  flex-direction: column;
 }
 

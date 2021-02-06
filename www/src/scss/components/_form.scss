@@ -1,0 +1,15 @@
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.form_align {
+  display: flex;
+  padding-bottom: rem(20);
+
+  &--top {
+    display: flex;
+    flex-direction: column;
+  }
+}
