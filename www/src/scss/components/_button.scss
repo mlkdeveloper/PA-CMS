@@ -1,44 +1,58 @@
 .button{
-	text-decoration: none;
-	border: none;
-	outline: none;
 	display: inline-block;
-	background-color: $blue-button;
-	padding: 1em 2em;
-	color: $white;
-	text-transform: uppercase;
-	transition: all 0.5s;
-	border-radius: 15px;
-	box-shadow: 0px 4px 15px rgba(46, 80, 114, 0.41);
-	border-radius: 5px;
+	width: auto;
+	text-align: center;
+	padding: 0.5em 0.7em;
+	border-radius: 0.25rem;
+	border: none;
+	font-size: 1rem;
+
 	@media screen and (max-width: $phone-width){
 		font-size: rem(14);
 	}
 	&:hover{
 		background-color: lighten($blue-button, 10%);
+		cursor: pointer;
 	}
 	&--success{
 		background-color: $green;
+		border-color: $green;
 		&:hover{
 			background-color: lighten($green, 10%);
 		}
 	}
 	&--black{
 		background-color: $black;
+		color: $white;
 		&:hover{
 			background-color: lighten($black, 10%);
 		}
 	}
 	&--blue{
 		background-color: $blue;
+		border-color: $blue;
+		outline-color: $blue;
+		color: $white;
+
 		&:hover{
 			background-color: lighten($blue, 10%);
 		}
 	}
 	&--alert{
 		background-color: $red;
-		&hover{
+		color: $white;
+		outline-color: $red;
+		&:hover{
 			background-color: lighten($red, 10%);
+		}
+	}
+	&--warning{
+		background-color: $yellow;
+		border-color: $yellow;
+		outline-color: $yellow;
+		color: $black;
+		&:hover{
+			background-color: lighten($yellow, 10%);
 		}
 	}
 }
