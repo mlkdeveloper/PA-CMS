@@ -6,7 +6,7 @@
 
                 <button class="button"><a href="/admin/nouveau-magasin">Nouveau magasin</a></button>
 
-                <table id="table-shop" class="display" style="width:100%">
+                <table id="table" class="row-border hover" style="width:100%">
                     <thead>
                     <tr>
                         <th>Nom</th>
@@ -235,7 +235,7 @@
 </div>
 <script>
     $(document).ready(function () {
-        $('#table-shop').DataTable({
+        $('#table').DataTable({
             language: {
                 url: '//cdn.datatables.net/plug-ins/1.10.22/i18n/French.json'
             },
