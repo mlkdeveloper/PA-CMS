@@ -319,13 +319,8 @@ p {
   justify-content: center;
 }
 
-.container {
-  max-width: 1140px;
+.center-margin {
   margin: auto;
-}
-
-.container > section {
-  padding: 20px 0;
 }
 
 .button {
