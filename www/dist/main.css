@@ -319,19 +319,23 @@ p {
   justify-content: center;
 }
 
+.container {
+  max-width: 1140px;
+  margin: auto;
+}
+
+.container > section {
+  padding: 20px 0;
+}
+
 .button {
-  text-decoration: none;
-  border: none;
-  outline: none;
   display: inline-block;
-  background-color: #64B0DC;
-  padding: 1em 2em;
-  color: #FFF;
-  text-transform: uppercase;
-  transition: all 0.5s;
-  border-radius: 15px;
-  box-shadow: 0px 4px 15px rgba(46, 80, 114, 0.41);
-  border-radius: 5px;
+  width: auto;
+  text-align: center;
+  padding: 0.5em 0.7em;
+  border-radius: 0.25rem;
+  border: none;
+  font-size: 1rem;
 }
 
 @media screen and (max-width: 800px) {
@@ -342,10 +346,12 @@ p {
 
 .button:hover {
   background-color: #8ec5e5;
+  cursor: pointer;
 }
 
 .button--success {
   background-color: #31aa66;
+  border-color: #31aa66;
 }
 
 .button--success:hover {
@@ -354,6 +360,7 @@ p {
 
 .button--black {
   background-color: #000000;
+  color: #FFF;
 }
 
 .button--black:hover {
@@ -362,6 +369,9 @@ p {
 
 .button--blue {
   background-color: #64b0dc;
+  border-color: #64b0dc;
+  outline-color: #64b0dc;
+  color: #FFF;
 }
 
 .button--blue:hover {
@@ -370,10 +380,23 @@ p {
 
 .button--alert {
   background-color: #ce0a0a;
+  color: #FFF;
+  outline-color: #ce0a0a;
 }
 
-.button--alerthover {
+.button--alert:hover {
   background-color: #f41717;
+}
+
+.button--warning {
+  background-color: #ffc800;
+  border-color: #ffc800;
+  outline-color: #ffc800;
+  color: #000000;
+}
+
+.button--warning:hover {
+  background-color: #ffd333;
 }
 
 .button a {
@@ -545,5 +568,49 @@ p {
 
 .dataTables_paginate .disabled:hover {
   background: none !important;
+}
+
+.input {
+  background: #FFF;
+  border: 1px solid #CFD8F4;
+  border-radius: 5px;
+  width: auto;
+  display: inline-block;
+  font-family: "Montserrat", sans-serif;
+  height: 2.1875rem;
+  padding: 1em;
+}
+
+.input--textarea {
+  height: 133.76px;
+}
+
+.label {
+  font-family: "Lato", sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1rem;
+  line-height: 2em;
+  color: #000000;
+}
+
+.checkboxes {
+  display: flex;
+}
+
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.form_align {
+  display: flex;
+  padding-bottom: 1.25rem;
+}
+
+.form_align--top {
+  display: flex;
+  flex-direction: column;
 }
 
