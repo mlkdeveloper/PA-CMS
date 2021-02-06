@@ -1,6 +1,6 @@
 /:
-  controller: Main
-  action: default
+  controller: Security
+  action: registerInstall
 
 /404:
   controller: Main
