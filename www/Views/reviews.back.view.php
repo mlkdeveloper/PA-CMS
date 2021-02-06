@@ -15,6 +15,25 @@
                     </tr>
                     </thead>
                     <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias at, autem, delectus
+                                distinctio dolorem facere harum ipsam labore magnam molestiae nemo, non vero. Earum
+                                eligendi enim id, placeat possimus quaerat.
+                            </p>
+                        </td>
+                        <td>test@test.com</td>
+                        <td>
+                            <button class="button button--warning">
+                                <i class="bi bi-pencil-fill"></i>
+                            </button>
+                            <button class="button button--alert">
+                                <i class="bi bi-trash-fill"></i>
+                            </button>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
