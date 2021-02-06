@@ -9,11 +9,11 @@
 </head>
 <body>
 
+    <main>
+        <!-- afficher la vue -->
+        <?php include $this->view ?>
 
-<!-- afficher la vue -->
-<?php include $this->view ?>
-
-
+    </main>
 
 </body>
 

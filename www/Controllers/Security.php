@@ -19,4 +19,13 @@ class Security
 
 
     }
+
+    //Method : Action
+    public function installAction(){
+
+
+        //Affiche la vue home intégrée dans le template du front
+        $view = new View("install", "install");
+        $view->assign("title", "Intallation");
+    }
 }
