@@ -23,6 +23,7 @@
 	}
 	&--black{
 		background-color: $black;
+		color: $white;
 		&:hover{
 			background-color: lighten($black, 10%);
 		}
