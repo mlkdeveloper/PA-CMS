@@ -1,1 +1,5 @@
-.container-input
+.container-input{
+    display: block;
+    margin: auto;
+    width: fit-content;
+}

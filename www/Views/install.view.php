@@ -6,8 +6,33 @@
                     Vous n’avez qu’a remplir les informations demandées ci-dessous et vous serez prêt à utiliser Click &
                     Create
                 </h4>
+
                 <div class="container-input">
-                    
+                    <label>toto</label>
+                    <input type="text">
+                    <p>Description</p>
+                </div>
+                <div class="container-input">
+                    <label>toto</label>
+                    <input type="text">
+                    <p>Description</p>
+
+                </div>
+                <div class="container-input">
+                    <label>toto</label>
+                    <input type="text">
+                    <p>Description</p>
+
+                </div>
+                <div class="container-input">
+                    <label>toto</label>
+                    <input type="text">
+                    <p>Description</p>
+                </div>
+                <div class="container-input">
+                    <label>toto</label>
+                    <input type="text">
+                    <p>Description</p>
                 </div>
             </div>
         </div>
