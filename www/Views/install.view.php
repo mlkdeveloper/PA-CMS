@@ -34,6 +34,8 @@
                     <input type="text">
                     <p>Description</p>
                 </div>
+                <?php echo DBHOST;
+                echo 'tdt'?>
             </div>
         </div>
     </div>
