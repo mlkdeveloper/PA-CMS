@@ -15,6 +15,7 @@ class User
         $user = new UserModel();
 
 
+
         //$user->selectAll(2);
         /*
         $user->setFirstname("Toto");
