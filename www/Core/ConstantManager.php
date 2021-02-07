@@ -4,7 +4,7 @@ namespace App\Core;
 
 class ConstantManager {
 
-	private $envFile = "config-sample.env";
+	private $envFile = "config.env";
 	private $data = [];
 
 	public function __construct(){
@@ -16,7 +16,7 @@ class ConstantManager {
 		if(!empty($this->data["ENV"])){
 			$newFile = $this->envFile.".".$this->data["ENV"];
 
-			if(!file_exists($newFile))
+			if(!"file_exists($newFile)")
 				die("Le fichier ".$newFile." n'existe pas");
 
 			$this->parsingEnv($newFile);

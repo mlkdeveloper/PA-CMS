@@ -31,8 +31,6 @@ class Security
 
     }
 
-
-
     private function checkInformations($data){
         if(count($data) != 6){
             $_SESSION['securityInstall'] = 'Formulaire non conforme';
@@ -55,7 +53,7 @@ class Security
             $dataArray = [];
 
 
-            array_push($dataArray, trim($data['name_bdd']));
+            array_push($dataArray, htmlspecialchars(trim($data['name_bdd'])));
             array_push( $dataArray, trim($data['user_bdd']));
             array_push($dataArray, trim($data['pwd_bdd']));
             array_push($dataArray, trim($data['address_bdd']));
@@ -65,7 +63,6 @@ class Security
             return $dataArray;
         }
     }
-
 
     private function createFile($dataArray){
         $dbDriver = file_get_contents("config-sample.env", true, null, 0,14);
@@ -79,6 +76,23 @@ class Security
             $newDB .= $configFileExploded[$i].'='.$dataArray[$i];
         }
 
+        //        Vérifaction  si connexion
+        try{
+            $this->pdo = new \PDO( DBDRIVER.":host=".DBHOST.";dbname=".DBNAME.";port=".DBPORT , DBUSER , DBPWD );
+        }catch(Exception $e){
+            die("Erreur SQL : ".$e->getMessage());
+        }
+        file_exists('config-sample');
+
+
         file_put_contents('config.env', $newDB);
+
+        //Insertion bdd
+
+        new ConstantManager();
+
+
+        //Redirection
+
     }
 }
