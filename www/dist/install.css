@@ -1,3 +1,22 @@
+h4{
+    padding-bottom: 50px;
+    text-align: center;
+}
 .container-input{
-    /*width: fit-content;*/
+    float: right;
+    padding-right: 30%;
+}
+.container-input label{
+    padding-right: 40px;
+}
+@media only screen and (max-width: 1300px) {
+    .form_align {
+        display: block;
+        width: 70%;
+        margin: auto;
+    }
+}
+button{
+    display: flex;
+    margin-left: 85%;
 }

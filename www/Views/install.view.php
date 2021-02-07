@@ -4,40 +4,53 @@
             <div class="jumbotron">
                 <h4>Bienvenue dans l’installation de click & collect !
                     Vous n’avez qu’a remplir les informations demandées ci-dessous et vous serez prêt à utiliser Click &
-                    Create
+                    Create.
                 </h4>
 
-                <div class="form_align center-margin container-input">
-                    <label>Nom de la base de données</label>
-                    <input type="text">
-                    <p>Le nom de la base de donnée avec laquelle vous souhaitez utiliser votre Click & Create</p>
-                </div>
-                <div class="form_align center-margin container-input">
-                    <label>Identidiant</label>
-                    <input type="text">
-                    <p>Votre identifiant MySQL</p>
+                <form class="form">
+                    <div class="col-md-12">
+                        <div class="form_align container-input">
+                            <label>Nom de la base de données:</label>
+                            <input class="input" type="text">
+                        </div>
+                    </div>
 
-                </div>
-                <div class="form_align center-margin container-input">
-                    <label>Mot de passe</label>
-                    <input type="text">
-                    <p>Votre mot de passe de basse de données</p>
+                    <div class="col-md-12">
+                        <div class="form_align container-input">
+                            <label>Identidiant:</label>
+                            <input class="input" type="text">
+                        </div>
+                    </div>
 
-                </div>
-                <div class="form_align center-margin container-input">
-                    <label>Adresse de la base de données</label>
-                    <input type="text">
-                </div>
-                <div class="form_align center-margin container-input">
-                    <label>Port</label>
-                    <input type="text">
-                </div>
-                <div class="form_align center-margin container-input">
-                    <label>Préfixe des tables</label>
-                    <input type="text">
-                </div>
-                <?php echo DBHOST;
-                echo 'tdt' ?>
+                    <div class="col-md-12">
+                        <div class="form_align container-input">
+                            <label>Mot de passe:</label>
+                            <input class="input" type="text">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form_align container-input">
+                            <label>Adresse de la base de données:</label>
+                            <input class="input" type="text">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form_align container-input">
+                            <label>Port:</label>
+                            <input class="input" type="text">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form_align container-input">
+                            <label>Préfixe des tables:</label>
+                            <input class="input" type="text">
+                        </div>
+                    </div>
+                </form>
+
+                <a href="/start-install">
+                    <button class="button button--blue">Installer</button>
+                </a>
             </div>
         </div>
     </div>

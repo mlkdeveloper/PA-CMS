@@ -25,8 +25,10 @@ class Security
         $view->assign("title", "Intallation");
     }
 
-    public function startInstall(){
+    public function startInstallAction(){
 
-
+//        file_get_contents('/test/fzef/azeqfzeenv', false);
+//        file_get_contents("/path/to/your/file/edit.json", true);
+        fopen('/.env', "r");
     }
 }

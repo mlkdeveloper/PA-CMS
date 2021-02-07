@@ -47,3 +47,7 @@
 /admin/pages:
   controller: Pages
   action: pages
+
+/start-install:
+  controller: Security
+  action: startInstall
