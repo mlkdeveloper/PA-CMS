@@ -13,6 +13,8 @@ class User
 	//Method : Action
 	public function defaultAction(){
         $user = new UserModel();
+
+
         //$user->selectAll(2);
         /*
         $user->setFirstname("Toto");
