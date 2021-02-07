@@ -8,6 +8,9 @@ use App\Core\ConstantManager;
 require "Autoload.php";
 Autoload::register();
 
+new ConstantManager();
+
+
 //require "Core/Router.php";
 
 //On récupère le slug dans la super globale SERVER

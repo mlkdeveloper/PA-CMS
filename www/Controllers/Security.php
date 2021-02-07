@@ -27,11 +27,19 @@ class Security
     public function startInstallAction(){
 
         $dataArray = $this->checkInformations($_POST);
-        print_r($dataArray);
-        new ConstantManager();
 
-//        file_get_contents("/path/to/your/file/edit.json", true);
-//        fopen('/.env', "r");
+        $dbDriver = file_get_contents("config-sample.env", true, null, 0,14);
+        $configFile = file_get_contents("config-sample.env", true, null, 14);
+
+        $configFileExploded = explode('=', $configFile);
+
+        $newDB='';
+        $newDB .= $dbDriver;
+        for ($i = 0; $i < count($dataArray); $i++){
+            $newDB .= $configFileExploded[$i].'='.$dataArray[$i];
+        }
+
+        file_put_contents('config.env', $newDB);
     }
 
 
@@ -55,12 +63,13 @@ class Security
 
             $dataArray = [];
 
-            $dataArray['name_bdd'] = trim($data['user_bdd']);
-            $dataArray['user_bdd'] = trim($data['user_bdd']);
-            $dataArray['pwd_bdd'] = trim($data['pwd_bdd']);
-            $dataArray['address_bdd'] = trim($data['address_bdd']);
-            $dataArray['port_bdd'] = trim($data['port_bdd']);
-            $dataArray['prefixe_bdd'] = trim($data['prefixe_bdd']);
+
+            array_push($dataArray, trim($data['name_bdd']));
+            array_push( $dataArray, trim($data['user_bdd']));
+            array_push($dataArray, trim($data['pwd_bdd']));
+            array_push($dataArray, trim($data['address_bdd']));
+            array_push($dataArray, trim($data['port_bdd']));
+            array_push($dataArray, trim($data['prefixe_bdd']));
 
             return $dataArray;
         }
