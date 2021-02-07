@@ -44,6 +44,12 @@ class QueryBuilder
         return $this;
     }
 
+    public function limit($nb){
+
+        $this->limit = $nb;
+        return $this;
+    }
+
     public function get(){
 
         $this->request = "SELECT ";
@@ -54,6 +60,10 @@ class QueryBuilder
             $this->request.= " WHERE ( ";
             $this->request.= implode(' ) AND ( ',$this->where);
             $this->request.= " )";
+        }
+
+        if ($this->limit){
+            $this->request.= " LIMIT " . $this->limit;
         }
 
         $this->execute();
@@ -72,10 +82,6 @@ class QueryBuilder
         return $query->fetchAll(\PDO::FETCH_ASSOC);
 
     }
-
-
-
-
 
 
 }
