@@ -27,19 +27,8 @@ class Security
     public function startInstallAction(){
 
         $dataArray = $this->checkInformations($_POST);
+        $this->createFile($dataArray);
 
-        $dbDriver = file_get_contents("config-sample.env", true, null, 0,14);
-        $configFile = file_get_contents("config-sample.env", true, null, 14);
-
-        $configFileExploded = explode('=', $configFile);
-
-        $newDB='';
-        $newDB .= $dbDriver;
-        for ($i = 0; $i < count($dataArray); $i++){
-            $newDB .= $configFileExploded[$i].'='.$dataArray[$i];
-        }
-
-        file_put_contents('config.env', $newDB);
     }
 
 
@@ -48,6 +37,7 @@ class Security
         if(count($data) != 6){
             $_SESSION['securityInstall'] = 'Formulaire non conforme';
             header('Location: /');
+            die();
         }else{
 
             if (empty($data['name_bdd'])
@@ -59,6 +49,7 @@ class Security
 
                 $_SESSION['securityInstall'] = "Veuillez remplir tous les champs";
                 header('Location: /');
+                die();
             }
 
             $dataArray = [];
@@ -73,5 +64,21 @@ class Security
 
             return $dataArray;
         }
+    }
+
+
+    private function createFile($dataArray){
+        $dbDriver = file_get_contents("config-sample.env", true, null, 0,14);
+        $configFile = file_get_contents("config-sample.env", true, null, 14);
+
+        $configFileExploded = explode('=', $configFile);
+
+        $newDB='';
+        $newDB .= $dbDriver;
+        for ($i = 0; $i < count($dataArray); $i++){
+            $newDB .= $configFileExploded[$i].'='.$dataArray[$i];
+        }
+
+        file_put_contents('config.env', $newDB);
     }
 }
