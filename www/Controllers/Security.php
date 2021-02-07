@@ -1,10 +1,8 @@
 <?php
-
-
 namespace App\Controller;
-
-
 use App\Core\View;
+
+session_start();
 
 class Security
 {
@@ -26,6 +24,27 @@ class Security
     }
 
     public function startInstallAction(){
+
+        if(count($_POST) != 6){
+            echo "toto";
+            $_SESSION['securityInstall'] = 'Formulaire non conforme';
+            header('Location: /');
+        }else{
+            $erros = [];
+
+            if (empty($_POST['name_bdd'])
+            ||empty($_POST['user_bdd'])
+            ||empty($_POST['pwd_bdd'])
+            ||empty($_POST['address_bdd'])
+            ||empty( $_POST['port_bdd'])
+            ||empty($_POST['prefixe_bdd'])){
+                $_SESSION['securityInstall'] = "Veuillez remplir tous les champs";
+                header('Location: /');
+            }
+
+
+
+        }
 
 //        file_get_contents('/test/fzef/azeqfzeenv', false);
 //        file_get_contents("/path/to/your/file/edit.json", true);
