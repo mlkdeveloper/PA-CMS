@@ -9,7 +9,7 @@ if(isset($_SESSION['securityInstall'])){
         <div class="col-lg-8 col-md-8 col-sm-12 col center-margin">
             <div class="jumbotron">
                 <h4>Bienvenue dans l’installation de Click & Create !
-                    Vous n’avez qu’a remplir les informations demandées ci-dessous et vous serez prêt à utiliser Click &
+                    Vous n’avez qu’à remplir les informations demandées ci-dessous et vous serez prêt à utiliser Click &
                     Create.
                 </h4>
 

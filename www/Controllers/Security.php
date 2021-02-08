@@ -7,6 +7,7 @@ session_start();
 
 class Security
 {
+
     //Method : Action
     public function registerInstallAction(){
 
@@ -76,13 +77,12 @@ class Security
             $newDB .= $configFileExploded[$i].'='.$dataArray[$i];
         }
 
-        //        Vérifaction  si connexion
-        try{
-            $this->pdo = new \PDO( DBDRIVER.":host=".DBHOST.";dbname=".DBNAME.";port=".DBPORT , DBUSER , DBPWD );
-        }catch(Exception $e){
-            die("Erreur SQL : ".$e->getMessage());
+        $this->verificationBDD($dbDriver, $dataArray);
+
+        if(!file_exists('config-sample.env')){
+            $_SESSION['securityInstall'] = "Le fichier config-sample.env n'existe pas";
+            header('Location: /');
         }
-        file_exists('config-sample');
 
 
         file_put_contents('config.env', $newDB);
@@ -94,5 +94,22 @@ class Security
 
         //Redirection
 
+    }
+
+
+    private function verificationBDD($dbDriver, $dataArray){
+
+//        echo $dbDriver;
+//        print_r($dataArray);
+
+        $dbDriver = explode('=', $dbDriver);
+        echo $dbDriver[1].":host=".$dataArray[3].";dbnamehost=".$dataArray[0].";port=".$dataArray[4];
+
+        try{
+            $pdo = new \PDO( $dbDriver[1].":host=".$dataArray[3].";dbnamehost=".$dataArray[0].";port=".$dataArray[4] , $dataArray[1] , $dataArray[2]);
+        }catch(Exception $e){
+            echo "test";
+
+        }
     }
 }
