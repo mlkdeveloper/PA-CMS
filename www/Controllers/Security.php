@@ -103,11 +103,10 @@ class Security
 //        print_r($dataArray);
 
         $dbDriver = explode('=', $dbDriver);
-        echo $dbDriver[1].":host=".$dataArray[3].";dbnamehost=".$dataArray[0].";port=".$dataArray[4];
 
         try{
             $pdo = new \PDO( $dbDriver[1].":host=".$dataArray[3].";dbnamehost=".$dataArray[0].";port=".$dataArray[4] , $dataArray[1] , $dataArray[2]);
-        }catch(Exception $e){
+        }catch(\Exception $e){
             echo "test";
 
         }
