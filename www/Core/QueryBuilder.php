@@ -70,13 +70,14 @@ class QueryBuilder
         }
 
         if (!empty($this->order)){
-            $this->request.= " ORDER BY " . implode(', ',$this->where);
+            $this->request.= " ORDER BY " . implode(', ',$this->order);
 
         }
 
         if ($this->limit){
             $this->request.= " LIMIT " . $this->limit;
         }
+
 
         return $this->execute();
 
