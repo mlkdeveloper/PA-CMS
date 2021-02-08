@@ -15,25 +15,22 @@
                     </tr>
                     </thead>
                     <tbody>
+                    <?php foreach ($datas as $review): ?>
                     <tr>
-                        <td>1</td>
-                        <td>1</td>
+                        <td><?= $review["id"] ?></td>
+                        <td><?= $review["commentary"] ?></td>
+                        <td><?= $review["commentary"] ?></td>
+                        <td><?= $review["status"] ?></td>
                         <td>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias at, autem, delectus
-                                distinctio dolorem facere harum ipsam labore magnam molestiae nemo, non vero. Earum
-                                eligendi enim id, placeat possimus quaerat.
-                            </p>
-                        </td>
-                        <td>test@test.com</td>
-                        <td>
-                            <button class="button button--warning">
-                                <i class="bi bi-pencil-fill"></i>
-                            </button>
-                            <button class="button button--alert">
+                            <a href="/admin/check-review/<?= $review["id"] ?>" class="button button--success">
+                                <i class="bi bi-check"></i>
+                            </a>
+                            <a class="button button--alert">
                                 <i class="bi bi-trash-fill"></i>
-                            </button>
+                            </a>
                         </td>
                     </tr>
+                    <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
