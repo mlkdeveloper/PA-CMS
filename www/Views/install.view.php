@@ -1,6 +1,7 @@
 <?php
 if(isset($_SESSION['securityInstall'])){
     echo '<h1>'.$_SESSION['securityInstall'].'</h1>';
+    print_r( $_SESSION['dataInstall']);
     unset($_SESSION['securityInstall']);
 }
 ?>

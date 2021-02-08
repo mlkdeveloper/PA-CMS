@@ -7,6 +7,7 @@ session_start();
 
 class Security
 {
+    private $pdo;
 
     //Method : Action
     public function registerInstallAction(){
@@ -55,11 +56,13 @@ class Security
 
 
             array_push($dataArray, htmlspecialchars(trim($data['name_bdd'])));
-            array_push( $dataArray, trim($data['user_bdd']));
-            array_push($dataArray, trim($data['pwd_bdd']));
-            array_push($dataArray, trim($data['address_bdd']));
-            array_push($dataArray, trim($data['port_bdd']));
-            array_push($dataArray, trim($data['prefixe_bdd']));
+            array_push( $dataArray, htmlspecialchars(trim($data['user_bdd'])));
+            array_push($dataArray, htmlspecialchars(trim($data['pwd_bdd'])));
+            array_push($dataArray, htmlspecialchars(trim($data['address_bdd'])));
+            array_push($dataArray, htmlspecialchars(trim($data['port_bdd'])));
+            array_push($dataArray, htmlspecialchars(trim($data['prefixe_bdd'])));
+
+            $_SESSION['dataInstall'] = $dataArray;
 
             return $dataArray;
         }
@@ -82,6 +85,7 @@ class Security
         if(!file_exists('config-sample.env')){
             $_SESSION['securityInstall'] = "Le fichier config-sample.env n'existe pas";
             header('Location: /');
+            die();
         }
 
 
@@ -105,10 +109,21 @@ class Security
         $dbDriver = explode('=', $dbDriver);
 
         try{
-            $pdo = new \PDO( $dbDriver[1].":host=".$dataArray[3].";dbnamehost=".$dataArray[0].";port=".$dataArray[4] , $dataArray[1] , $dataArray[2]);
+            $this->pdo = new \PDO( $dbDriver[1].":host=".$dataArray[3].";dbnamehost=".$dataArray[0].";port=".$dataArray[4] , $dataArray[1] , $dataArray[2]);
         }catch(\Exception $e){
-            echo "test";
 
+            $erroCode = $e->getCode();
+
+            switch ($erroCode){
+                case 1045:
+                    $_SESSION['securityInstall'] = "Les identifiants de connexion à la base de données sont incorrects";
+                    header('Location: /');
+                    die();
+                case 2002:
+                    $_SESSION['securityInstall'] = "L'adresse de la base de données est incorrecte";
+                    header('Location: /');
+                    die();
+            }
         }
     }
 }
