@@ -1,9 +1,8 @@
 <?php
-if(isset($_SESSION['securityInstall'])){
-    echo '<h1>'.$_SESSION['securityInstall'].'</h1>';
-    print_r( $_SESSION['dataInstall']);
-    unset($_SESSION['securityInstall']);
-}
+    if(isset($_SESSION['securityInstall'])){
+        echo '<h1>'.$_SESSION['securityInstall'].'</h1>';
+        unset($_SESSION['securityInstall']);
+    }
 ?>
 <div class="container">
     <div class="row">
@@ -18,39 +17,39 @@ if(isset($_SESSION['securityInstall'])){
                     <div class="col-lg-12 col-md-12 col-sm-12 col">
                         <div class="form_align container-input">
                             <label for="name_bdd">Nom de la base de données:</label>
-                            <input class="input" type="text" id="name_bdd" name="name_bdd">
+                            <input class="input" type="text" id="name_bdd" name="name_bdd" value="<?php echo isset($_SESSION["dataInstall"][0])?$_SESSION["dataInstall"][0]:"" ?>">
                         </div>
                     </div>
 
                     <div class="col-lg-12 col-md-12 col-sm-12 col">
                         <div class="form_align container-input">
                             <label for="user_bdd">Identidiant:</label>
-                            <input class="input" type="text" id="user_bdd" name="user_bdd">
+                            <input class="input" type="text" id="user_bdd" name="user_bdd" value="<?php echo isset($_SESSION["dataInstall"][1])?$_SESSION["dataInstall"][1]:"" ?>">
                         </div>
                     </div>
 
                     <div class="col-lg-12 col-md-12 col-sm-12 col">
                         <div class="form_align container-input">
                             <label for="pwd_bdd">Mot de passe:</label>
-                            <input class="input" type="text" id="pwd_bdd" name="pwd_bdd">
+                            <input class="input" type="text" id="pwd_bdd" name="pwd_bdd" value="<?php echo isset($_SESSION["dataInstall"][2])?$_SESSION["dataInstall"][2]:"" ?>">
                         </div>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col">
                         <div class="form_align container-input">
                             <label for="address_bdd">Adresse de la base de données:</label>
-                            <input class="input" type="text" id="address_bdd" name="address_bdd" value="localhost">
+                            <input class="input" type="text" id="address_bdd" name="address_bdd" value="<?php echo isset($_SESSION["dataInstall"][3])?$_SESSION["dataInstall"][3]:"localhost" ?>">
                         </div>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col">
                         <div class="form_align container-input">
                             <label for="port_bdd">Port:</label>
-                            <input class="input" type="text" id="port_bdd" name="port_bdd" value="3306">
+                            <input class="input" type="text" id="port_bdd" name="port_bdd" value="<?php echo isset($_SESSION["dataInstall"][4])?$_SESSION["dataInstall"][4]:"3306" ?>">
                         </div>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col">
                         <div class="form_align container-input">
                             <label for="prefixe_bdd">Préfixe des tables:</label>
-                            <input class="input" type="text" id="prefixe_bdd" name="prefixe_bdd" value="cc_">
+                            <input class="input" type="text" id="prefixe_bdd" name="prefixe_bdd" value="<?php echo isset($_SESSION["dataInstall"][5])?$_SESSION["dataInstall"][5]:"cc_" ?>">
                         </div>
                     </div>
                     <input type="submit" value="Installer" class="button button--blue" id="button_install">
@@ -59,3 +58,8 @@ if(isset($_SESSION['securityInstall'])){
         </div>
     </div>
 </div
+
+
+<?php
+    unset($_SESSION['dataInstall']);
+?>
