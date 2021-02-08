@@ -10,7 +10,7 @@ class QueryBuilder
     private $params;
     private $select;
     private $where = [];
-    private $order;
+    private $order = [];
     private $limit;
     private $group;
 
@@ -49,6 +49,13 @@ class QueryBuilder
         return $this;
     }
 
+    public function orderBy($column,$direction){
+
+        $this->order[] = "$column $direction";
+        return $this;
+
+    }
+
 
     public function get(){
 
@@ -62,6 +69,10 @@ class QueryBuilder
             $this->request.= " )";
         }
 
+        if (!empty($this->order)){
+            $this->request.= " ORDER BY " . implode(', ',$this->where);
+
+        }
 
         if ($this->limit){
             $this->request.= " LIMIT " . $this->limit;
