@@ -48,8 +48,8 @@
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col">
                         <div class="form_align container-input">
-                            <label for="prefixe_bdd">Préfixe des tables:</label>
-                            <input class="input" type="text" id="prefixe_bdd" name="prefixe_bdd" value="<?php echo isset($_SESSION["dataInstall"][5])?$_SESSION["dataInstall"][5]:"cc_" ?>">
+                            <label for="prefix_bdd">Préfixe des tables:</label>
+                            <input class="input" type="text" id="prefix_bdd" name="prefix_bdd" value="<?php echo isset($_SESSION["dataInstall"][5])?$_SESSION["dataInstall"][5]:"cc_" ?>">
                         </div>
                     </div>
                     <input type="submit" value="Installer" class="button button--blue" id="button_install">

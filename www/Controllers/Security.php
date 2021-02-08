@@ -37,7 +37,6 @@ class Security
         if(count($data) != 6){
             $_SESSION['securityInstall'] = 'Formulaire non conforme';
             header('Location: /');
-            die();
         }else{
 
             if (empty($data['name_bdd'])
@@ -45,11 +44,10 @@ class Security
                 ||empty($data['pwd_bdd'])
                 ||empty($data['address_bdd'])
                 ||empty($data['port_bdd'])
-                ||empty($data['prefixe_bdd'])){
+                ||empty($data['prefix_bdd'])){
 
                 $_SESSION['securityInstall'] = "Veuillez remplir tous les champs";
                 header('Location: /');
-                die();
             }
 
             $dataArray = [];
@@ -60,7 +58,7 @@ class Security
             array_push($dataArray, htmlspecialchars(trim($data['pwd_bdd'])));
             array_push($dataArray, htmlspecialchars(trim($data['address_bdd'])));
             array_push($dataArray, htmlspecialchars(trim($data['port_bdd'])));
-            array_push($dataArray, htmlspecialchars(trim($data['prefixe_bdd'])));
+            array_push($dataArray, htmlspecialchars(trim($data['prefix_bdd'])));
 
             $_SESSION['dataInstall'] = $dataArray;
 
@@ -74,8 +72,7 @@ class Security
 
         $configFileExploded = explode('=', $configFile);
 
-        $newDB='';
-        $newDB .= $dbDriver;
+        $newDB = $dbDriver;
         for ($i = 0; $i < count($dataArray); $i++){
             $newDB .= $configFileExploded[$i].'='.$dataArray[$i];
         }
@@ -85,16 +82,14 @@ class Security
         if(!file_exists('config-sample.env')){
             $_SESSION['securityInstall'] = "Le fichier config-sample.env n'existe pas";
             header('Location: /');
-            die();
         }
-
 
         file_put_contents('config.env', $newDB);
 
-        //Insertion bdd
-
         new ConstantManager();
 
+        //Insertion bdd
+        $this->insertBDD($dataArray[5], $dataArray[0]);
 
         //Redirection
 
@@ -103,27 +98,45 @@ class Security
 
     private function verificationBDD($dbDriver, $dataArray){
 
-//        echo $dbDriver;
-//        print_r($dataArray);
-
         $dbDriver = explode('=', $dbDriver);
 
         try{
             $this->pdo = new \PDO( $dbDriver[1].":host=".$dataArray[3].";dbnamehost=".$dataArray[0].";port=".$dataArray[4] , $dataArray[1] , $dataArray[2]);
         }catch(\Exception $e){
 
-            $erroCode = $e->getCode();
+            $errorCode = $e->getCode();
 
-            switch ($erroCode){
+            switch ($errorCode){
                 case 1045:
                     $_SESSION['securityInstall'] = "Les identifiants de connexion à la base de données sont incorrects";
                     header('Location: /');
-                    die();
+                    break;
                 case 2002:
                     $_SESSION['securityInstall'] = "L'adresse de la base de données est incorrecte";
                     header('Location: /');
-                    die();
+                    break;
+                default:
+                    $_SESSION['securityInstall'] = "Une erreur s'est produite pendant la connexion à la base de données";
+                    header('Location: /');
             }
         }
+
+        $verificationDatabase = $this->pdo->prepare('SELECT COUNT(*) FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = ?');
+        $verificationDatabase->execute(array($dataArray[0]));
+        if ($verificationDatabase->fetchColumn() == 0) {
+            $_SESSION['securityInstall'] = "La base de données renseignée n'existe pas";
+            header('Location: /');
+        }
+    }
+
+
+    private function insertBDD($prefix, $database){
+        $sql = file_get_contents("clickcreate.sql");
+
+        $installSql = str_replace("cc_", $prefix, $sql);
+        $installSql = str_replace("clickCreate", $database, $installSql);
+
+        echo $installSql;
+        file_put_contents("test.sql", $installSql);
     }
 }
