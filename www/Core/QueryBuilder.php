@@ -12,7 +12,7 @@ class QueryBuilder
     private $where = [];
     private $order = [];
     private $limit;
-    private $group;
+
 
     protected $pdo;
 
@@ -77,8 +77,6 @@ class QueryBuilder
         if ($this->limit){
             $this->request.= " LIMIT " . $this->limit;
         }
-
-
 
         return $this->execute();
 
