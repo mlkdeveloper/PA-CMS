@@ -46,6 +46,6 @@
   controller: Pages
   action: pages
 
-/admin/check-review/:
+/admin/check-review:
   controller: Reviews
   action: checkReviews

@@ -22,6 +22,7 @@ class Reviews
         $review = new Review();
         $review->setId($_GET["id"]);
         $review->setStatus("1");
+        $review->save();
         header("Location: /admin/reviews");
     }
 

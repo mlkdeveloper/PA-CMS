@@ -22,7 +22,7 @@
                         <td><?= $review["commentary"] ?></td>
                         <td><?= $review["status"] ?></td>
                         <td>
-                            <a href="/admin/check-review/<?= $review["id"] ?>" class="button button--success">
+                            <a href="/admin/check-review?id=<?= $review["id"] ?>" class="button button--success">
                                 <i class="bi bi-check"></i>
                             </a>
                             <a class="button button--alert">
