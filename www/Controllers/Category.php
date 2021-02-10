@@ -3,18 +3,18 @@
 namespace App\Controller;
 
 use App\Core\View;
-use App\Models\Category as Categ;
+use App\Models\Category as modelCategory;
 
 class Category{
 
     public function showAction(){
 
-        $category = new Categ();
+        $category = new modelCategory();
+        $array = $category->select()->get();
 
-        $array = $category->select();
 
         $view = new View("displayCategory.back", "back");
-        $view->assign("title", "test");
+        $view->assign("title", "Liste des catégories");
         $view->assign("array", $array);
 
 
