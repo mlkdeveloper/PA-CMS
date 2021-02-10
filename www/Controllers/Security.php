@@ -35,23 +35,10 @@ class Security
 
     private function checkInformations($data){
         if(count($data) != 6){
-            $_SESSION['securityInstall'] = 'Formulaire non conforme';
-            header('Location: /');
+            $this->errorRedirection("Formulaire non conforme");
         }else{
 
-            if (empty($data['name_bdd'])
-                ||empty($data['user_bdd'])
-                ||empty($data['pwd_bdd'])
-                ||empty($data['address_bdd'])
-                ||empty($data['port_bdd'])
-                ||empty($data['prefix_bdd'])){
-
-                $_SESSION['securityInstall'] = "Veuillez remplir tous les champs";
-                header('Location: /');
-            }
-
             $dataArray = [];
-
 
             array_push($dataArray, htmlspecialchars(trim($data['name_bdd'])));
             array_push( $dataArray, htmlspecialchars(trim($data['user_bdd'])));
@@ -62,8 +49,20 @@ class Security
 
             $_SESSION['dataInstall'] = $dataArray;
 
+            if (empty($dataArray[0])
+                ||empty($dataArray[1])
+                ||empty($dataArray[2])
+                ||empty($dataArray[3])
+                ||empty($dataArray[4])
+                ||empty($dataArray[5])){
+
+                $this->errorRedirection("Veuillez remplir tous les champs");
+            }
+
+
             return $dataArray;
         }
+        return null;
     }
 
     private function createFile($dataArray){
@@ -80,15 +79,13 @@ class Security
         $this->verificationBDD($dbDriver, $dataArray);
 
         if(!file_exists('config-sample.env')){
-            $_SESSION['securityInstall'] = "Le fichier config-sample.env n'existe pas";
-            header('Location: /');
+            $this->errorRedirection("Le fichier config-sample.env n'existe pas");
         }
 
         file_put_contents('config.env', $newDB);
 
         new ConstantManager();
 
-        //Insertion bdd
         $this->insertBDD($dataArray[5], $dataArray[0]);
 
         //Redirection
@@ -108,24 +105,20 @@ class Security
 
             switch ($errorCode){
                 case 1045:
-                    $_SESSION['securityInstall'] = "Les identifiants de connexion à la base de données sont incorrects";
-                    header('Location: /');
-                    break;
+                    $this->errorRedirection("Les identifiants de connexion à la base de données sont incorrects");
+                    die();
                 case 2002:
-                    $_SESSION['securityInstall'] = "L'adresse de la base de données est incorrecte";
-                    header('Location: /');
-                    break;
+                    $this->errorRedirection("L'adresse de la base de données est incorrecte");
+                    die();
                 default:
-                    $_SESSION['securityInstall'] = "Une erreur s'est produite pendant la connexion à la base de données";
-                    header('Location: /');
+                    $this->errorRedirection("Une erreur s'est produite pendant la connexion à la base de données");
             }
         }
 
         $verificationDatabase = $this->pdo->prepare('SELECT COUNT(*) FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = ?');
         $verificationDatabase->execute(array($dataArray[0]));
         if ($verificationDatabase->fetchColumn() == 0) {
-            $_SESSION['securityInstall'] = "La base de données renseignée n'existe pas";
-            header('Location: /');
+            $this->errorRedirection("La base de données renseignée n'existe pas");
         }
     }
 
@@ -137,6 +130,11 @@ class Security
         $installSql = str_replace("clickCreate", $database, $installSql);
 
         echo $installSql;
-        file_put_contents("test.sql", $installSql);
+    }
+
+    private function errorRedirection($error){
+        $_SESSION['securityInstall'] = $error;
+        header('Location: /');
+        die();
     }
 }
