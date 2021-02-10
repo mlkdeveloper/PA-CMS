@@ -114,12 +114,6 @@ class Security
                     $this->errorRedirection("Une erreur s'est produite pendant la connexion à la base de données");
             }
         }
-
-        $verificationDatabase = $this->pdo->prepare('SELECT COUNT(*) FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = ?');
-        $verificationDatabase->execute(array($dataArray[0]));
-        if ($verificationDatabase->fetchColumn() == 0) {
-            $this->errorRedirection("La base de données renseignée n'existe pas");
-        }
     }
 
 
