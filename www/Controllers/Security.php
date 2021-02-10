@@ -30,7 +30,9 @@ class Security
 
         $dataArray = $this->checkInformations($_POST);
         $this->createFile($dataArray);
+        $this->insertBDD($dataArray[5], $dataArray[0]);
 
+        //Redirection
     }
 
     private function checkInformations($data){
@@ -88,11 +90,6 @@ class Security
         file_put_contents('config.env', $newDB);
 
         new ConstantManager();
-
-        $this->insertBDD($dataArray[5], $dataArray[0]);
-
-        //Redirection
-
     }
 
 
@@ -132,7 +129,11 @@ class Security
         $installSql = str_replace("cc_", $prefix, $sql);
         $installSql = str_replace("clickCreate", $database, $installSql);
 
-        echo $installSql;
+        try {
+            $this->pdo->query($installSql);
+        }catch(\Exception $e){
+            $this->errorRedirection("Une erreur s'est produit pendant la création de la base de données");
+        }
     }
 
     private function errorRedirection($error){
