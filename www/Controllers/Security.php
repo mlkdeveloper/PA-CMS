@@ -59,6 +59,9 @@ class Security
                 $this->errorRedirection("Veuillez remplir tous les champs");
             }
 
+            if(!preg_match("/^[0-9]*$/", $dataArray[4])){
+                $this->errorRedirection("Le port n'est pas valide");
+            }
 
             return $dataArray;
         }
@@ -108,7 +111,7 @@ class Security
                     $this->errorRedirection("Les identifiants de connexion à la base de données sont incorrects");
                     die();
                 case 2002:
-                    $this->errorRedirection("L'adresse de la base de données est incorrecte");
+                    $this->errorRedirection("L'adresse de la base de données ou le port est incorrecte");
                     die();
                 default:
                     $this->errorRedirection("Une erreur s'est produite pendant la connexion à la base de données");
