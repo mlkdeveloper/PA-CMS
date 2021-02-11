@@ -1,10 +1,9 @@
 .alert {
     text-align: center;
     width: 80%;
-    margin: auto;
+    margin: 20px auto;
     border-radius: 15px;
     padding: 0.2rem 0;
-    margin-top: 20px;
     font-weight: bold;
     &--red{
         background-color: $light-red;
