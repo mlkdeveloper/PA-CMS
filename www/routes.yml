@@ -1,5 +1,5 @@
 /:
-  controller: Security
+  controller: Installation
   action: install
 
 /404:
@@ -49,5 +49,5 @@
   action: pages
 
 /start-install:
-  controller: Security
+  controller: Installation
   action: startInstall
