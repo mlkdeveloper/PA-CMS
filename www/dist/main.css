@@ -611,7 +611,7 @@ p {
 
 .alert {
   text-align: center;
-  width: 80%;
+  width: 100%;
   margin: 20px auto;
   border-radius: 15px;
   padding: 0.2rem 0;
