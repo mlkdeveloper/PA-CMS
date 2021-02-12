@@ -1,6 +1,6 @@
 /:
-  controller: Main
-  action: default
+  controller: Security
+  action: install
 
 /404:
   controller: Main
@@ -51,3 +51,7 @@
 /admin/publisher:
   controller: Publisher
   action: publisher
+
+/admin/check-review:
+  controller: Reviews
+  action: checkReviews

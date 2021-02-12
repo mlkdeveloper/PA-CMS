@@ -3,3 +3,5 @@ site
 server
 .idea
 docker-compose.yml
+www/webpack
+.DS_Store
