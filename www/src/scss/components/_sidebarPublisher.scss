@@ -1,0 +1,29 @@
+#bodyPublisher{
+  background-color: #FFFFFF;
+}
+
+.sidenavPublisher {
+  height: 100vh;
+  position: fixed;
+  width: 200px;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background: #F1F4F9;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.headerNavbar {
+  position: relative;
+  padding: 10px;
+  margin: 0;
+  background-color: red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  border-bottom: solid 1px black;
+}

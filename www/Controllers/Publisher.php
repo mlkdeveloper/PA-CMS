@@ -9,7 +9,7 @@ class Publisher
 
 
     public function publisherAction(){
-        $view = new View("pages.back", "publisher");
+        $view = new View("publisher.back", "publisher");
         $view->assign("title", "Editeur");
     }
 }
