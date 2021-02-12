@@ -237,8 +237,8 @@
   }
 
   .col-lg-8 {
-    flex-basis: 66.6666666667%;
-    width: 66.6666666667%;
+    flex-basis: 66.66666667%;
+    width: 66.66666667%;
     padding: 10px 10px;
   }
 
@@ -359,7 +359,7 @@ p {
 }
 
 .button--black:hover {
-  background-color: #1a1a1a;
+  background-color: #1a1919;
 }
 
 .button--blue {
@@ -572,12 +572,12 @@ p {
   width: auto;
   display: inline-block;
   font-family: "Montserrat", sans-serif;
-  height: 2.1875rem;
-  padding: 1em;
+  padding: 0.5em 0.7em;
 }
 
 .input--textarea {
-  height: 133.76px;
+  height: 8rem;
+  resize: none;
 }
 
 .label {
