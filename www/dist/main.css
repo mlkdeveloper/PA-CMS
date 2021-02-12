@@ -614,7 +614,8 @@ p {
 }
 
 .sidenavPublisher {
-  height: 100vh;
+  height: 89vh;
+  margin-top: 11vh;
   position: fixed;
   width: 200px;
   z-index: 1;
@@ -637,5 +638,18 @@ p {
   justify-content: center;
   width: auto;
   border-bottom: solid 1px black;
+}
+
+#selectCol {
+  background-color: rgba(255, 255, 255, 0.05);
+  text-align: center;
+}
+
+#selectCol img {
+  cursor: pointer;
+}
+
+#selectCol .row:first-child {
+  padding-bottom: 40px;
 }
 

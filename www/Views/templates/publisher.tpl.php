@@ -27,7 +27,36 @@
     <main>
         <!-- afficher la vue -->
         <?php include $this->view ?>
-
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-8 col-sm-8 col center-margin">
+                    <div class="jumbotron" id="selectCol">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col">
+                                <img src="../../src/img/col-12.svg" alt="col-12">
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col">
+                                <img src="../../src/img/col-6.svg" alt="col-6">
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col">
+                                <img src="../../src/img/col-4.svg" alt="col-4">
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col">
+                                <img src="../../src/img/col-3.svg" alt="col-3">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col">
+                                <img src="../../src/img/col-3-9.svg" alt="col-3-9">
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col">
+                                <img src="../../src/img/col-9-3.svg" alt="col-9-3">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 </div>
 <script src="../../public/js/dropdowns.js"></script>
