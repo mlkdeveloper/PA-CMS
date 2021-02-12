@@ -5,11 +5,11 @@
   width: auto;
   display: inline-block;
   font-family: $font1;
-  height: rem(35);
-  padding: 1em;
+  padding: 0.5em 0.7em;
 
   &--textarea {
-    height: 133.76px;
+    height: rem(128);
+    resize: none;
   }
 }
 
