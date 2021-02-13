@@ -13,7 +13,7 @@
 ?>
 
 <section>
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         <section>
             <div class="container">
                 <div class="row">
@@ -47,8 +47,13 @@
                         <div class="jumbotron" style="margin-top:5%;">
                             <div class="align">
                                 <h2>Image</h2>
-                                <i class="fas fa-plus"></i>
+                                <i class="fas fa-plus" onclick="triggerCategoryAdd()"></i>
+                                <input style="display: none;" id="categoryUpload" type="file" accept="image/*" name="othersPictures" class="input" onchange="displayImageCategory(this)">
                             </div>
+
+                          <div style="display: flex; justify-content: center">
+                             <img src="../images/cross-add.svg" id="categoryImage" style="width: 50%;">
+                          </div>
                         </div>
                     </div>
 
@@ -93,4 +98,5 @@
 </section>
 
 <script src="../public/js/datatable.js"></script>
+<script src="../public/js/category.js"></script>
 
