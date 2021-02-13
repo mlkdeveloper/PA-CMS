@@ -34,24 +34,24 @@
                     <div class="jumbotron" id="selectCol">
                         <div class="row">
                             <div class="col-lg-3 col-md-3 col-sm-3 col">
-                                <img src="../../src/img/col-12.svg" alt="col-12">
+                                <img src="../../src/img/col-12.svg" alt="col-12" onclick="addBloc(12)">
                             </div>
                             <div class="col-lg-3 col-md-3 col-sm-3 col">
-                                <img src="../../src/img/col-6.svg" alt="col-6">
+                                <img src="../../src/img/col-6.svg" alt="col-6" onclick="addBloc(6)">
                             </div>
                             <div class="col-lg-3 col-md-3 col-sm-3 col">
-                                <img src="../../src/img/col-4.svg" alt="col-4">
+                                <img src="../../src/img/col-4.svg" alt="col-4" onclick="addBloc(4)">
                             </div>
                             <div class="col-lg-3 col-md-3 col-sm-3 col">
-                                <img src="../../src/img/col-3.svg" alt="col-3">
+                                <img src="../../src/img/col-3.svg" alt="col-3" onclick="addBloc(3)">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-3 col-md-3 col-sm-3 col">
-                                <img src="../../src/img/col-3-9.svg" alt="col-3-9">
+                                <img src="../../src/img/col-3-9.svg" alt="col-3-9" onclick="addBloc(39)">
                             </div>
                             <div class="col-lg-3 col-md-3 col-sm-3 col">
-                                <img src="../../src/img/col-9-3.svg" alt="col-9-3">
+                                <img src="../../src/img/col-9-3.svg" alt="col-9-3" onclick="addBloc(93)">
                             </div>
                         </div>
                     </div>

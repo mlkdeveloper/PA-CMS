@@ -1,0 +1,3 @@
+function addBloc(col){
+
+}
