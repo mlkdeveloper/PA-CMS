@@ -11,8 +11,8 @@ class Category extends Database
     protected $name;
     protected $description;
     protected $status;
-    protected $image;
-    protected $isDeleted = 0;
+    protected $picPath;
+
 
 
     public function __construct(){
@@ -86,35 +86,49 @@ class Category extends Database
     /**
      * @return mixed
      */
-    public function getImage()
+    public function getPicPath()
     {
-        return $this->image;
+        return $this->picPath;
     }
 
     /**
-     * @param mixed $image
+     * @param mixed $picPath
      */
-    public function setImage($image)
+    public function setPicPath($picPath)
     {
-        $this->image = $image;
+        $this->picPath = $picPath;
     }
 
-    /**
-     * @return int
-     */
-    public function getIsDeleted()
-    {
-        return $this->isDeleted;
-    }
 
-    /**
-     * @param int $isDeleted
-     */
-    public function setIsDeleted($isDeleted)
-    {
-        $this->isDeleted = $isDeleted;
-    }
 
+
+
+    public function formBuilderRegister(){
+
+        return [
+
+            "inputs"=>[
+
+                "name"=>[
+                    "minLength"=>2,
+                    "maxLength"=>50,
+                    "error"=>"Le nom de la catégorie doit être compris entre 2 et 50 caractères."
+                ],
+                "description"=>[
+                    "minLength"=>0,
+                    "maxLength"=>255,
+                    "error"=>"La description doit être inférieur à 255 caractères."
+                ],
+
+                "status"=>[
+                    "status"=> [0,1],
+                    "error"=>"Erreur sur le statut."
+                ]
+            ]
+
+        ];
+
+    }
 
 
 

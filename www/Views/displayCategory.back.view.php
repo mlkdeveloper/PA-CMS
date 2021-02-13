@@ -3,7 +3,7 @@
     <div class="align">
         <h1>Liste des catégories</h1>
         <button class="button button--blue">
-            <a href="/admin/newCategory">Ajouter une catégorie</a>
+            <a href="/admin/nouvelle-categorie">Ajouter une catégorie</a>
         </button>
     </div>
     <div class="row">
