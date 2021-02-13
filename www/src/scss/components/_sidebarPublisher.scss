@@ -38,7 +38,14 @@
   cursor: pointer;
 }
 
-#selectCol .row:first-child{
-  padding-bottom: 40px;
+#selectCol img:hover {
+  transform: scale(1.3);
+  transition: all 0.5s;
 }
+
+#selectCol .row:first-child{
+  margin-bottom: 40px;
+}
+
+
 
