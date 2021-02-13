@@ -16,14 +16,13 @@ new ConstantManager();
 //On récupère le slug dans la super globale SERVER
 //On le transforme en minuscule
 $slug = mb_strtolower($_SERVER["REQUEST_URI"]);
+$slug = explode("?", $slug);
 
 //Instance de la classe router (dossier CORE) avec en paramètre la slug
-$route = new Router($slug); 
+$route = new Router($slug[0]);
 //On récupère le controller et l'action correspond au slug
 $c = $route->getController();
 $a = $route->getAction();
-
-
 
 
 //vérification que le fichier du controller existe

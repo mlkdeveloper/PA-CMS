@@ -1,6 +1,6 @@
 /:
-  controller: Main
-  action: default
+  controller: Security
+  action: install
 
 /404:
   controller: Main
@@ -14,7 +14,6 @@
   controller: User
   action: add
 
-
 /s-inscrire:
   controller: User
   action: register
@@ -22,7 +21,6 @@
 /afficher-un-utilisateur:
   controller: User
   action: show
-
 
 /afficher-les-utilisateurs:
   controller: User
@@ -57,4 +55,9 @@
 /admin/pages:
   controller: Pages
   action: pages
+
+
+/admin/check-review:
+  controller: Reviews
+  action: checkReviews
 
