@@ -609,3 +609,30 @@ p {
   flex-direction: column;
 }
 
+.alert {
+  text-align: center;
+  width: 100%;
+  margin: 20px auto;
+  border-radius: 15px;
+  padding: 0.2rem 0;
+  font-weight: bold;
+}
+
+.alert--red {
+  background-color: #f8d7da;
+  color: #842029;
+}
+
+.alert--green {
+  background-color: #d1e7dd;
+  color: #0f5132;
+}
+
+@media only screen and (max-width: 1000px) {
+  .alert {
+    width: 100%;
+    border-radius: 0;
+    margin-top: 0;
+  }
+}
+
