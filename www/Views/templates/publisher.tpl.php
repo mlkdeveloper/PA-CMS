@@ -37,24 +37,24 @@
                             <div class="jumbotron blocEdit" id="selectCol">
                                 <div class="row">
                                     <div class="col-lg-3 col-md-3 col-sm-3 col">
-                                        <img src="../../images/publisher/col-12.svg" alt="col-12" onclick="addBloc(12)">
+                                        <img src="../../images/publisher/col-12.svg" alt="col-12" onclick="addBlock(12)">
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3 col">
-                                        <img src="../../images/publisher/col-6.svg" alt="col-6" onclick="addBloc(6)">
+                                        <img src="../../images/publisher/col-6.svg" alt="col-6" onclick="addBlock(6)">
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3 col">
-                                        <img src="../../images/publisher/col-4.svg" alt="col-4" onclick="addBloc(4)">
+                                        <img src="../../images/publisher/col-4.svg" alt="col-4" onclick="addBlock(4)">
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3 col">
-                                        <img src="../../images/publisher/col-3.svg" alt="col-3" onclick="addBloc(3)">
+                                        <img src="../../images/publisher/col-3.svg" alt="col-3" onclick="addBlock(3)">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-3 col-md-3 col-sm-3 col">
-                                        <img src="../../images/publisher/col-3-9.svg" alt="col-3-9" onclick="addBloc(39)">
+                                        <img src="../../images/publisher/col-3-9.svg" alt="col-3-9" onclick="addBlock(39)">
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3 col">
-                                        <img src="../../images/publisher/col-9-3.svg" alt="col-9-3" onclick="addBloc(93)">
+                                        <img src="../../images/publisher/col-9-3.svg" alt="col-9-3" onclick="addBlock(93)">
                                     </div>
                                 </div>
                             </div>
