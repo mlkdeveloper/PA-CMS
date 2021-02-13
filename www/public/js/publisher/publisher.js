@@ -1,48 +1,66 @@
+let counterId = 1;
+const prefixId = "block_";
+let html;
+
 function addBloc(col) {
-    var html = '<section class="container">' +
-        '<div class="row">';
 
     if (col > 12) {
         switch (col){
+
             case 39:
-                html += '<div class="col-lg-3 col-md-3 col-sm-12 col">' +
-                        '<div class="jumbotron blocEdit">' +
-                            '<h1>Test</h1>' +
-                        '</div>' +
-                    '</div>' +
-                    '<div class="col-lg-9 col-md-9 col-sm-12 col">' +
-                        '<div class="jumbotron blocEdit">' +
-                            '<h1>Test</h1>' +
-                        '</div>' +
-                    '</div>';
+                html = '<section class="container" id="'+prefixId+counterId+'">' +
+                    '<div class="row">' +
+                        '<div class="col-lg-3 col-md-3 col-sm-12 col">' +
+                            '<div class="jumbotron blocEdit">' +
+                                '<img src="../../../images/cross-add.svg" class="cross-add" alt="cross-add">' +
+                            '</div>' +
+                        '</div>'
+                        html += '<div class="col-lg-9 col-md-9 col-sm-12 col">' +
+                            '<div class="jumbotron blocEdit">' +
+                                '<img src="../../../images/cross-add.svg" class="cross-add" alt="cross-add">' +
+                            '</div>' +
+                        '</div>';
+                    html +='</div>' +
+                '</section>';
+                counterId++;
                 break;
             case 93:
-                html += '<div class="col-lg-9 col-md-9 col-sm-12 col">' +
-                        '<div class="jumbotron blocEdit">' +
-                            '<h1>Test</h1>' +
-                        '</div>' +
-                    '</div>' +
-                    '<div class="col-lg-3 col-md-3 col-sm-12 col">' +
-                        '<div class="jumbotron blocEdit">' +
-                            '<h1>Test</h1>' +
-                        '</div>' +
-                    '</div>';
+                html = '<section class="container" id="'+prefixId+counterId+'">' +
+                    '<div class="row">' +
+                        '<div class="col-lg-9 col-md-9 col-sm-12 col">' +
+                            '<div class="jumbotron blocEdit">' +
+                            '<img src="../../../images/cross-add.svg" class="cross-add" alt="cross-add">' +
+                        '   </div>' +
+                        '</div>'
+                        html += '<div class="col-lg-3 col-md-3 col-sm-12 col">' +
+                            '<div class="jumbotron blocEdit">' +
+                                '<img src="../../../images/cross-add.svg" class="cross-add" alt="cross-add">' +
+                            '</div>' +
+                        '</div>';
+                    html += '</div>' +
+                '</section>';
+                counterId++;
                 break;
         }
+
     } else {
 
+        html = '<section class="container" id="'+prefixId+counterId+'">' +
+            '<div class="row">';
+
         for (var i = 0; i < 12; i += col) {
+
             html += '<div class="col-lg-' + col + ' col-md-' + col + ' col-sm-12 col">' +
-                    '<div class="jumbotron blocEdit">' +
-                        '<h1>Test</h1>' +
-                    '</div>' +
-                '</div>';
+                '<div class="jumbotron blocEdit">' +
+                    '<img src="../../../images/cross-add.svg" class="cross-add" alt="cross-add">' +
+                '</div>' +
+            '</div>';
         }
 
+        html += '</div>' +
+            '</section>';
+        counterId++;
     }
-
-    html += '</div>' +
-        '</section>';
 
     $('#createBloc').before(html);
 }

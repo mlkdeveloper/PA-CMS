@@ -644,6 +644,10 @@ p {
   text-align: center;
 }
 
+.cross-add {
+  width: 4rem;
+}
+
 #selectCol img {
   cursor: pointer;
 }
