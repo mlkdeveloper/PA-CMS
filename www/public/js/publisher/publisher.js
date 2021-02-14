@@ -10,15 +10,15 @@ function addBlock(colNumber) {
         switch (colNumber){
 
             case 39:
-                html = '<section class="container block" id="'+prefixIdBlock+counterIdBlock+'">' +
+                html = '<section class="container" id="'+prefixIdBlock+counterIdBlock+'">' +
                     '<div class="row">' +
-                        '<div class="col-lg-3 col-md-3 col-sm-12 col colBlock" id="'+prefixIdCol+counterIdCol+'">' +
+                        '<div class="col-lg-3 col-md-3 col-sm-12 col colBlock" id="'+prefixIdCol+counterIdCol+'" onclick="selectCol(this)">' +
                             '<div class="jumbotron containerJumbo">' +
                                 '<img src="../../../images/cross-add.svg" class="cross-add" alt="cross-add">' +
                             '</div>' +
                         '</div>'
                         counterIdCol++;
-                        html += '<div class="col-lg-9 col-md-9 col-sm-12 col colBlock" id="'+prefixIdCol+counterIdCol+'">' +
+                        html += '<div class="col-lg-9 col-md-9 col-sm-12 col colBlock" id="'+prefixIdCol+counterIdCol+'" onclick="selectCol(this)">' +
                             '<div class="jumbotron containerJumbo">' +
                                 '<img src="../../../images/cross-add.svg" class="cross-add" alt="cross-add">' +
                             '</div>' +
@@ -29,15 +29,15 @@ function addBlock(colNumber) {
                 counterIdBlock++;
                 break;
             case 93:
-                html = '<section class="container block" id="'+prefixIdBlock+counterIdBlock+'">' +
+                html = '<section class="container" id="'+prefixIdBlock+counterIdBlock+'">' +
                     '<div class="row">' +
-                        '<div class="col-lg-9 col-md-9 col-sm-12 col colBlock" id="'+prefixIdCol+counterIdCol+'">' +
+                        '<div class="col-lg-9 col-md-9 col-sm-12 col colBlock" id="'+prefixIdCol+counterIdCol+'" onclick="selectCol(this)">' +
                             '<div class="jumbotron containerJumbo">' +
                             '<img src="../../../images/cross-add.svg" class="cross-add" alt="cross-add">' +
                         '   </div>' +
                         '</div>'
                         counterIdCol++;
-                        html += '<div class="col-lg-3 col-md-3 col-sm-12 col colBlock" id="'+prefixIdCol+counterIdCol+'">' +
+                        html += '<div class="col-lg-3 col-md-3 col-sm-12 col colBlock" id="'+prefixIdCol+counterIdCol+'" onclick="selectCol(this)">' +
                             '<div class="jumbotron containerJumbo">' +
                                 '<img src="../../../images/cross-add.svg" class="cross-add" alt="cross-add">' +
                             '</div>' +
@@ -51,7 +51,7 @@ function addBlock(colNumber) {
 
     } else {
 
-        html = '<section class="container block" id="'+prefixIdBlock+counterIdBlock+'">' +
+        html = '<section class="container" id="'+prefixIdBlock+counterIdBlock+'">' +
             '<div class="row">';
 
         for (var i = 0; i < 12; i += colNumber) {
@@ -69,12 +69,13 @@ function addBlock(colNumber) {
         counterIdBlock++;
     }
 
-    $("#createBloc").before(html);
+    $("#containerPublisher").append(html);
 }
 
 
 function selectCol(col){
-    $("section").children().children().children().removeClass("activeCol");
+    $(".activeCol").removeClass("activeCol");
     $("#"+col.id).children().addClass("activeCol");
+    $("#menuObject").css("display", "block");
 }
 

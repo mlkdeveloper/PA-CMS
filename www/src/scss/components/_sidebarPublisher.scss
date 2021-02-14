@@ -2,6 +2,27 @@
   background-color: #FFFFFF;
 }
 
+#headerMenu{
+  padding: 20px 0 150px 0;
+}
+
+#hamburger{
+  width: 2.2rem;
+}
+
+.sidenavPublisher img{
+  width: 3rem;
+  cursor: pointer;
+}
+
+#menuObject{
+  display: none;
+}
+
+#menuObject .row{
+  padding-bottom: 30px;
+}
+
 .sidenavPublisher {
   height: 100vh;
   position: fixed;
@@ -13,7 +34,7 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  text-align: center;
 }
 
 .headerNavbar {
@@ -50,8 +71,10 @@
   margin-bottom: 40px;
 }
 
-.block{}
-
 .activeCol{
   border: solid 3px $dark-blue;
+}
+
+.colBlock:hover{
+  cursor: pointer;
 }

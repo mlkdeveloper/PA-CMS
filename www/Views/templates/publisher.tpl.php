@@ -7,27 +7,51 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <script src="../../src/js/jquery-3.5.1.min.js"></script>
+        <script src="../../public/js/publisher/publisher.js"></script>
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
         <link rel="stylesheet" href="../../dist/main.css">
     </head>
 
     <body id="bodyPublisher">
-        <aside>
-            <nav class="sidenavPublisher">
+        <main>
+            <aside>
+                <nav class="sidenavPublisher">
+                    <div class="row align" id="headerMenu">
+                        <div class="col-lg-6 col-md-6 col-sm-12 col">
+                            <a href="/admin/pages"><button class="button button--blue">Retour</button></a>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 col">
+                            <img src="../.././images/hamburger.svg" alt="hamburger" id="hamburger">
+                        </div>
+                    </div>
 
-            </nav>
-        </aside>
+                    <div id="menuObject">
+                        <div class="row align">
+                            <div class="col-lg-6 col-md-6 col-sm-12 col">
+                                <img src="../.././images/publisher/icon-image.svg" alt="hamburger">
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 col">
+                                <img src="../.././images/publisher/icon-list.svg" alt="hamburger">
+                            </div>
+                        </div>
+                        <div class="row align">
+                            <div class="col-lg-6 col-md-6 col-sm-12 col">
+                                <img src="../.././images/publisher/icon-text.svg" alt="hamburger">
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </aside>
 
-        <div class="container-body">
-            <header>
-                <div class="headerNavbar">
-                    <h1>La navbar</h1>
-                </div>
-            </header>
+            <div class="container-body">
+                <header>
+                    <div class="headerNavbar">
+                        <h1>La navbar</h1>
+                    </div>
+                </header>
 
-            <main>
-
+                <div id="containerPublisher"></div>
                 <?php include $this->view ?>
 
                 <section class="container" id="createBloc">
@@ -60,9 +84,8 @@
                         </div>
                     </div>
                 </section>
-            </main>
-        </div>
+            </div>
 
-        <script src="../../public/js/publisher/publisher.js"></script>
+        </main>
     </body>
 </html>
