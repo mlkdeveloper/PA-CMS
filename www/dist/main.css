@@ -347,6 +347,7 @@ p {
 .button--success {
   background-color: #31aa66;
   border-color: #31aa66;
+  color: #FFF;
 }
 
 .button--success:hover {

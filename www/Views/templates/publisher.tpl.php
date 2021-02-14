@@ -21,7 +21,7 @@
                 <nav class="sidenavPublisher">
                     <div class="row align" id="headerMenu">
                         <div class="col-lg-6 col-md-6 col-sm-12 col">
-                            <a href="/admin/pages"><button class="button button--blue">Retour</button></a>
+                            <a href="/admin/pages" class="button button--blue">Retour</a>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12 col">
                             <img src="../.././images/hamburger.svg" alt="hamburger" id="hamburger">
@@ -88,7 +88,10 @@
                 </section>
 
                 <div id="modal">
-                    <div id="modal-content"></div>
+                    <div id="modal-content">
+                        <button onclick="test()" class="button button--alert">Annuler</button>
+                        <button onclick="test()" class="button button--success">Enregistrer</button>
+                    </div>
                 </div>
 
             </div>

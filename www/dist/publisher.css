@@ -15,6 +15,10 @@
     cursor: pointer;
 }
 
+a{
+    text-decoration: none;
+}
+
 #menuObject{
     display: none;
 }
@@ -95,7 +99,18 @@
 #modal-content {
     background-color: white;
     margin: auto;
-    padding: 20px;
+    padding: 20px 20px 50px 20px;
     border: 1px solid #888888;
-    width: 80%;
+    width: fit-content;
 }
+
+#formTiny{
+    width: 1000px;
+    margin-bottom: 30px;
+}
+
+#modal-content button{
+    float: right;
+}
+
+

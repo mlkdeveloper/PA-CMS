@@ -5,19 +5,17 @@ const prefixIdCol = "col_";
 let html;
 
 
-
-
 $(document).ready(function(){
     $("#icon-text").click( function (){
 
-        let content= '<form method="post">' +
+        let content= '<form method="post" class="center-margin" id="formTiny">' +
             '<textarea id="tiny" name="tiny"></textarea>' +
         '</form>';
 
-        $("#modal-content").append(content);
+        $("#modal-content").prepend(content);
 
         tinymce.init({
-            selector: '#tiny'
+            selector: '#tiny',
         });
 
         $("#modal").css("display", "block");
@@ -94,12 +92,14 @@ function addBlock(colNumber) {
     $("#containerPublisher").append(html);
 }
 
-
 function selectCol(col){
     $(".activeCol").removeClass("activeCol");
     $("#"+col.id).children().addClass("activeCol");
     $("#menuObject").css("display", "block");
 }
 
+function getTiny(){
+    console.log(tinyMCE.get('tiny').getContent());
+}
 
 
