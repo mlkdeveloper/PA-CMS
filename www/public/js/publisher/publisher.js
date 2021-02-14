@@ -74,20 +74,7 @@ function addBlock(colNumber) {
 
 
 function selectCol(col){
+    $("section").children().children().children().removeClass("activeCol");
     $("#"+col.id).children().addClass("activeCol");
-    $("#"+col.id).siblings().removeClass('activeCol');
 }
-
-
-$ (function(){$('main').on('click', 'div', function(e){
-    // e.preventDefault();
-    // console.log($(this).attr('class'));
-    // if($(this).attr('class') == "col-lg-3 col-md-3 col-sm-12 col colBlock") {
-    //     $(this).addClass('active');
-    //     $(this).parent().siblings().removeClass('active');
-    // }
-    // $(this).parent('div').addClass('active');
-    // console.log($(this).parent());
-})
-})
 
