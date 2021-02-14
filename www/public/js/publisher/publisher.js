@@ -4,6 +4,28 @@ const prefixIdBlock = "block_";
 const prefixIdCol = "col_";
 let html;
 
+
+
+
+$(document).ready(function(){
+    $("#icon-text").click( function (){
+
+        let content= '<form method="post">' +
+            '<textarea id="tiny" name="tiny"></textarea>' +
+        '</form>';
+
+        $("#modal-content").append(content);
+
+        tinymce.init({
+            selector: '#tiny'
+        });
+
+        $("#modal").css("display", "block");
+    });
+});
+
+
+
 function addBlock(colNumber) {
 
     if (colNumber > 12) {
@@ -78,4 +100,6 @@ function selectCol(col){
     $("#"+col.id).children().addClass("activeCol");
     $("#menuObject").css("display", "block");
 }
+
+
 

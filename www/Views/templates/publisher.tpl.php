@@ -7,6 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <script src="../../src/js/jquery-3.5.1.min.js"></script>
+        <script src="https://cdn.tiny.cloud/1/hhyltwzrx7o3enydpiz3vfnppsdw0hg6iyjr8ruqxp8gfq9i/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
         <script src="../../public/js/publisher/publisher.js"></script>
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
@@ -29,15 +30,15 @@
                     <div id="menuObject">
                         <div class="row align">
                             <div class="col-lg-6 col-md-6 col-sm-12 col">
-                                <img src="../.././images/publisher/icon-image.svg" alt="hamburger">
+                                <img src="../.././images/publisher/icon-image.svg" alt="icon-image">
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 col">
-                                <img src="../.././images/publisher/icon-list.svg" alt="hamburger">
+                                <img src="../.././images/publisher/icon-list.svg" alt="icon-list">
                             </div>
                         </div>
                         <div class="row align">
                             <div class="col-lg-6 col-md-6 col-sm-12 col">
-                                <img src="../.././images/publisher/icon-text.svg" alt="hamburger">
+                                <img src="../.././images/publisher/icon-text.svg" alt="icon-text" id="icon-text">
                             </div>
                         </div>
                     </div>
@@ -84,8 +85,12 @@
                         </div>
                     </div>
                 </section>
-            </div>
 
+                <div id="modal">
+                    <div id="modal-content"></div>
+                </div>
+
+            </div>
         </main>
     </body>
 </html>
