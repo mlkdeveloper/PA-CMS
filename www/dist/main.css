@@ -639,7 +639,7 @@ p {
   border-bottom: solid 1px black;
 }
 
-.blocEdit {
+.containerJumbo {
   background-color: #f9f9fa;
   text-align: center;
 }
@@ -659,5 +659,9 @@ p {
 
 #selectCol .row:first-child {
   margin-bottom: 40px;
+}
+
+.activeCol {
+  border: solid 3px #2D9CDB;
 }
 

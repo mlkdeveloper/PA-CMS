@@ -28,7 +28,7 @@
   border-bottom: solid 1px black;
 }
 
-.blocEdit{
+.containerJumbo{
   background-color: #f9f9fa;
   text-align: center;
 }
@@ -50,4 +50,8 @@
   margin-bottom: 40px;
 }
 
+.block{}
 
+.activeCol{
+  border: solid 3px $dark-blue;
+}

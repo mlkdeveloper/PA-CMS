@@ -7,7 +7,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <script src="../../src/js/jquery-3.5.1.min.js"></script>
-        <script src="../../public/js/publisher/publisher.js"></script>
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
         <link rel="stylesheet" href="../../dist/main.css">
@@ -34,7 +33,7 @@
                 <section class="container" id="createBloc">
                     <div class="row">
                         <div class="col-lg-8 col-md-8 col-sm-8 col center-margin">
-                            <div class="jumbotron blocEdit" id="selectCol">
+                            <div class="jumbotron containerJumbo" id="selectCol">
                                 <div class="row">
                                     <div class="col-lg-3 col-md-3 col-sm-3 col">
                                         <img src="../../images/publisher/col-12.svg" alt="col-12" onclick="addBlock(12)">
@@ -63,5 +62,7 @@
                 </section>
             </main>
         </div>
+
+        <script src="../../public/js/publisher/publisher.js"></script>
     </body>
 </html>
