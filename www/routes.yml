@@ -49,3 +49,11 @@
 /admin/check-review:
   controller: Reviews
   action: checkReviews
+
+/admin/orders:
+  controller: Orders
+  action: showOrders
+
+/admin/info-order:
+  controller: Orders
+  action: infoOrder
