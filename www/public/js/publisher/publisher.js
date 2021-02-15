@@ -17,6 +17,10 @@ $(document).ready(function(){
     $("#icon-text").on( "click", function() {
         modalTiny();
     });
+
+    $("#containerPublisher").bind("DOMSubtreeModified", function() {
+        $("#savePage").css("display", "block");
+    });
 });
 
 

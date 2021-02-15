@@ -46,6 +46,8 @@
                 </nav>
             </aside>
 
+            <button id="savePage" class="button button--success">Enregistrer</button>
+
             <div class="container-body">
                 <header>
                     <div class="headerNavbar">
@@ -94,7 +96,7 @@
                         </form>
                         <div class="buttonModal">
                             <button onclick="closeModal()" class="button button--alert">Annuler</button>
-                            <button onclick="getTiny()" class="button button--success">Enregistrer</button>
+                            <button onclick="getTiny()" class="button button--success">Valider</button>
                         </div>
                     </div>
                 </div>
