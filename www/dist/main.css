@@ -347,6 +347,7 @@ p {
 .button--success {
   background-color: #31aa66;
   border-color: #31aa66;
+  color: #FFF;
 }
 
 .button--success:hover {
@@ -572,12 +573,12 @@ p {
   width: auto;
   display: inline-block;
   font-family: "Montserrat", sans-serif;
-  height: 2.1875rem;
-  padding: 1em;
+  padding: 0.5em 0.7em;
 }
 
 .input--textarea {
-  height: 133.76px;
+  height: 8rem;
+  resize: none;
 }
 
 .label {
@@ -607,5 +608,32 @@ p {
 .form_align--top {
   display: flex;
   flex-direction: column;
+}
+
+.alert {
+  text-align: center;
+  width: 100%;
+  margin: 20px auto;
+  border-radius: 15px;
+  padding: 0.2rem 0;
+  font-weight: bold;
+}
+
+.alert--red {
+  background-color: #f8d7da;
+  color: #842029;
+}
+
+.alert--green {
+  background-color: #d1e7dd;
+  color: #0f5132;
+}
+
+@media only screen and (max-width: 1000px) {
+  .alert {
+    width: 100%;
+    border-radius: 0;
+    margin-top: 0;
+  }
 }
 

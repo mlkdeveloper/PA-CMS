@@ -17,6 +17,7 @@
 	&--success{
 		background-color: $green;
 		border-color: $green;
+		color: $white;
 		&:hover{
 			background-color: lighten($green, 10%);
 		}
