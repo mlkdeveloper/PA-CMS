@@ -87,10 +87,15 @@
                     </div>
                 </section>
 
-                <div id="modal">
-                    <div id="modal-content">
-                        <button onclick="test()" class="button button--alert">Annuler</button>
-                        <button onclick="test()" class="button button--success">Enregistrer</button>
+                <div class="modal">
+                    <div class="modal-content">
+                        <form method="post" class="center-margin" id="formTiny">
+                            <textarea id="tiny" name="tiny"></textarea>
+                        </form>
+                        <div class="buttonModal">
+                            <button onclick="closeModal()" class="button button--alert">Annuler</button>
+                            <button onclick="getTiny()" class="button button--success">Enregistrer</button>
+                        </div>
                     </div>
                 </div>
 

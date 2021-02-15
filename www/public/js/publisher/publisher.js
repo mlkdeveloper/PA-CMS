@@ -3,22 +3,20 @@ let counterIdCol = 1;
 const prefixIdBlock = "block_";
 const prefixIdCol = "col_";
 let html;
+let idCol;
 
+
+tinymce.init({
+    selector: '#tiny',
+});
 
 $(document).ready(function(){
-    $("#icon-text").click( function (){
+    $("#icon-text").on( "click", function() {
 
-        let content= '<form method="post" class="center-margin" id="formTiny">' +
-            '<textarea id="tiny" name="tiny"></textarea>' +
-        '</form>';
-
-        $("#modal-content").prepend(content);
-
-        tinymce.init({
-            selector: '#tiny',
-        });
-
-        $("#modal").css("display", "block");
+        $("#formTiny").css("display", "block");
+        $(".button--alert").css("onclick", "closeModal()");
+        $(".button--success").css("onclick", "getTiny()");
+        $(".modal").css("display", "block");
     });
 });
 
@@ -93,13 +91,19 @@ function addBlock(colNumber) {
 }
 
 function selectCol(col){
+    idCol = col.id;
     $(".activeCol").removeClass("activeCol");
     $("#"+col.id).children().addClass("activeCol");
     $("#menuObject").css("display", "block");
 }
 
 function getTiny(){
-    console.log(tinyMCE.get('tiny').getContent());
+    $("#"+idCol).html(tinyMCE.get('tiny').getContent());
+    $(".modal").css("display", "none");
+}
+
+function closeModal(){
+    $(".modal").css("display", "none");
 }
 
 
