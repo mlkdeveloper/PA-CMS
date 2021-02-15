@@ -3,7 +3,7 @@
         <h1 class="centered">Détails sur la commande</h1>
 
         <div class="row">
-            <div class="profil-picture col-md-3">
+            <div class="profil-picture col-md-4">
                 <img src="../public/img/profil-icone.jpg"/>
             </div>
             <div class="col-md-4 jumbotron">
