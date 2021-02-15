@@ -99,10 +99,6 @@ class Category extends Database
         $this->picPath = $picPath;
     }
 
-
-
-
-
     public function formBuilderRegister(){
 
         return [
@@ -129,7 +125,5 @@ class Category extends Database
         ];
 
     }
-
-
 
 }

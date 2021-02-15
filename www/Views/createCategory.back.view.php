@@ -1,17 +1,25 @@
+<?php
+
+if (isset($errors)){
+
+    echo "<div class='container'>";
+    echo "<div class='alert alert--red'>";
+
+    foreach($errors as $error){
+        echo $error . "<br>";
+    }
+
+    echo "</div>";
+    echo "</div>";
+}
+?>
+
+
 <section>
     <div class="container">
         <h1>Créer une catégorie</h1>
     </div>
 </section>
-
-<?php
-
-    if (isset($errors)){
-
-        print_r($errors);
-    }
-?>
-
 <section>
     <form method="POST" enctype="multipart/form-data">
         <section>
@@ -20,12 +28,12 @@
                     <div class="col-lg-7 col-md-7 col-sm-12 col">
                         <div class=" jumbotron">
                             <div class="form_align--top">
-                                <label class="label">Titre</label>
+                                <label class="label">Titre *</label>
                                 <input class="input" type="text" name="name" placeholder="Casquettes" required="required">
                             </div>
 
                             <div class="form_align--top">
-                                <label class="label">Description</label>
+                                <label class="label">Description *</label>
                                 <textarea class="input input--textarea" type="text" name="description" placeholder="Nos casquettes..."></textarea>
                             </div>
 
@@ -36,7 +44,7 @@
                     <div class="col-lg-5 col-md-5 col-sm-12 col">
                         <div class="jumbotron">
                             <div class="form_align--top">
-                                <label class="label">Statut</label>
+                                <label class="label">Statut *</label>
                                 <select class="input" name="status">
                                     <option value="0">Actif</option>
                                     <option value="1">Inactif</option>
@@ -48,7 +56,7 @@
                             <div class="align">
                                 <h2>Image</h2>
                                 <i class="fas fa-plus" onclick="triggerCategoryAdd()"></i>
-                                <input style="display: none;" id="categoryUpload" type="file" accept="image/*" name="othersPictures" class="input" onchange="displayImageCategory(this)">
+                                <input style="display: none;" id="categoryUpload" type="file" accept="image/*" name="categoryImage" class="input" onchange="displayImageCategory(this)">
                             </div>
 
                           <div style="display: flex; justify-content: center">
