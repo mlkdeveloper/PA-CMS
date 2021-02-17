@@ -35,13 +35,11 @@ class FormValidator
 
         $errors = [];
 
-
         if( count($data) != count($config["inputs"]) ){
             $errors[] = "Tentative de HACK - Faille XSS";
-
         }else {
 
-            if($files["categoryImage"]["error"] === 0 ){
+            if($files["categoryImage"]["error"] !== 4 ){
                 $errors = self::checkImage($files);
             }
 
@@ -49,26 +47,23 @@ class FormValidator
 
                 if (!empty($configInputs["minLength"])
                     && is_numeric($configInputs["minLength"])
-                    && strlen($data[$name]) < $configInputs["minLength"]) {
+                    && strlen(trim($data[$name])) < $configInputs["minLength"]) {
 
                     $errors[] = $configInputs["error"];
-
                 }
+
                 if (!empty($configInputs["maxLength"])
                     && is_numeric($configInputs["maxLength"])
-                    && strlen($data[$name]) > $configInputs["maxLength"]) {
+                    && strlen(trim($data[$name])) > $configInputs["maxLength"]) {
 
                     $errors[] = $configInputs["error"];
-
                 }
 
                 if (!empty($configInputs["status"])
                     && !in_array($data[$name], $configInputs["status"])) {
 
                     $errors[] = $configInputs["error"];
-
                 }
-
             }
         }
         return $errors;
@@ -82,6 +77,11 @@ class FormValidator
         $fileSize = $files['categoryImage']['size'];
         $fileExtExploded = explode('.', $fileName);
         $fileExt = strtolower(end($fileExtExploded));
+        $error = $files['categoryImage']['error'];
+
+        if ($error !== 0){
+            $errors[] = "Erreur sur l'image téléchargé.";
+        }
 
         if(!in_array($fileExt,$acceptedImage)){
             $errors[] = "Extensions .png, .jpeg, .jpg seulement autorisées.";

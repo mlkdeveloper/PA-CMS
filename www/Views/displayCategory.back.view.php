@@ -25,12 +25,12 @@
                     <tr>
                         <td><?= $value['id'] ?></td>
                         <td><?= $value['name'] ?></td>
-                        <td><?= $value['name'] ?></td>
+                        <td><?= $value['status'] ?></td>
                         <td >
                             <div class="align">
                                 <button class="button button--black">
                                     <i class="fas fa-pencil-alt"></i>
-                                    <a href="#">Modifier</a>
+                                    <a href="/admin/modification-categorie?id=<?= $value['id'] ?>">Modifier</a>
                                 </button>
                                 <i class="fas fa-trash"></i>
                            </div>

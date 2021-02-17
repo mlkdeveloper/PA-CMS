@@ -26,39 +26,65 @@ class Category{
         $view = new View("createCategory.back", "back");
 
         $form = $category->formBuilderRegister();
+        $this->saveForm($view,$category,$form);
+
+        $view->assign("title", "Admin - catégorie");
+
+    }
+
+    public function updateCategoryAction(){
+
+        if (isset($_GET['id']) && !empty($_GET['id'])){
+
+            $category = new modelCategory();
+            $verifyId = $category->select("id")->where("id = :id")->setParams(["id" => $_GET['id']])->get();
+
+            if (empty($verifyId))
+                header("Location: /admin/display-category");
+
+            $view = new View("updateCategory.back", "back");
+
+            $form = $category->formBuilderRegister();
+            $this->saveForm($view,$category,$form,true);
+
+            $values = $category->select()->where("id = :id")->setParams(["id" => $_GET['id']])->get();
+            $view->assign("values", ...$values);
+            $view->assign("title", "Admin - catégorie");
+
+        }else{
+            header("Location: /admin/display-category");
+        }
+    }
+
+    public function saveForm($view,$category,$form,$formStatus = false){
 
         if(!empty($_POST) && !empty($_FILES)){
 
             unset($_POST["table_length"]);
-
-            $name = htmlspecialchars(trim($_POST['name']));
-            $description = htmlspecialchars(trim($_POST['description']));
-            $status = $_POST['status'];
-            $fields = [ "name" => $name, "description" => $description, "status" => $status];
-
-            $errors = FormValidator::checkFormCategory($form, $fields, $_FILES);
+            $errors = FormValidator::checkFormCategory($form, $_POST, $_FILES);
 
             if (empty($errors)){
 
-                $imageName = time() . '_' . $_FILES['categoryImage']['name'];
-                $target = './images/' . $imageName;
+                if ($formStatus)
+                    $category->setId($_GET['id']);
 
-                $category->setName($name);
-                $category->setDescription($description);
-                $category->setStatus($status);
-                $category->setPicPath($imageName);
+                $category->setName(htmlspecialchars(trim($_POST['name'])));
+                $category->setDescription(htmlspecialchars(trim($_POST['description'])));
+                $category->setStatus($_POST['status']);
 
-                if (move_uploaded_file($_FILES['categoryImage']['tmp_name'],$target)){
-                    $category->save();
+                if($_FILES["categoryImage"]["error"] === 0 ) {
+                    $imageName = time() . '_' . $_FILES['categoryImage']['name'];
+                    $target = './images/' . $imageName;
+                    move_uploaded_file($_FILES['categoryImage']['tmp_name'], $target);
+                    $category->setPicPath($imageName);
                 }
 
-            }else{
+                $category->save();
 
+            }else{
                 $view->assign("errors", $errors);
             }
         }
-        $view->assign("title", "Admin - catégorie");
-
     }
 
 }

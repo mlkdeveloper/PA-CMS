@@ -47,6 +47,10 @@
   controller: Category
   action: newCategory
 
+/admin/modification-categorie:
+  controller: Category
+  action: updateCategory
+
 /admin/nouveau-magasin:
   controller: Shop
   action: newShop

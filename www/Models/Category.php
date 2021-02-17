@@ -111,7 +111,6 @@ class Category extends Database
                     "error"=>"Le nom de la catégorie doit être compris entre 2 et 50 caractères."
                 ],
                 "description"=>[
-                    "minLength"=>0,
                     "maxLength"=>255,
                     "error"=>"La description doit être inférieur à 255 caractères."
                 ],
