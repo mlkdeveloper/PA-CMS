@@ -19,7 +19,11 @@ $(document).ready(function(){
     });
 
     $("#containerPublisher").bind("DOMSubtreeModified", function() {
-        $("#savePage").css("display", "block");
+        $("#buttonSave").css("display", "block");
+    });
+
+    $("#buttonSave").on("click", function () {
+       savePage();
     });
 });
 
@@ -123,6 +127,43 @@ function modalTiny(){
     $(".button--alert").css("onclick", "closeModal()");
     $(".button--success").css("onclick", "getTiny()");
     $(".modal").css("display", "block");
+}
+
+function savePage(){
+
+    let dataHtml =
+        {
+            "structure": [
+
+            ]
+        }
+
+    $( "#containerPublisher section" ).each(function(index) {
+
+        let block = {
+            "idBlock": $(this).attr('id'),
+            "columns": [
+            ]
+        }
+
+        dataHtml["structure"].push(block);
+
+        $( this ).children().children().each(function() {
+
+            let column = {
+                "idColumn": $( this ).attr('id'),
+                "numberCol": $( this ).attr('class').split(" ")[0].split("_")[1],
+                "content": $( this ).html()
+            }
+
+            dataHtml["structure"][index]["columns"].push(column);
+        });
+
+    });
+
+    dataHtml = JSON.stringify(dataHtml);
+
+    console.log(dataHtml);
 }
 
 

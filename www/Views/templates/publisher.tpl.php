@@ -46,7 +46,7 @@
                 </nav>
             </aside>
 
-            <button id="savePage" class="button button--success">Enregistrer</button>
+            <button id="buttonSave" class="button button--success">Enregistrer</button>
 
             <div class="container-body">
                 <header>

@@ -54,7 +54,7 @@ a{
 }
 
 .containerJumbo{
-    background-color: #f9f9fa;
+    background-color: #e5e5e5b3;
     text-align: center;
 }
 
@@ -97,7 +97,7 @@ a{
     margin-right: 20px;
 }
 
-#savePage{
+#buttonSave{
     position: fixed;
     z-index: 5;
     right: 15px;
