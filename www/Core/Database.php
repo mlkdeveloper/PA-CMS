@@ -40,6 +40,7 @@ class Database extends QueryBuilder
 						VALUES 
 						(:" . implode(',:', array_keys($column)) . ") "); //1
 
+
         } else {
             //UPDATE
             $keySql = [];

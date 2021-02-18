@@ -13,7 +13,11 @@ class User extends Database
 	protected $email;
 	protected $pwd;
 	protected $country;
-	protected $role = 0;
+	protected $address;
+	protected $city;
+	protected $zipcode;
+	protected $phoneNumber;
+	protected $id_role = 0;
 	protected $status = 1;
 	protected $isDeleted = 0;
 
@@ -121,20 +125,87 @@ class User extends Database
 	{
 	    $this->country = $country;
 	}
-	/**
-	 * @return int
-	 */
-	public function getRole()
-	{
-	    return $this->role;
-	}
-	/**
-	 * @param int $role
-	 */
-	public function setRole(int $role)
-	{
-	    $this->role = $role;
-	}
+
+    /**
+     * @return mixed
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param mixed $address
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param mixed $city
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getZipcode()
+    {
+        return $this->zipcode;
+    }
+
+    /**
+     * @param mixed $zipcode
+     */
+    public function setZipcode($zipcode)
+    {
+        $this->zipcode = $zipcode;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPhoneNumber()
+    {
+        return $this->phoneNumber;
+    }
+
+    /**
+     * @param mixed $phoneNumber
+     */
+    public function setPhoneNumber($phoneNumber)
+    {
+        $this->phoneNumber = $phoneNumber;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIdRole()
+    {
+        return $this->id_role;
+    }
+
+    /**
+     * @param int $id_role
+     */
+    public function setIdRole($id_role)
+    {
+        $this->id_role = $id_role;
+    }
+
 	/**
 	 * @return int
 	 */
@@ -278,6 +349,79 @@ class User extends Database
 		];
 
 	}
+
+
+    public function formBuilderInstallRegister(){
+
+        return [
+
+            "config"=>[
+                "method"=>"POST",
+                "action"=>"",
+                "class"=>"form_control",
+                "id"=>"form_register",
+                "submit"=>"S'enregistrer",
+                "classButton" => "button button--blue"
+            ],
+            "inputs"=>[
+                "firstname"=>[
+                    "type"=>"text",
+                    "divClass"=> "form_align--top",
+                    "placeholder"=>"Exemple : Yves",
+                    "label"=>"Prénom",
+                    "required"=>true,
+                    "class"=>"form_input",
+                    "minLength"=>2,
+                    "maxLength"=>50,
+                    "error"=>"Votre prénom doit faire entre 2 et 50 caractères"
+                ],
+                "lastname"=>[
+                    "type"=>"text",
+                    "divClass"=> "form_align--top",
+                    "placeholder"=>"Exemple : Skrzypczyk",
+                    "label"=>"Nom",
+                    "required"=>true,
+                    "class"=>"form_input",
+                    "minLength"=>2,
+                    "maxLength"=>100,
+                    "error"=>"Votre nom doit faire entre 2 et 100 caractères"
+                ],
+
+                "email"=>[
+                    "type"=>"email",
+                    "divClass"=> "form_align--top",
+                    "placeholder"=>"Exemple : nom@gmail.com",
+                    "label"=>"Email",
+                    "required"=>true,
+                    "class"=>"form_input",
+                    "minLength"=>8,
+                    "maxLength"=>320,
+                    "error"=>"Votre email doit faire entre 8 et 320 caractères"
+                ],
+
+                "pwd"=>[
+                    "type"=>"password",
+                    "divClass"=> "form_align--top",
+                    "label"=>"Mot de passe",
+                    "required"=>true,
+                    "class"=>"form_input",
+                    "minLength"=>8,
+                    "error"=>"Votre mot de passe doit faire au minimum 8 caractères"
+                ],
+                "pwdConfirm"=>[
+                    "type"=>"password",
+                    "divClass"=> "form_align--top",
+                    "label"=>"Confirmation",
+                    "required"=>true,
+                    "class"=>"form_input",
+                    "confirm"=>"pwd",
+                    "error"=>"Votre mot de passe de confirmation ne correspond pas"
+                ],
+            ]
+
+        ];
+
+    }
 
 }
 

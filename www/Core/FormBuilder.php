@@ -20,6 +20,9 @@ class FormBuilder
 
 
 		foreach ($config["inputs"] as $name => $configInput) {
+
+		    $html .= "<div class='".($configInput["divClass"]??"")."'>";
+
 			$html .="<label for='".($configInput["id"]??$name)."'>".($configInput["label"]??"")." </label>";
 
 			$html .="<input 
@@ -30,12 +33,14 @@ class FormBuilder
 						id='".($configInput["id"]??$name)."'
 						".(!empty($configInput["required"])?"required='required'":"")."
 						 ><br>";
+
+			$html .= "</div>";
 		}
 
 
 
 
-		$html .= "<input type='submit' value=\"".($config["config"]["submit"]??"Valider")."\">";
+		$html .= "<input type='submit' class='".($config["config"]["classButton"]??"")."' value=\"".($config["config"]["submit"]??"Valider")."\">";
 		$html .= "</form>";
 
 
