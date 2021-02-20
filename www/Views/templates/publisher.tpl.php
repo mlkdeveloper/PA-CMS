@@ -46,8 +46,6 @@
                 </nav>
             </aside>
 
-            <button id="buttonSave" class="button button--success">Enregistrer</button>
-
             <div class="container-body">
                 <header>
                     <div class="headerNavbar">
@@ -88,6 +86,10 @@
                         </div>
                     </div>
                 </section>
+
+                <button id="buttonSave" class="button button--success">Enregistrer</button>
+
+                <div class="spinner" id="loader"></div>
 
                 <div class="modal">
                     <div class="modal-content">

@@ -140,6 +140,9 @@ function modalTiny(){
 
 function savePage(){
 
+    $("#buttonSave").css("display", "none");
+    $("#loader").css("display", "block");
+
     let dataHtml =
         {
             "structure": [
@@ -177,7 +180,9 @@ function savePage(){
         url: '../.././Controllers/Publisher.php',
         data: {dataHtml: dataHtml},
         success: function(msg) {
-            alert("ok");
+            setTimeout(function(){
+                $("#loader").css("display", "none");
+            }, 1500);
         },
         error: function (xhr, ajaxOptions, thrownError){
             alert(xhr.responseText);
