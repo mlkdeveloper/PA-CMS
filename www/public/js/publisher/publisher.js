@@ -151,7 +151,7 @@ function savePage(){
         }
 
     $( "#containerPublisher section" ).each(function(index) {
-
+        let contentCol;
         let block = {
             "idBlock": $(this).attr('id'),
             "columns": [
@@ -161,11 +161,16 @@ function savePage(){
         dataHtml["structure"].push(block);
 
         $( this ).children().children().each(function() {
+            if($( this ).children().attr('class') === "jumbotron containerJumbo" ){
+                contentCol = "";
+            }else{
+                contentCol = $( this ).html();
+            }
 
             let column = {
                 "idColumn": $( this ).attr('id'),
                 "numberCol": $( this ).attr('class').split(" ")[0].split("_")[1],
-                "content": $( this ).html()
+                "content": contentCol
             }
 
             dataHtml["structure"][index]["columns"].push(column);
