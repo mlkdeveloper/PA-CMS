@@ -1,5 +1,5 @@
-let counterIdBlock = 1;
-let counterIdCol = 1;
+let counterIdBlock;
+let counterIdCol;
 const prefixIdBlock = "block_";
 const prefixIdCol = "col_";
 let html;
@@ -25,6 +25,15 @@ $(document).ready(function(){
     $("#buttonSave").on("click", function () {
        savePage();
     });
+
+    if ($("#containerPublisher").html()){
+        counterIdBlock = ($("#containerPublisher").children().last().attr("id")).split("_")[1];
+        counterIdCol = ($("#containerPublisher").children().children().children().last().attr("id")).split("_")[1];
+
+    }else {
+        counterIdBlock = 1;
+        counterIdCol = 1;
+    }
 });
 
 
@@ -163,7 +172,20 @@ function savePage(){
 
     dataHtml = JSON.stringify(dataHtml);
 
-    console.log(dataHtml);
+    $.ajax({
+        type: 'POST',
+        url: '../.././Controllers/Publisher.php',
+        data: {dataHtml: dataHtml},
+        success: function(msg) {
+            alert("ok");
+        },
+        error: function (xhr, ajaxOptions, thrownError){
+            alert(xhr.responseText);
+            alert(ajaxOptions);
+            alert(thrownError);
+            alert(xhr.status);
+        }
+    });
 }
 
 
