@@ -1,0 +1,109 @@
+#bodyPublisher{
+    background-color: #FFFFFF;
+}
+
+#headerMenu{
+    padding: 20px 0 150px 0;
+}
+
+#hamburger{
+    width: 2.2rem;
+}
+
+.sidenavPublisher img{
+    width: 3rem;
+    cursor: pointer;
+}
+
+a{
+    text-decoration: none;
+}
+
+#menuObject{
+    display: none;
+}
+
+#menuObject .row{
+    padding-bottom: 30px;
+}
+
+.sidenavPublisher {
+    height: 100vh;
+    position: fixed;
+    width: 200px;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background: #F1F4F9;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.headerNavbar {
+    position: relative;
+    padding: 10px;
+    margin: 0;
+    background-color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    border-bottom: solid 1px black;
+}
+
+.containerJumbo{
+    background-color: #e5e5e5b3;
+    text-align: center;
+}
+
+.cross-add{
+    width: 4rem;
+}
+
+#selectCol img {
+    cursor: pointer;
+}
+
+#selectCol img:hover {
+    transform: scale(1.3);
+    transition: all 0.5s;
+}
+
+#selectCol .row:first-child{
+    margin-bottom: 40px;
+}
+
+.activeCol{
+    border: solid 3px #2D9CDB;
+}
+
+.colBlock:hover{
+    cursor: pointer;
+}
+
+#formTiny{
+    margin-bottom: 30px;
+    display: none;
+}
+
+.buttonModal{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.buttonModal button:nth-child(1){
+    margin-right: 20px;
+}
+
+#buttonSave{
+    position: fixed;
+    z-index: 5;
+    right: 15px;
+    bottom: 15px;
+    display: none;
+}
+
+
+
