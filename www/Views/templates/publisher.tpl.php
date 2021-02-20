@@ -87,9 +87,15 @@
                     </div>
                 </section>
 
-                <button id="buttonSave" class="button button--success">Enregistrer</button>
+                <div id="containerSave">
+                    <button id="buttonSave" class="button button--success">Enregistrer</button>
 
-                <div class="spinner" id="loader"></div>
+                    <div class="spinner" id="loader"></div>
+
+                    <div id="alertSave">
+                        <p>Enregistrement réussi !</p>
+                    </div>
+                </div>
 
                 <div class="modal">
                     <div class="modal-content">

@@ -98,20 +98,32 @@ a{
 }
 
 #buttonSave{
-    position: fixed;
-    z-index: 5;
-    right: 15px;
-    bottom: 15px;
     display: none;
 }
 
 #loader{
+    display: none;
+    transition: all 0.8s;
+}
+
+#alertSave{
+    background-color: #2dc26b;
+    color: white;
+    font-weight: bold;
+    width: max-content;
+    padding: 20px 10px;
+    border-radius: 10px;
+    display: none;
+}
+
+#containerSave{
     position: fixed;
     z-index: 5;
     right: 15px;
     bottom: 15px;
-    display: none;
 }
 
-
-
+@keyframes fadeInAlert{
+    from {opacity: 0; transform: translateY(100%);}
+    to {opacity: 1; transform: translateY(0%);}
+}

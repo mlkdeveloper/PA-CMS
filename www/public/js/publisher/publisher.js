@@ -19,7 +19,7 @@ $(document).ready(function(){
     });
 
     $("#containerPublisher").bind("DOMSubtreeModified", function() {
-        $("#buttonSave").css("display", "block");
+        $("#buttonSave").show();
     });
 
     $("#buttonSave").on("click", function () {
@@ -111,7 +111,7 @@ function selectCol(col){
     contentCol = $("#"+idCol).html();
     $(".activeCol").removeClass("activeCol");
     $("#"+col.id).children().addClass("activeCol");
-    $("#menuObject").css("display", "block");
+    $("#menuObject").show();
 }
 
 function getTiny(){
@@ -119,15 +119,15 @@ function getTiny(){
     if (textTiny !==""){
         $("#"+idCol).html('<div>'+textTiny+'</div>');
     }
-    $(".modal").css("display", "none");
+    $(".modal").hide();
 }
 
 function closeModal(){
-    $(".modal").css("display", "none");
+    $(".modal").hide();
 }
 
 function modalTiny(){
-    $("#formTiny").css("display", "block");
+    $("#formTiny").show();
     if ($("#"+idCol).children().hasClass("jumbotron") === true){
         tinyMCE.activeEditor.setContent("");
     }else{
@@ -135,13 +135,13 @@ function modalTiny(){
     }
     $(".button--alert").css("onclick", "closeModal()");
     $(".button--success").css("onclick", "getTiny()");
-    $(".modal").css("display", "block");
+    $(".modal").show();
 }
 
 function savePage(){
 
-    $("#buttonSave").css("display", "none");
-    $("#loader").css("display", "block");
+    $("#buttonSave").hide();
+    $("#loader").show();
 
     let dataHtml =
         {
@@ -181,8 +181,13 @@ function savePage(){
         data: {dataHtml: dataHtml},
         success: function(msg) {
             setTimeout(function(){
-                $("#loader").css("display", "none");
+                $("#loader").hide();
+                $("#alertSave").show();
+                $("#alertSave").css("animation", "fadeInAlert 1s");
             }, 1500);
+            setTimeout(function(){
+                $("#alertSave").hide();
+            }, 5000);
         },
         error: function (xhr, ajaxOptions, thrownError){
             alert(xhr.responseText);
