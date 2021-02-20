@@ -1,7 +1,24 @@
 <section>
-    <div class="container">
-        <h1><?= $values["name"] ?></h1>
 
+    <?php
+
+    if (isset($errors)){
+
+        echo "<div class='container'>";
+        echo "<div class='alert alert--red'>";
+
+        foreach($errors as $error){
+            echo $error . "<br>";
+        }
+
+        echo "</div>";
+        echo "</div>";
+    }
+    ?>
+
+
+    <div class="container">
+        <h1><?= $category->getName(); ?></h1>
     </div>
 </section>
 <section>
@@ -13,12 +30,12 @@
                         <div class=" jumbotron">
                             <div class="form_align--top">
                                 <label class="label">Titre *</label>
-                                <input class="input" type="text" name="name" placeholder="Casquettes" required="required" value="<?= $values["name"] ?>">
+                                <input class="input" type="text" name="name" placeholder="Casquettes" required="required" value="<?= $category->getName(); ?>">
                             </div>
 
                             <div class="form_align--top">
                                 <label class="label">Description *</label>
-                                <textarea class="input input--textarea" type="text" name="description" placeholder="Nos casquettes..."><?= $values["description"]?></textarea>
+                                <textarea class="input input--textarea" type="text" name="description" placeholder="Nos casquettes..."><?= $category->getDescription();?></textarea>
                             </div>
                         </div>
                     </div>
@@ -28,8 +45,8 @@
                             <div class="form_align--top">
                                 <label class="label">Statut *</label>
                                 <select class="input" name="status">
-                                    <option value="0">Actif</option>
-                                    <option value="1">Inactif</option>
+                                    <option value="0" <?= $category->getStatus() == 0 ? "selected" : "" ?> >Actif</option>
+                                    <option value="1"  <?= $category->getStatus() == 1 ? "selected" : "" ?>>Inactif</option>
                                 </select>
                             </div>
                         </div>
@@ -42,7 +59,7 @@
                             </div>
 
                           <div style="display: flex; justify-content: center">
-                             <img src="../images/<?= $values['picPath']??'cross-add.svg'?>" id="categoryImage" style="width: 50%;">
+                             <img src="../images/<?= $category->getPicPath()??'cross-add.svg'?>" id="categoryImage" style="width: 50%;">
                           </div>
                         </div>
                     </div>

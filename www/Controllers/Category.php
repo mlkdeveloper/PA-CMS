@@ -54,20 +54,20 @@ class Category{
         if (isset($_GET['id']) && !empty($_GET['id'])){
 
             $category = new modelCategory();
-            $verifyId = $category->select("id")->where("id = :id")->setParams(["id" => $_GET['id']])->get();
+            $columns = $category->select()->where("id = :id")->setParams(["id" => $_GET['id']])->get();
 
-            if (empty($verifyId))
+            if (empty($columns))
                 header("Location: /admin/display-category");
 
+            $category->populate($columns[0]);
             $view = new View("updateCategory.back", "back");
+            $view->assign("title", "Admin - catégorie");
+
 
             $form = $category->formBuilderRegister();
             $this->saveForm($view,$category,$form,true);
 
-            $values = $category->select()->where("id = :id")->setParams(["id" => $_GET['id']])->get();
-            $view->assign("values", ...$values);
-            $view->assign("title", "Admin - catégorie");
-
+            $view->assign("category", $category);
         }else{
             header("Location: /admin/display-category");
         }
