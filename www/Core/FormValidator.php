@@ -80,7 +80,7 @@ class FormValidator
         $error = $files['categoryImage']['error'];
 
         if ($error !== 0){
-            $errors[] = "Erreur sur l'image téléchargé.";
+            $errors[] = "Erreur lors de l'upload.";
         }
 
         if(!in_array($fileExt,$acceptedImage)){
@@ -90,7 +90,6 @@ class FormValidator
         if ($fileSize > 15000000) {
             $errors[] = "Le poids de l'image doit être inférieure à 15 MO.";
         }
-
 
 	    return $errors;
     }

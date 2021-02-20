@@ -13,7 +13,6 @@ class Category{
         $category = new modelCategory();
         $array = $category->select()->get();
 
-
         $view = new View("displayCategory.back", "back");
         $view->assign("title", "Liste des catégories");
         $view->assign("array", $array);
@@ -26,10 +25,28 @@ class Category{
         $view = new View("createCategory.back", "back");
 
         $form = $category->formBuilderRegister();
-        $this->saveForm($view,$category,$form);
 
+        if(!empty($_POST) && !empty($_FILES)){
+
+            $errors = FormValidator::checkFormCategory($form, $_POST, $_FILES);
+
+            if (empty($errors)){
+
+                $category->populate($_POST);
+
+                if($_FILES["categoryImage"]["error"] === 0 ) {
+                    $imageName = time() . '_' . $_FILES['categoryImage']['name'];
+                    $target = './images/' . $imageName;
+                    move_uploaded_file($_FILES['categoryImage']['tmp_name'], $target);
+                    $category->setPicPath($imageName);
+                }
+                $category->save();
+
+            }else{
+                $view->assign("errors", $errors);
+            }
+        }
         $view->assign("title", "Admin - catégorie");
-
     }
 
     public function updateCategoryAction(){
@@ -60,7 +77,9 @@ class Category{
 
         if(!empty($_POST) && !empty($_FILES)){
 
-            unset($_POST["table_length"]);
+            if (isset($_POST["table_length"]))
+                unset($_POST["table_length"]);
+
             $errors = FormValidator::checkFormCategory($form, $_POST, $_FILES);
 
             if (empty($errors)){
@@ -68,9 +87,7 @@ class Category{
                 if ($formStatus)
                     $category->setId($_GET['id']);
 
-                $category->setName(htmlspecialchars(trim($_POST['name'])));
-                $category->setDescription(htmlspecialchars(trim($_POST['description'])));
-                $category->setStatus($_POST['status']);
+               $category->populate($_POST);
 
                 if($_FILES["categoryImage"]["error"] === 0 ) {
                     $imageName = time() . '_' . $_FILES['categoryImage']['name'];
@@ -78,9 +95,7 @@ class Category{
                     move_uploaded_file($_FILES['categoryImage']['tmp_name'], $target);
                     $category->setPicPath($imageName);
                 }
-
                 $category->save();
-
             }else{
                 $view->assign("errors", $errors);
             }

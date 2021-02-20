@@ -48,7 +48,7 @@ class Category extends Database
      */
     public function setName($name)
     {
-        $this->name = $name;
+        $this->name = htmlspecialchars(trim($name));
     }
 
     /**
@@ -64,7 +64,7 @@ class Category extends Database
      */
     public function setDescription($description)
     {
-        $this->description = $description;
+        $this->description = htmlspecialchars(trim($description));
     }
 
     /**

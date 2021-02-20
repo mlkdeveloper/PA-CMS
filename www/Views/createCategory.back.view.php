@@ -26,7 +26,7 @@ if (isset($errors)){
             <div class="container">
                 <div class="row">
                     <div class="col-lg-7 col-md-7 col-sm-12 col">
-                        <div class=" jumbotron">
+                        <div class="jumbotron">
                             <div class="form_align--top">
                                 <label class="label">Titre *</label>
                                 <input class="input" type="text" name="name" placeholder="Casquettes" required="required">
@@ -68,33 +68,6 @@ if (isset($errors)){
                 </div>
 
             </div>
-        </section>
-
-        <section>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12 col-sm-12">
-                        <div class="jumbotron">
-                            <table id="table" class="row-border hover">
-                                <thead>
-                                <tr>
-                                    <th>N° Produit</th>
-                                    <th>Nom</th>
-                                    <th>Statut</th>
-                                    <th>Actions</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
         </section>
 
         <section>
