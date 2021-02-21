@@ -27,8 +27,8 @@ $(document).ready(function(){
     });
 
     if ($("#containerPublisher").html()){
-        counterIdBlock = ($("#containerPublisher").children().last().attr("id")).split("_")[1];
-        counterIdCol = ($("#containerPublisher").children().children().children().last().attr("id")).split("_")[1];
+        counterIdBlock = parseInt(($("#containerPublisher").children().last().attr("id")).split("_")[1])+1;
+        counterIdCol = parseInt(($("#containerPublisher").children().children().children().last().attr("id")).split("_")[1])+1;
 
     }else {
         counterIdBlock = 1;
@@ -169,7 +169,7 @@ function savePage(){
 
             let column = {
                 "idColumn": $( this ).attr('id'),
-                "numberCol": $( this ).attr('class').split(" ")[0].split("_")[1],
+                "numberCol": $( this ).attr('class').split(" ")[0].split("-")[2],
                 "content": contentCol
             }
 

@@ -8,6 +8,12 @@ if (isset($_POST['dataHtml'])){
     $myPublisher->savePublisher($_POST['dataHtml']);
 }
 
+if (isset($_POST['idPage'])){
+    $myPublisher = new Publisher();
+    $myPublisher->readPublisher($_POST['idPage']);
+}
+
+
 class Publisher
 {
 
@@ -19,5 +25,14 @@ class Publisher
 
     public function savePublisher($dataHtml){
         file_put_contents("../templatesPublisher/test.json", $dataHtml);
+    }
+
+    public function readPublisher($idPage){
+
+        if (file_exists("../templatesPublisher/test.json")){
+            echo  file_get_contents("../templatesPublisher/test.json");
+        }else {
+            echo null;
+        }
     }
 }
