@@ -82,5 +82,44 @@ class User
 	}
 
 
+    public function displayClientAction(){
+        $view = new View("clientList.back", "back");
+        $view->assign("title", "Admin - Client");
+    }
+    public function newClientAction(){
+
+        $client = new ClientModel();
+
+        $view = new View("createClient.back", "back");
+        $view->assign("title", "Admin - Nouveau client");
+
+        $formCreateClient = $client->formBuilderCreateClient();
+
+        if(!empty($_POST)){
+
+            $error = FormValidator::check($formCreateClient, $_POST);
+
+            if(empty($errors)){
+                $client->setName($_POST['firstName']);
+                $client->setFirstName($_POST['lastName']);
+                $client->setAddress($_POST['address']);
+                $client->setCity($_POST['city']);
+                $client->setZipCode($_POST['zipCode']);
+                $client->setEmail($_POST['email']);
+                $client->setPhoneNumber($_POST['phoneNumber']);
+                $client->setStatus(1);
+                $client->setIsDeleted(0);
+                $client->setPwd("okjghhghghgghghghghgh");
+                $client->setCreatedAt(date());
+                $client->setIdRole(1);
+                throw new Exception(json_encode($client));
+                $client->save();
+
+            }else{
+                $view->assign("errors", $errors);
+            }
+        }
+        $view->assign("form", $formCreateClient);
+    }
 
 }

@@ -49,3 +49,7 @@
 /admin/check-review:
   controller: Reviews
   action: checkReviews
+
+/admin/ajout-client:
+  controller: User
+  action: newClient
