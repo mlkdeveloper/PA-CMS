@@ -16,12 +16,12 @@ tinymce.init({
     block_unsupported_drop: true,
     plugins: [
         'lists',
-        'table advtable'
+        'table'
     ],
     toolbar: [
         'undo redo | styleselect | forecolor backcolor bold italic underline fontselect fontsizeselect | alignleft aligncenter alignright alignjustify ' +
         '| outdent indent',
-        'numlist bullist |  table',
+        'numlist bullist | table',
     ]
 });
 
@@ -122,7 +122,11 @@ function selectCol(col){
     idCol = col.id;
     contentCol = $("#"+idCol).html();
     $(".activeCol").removeClass("activeCol");
-    $("#"+col.id).children().addClass("activeCol");
+    if ($("#"+col.id).children().attr('class') !== "jumbotron containerJumbo"){
+        $("#"+col.id).addClass("activeCol");
+    }else {
+        $("#"+col.id).children().addClass("activeCol");
+    }
     $("#menuObject").show();
 }
 
