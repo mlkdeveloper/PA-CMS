@@ -35,11 +35,6 @@
                                 <img src="../.././images/publisher/icon-image.svg" alt="icon-image">
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 col">
-                                <img src="../.././images/publisher/icon-list.svg" alt="icon-list">
-                            </div>
-                        </div>
-                        <div class="row align">
-                            <div class="col-lg-6 col-md-6 col-sm-12 col">
                                 <img src="../.././images/publisher/icon-text.svg" alt="icon-text" id="icon-text">
                             </div>
                         </div>
@@ -48,11 +43,11 @@
             </aside>
 
             <div class="container-body">
-<!--                <header>-->
-<!--                    <div class="headerNavbar">-->
-<!--                        <h1>La navbar</h1>-->
-<!--                    </div>-->
-<!--                </header>-->
+                <header>
+                    <div class="headerNavbar">
+                        <h1>La navbar</h1>
+                    </div>
+                </header>
 
                 <div id="containerPublisher"></div>
                 <?php include $this->view ?>

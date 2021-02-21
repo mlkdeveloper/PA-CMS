@@ -9,8 +9,20 @@ let contentCol;
 
 tinymce.init({
     selector: '#tiny',
-    height: '350px',
-    width: '1000px'
+    height: '450px',
+    width: '1000px',
+    language: 'fr_FR',
+    statusbar: false,
+    block_unsupported_drop: true,
+    plugins: [
+        'lists',
+        'table advtable'
+    ],
+    toolbar: [
+        'undo redo | styleselect | forecolor backcolor bold italic underline fontselect fontsizeselect | alignleft aligncenter alignright alignjustify ' +
+        '| outdent indent',
+        'numlist bullist |  table',
+    ]
 });
 
 $(document).ready(function(){

@@ -24,13 +24,13 @@ class Publisher
     }
 
     public function savePublisher($dataHtml){
-        file_put_contents("../templatesPublisher/test.json", $dataHtml);
+        file_put_contents("../publisher/templatesPublisher/test.json", $dataHtml);
     }
 
     public function readPublisher($idPage){
 
-        if (file_exists("../templatesPublisher/test.json")){
-            echo  file_get_contents("../templatesPublisher/test.json");
+        if (file_exists("../publisher/templatesPublisher/test.json")){
+            echo  file_get_contents("../publisher/templatesPublisher/test.json");
         }else {
             echo null;
         }
