@@ -1,5 +1,4 @@
 <div class="container">
-
     <div class="align">
         <h1>Liste des catégories</h1>
         <button class="button button--blue">
@@ -15,22 +14,22 @@
                         <th>N° catégorie</th>
                         <th>Nom</th>
                         <th>Statut</th>
-                        <th>Actions</th>
+                        <th class="thAction">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
                     <?php
-                        foreach ($array as $value):
+                        foreach ($listCategory as $category):
                     ?>
                     <tr>
-                        <td><?= $value['id'] ?></td>
-                        <td><?= $value['name'] ?></td>
-                        <td><?= $value['status'] ?></td>
-                        <td >
+                        <td><?= $category['id'] ?></td>
+                        <td><?= $category['name'] ?></td>
+                        <td><?= $category['status'] ?></td>
+                        <td>
                             <div class="align">
                                 <button class="button button--black">
                                     <i class="fas fa-pencil-alt"></i>
-                                    <a href="/admin/modification-categorie?id=<?= $value['id'] ?>">Modifier</a>
+                                    <a href="/admin/modification-categorie?id=<?= $category['id'] ?>">Modifier</a>
                                 </button>
                                 <i class="fas fa-trash"></i>
                            </div>
@@ -48,3 +47,4 @@
 </div>
 
 <script src="../public/js/datatable.js"></script>
+<link rel="stylesheet" href="../../dist/category.css">

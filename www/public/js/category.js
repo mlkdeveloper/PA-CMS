@@ -4,6 +4,8 @@ function displayImageCategory(e) {
 
         const reader = new FileReader();
         reader.onload = function (e) {
+
+            console.log(e.target.result);
                 document.querySelector('#categoryImage').setAttribute('src', e.target.result);
             };
 
@@ -14,3 +16,4 @@ function displayImageCategory(e) {
 function triggerCategoryAdd() {
     document.querySelector('#categoryUpload').click();
 }
+

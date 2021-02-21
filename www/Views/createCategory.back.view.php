@@ -33,7 +33,7 @@ if (isset($errors)){
                             </div>
 
                             <div class="form_align--top">
-                                <label class="label">Description *</label>
+                                <label class="label">Description </label>
                                 <textarea class="input input--textarea" type="text" name="description" placeholder="Nos casquettes..."></textarea>
                             </div>
 
@@ -54,13 +54,13 @@ if (isset($errors)){
 
                         <div class="jumbotron" style="margin-top:5%;">
                             <div class="align">
-                                <h2>Image</h2>
+                                <h2>Image *</h2>
                                 <i class="fas fa-plus" onclick="triggerCategoryAdd()"></i>
-                                <input style="display: none;" id="categoryUpload" type="file" accept="image/*" name="categoryImage" class="input" onchange="displayImageCategory(this)">
+                                <input id="categoryUpload" type="file" accept="image/*" name="categoryImage" class="input inputFile" onchange="displayImageCategory(this)">
                             </div>
 
-                          <div style="display: flex; justify-content: center">
-                             <img src="../images/cross-add.svg" id="categoryImage" style="width: 50%;">
+                          <div class="imageBlock">
+                             <img src="../images/cross-add.svg" id="categoryImage">
                           </div>
                         </div>
                     </div>
@@ -71,13 +71,13 @@ if (isset($errors)){
         </section>
 
         <section>
-            <div class="container" style="display: flex;justify-content: flex-end">
+            <div class="container positionBtnSave">
                 <input class="button--blue button" type="submit" value="Enregistrer">
             </div>
         </section>
     </form>
 </section>
 
-<script src="../public/js/datatable.js"></script>
 <script src="../public/js/category.js"></script>
+<link rel="stylesheet" href="../../dist/category.css">
 

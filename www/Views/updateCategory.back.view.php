@@ -1,5 +1,4 @@
 <section>
-
     <?php
 
     if (isset($errors)){
@@ -27,14 +26,14 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-7 col-md-7 col-sm-12 col">
-                        <div class=" jumbotron">
+                        <div class="jumbotron">
                             <div class="form_align--top">
                                 <label class="label">Titre *</label>
                                 <input class="input" type="text" name="name" placeholder="Casquettes" required="required" value="<?= $category->getName(); ?>">
                             </div>
 
                             <div class="form_align--top">
-                                <label class="label">Description *</label>
+                                <label class="label">Description </label>
                                 <textarea class="input input--textarea" type="text" name="description" placeholder="Nos casquettes..."><?= $category->getDescription();?></textarea>
                             </div>
                         </div>
@@ -53,13 +52,13 @@
 
                         <div class="jumbotron" style="margin-top:5%;">
                             <div class="align">
-                                <h2>Image</h2>
+                                <h2>Image *</h2>
                                 <i class="fas fa-plus" onclick="triggerCategoryAdd()"></i>
-                                <input style="display: none;" id="categoryUpload" type="file" accept="image/*" name="categoryImage" class="input" onchange="displayImageCategory(this)">
+                                <input id="categoryUpload" type="file" accept="image/*" name="categoryImage" onchange="displayImageCategory(this)">
                             </div>
 
-                          <div style="display: flex; justify-content: center">
-                             <img src="../images/<?= $category->getPicPath()??'cross-add.svg'?>" id="categoryImage" style="width: 50%;">
+                          <div class="imageBlock">
+                             <img src="../images/<?= $category->getPicPath()??'cross-add.svg'?>" id="categoryImage">
                           </div>
                         </div>
                     </div>
@@ -97,7 +96,7 @@
         </section>
 
         <section>
-            <div class="container" style="display: flex;justify-content: flex-end">
+            <div class="container positionBtnSave">
                 <input class="button--blue button" type="submit" value="Enregistrer">
             </div>
         </section>
@@ -106,3 +105,5 @@
 
 <script src="../public/js/datatable.js"></script>
 <script src="../public/js/category.js"></script>
+<link rel="stylesheet" href="../../dist/category.css">
+

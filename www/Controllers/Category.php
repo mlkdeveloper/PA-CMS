@@ -11,11 +11,11 @@ class Category{
     public function showAction(){
 
         $category = new modelCategory();
-        $array = $category->select()->get();
+        $listCategory = $category->select()->get();
 
         $view = new View("displayCategory.back", "back");
         $view->assign("title", "Liste des catégories");
-        $view->assign("array", $array);
+        $view->assign("listCategory", $listCategory);
 
     }
 
@@ -65,7 +65,7 @@ class Category{
 
 
             $form = $category->formBuilderRegister();
-            $this->saveForm($view,$category,$form,true);
+            $this->saveForm($view,$category,$form,false);
 
             $view->assign("category", $category);
         }else{
@@ -73,18 +73,18 @@ class Category{
         }
     }
 
-    public function saveForm($view,$category,$form,$formStatus = false){
+    public function saveForm($view,$category,$form,$newCategory = true){
 
         if(!empty($_POST) && !empty($_FILES)){
 
             if (isset($_POST["table_length"]))
                 unset($_POST["table_length"]);
 
-            $errors = FormValidator::checkFormCategory($form, $_POST, $_FILES);
+            $errors = FormValidator::checkFormCategory($form, $_POST, $_FILES,$newCategory);
 
             if (empty($errors)){
 
-                if ($formStatus)
+                if ($newCategory === false)
                     $category->setId($_GET['id']);
 
                $category->populate($_POST);

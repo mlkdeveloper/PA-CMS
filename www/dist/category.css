@@ -1,0 +1,30 @@
+
+/*UPDATE*/
+
+.inputFile{
+    display: none;
+}
+
+.imageBlock {
+    display: flex;
+    justify-content: center;
+}
+
+.imageBlock img{
+    width: 10rem;
+    height: 10rem;
+    object-fit: contain;
+}
+
+#categoryUpload{
+    display: none;
+}
+
+.positionBtnSave{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.thAction{
+    width: 150px;
+}
