@@ -28,11 +28,11 @@ tinymce.init({
 $(document).ready(function(){
     $("#buttonBack").on("click", function () {
         $(".button--success").attr("onclick", "backPages()");
-        $("#textBack").show();
+        $("#alertMessage").html("N'oubliez pas de sauvegarder vos modifications !");
         $(".modal").show();
     });
 
-    $("#menuObject .col").on( "click", function() {
+    $("#menuObject #icon-edit").on( "click", function() {
         modalTiny();
     });
 
@@ -45,7 +45,9 @@ $(document).ready(function(){
     });
 
     $("#containerDeleteSection").on("click", function () {
-       deleteSection();
+        $(".button--success").attr("onclick", "deleteSection()");
+        $("#alertMessage").html("Êtes-vous sûr de vouloir supprimer la section ?");
+        $(".modal").show();
     });
 
     if ($("#containerPublisher").html()){
@@ -149,6 +151,7 @@ function getTiny(){
         $("#"+idCol).html('<div>'+textTiny+'</div>');
     }
     $(".modal").hide();
+    $("#formTiny").hide();
 }
 
 function closeModal(){
@@ -160,6 +163,7 @@ function closeModal(){
 
 function modalTiny(){
     $("#formTiny").show();
+    $("#alertMessage").html("");
     if ($("#"+idCol).children().hasClass("jumbotron") === true){
         tinyMCE.activeEditor.setContent("");
     }else{
@@ -237,6 +241,7 @@ function savePage(){
 }
 
 function backPages(){
+    $(".modal").hide();
     document.location.replace("/admin/pages");
 }
 
@@ -244,6 +249,7 @@ function deleteSection(){
     let section = $(".activeRow").parent().attr('id')
     $("#"+section).remove();
     $("#menuObject").hide();
+    $(".modal").hide();
 }
 
 

@@ -150,10 +150,6 @@ a{
     to {opacity: 1; transform: translateY(0%);}
 }
 
-#textBack{
-    display: none;
-}
-
 #containerDeleteSection{
     position: absolute;
     bottom: 10px;

@@ -31,8 +31,8 @@
 
                     <div id="menuObject">
                         <div class="row align">
-                            <div class="col-lg-12 col-md-12 col-sm-12 col">
-                                <img src="../.././images/publisher/icon-edit.svg" alt="icon-text" id="icon-text">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col" id="icon-edit">
+                                <img src="../.././images/publisher/icon-edit.svg" alt="icon-edit">
                                 <span>Editer</span>
                             </div>
                         </div>
@@ -111,7 +111,7 @@
                         <form method="post" class="center-margin" id="formTiny">
                             <textarea id="tiny" name="tiny"></textarea>
                         </form>
-                        <h4 id="textBack">N'oubliez pas de sauvegarder vos modifications !</h4>
+                        <h4 id="alertMessage"></h4>
                         <div class="buttonModal">
                             <button onclick="closeModal()" class="button button--alert">Annuler</button>
                             <button class="button button--success">Valider</button>
