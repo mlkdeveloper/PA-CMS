@@ -8,9 +8,13 @@ let contentCol;
 
 $(document).ready(function(){
     if( /Android|webOS|iPhone|iPad|Mac|Macintosh|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-        $("#bodyPublisher").children().remove();
-        $("#bodyPublisher").append("<h2 id='errorMobile'>L'éditeur n'est pas disponible sur mobile et tablette</h2>")
+        $("main").children().remove();
+        $("main").append("<h2 id='errorMobile'>L'éditeur n'est pas disponible sur mobile et tablette</h2>")
     }
+
+    setTimeout(function (){
+        $("#containerLoader").fadeOut(700);
+    }, 1000);
 
     $("#buttonBack").on("click", function () {
         $(".button--success").attr("onclick", "backPages()");

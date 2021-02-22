@@ -17,6 +17,12 @@
     </head>
 
     <body id="bodyPublisher">
+        <div id="containerLoader">
+            <div id="loadingPage">
+                <div class="spinner"></div>
+            </div>
+        </div>
+
         <main>
             <aside>
                 <nav class="sidenavPublisher">
