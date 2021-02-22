@@ -62,7 +62,6 @@
                 </header>
 
                 <div id="containerPublisher"></div>
-                <?php include $this->view ?>
 
                 <section class="container" id="createBloc">
                     <div class="row">

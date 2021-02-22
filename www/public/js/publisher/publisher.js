@@ -6,26 +6,12 @@ let html;
 let idCol;
 let contentCol;
 
-
-tinymce.init({
-    selector: '#tiny',
-    height: '450px',
-    width: '1000px',
-    language: 'fr_FR',
-    statusbar: false,
-    block_unsupported_drop: true,
-    plugins: [
-        'lists',
-        'table'
-    ],
-    toolbar: [
-        'undo redo | styleselect | forecolor backcolor bold italic underline fontselect fontsizeselect | alignleft aligncenter alignright alignjustify ' +
-        '| outdent indent',
-        'numlist bullist | table',
-    ]
-});
-
 $(document).ready(function(){
+    if( /Android|webOS|iPhone|iPad|Mac|Macintosh|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+        $("#bodyPublisher").children().remove();
+        $("#bodyPublisher").append("<h2 id='errorMobile'>L'éditeur n'est pas disponible sur mobile et tablette</h2>")
+    }
+
     $("#buttonBack").on("click", function () {
         $(".button--success").attr("onclick", "backPages()");
         $("#alertMessage").html("N'oubliez pas de sauvegarder vos modifications !");
@@ -58,6 +44,25 @@ $(document).ready(function(){
         counterIdBlock = 1;
         counterIdCol = 1;
     }
+
+
+    tinymce.init({
+        selector: '#tiny',
+        height: '450px',
+        width: '1000px',
+        language: 'fr_FR',
+        statusbar: false,
+        block_unsupported_drop: true,
+        plugins: [
+            'lists',
+            'table'
+        ],
+        toolbar: [
+            'undo redo | styleselect | forecolor backcolor bold italic underline fontselect fontsizeselect | alignleft aligncenter alignright alignjustify ' +
+            '| outdent indent',
+            'numlist bullist | table',
+        ]
+    });
 });
 
 
