@@ -184,10 +184,11 @@ function modalTiny(){
 
 function savePage(){
 
+    $(".activeCol").removeClass("activeCol");
+    $(".activeRow").removeClass("activeRow");
+
     $("#buttonSave").hide();
     $("#loader").show();
-
-    $(".activeCol").removeClass("activeCol");
 
     let dataHtml =
         {
