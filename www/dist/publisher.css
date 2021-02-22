@@ -95,6 +95,12 @@ a{
     border: solid 3px #2D9CDB;
 }
 
+.activeRow{
+    border: solid 3px #8B0000;
+    border-radius: 15px;
+    padding: 20px 10px;
+}
+
 .colBlock:hover{
     cursor: pointer;
 }

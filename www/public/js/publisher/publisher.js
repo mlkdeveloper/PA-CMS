@@ -129,10 +129,13 @@ function selectCol(col){
     idCol = col.id;
     contentCol = $("#"+idCol).html();
     $(".activeCol").removeClass("activeCol");
+    $(".activeRow").removeClass("activeRow");
     if ($("#"+col.id).children().attr('class') !== "jumbotron containerJumbo"){
         $("#"+col.id).addClass("activeCol");
+        $("#"+col.id).parent().addClass("activeRow");
     }else {
         $("#"+col.id).children().addClass("activeCol");
+        $("#"+col.id).parent().addClass("activeRow");
     }
     $("#menuObject").show();
 }
