@@ -46,11 +46,10 @@
                             <div class="col-lg-12 col-md-12 col-sm-12 col">
                             </div>
                         </div>
-                    </div>
-
-                    <div id="containerDeleteSection">
-                        <img src="../.././images/publisher/icon-trash.svg" alt="icon-trash">
-                        <span>Supprimer la section</span>
+                        <div id="containerDeleteSection">
+                            <img src="../.././images/publisher/icon-trash.svg" alt="icon-trash">
+                            <span>Supprimer la section</span>
+                        </div>
                     </div>
                 </nav>
             </aside>

@@ -27,7 +27,6 @@ tinymce.init({
 
 $(document).ready(function(){
     $("#buttonBack").on("click", function () {
-        console.log($(".button--success"));
         $(".button--success").attr("onclick", "backPages()");
         $("#textBack").show();
         $(".modal").show();
@@ -43,6 +42,10 @@ $(document).ready(function(){
 
     $("#buttonSave").on("click", function () {
        savePage();
+    });
+
+    $("#containerDeleteSection").on("click", function () {
+       deleteSection();
     });
 
     if ($("#containerPublisher").html()){
@@ -235,6 +238,12 @@ function savePage(){
 
 function backPages(){
     document.location.replace("/admin/pages");
+}
+
+function deleteSection(){
+    let section = $(".activeRow").parent().attr('id')
+    $("#"+section).remove();
+    $("#menuObject").hide();
 }
 
 
