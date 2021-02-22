@@ -52,7 +52,7 @@ if (isset($errors)){
                             </div>
                         </div>
 
-                        <div class="jumbotron" style="margin-top:5%;">
+                        <div class="jumbotron mt-2">
                             <div class="align">
                                 <h2>Image *</h2>
                                 <i class="fas fa-plus" onclick="triggerCategoryAdd()"></i>
