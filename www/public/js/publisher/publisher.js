@@ -14,7 +14,7 @@ $(document).ready(function(){
 
     setTimeout(function (){
         $("#containerLoader").fadeOut(700);
-    }, 1000);
+    }, 500);
 
     $("#buttonBack").on("click", function () {
         $(".button--success").attr("onclick", "backPages()");
