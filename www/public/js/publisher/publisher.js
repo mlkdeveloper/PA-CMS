@@ -29,6 +29,7 @@ $(document).ready(function(){
     $("#buttonBack").on("click", function () {
         console.log($(".button--success"));
         $(".button--success").attr("onclick", "backPages()");
+        $("#textBack").show();
         $(".modal").show();
     });
 
@@ -146,6 +147,9 @@ function getTiny(){
 
 function closeModal(){
     $(".modal").hide();
+    $("#textBack").hide();
+    $("#formTiny").hide();
+
 }
 
 function modalTiny(){

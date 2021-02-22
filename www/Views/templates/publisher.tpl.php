@@ -31,11 +31,19 @@
 
                     <div id="menuObject">
                         <div class="row align">
-                            <div class="col-lg-6 col-md-6 col-sm-12 col">
-                                <img src="../.././images/publisher/icon-image.svg" alt="icon-image">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col">
+                                <img src="../.././images/publisher/icon-edit.svg" alt="icon-text" id="icon-text">
+                                <span>Editer</span>
                             </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 col">
-                                <img src="../.././images/publisher/icon-text.svg" alt="icon-text" id="icon-text">
+                        </div>
+                        <div class="row align">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col">
+                                <img src="../.././images/publisher/icon-image.svg" alt="icon-image">
+                                <span>Image</span>
+                            </div>
+                        </div>
+                        <div class="row align">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col">
                             </div>
                         </div>
                     </div>
@@ -56,6 +64,7 @@
                     <div class="row">
                         <div class="col-lg-8 col-md-8 col-sm-8 col center-margin">
                             <div class="jumbotron containerJumbo" id="selectCol">
+                                <h3>Sélectionnez le modèle du bloc</h3>
                                 <div class="row">
                                     <div class="col-lg-3 col-md-3 col-sm-3 col">
                                         <img src="../../images/publisher/col-12.svg" alt="col-12" onclick="addBlock(12)">
@@ -98,7 +107,7 @@
                         <form method="post" class="center-margin" id="formTiny">
                             <textarea id="tiny" name="tiny"></textarea>
                         </form>
-                        <h4>N'oubliez pas de sauvegarder vos modifications !</h4>
+                        <h4 id="textBack">N'oubliez pas de sauvegarder vos modifications !</h4>
                         <div class="buttonModal">
                             <button onclick="closeModal()" class="button button--alert">Annuler</button>
                             <button class="button button--success">Valider</button>
