@@ -22,7 +22,7 @@
                 <nav class="sidenavPublisher">
                     <div class="row align" id="headerMenu">
                         <div class="col-lg-6 col-md-6 col-sm-12 col">
-                            <a href="/admin/pages" class="button button--blue">Retour</a>
+                            <button class="button button--blue" id="buttonBack">Retour</button>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12 col">
                             <img src="../.././images/hamburger.svg" alt="hamburger" id="hamburger">
@@ -98,9 +98,10 @@
                         <form method="post" class="center-margin" id="formTiny">
                             <textarea id="tiny" name="tiny"></textarea>
                         </form>
+                        <h4>N'oubliez pas de sauvegarder vos modifications !</h4>
                         <div class="buttonModal">
                             <button onclick="closeModal()" class="button button--alert">Annuler</button>
-                            <button onclick="getTiny()" class="button button--success">Valider</button>
+                            <button class="button button--success">Valider</button>
                         </div>
                     </div>
                 </div>

@@ -26,6 +26,12 @@ tinymce.init({
 });
 
 $(document).ready(function(){
+    $("#buttonBack").on("click", function () {
+        console.log($(".button--success"));
+        $(".button--success").attr("onclick", "backPages()");
+        $(".modal").show();
+    });
+
     $("#icon-text").on( "click", function() {
         modalTiny();
     });
@@ -149,8 +155,7 @@ function modalTiny(){
     }else{
         tinyMCE.activeEditor.setContent(contentCol);
     }
-    $(".button--alert").css("onclick", "closeModal()");
-    $(".button--success").css("onclick", "getTiny()");
+    $(".button--success").attr("onclick", "getTiny()");
     $(".modal").show();
 }
 
@@ -158,6 +163,8 @@ function savePage(){
 
     $("#buttonSave").hide();
     $("#loader").show();
+
+    $(".activeCol").removeClass("activeCol");
 
     let dataHtml =
         {
@@ -217,6 +224,10 @@ function savePage(){
             alert(xhr.status);
         }
     });
+}
+
+function backPages(){
+    document.location.replace("/admin/pages");
 }
 
 
