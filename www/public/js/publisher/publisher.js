@@ -33,7 +33,7 @@ $(document).ready(function(){
         $(".modal").show();
     });
 
-    $("#icon-text").on( "click", function() {
+    $("#menuObject .col").on( "click", function() {
         modalTiny();
     });
 

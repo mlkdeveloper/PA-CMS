@@ -15,9 +15,10 @@
     cursor: pointer;
 }
 
-.sidenavPublisher img:hover {
+#menuObject .col:hover {
     transform: scale(1.3);
     transition: all 0.5s;
+    cursor: pointer;
 }
 
 .sidenavPublisher span{
@@ -145,4 +146,26 @@ a{
 
 #textBack{
     display: none;
+}
+
+#containerDeleteSection{
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+
+#containerDeleteSection:hover {
+    transform: scale(1.1);
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+#containerDeleteSection span{
+    display: inline;
+    font-size: 0.9rem;
+}
+
+#containerDeleteSection img{
+    width: 1.5rem;
+    vertical-align: middle;
 }

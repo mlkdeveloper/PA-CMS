@@ -47,6 +47,11 @@
                             </div>
                         </div>
                     </div>
+
+                    <div id="containerDeleteSection">
+                        <img src="../.././images/publisher/icon-trash.svg" alt="icon-trash">
+                        <span>Supprimer la section</span>
+                    </div>
                 </nav>
             </aside>
 
@@ -64,7 +69,7 @@
                     <div class="row">
                         <div class="col-lg-8 col-md-8 col-sm-8 col center-margin">
                             <div class="jumbotron containerJumbo" id="selectCol">
-                                <h3>Sélectionnez le modèle du bloc</h3>
+                                <h3>Sélectionnez le modèle de la section</h3>
                                 <div class="row">
                                     <div class="col-lg-3 col-md-3 col-sm-3 col">
                                         <img src="../../images/publisher/col-12.svg" alt="col-12" onclick="addBlock(12)">
