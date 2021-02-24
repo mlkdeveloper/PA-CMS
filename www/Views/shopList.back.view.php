@@ -3,8 +3,9 @@
         <div class="col col-lg-12">
             <h1 style="text-align: center;font-size: 40px">Gestion des magasins </h1>
             <div class="jumbotron">
-
-                <button class="button button--blue"><a href="/admin/nouveau-magasin">Nouveau magasin</a></button>
+                <div class="flex-end mb-1">
+                    <button class="button button--blue"><a href="/admin/nouveau-magasin">Nouveau magasin</a></button>
+                </div>
                 <table id="table" class="row-border hover" style="width:100%">
                     <thead>
                     <tr>
