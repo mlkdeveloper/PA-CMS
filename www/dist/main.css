@@ -16,6 +16,11 @@
   align-items: center;
 }
 
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .col-inner {
   padding: 15px;
 }
