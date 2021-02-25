@@ -47,28 +47,23 @@ class User extends Database
 
 	}
 
-	/**
-	 * @return mixed
-	 */
-	public function getFirstname()
-	{
-	    return $this->firstname;
-	}
-	/**
-	 * @param mixed $firstname
-	 */
-	public function setFirstname($firstname)
-	{
-	    $this->firstname = $firstname;
-	}
+    /**
+     * @return mixed
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
 
-	/**
-	 * @return mixed
-	 */
-	public function getLastname()
-	{
-	    return $this->lastname;
-	}
+    /**
+     * @param mixed $firstName
+     */
+    public function setFirstName($firstName): void
+    {
+        $this->firstName = $firstName;
+    }
+
+
 	/**
 	 * @param mixed $lastname
 	 */
@@ -161,6 +156,102 @@ class User extends Database
 	    $this->isDeleted = $isDeleted;
 	}
 
+    /**
+     * @return mixed
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param mixed $address
+     */
+    public function setAddress($address): void
+    {
+        $this->address = $address;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param mixed $city
+     */
+    public function setCity($city): void
+    {
+        $this->city = $city;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getZipCode()
+    {
+        return $this->zipCode;
+    }
+
+    /**
+     * @param mixed $zipCode
+     */
+    public function setZipCode($zipCode): void
+    {
+        $this->zipCode = $zipCode;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPhoneNumber()
+    {
+        return $this->phoneNumber;
+    }
+
+    /**
+     * @param mixed $phoneNumber
+     */
+    public function setPhoneNumber($phoneNumber): void
+    {
+        $this->phoneNumber = $phoneNumber;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param mixed $createdAt
+     */
+    public function setCreatedAt($createdAt): void
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIdRole()
+    {
+        return $this->id_role;
+    }
+
+    /**
+     * @param mixed $id_role
+     */
+    public function setIdRole($id_role): void
+    {
+        $this->id_role = $id_role;
+    }
+
 
 	public function formBuilderLogin(){
 		return [
@@ -248,7 +339,7 @@ class User extends Database
 								"required"=>true,
 								"class"=>"form_input",
 								"minLength"=>8,
-								"error"=>"Votre mot de passe doit faire au minimum 8 caractères"
+								"error"=>"Votre mot de passe doit faire au minimum 8 caractères et une maj avec un nbr numérique"
 							],
 
 				"pwdConfirm"=>[
@@ -282,11 +373,10 @@ class User extends Database
             "config"=>[
                 "method"=>"POST",
                 "action"=>"",
-                "class"=>"form_control",
-                "id"=>"form_register",
-                "submit"=>"Enregistrer"
+                "class"=>"",
+                "id"=>"form_create_client",
+                "submit"=>"Créer"
             ],
-
             "inputs"=>[
                 "lastName"=>[
                     "type"=>"text",
