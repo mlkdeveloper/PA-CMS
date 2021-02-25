@@ -26,7 +26,7 @@
 }
 
 #headerMenu{
-    padding: 20px 0 150px 0;
+    padding: 20px 0 100px 0;
 }
 
 #hamburger{
@@ -59,6 +59,10 @@ a{
 
 #menuObject .row{
     padding-bottom: 30px;
+}
+
+#menuObject .row:nth-child(3){
+    padding-bottom: 0px;
 }
 
 .sidenavPublisher {

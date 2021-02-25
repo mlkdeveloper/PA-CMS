@@ -7,9 +7,27 @@ let idCol;
 let contentCol;
 
 $(document).ready(function(){
-    if( /Android|webOS|iPhone|iPad|Mac|Macintosh|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
         $("main").children().remove();
         $("main").append("<h2 id='errorMobile'>L'éditeur n'est pas disponible sur mobile et tablette</h2>")
+    }else{
+        tinymce.init({
+            selector: '#tiny',
+            height: '450px',
+            width: '1000px',
+            language: 'fr_FR',
+            statusbar: false,
+            block_unsupported_drop: true,
+            plugins: [
+                'lists',
+                'table'
+            ],
+            toolbar: [
+                'undo redo | styleselect | forecolor backcolor bold italic underline fontselect fontsizeselect | alignleft aligncenter alignright alignjustify ' +
+                '| outdent indent',
+                'numlist bullist | table',
+            ]
+        });
     }
 
     setTimeout(function (){
@@ -34,6 +52,14 @@ $(document).ready(function(){
        savePage();
     });
 
+    $("#icon-arrow-up").on("click", function () {
+        moveUp();
+    });
+
+    $("#icon-arrow-down").on("click", function () {
+        moveDown();
+    });
+
     $("#containerDeleteSection").on("click", function () {
         $(".button--success").attr("onclick", "deleteSection()");
         $("#alertMessage").html("Êtes-vous sûr de vouloir supprimer la section ?");
@@ -48,25 +74,6 @@ $(document).ready(function(){
         counterIdBlock = 1;
         counterIdCol = 1;
     }
-
-
-    tinymce.init({
-        selector: '#tiny',
-        height: '450px',
-        width: '1000px',
-        language: 'fr_FR',
-        statusbar: false,
-        block_unsupported_drop: true,
-        plugins: [
-            'lists',
-            'table'
-        ],
-        toolbar: [
-            'undo redo | styleselect | forecolor backcolor bold italic underline fontselect fontsizeselect | alignleft aligncenter alignright alignjustify ' +
-            '| outdent indent',
-            'numlist bullist | table',
-        ]
-    });
 });
 
 
@@ -260,6 +267,20 @@ function deleteSection(){
     $("#"+section).remove();
     $("#menuObject").hide();
     $(".modal").hide();
+}
+
+function moveUp(){
+    let prevSection = $(".activeRow").parent().prev()[0];
+    if (prevSection){
+        prevSection.before($(".activeRow").parent()[0]);
+    }
+}
+
+function moveDown(){
+    let nextSection = $(".activeRow").parent().next()[0];
+    if (nextSection){
+        nextSection.after($(".activeRow").parent()[0]);
+    }
 }
 
 

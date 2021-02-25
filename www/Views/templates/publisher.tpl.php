@@ -49,9 +49,16 @@
                             </div>
                         </div>
                         <div class="row align">
-                            <div class="col-lg-12 col-md-12 col-sm-12 col">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col" id="icon-arrow-up">
+                                <img src="../../images/publisher/icon-arrow-down.svg" alt="icon-arrow-up">
                             </div>
                         </div>
+                        <div class="row align">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col" id="icon-arrow-down">
+                                <img src="../../images/publisher/icon-arrow-up.svg" alt="icon-arrow-down">
+                            </div>
+                        </div>
+
                         <div id="containerDeleteSection">
                             <img src="../.././images/publisher/icon-trash.svg" alt="icon-trash">
                             <span>Supprimer la section</span>
