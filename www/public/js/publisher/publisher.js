@@ -11,6 +11,46 @@ $(document).ready(function(){
         $("main").children().remove();
         $("main").append("<h2 id='errorMobile'>L'éditeur n'est pas disponible sur mobile et tablette</h2>")
     }else{
+        // tinymce.init({
+        //     selector: '#tiny',
+        //     plugins: 'image code',
+        //     toolbar: 'undo redo | image code',
+        //
+        //     // without images_upload_url set, Upload tab won't show up
+        //     images_upload_url: 'upload.php',
+        //
+        //     // override default upload handler to simulate successful upload
+        //     images_upload_handler: function (blobInfo, success, failure) {
+        //         var xhr, formData;
+        //
+        //         xhr = new XMLHttpRequest();
+        //         xhr.withCredentials = false;
+        //         xhr.open('POST', '../.././Controllers/Toto.php');
+        //
+        //         xhr.onload = function() {
+        //             var json;
+        //
+        //             if (xhr.status != 200) {
+        //                 failure('HTTP Error: ' + xhr.status);
+        //                 return;
+        //             }
+        //
+        //             json = JSON.parse(xhr.responseText);
+        //
+        //             if (!json || typeof json.location != 'string') {
+        //                 failure('Invalid JSON: ' + xhr.responseText);
+        //                 return;
+        //             }
+        //
+        //             success(json.location);
+        //         };
+        //
+        //         formData = new FormData();
+        //         formData.append('file', blobInfo.blob(), blobInfo.filename());
+        //
+        //         xhr.send(formData);
+        //     },
+        // });
         tinymce.init({
             selector: '#tiny',
             height: '450px',
@@ -18,15 +58,52 @@ $(document).ready(function(){
             language: 'fr_FR',
             statusbar: false,
             block_unsupported_drop: true,
+            file_picker_types: 'image',
+            image_description: false,
+            // images_upload_url: '../.././Controllers/Toto.php',
             plugins: [
                 'lists',
-                'table'
+                'table',
+                'image',
+                'imagetools'
             ],
             toolbar: [
                 'undo redo | styleselect | forecolor backcolor bold italic underline fontselect fontsizeselect | alignleft aligncenter alignright alignjustify ' +
                 '| outdent indent',
-                'numlist bullist | table',
-            ]
+                'numlist bullist | table image',
+            ],
+            automatic_uploads: true,
+
+            images_upload_handler: function (blobInfo, success, failure) {
+                var xhr, formData;
+
+                xhr = new XMLHttpRequest();
+                xhr.withCredentials = false;
+                xhr.open('POST', '../.././Controllers/Publisher.php');
+
+                xhr.onload = function() {
+                    var json;
+
+                    if (xhr.status != 200) {
+                        failure('HTTP Error: ' + xhr.status);
+                        return;
+                    }
+
+                    json = JSON.parse(xhr.responseText);
+
+                    if (!json || typeof json.location != 'string') {
+                        failure('Invalid JSON: ' + xhr.responseText);
+                        return;
+                    }
+
+                    success(json.location);
+                };
+
+                formData = new FormData();
+                formData.append('file', blobInfo.blob(), blobInfo.filename());
+
+                xhr.send(formData);
+            },
         });
     }
 
@@ -46,6 +123,14 @@ $(document).ready(function(){
 
     $("#containerPublisher").bind("DOMSubtreeModified", function() {
         $("#buttonSave").show();
+        if ($("#containerPublisher").html()){
+            counterIdBlock = parseInt(($("#containerPublisher").children().last().attr("id")).split("_")[1])+1;
+            counterIdCol = parseInt(($("#containerPublisher").children().children().children().last().attr("id")).split("_")[1])+1;
+
+        }else {
+            counterIdBlock = 1;
+            counterIdCol = 1;
+        }
     });
 
     $("#buttonSave").on("click", function () {
@@ -65,15 +150,6 @@ $(document).ready(function(){
         $("#alertMessage").html("Êtes-vous sûr de vouloir supprimer la section ?");
         $(".modal").show();
     });
-
-    if ($("#containerPublisher").html()){
-        counterIdBlock = parseInt(($("#containerPublisher").children().last().attr("id")).split("_")[1])+1;
-        counterIdCol = parseInt(($("#containerPublisher").children().children().children().last().attr("id")).split("_")[1])+1;
-
-    }else {
-        counterIdBlock = 1;
-        counterIdCol = 1;
-    }
 });
 
 
@@ -162,9 +238,15 @@ function selectCol(col){
 }
 
 function getTiny(){
+    let checkCol = ($(".activeCol").children()[0]);
+
     let textTiny = tinyMCE.get('tiny').getContent();
     if (textTiny !==""){
         $("#"+idCol).html('<div>'+textTiny+'</div>');
+    }else if (checkCol.className !== "cross-add"){
+        $("#"+idCol).html('<div class="jumbotron containerJumbo">' +
+                '<img src="../../../images/cross-add.svg" class="cross-add" alt="cross-add">' +
+            '</div>');
     }
     $(".modal").hide();
     $("#formTiny").hide();
@@ -193,6 +275,7 @@ function savePage(){
 
     $(".activeCol").removeClass("activeCol");
     $(".activeRow").removeClass("activeRow");
+    $("#menuObject").hide();
 
     $("#buttonSave").hide();
     $("#loader").show();

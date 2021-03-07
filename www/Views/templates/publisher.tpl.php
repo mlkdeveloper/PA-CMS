@@ -109,13 +109,13 @@
                 </section>
 
                 <div id="containerSave">
-                    <button id="buttonSave" class="button button--success">Enregistrer</button>
-
                     <div class="spinner" id="loader"></div>
 
                     <div id="alertSave">
                         <p>Enregistrement réussi !</p>
                     </div>
+
+                    <button id="buttonSave" class="button button--success">Enregistrer</button>
                 </div>
 
                 <div class="modal">
