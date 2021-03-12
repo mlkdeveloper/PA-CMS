@@ -12,9 +12,8 @@ if (isset($_POST['dataHtml'])){
 if (isset($_POST['idPage'])){
     $myPublisher->readPublisher($_POST['idPage']);
 }
-$test = reset ($_FILES);
 
-if (!empty($test)){
+if (!empty(reset ($_FILES))){
     $myPublisher->savePictures();
 }
 
