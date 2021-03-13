@@ -17,6 +17,10 @@ if (isset($_POST['listImages'])){
     $myPublisher->listImages();
 }
 
+if (isset($_POST['srcImage'])){
+    $myPublisher->deleteImage($_POST['srcImage']);
+}
+
 if (!empty(reset ($_FILES))){
     $myPublisher->savePictures();
 }
@@ -57,6 +61,10 @@ class Publisher
             echo("undefined");
         }
 
+    }
+
+    public function deleteImage($srcImage){
+        unlink($srcImage);
     }
 
     public function savePictures(){

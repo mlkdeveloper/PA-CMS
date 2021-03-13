@@ -138,7 +138,7 @@ $(document).ready(function(){
 });
 
 
-
+//Ajout d'un bloc
 function addBlock(colNumber) {
 
     if (colNumber > 12) {
@@ -207,6 +207,7 @@ function addBlock(colNumber) {
     $("#containerPublisher").append(html);
 }
 
+//Sélection de la colonne
 function selectCol(col){
     idCol = col.id;
     contentCol = $("#"+idCol).html();
@@ -222,6 +223,7 @@ function selectCol(col){
     $(".objectMenuHide").show();
 }
 
+//Ajout de contenu de Tiny dans la colonne
 function getTiny(){
     let checkCol = ($(".activeCol").children()[0]);
 
@@ -237,16 +239,19 @@ function getTiny(){
     $("#formTiny").hide();
 }
 
+//Fermeture du modal
 function closeModal(){
     $("#modalTiny").hide();
     $("#textBack").hide();
     $("#formTiny").hide();
 }
 
+//Fermeture du modal du gestionnaire des images
 function closeModalImages(){
     $("#modalImages").hide();
 }
 
+//Apparition du modal Tiny
 function modalTiny(){
     $("#formTiny").show();
     $("#alertMessage").html("");
@@ -259,6 +264,7 @@ function modalTiny(){
     $("#modalTiny").show();
 }
 
+//Sauvegarde de la page
 function savePage(){
 
     $(".activeCol").removeClass("activeCol");
@@ -328,11 +334,13 @@ function savePage(){
     });
 }
 
+//Retour aux pages
 function backPages(){
     $("#modalTiny").hide();
     document.location.replace("/admin/pages");
 }
 
+//Suppresion de la section
 function deleteSection(){
     let section = $(".activeRow").parent().attr('id')
     $("#"+section).remove();
@@ -340,6 +348,7 @@ function deleteSection(){
     $("#modalTiny").hide();
 }
 
+//Déplacement vers le haut de la section
 function moveUp(){
     let prevSection = $(".activeRow").parent().prev()[0];
     if (prevSection){
@@ -347,6 +356,7 @@ function moveUp(){
     }
 }
 
+//Déplacement vers le bas de la section
 function moveDown(){
     let nextSection = $(".activeRow").parent().next()[0];
     if (nextSection){
@@ -354,6 +364,7 @@ function moveDown(){
     }
 }
 
+//Lecture du fichier json et affichage de la page
 function read(data){
 
     data = JSON.parse(data);
@@ -382,6 +393,7 @@ function read(data){
     $("#containerPublisher").html(htmlPage);
 }
 
+//Apparition du modal images
 function modalImages(){
     $.ajax({
         type: 'POST',
@@ -393,9 +405,9 @@ function modalImages(){
                 if (data === "undefined"){
                     $("#listImages").append("<h4>Aucune images sur le serveur</h4>")
                 }else {
-                    data.split("|").forEach(function (image, index){
+                    data.split("|").forEach(function (image){
                         if (image !== ""){
-                            $("#listImages").append("<img style='width: 100px; height: 100px' src='../publisher/images/"+image+"' alt='image'>");
+                            $("#listImages").append("<img src='../publisher/images/"+image+"' alt='image' onclick='selectImage(this)'>");
                         }
                     });
                 }
@@ -410,5 +422,28 @@ function modalImages(){
     });
 
     $("#modalImages").show();
+}
+
+function selectImage(image){
+    $(".activeImage").removeClass("activeImage");
+    image.classList.add("activeImage");
+}
+
+function deleteImage(){
+    console.log($(".activeImage").attr("src"));
+    $.ajax({
+        type: 'POST',
+        url: '../.././Controllers/Publisher.php',
+        data: {srcImage: $(".activeImage").attr("src")},
+        success: function(data) {
+            modalImages();
+        },
+        error: function (xhr, ajaxOptions, thrownError){
+            alert(xhr.responseText);
+            alert(ajaxOptions);
+            alert(thrownError);
+            alert(xhr.status);
+        }
+    });
 }
 

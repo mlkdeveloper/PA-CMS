@@ -198,3 +198,20 @@ a{
     width: 1.5rem;
     vertical-align: middle;
 }
+
+#listImages img{
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin: 10px;
+}
+
+#listImages img:hover{
+    cursor: pointer;
+    opacity: 70%;
+}
+
+.activeImage{
+    border: solid 4px #4cb0f1;
+    padding: 4px;
+}

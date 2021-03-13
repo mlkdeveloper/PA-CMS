@@ -137,6 +137,7 @@
                         <div id="listImages"></div>
                         <div class="buttonModal">
                             <button onclick="closeModalImages()" class="button button--alert">Annuler</button>
+                            <button class="button button--success" onclick="deleteImage()">Supprimer</button>
                         </div>
                     </div>
                 </div>
