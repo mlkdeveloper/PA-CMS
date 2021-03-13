@@ -35,7 +35,7 @@
                     </div>
 
                     <div id="menuObject">
-                        <div class="row align">
+                        <div class="row align objectMenuHide">
                             <div class="col-lg-12 col-md-12 col-sm-12 col" id="icon-edit">
                                 <img src="../.././images/publisher/icon-edit.svg" alt="icon-edit">
                                 <span>Editer</span>
@@ -44,21 +44,21 @@
                         <div class="row align">
                             <div class="col-lg-12 col-md-12 col-sm-12 col" id="icon-image">
                                 <img src="../.././images/publisher/icon-image.svg" alt="icon-image">
-                                <span>Images sur le serveur</span>
+                                <span>Gestionnaire<br>d'images</span>
                             </div>
                         </div>
-                        <div class="row align">
+                        <div class="row align objectMenuHide">
                             <div class="col-lg-12 col-md-12 col-sm-12 col" id="icon-arrow-up">
                                 <img src="../../images/publisher/icon-arrow-down.svg" alt="icon-arrow-up">
                             </div>
                         </div>
-                        <div class="row align">
+                        <div class="row align objectMenuHide">
                             <div class="col-lg-12 col-md-12 col-sm-12 col" id="icon-arrow-down">
                                 <img src="../../images/publisher/icon-arrow-up.svg" alt="icon-arrow-down">
                             </div>
                         </div>
 
-                        <div id="containerDeleteSection">
+                        <div id="containerDeleteSection" class="objectMenuHide">
                             <img src="../.././images/publisher/icon-trash.svg" alt="icon-trash">
                             <span>Supprimer la section</span>
                         </div>
@@ -117,7 +117,7 @@
                     <button id="buttonSave" class="button button--success">Enregistrer</button>
                 </div>
 
-                <div class="modal">
+                <div class="modal" id="modalTiny">
                     <div class="modal-content">
                         <form method="post" class="center-margin" id="formTiny">
                             <textarea id="tiny" name="tiny"></textarea>
@@ -125,11 +125,18 @@
 
                         <h4 id="alertMessage"></h4>
 
-                        <div id="listImages"></div>
-
                         <div class="buttonModal">
                             <button onclick="closeModal()" class="button button--alert">Annuler</button>
                             <button class="button button--success">Valider</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal" id="modalImages">
+                    <div class="modal-content">
+                        <div id="listImages"></div>
+                        <div class="buttonModal">
+                            <button onclick="closeModalImages()" class="button button--alert">Annuler</button>
                         </div>
                     </div>
                 </div>

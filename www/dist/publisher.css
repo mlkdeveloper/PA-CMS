@@ -53,7 +53,7 @@ a{
     text-decoration: none;
 }
 
-#menuObject{
+.objectMenuHide{
     display: none;
 }
 

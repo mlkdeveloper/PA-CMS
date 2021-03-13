@@ -50,7 +50,13 @@ class Publisher
         foreach ($list as $image){
             $images .= $image."|";
         }
-        echo($images);
+
+        if ($images){
+            echo($images);
+        }else {
+            echo("undefined");
+        }
+
     }
 
     public function savePictures(){
