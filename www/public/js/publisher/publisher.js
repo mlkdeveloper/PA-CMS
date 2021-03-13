@@ -38,7 +38,7 @@ $(document).ready(function(){
             block_unsupported_drop: true,
             file_picker_types: 'image',
             image_description: false,
-            // images_upload_url: '../.././Controllers/Toto.php',
+            images_file_types: 'jpg,png,gif',
             plugins: [
                 'lists',
                 'table',
@@ -95,6 +95,10 @@ $(document).ready(function(){
 
     $("#menuObject #icon-edit").on( "click", function() {
         modalTiny();
+    });
+
+    $("#menuObject #icon-image").on( "click", function() {
+        modalImages();
     });
 
     $("#buttonSave").on("click", function () {
@@ -375,4 +379,29 @@ function read(data){
     $("#containerPublisher").html(htmlPage);
 }
 
+function modalImages(){
+    $.ajax({
+        type: 'POST',
+        url: '../.././Controllers/Publisher.php',
+        data: {listImages: ""},
+        success: function(data) {
+            if (data) {
+                $("#listImages").html("");
+                data.split("|").forEach(function (image){
+                    if (image !== ""){
+                        $("#listImages").append("<img style='width: 100px; height: 100px' src='../publisher/images/"+image+"' alt='image'>");
+                    }
+                });
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError){
+            alert(xhr.responseText);
+            alert(ajaxOptions);
+            alert(thrownError);
+            alert(xhr.status);
+        }
+    });
+
+    $(".modal").show();
+}
 

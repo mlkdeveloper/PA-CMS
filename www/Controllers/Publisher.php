@@ -13,6 +13,10 @@ if (isset($_POST['idPage'])){
     $myPublisher->readPublisher($_POST['idPage']);
 }
 
+if (isset($_POST['listImages'])){
+    $myPublisher->listImages();
+}
+
 if (!empty(reset ($_FILES))){
     $myPublisher->savePictures();
 }
@@ -38,6 +42,15 @@ class Publisher
         }else {
             echo null;
         }
+    }
+
+    public function listImages(){
+        $images = "";
+        $list =array_diff(scandir("../publisher/images"), array('.', '..'));
+        foreach ($list as $image){
+            $images .= $image."|";
+        }
+        echo($images);
     }
 
     public function savePictures(){

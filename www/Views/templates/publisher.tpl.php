@@ -42,9 +42,9 @@
                             </div>
                         </div>
                         <div class="row align">
-                            <div class="col-lg-12 col-md-12 col-sm-12 col">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col" id="icon-image">
                                 <img src="../.././images/publisher/icon-image.svg" alt="icon-image">
-                                <span>Image</span>
+                                <span>Images sur le serveur</span>
                             </div>
                         </div>
                         <div class="row align">
@@ -122,7 +122,11 @@
                         <form method="post" class="center-margin" id="formTiny">
                             <textarea id="tiny" name="tiny"></textarea>
                         </form>
+
                         <h4 id="alertMessage"></h4>
+
+                        <div id="listImages"></div>
+
                         <div class="buttonModal">
                             <button onclick="closeModal()" class="button button--alert">Annuler</button>
                             <button class="button button--success">Valider</button>
