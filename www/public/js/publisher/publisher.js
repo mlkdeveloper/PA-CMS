@@ -409,6 +409,14 @@ function modalImages(){
     $("#errorSelectionImage").remove();
     $("#errorImageExist").remove();
 
+    // $("#modalImages").show();
+    // $("#listImages").before("<div id='containerLoaderImages'>" +
+    //         "<div id='loadingImages'>" +
+    //             "<div class='spinner'></div>" +
+    //         "</div>" +
+    //     "</div>");
+
+
     $.ajax({
         type: 'POST',
         url: '../.././Controllers/Publisher.php',
@@ -429,7 +437,6 @@ function modalImages(){
                     });
                 }
             }
-            $("#modalImages").show();
         },
         error: function (xhr, ajaxOptions, thrownError){
             alert(xhr.responseText);
