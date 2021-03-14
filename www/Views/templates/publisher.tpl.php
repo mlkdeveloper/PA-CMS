@@ -127,17 +127,26 @@
 
                         <div class="buttonModal">
                             <button onclick="closeModal()" class="button button--alert">Annuler</button>
-                            <button class="button button--success">Valider</button>
+                            <button class="button button--success" id="buttonModalTiny">Valider</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="modal" id="modalImages">
                     <div class="modal-content">
-                        <div id="listImages"></div>
-                        <div class="buttonModal">
-                            <button onclick="closeModalImages()" class="button button--alert">Annuler</button>
-                            <button class="button button--success" onclick="deleteImage()">Supprimer</button>
+                        <div id="selectDeleteImage">
+                            <div id="listImages"></div>
+                            <div class="buttonModal">
+                                <button onclick="closeModalImages()" class="button button--alert">Fermer</button>
+                                <button class="button button--success" onclick="confirmDeleteImage()" id="successModalImages">Supprimer</button>
+                            </div>
+                        </div>
+                        <div id="confirmDeleteImage">
+                            <h4>Etes-vous sûr de vouloir supprimer cette image du serveur ?</h4>
+                            <div class="buttonModal">
+                                <button onclick='closeModalConfirmImages()' class='button button--alert'>Non</button>
+                                <button class='button button--success' onclick='deleteImage()' id='successModalImages'>Oui</button>
+                            </div>
                         </div>
                     </div>
                 </div>

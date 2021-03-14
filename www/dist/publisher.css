@@ -215,3 +215,7 @@ a{
     border: solid 4px #4cb0f1;
     padding: 4px;
 }
+
+#confirmDeleteImage{
+    display: none;
+}

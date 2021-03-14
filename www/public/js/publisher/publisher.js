@@ -5,8 +5,9 @@ const prefixIdCol = "col_";
 let html;
 let idCol;
 let contentCol;
-let htmlPage;
+let htmlPage = "";
 
+//Lecture du fichier JSON de la page
 $.ajax({
     type: 'POST',
     url: '../.././Controllers/Publisher.php',
@@ -14,6 +15,13 @@ $.ajax({
     success: function(data) {
         if (data) {
             read(data);
+        }else{
+            counterIdBlock = 1;
+            counterIdCol = 1;
+
+            setTimeout(function (){
+                $("#containerLoader").fadeOut(700);
+            }, 500);
         }
     },
     error: function (xhr, ajaxOptions, thrownError){
@@ -39,6 +47,9 @@ $(document).ready(function(){
             file_picker_types: 'image',
             image_description: false,
             images_file_types: 'jpg,png,gif',
+            image_class_list: [
+                {title: 'Class', value: 'imageTiny'}
+            ],
             plugins: [
                 'lists',
                 'table',
@@ -88,7 +99,7 @@ $(document).ready(function(){
 
 
     $("#buttonBack").on("click", function () {
-        $(".button--success").attr("onclick", "backPages()");
+        $("#buttonModalTiny").attr("onclick", "backPages()");
         $("#alertMessage").html("N'oubliez pas de sauvegarder vos modifications !");
         $("#modalTiny").show();
     });
@@ -114,27 +125,14 @@ $(document).ready(function(){
     });
 
     $("#containerDeleteSection").on("click", function () {
-        $(".button--success").attr("onclick", "deleteSection()");
+        $("#buttonModalTiny").attr("onclick", "deleteSection()");
         $("#alertMessage").html("Êtes-vous sûr de vouloir supprimer la section ?");
         $("#modalTiny").show();
     });
 
-    if ($("#containerPublisher").html()){
-        counterIdBlock = parseInt(($("#containerPublisher").children().last().attr("id")).split("_")[1])+1;
-        counterIdCol = parseInt(($("#containerPublisher").children().children().children().last().attr("id")).split("_")[1])+1;
-
-    }else {
-        counterIdBlock = 1;
-        counterIdCol = 1;
-    }
-
     $("#containerPublisher").bind("DOMSubtreeModified", function() {
         $("#buttonSave").show();
     });
-
-    setTimeout(function (){
-        $("#containerLoader").fadeOut(700);
-    }, 500);
 });
 
 
@@ -260,7 +258,7 @@ function modalTiny(){
     }else{
         tinyMCE.activeEditor.setContent(contentCol);
     }
-    $(".button--success").attr("onclick", "getTiny()");
+    $("#buttonModalTiny").attr("onclick", "getTiny()");
     $("#modalTiny").show();
 }
 
@@ -391,10 +389,26 @@ function read(data){
             '</section>';
     });
     $("#containerPublisher").html(htmlPage);
+
+    if ($("#containerPublisher").html()){
+        counterIdBlock = parseInt(($("#containerPublisher").children().last().attr("id")).split("_")[1])+1;
+        counterIdCol = parseInt(($("#containerPublisher").children().children().children().last().attr("id")).split("_")[1])+1;
+
+    }else {
+        counterIdBlock = 1;
+        counterIdCol = 1;
+    }
+
+    setTimeout(function (){
+        $("#containerLoader").fadeOut(700);
+    }, 500);
 }
 
 //Apparition du modal images
 function modalImages(){
+    $("#errorSelectionImage").remove();
+    $("#errorImageExist").remove();
+
     $.ajax({
         type: 'POST',
         url: '../.././Controllers/Publisher.php',
@@ -403,8 +417,11 @@ function modalImages(){
             if (data) {
                 $("#listImages").html("");
                 if (data === "undefined"){
-                    $("#listImages").append("<h4>Aucune images sur le serveur</h4>")
+                    $("#listImages").append("<h4>Aucune images sur le serveur</h4>");
+                    $("#successModalImages").hide();
                 }else {
+                    $("#listImages").append("<h4>Sélectionnez une image pour la supprimer du serveur</h4>");
+                    $("#successModalImages").show();
                     data.split("|").forEach(function (image){
                         if (image !== ""){
                             $("#listImages").append("<img src='../publisher/images/"+image+"' alt='image' onclick='selectImage(this)'>");
@@ -412,6 +429,7 @@ function modalImages(){
                     });
                 }
             }
+            $("#modalImages").show();
         },
         error: function (xhr, ajaxOptions, thrownError){
             alert(xhr.responseText);
@@ -420,23 +438,73 @@ function modalImages(){
             alert(xhr.status);
         }
     });
-
-    $("#modalImages").show();
 }
 
+//Sélection d'une image du gestionnaire d'images
 function selectImage(image){
     $(".activeImage").removeClass("activeImage");
     image.classList.add("activeImage");
 }
 
+//Apparition du modal de confirmation de suppression d'une image
+function confirmDeleteImage(){
+
+    $(".imageTiny").each(function (){
+        if ($(".activeImage").length !== 0) {
+            if (($(this).attr('src')).split("publisher")[1] === ($(".activeImage").attr("src")).split("publisher")[1]) {
+                if($("#errorImageExist").length === 0){
+                    $("#errorSelectionImage").remove();
+                    $("#listImages").prepend("<div class='alert alert--red' id='errorImageExist'>Cette image ne peut pas être supprimée car elle est utilisée sur la page</div>")
+                }
+            } else {
+                detectionErrorsDeleteImage();
+            }
+        }else{
+            if($("#errorSelectionImage").length === 0){
+                $("#errorImageExist").remove();
+                $("#listImages").prepend("<div class='alert alert--red' id='errorSelectionImage'>Aucune image sélectionnée</div>");
+            }
+        }
+    });
+
+    if ($(".imageTiny").length === 0){
+        if ($(".activeImage").length === 0){
+            if($("#errorSelectionImage").length === 0){
+                $("#errorImageExist").remove();
+                $("#listImages").prepend("<div class='alert alert--red' id='errorSelectionImage'>Aucune image sélectionnée</div>");
+            }
+        }else{
+            detectionErrorsDeleteImage();
+        }
+    }
+}
+
+//Gestion des erreurs pour lers images
+function detectionErrorsDeleteImage(){
+
+    $("#errorSelectionImage").remove();
+    $("#errorImageExist").remove();
+    $("#selectDeleteImage").hide();
+    $("#confirmDeleteImage").show();
+}
+
+//Fermeture du modal de confirmation de suppression d'une image
+function closeModalConfirmImages(){
+    $("#confirmDeleteImage").hide();
+    $("#selectDeleteImage").show();
+}
+
+//Suppression de l'image
 function deleteImage(){
-    console.log($(".activeImage").attr("src"));
+
     $.ajax({
         type: 'POST',
         url: '../.././Controllers/Publisher.php',
         data: {srcImage: $(".activeImage").attr("src")},
         success: function(data) {
-            modalImages();
+            $(".activeImage").remove();
+            $("#confirmDeleteImage").hide();
+            $("#selectDeleteImage").show();
         },
         error: function (xhr, ajaxOptions, thrownError){
             alert(xhr.responseText);
