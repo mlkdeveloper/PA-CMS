@@ -138,7 +138,8 @@
                             <div id="listImages"></div>
                             <div class="buttonModal">
                                 <button onclick="closeModalImages()" class="button button--alert">Fermer</button>
-                                <button class="button button--success" onclick="confirmDeleteImage()" id="successModalImages">Supprimer</button>
+                                <button class="button button--blue" onclick="inputUpload()">Ajouter</button>
+                                <button class="button button--blue" onclick="confirmDeleteImage()" id="successModalImages">Supprimer</button>
                             </div>
                         </div>
                         <div id="confirmDeleteImage">

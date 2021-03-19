@@ -21,6 +21,11 @@ if (isset($_POST['srcImage'])){
     $myPublisher->deleteImage($_POST['srcImage']);
 }
 
+if (isset($_FILES['file'])){
+
+    $myPublisher->uploadImage();
+}
+
 if (!empty(reset ($_FILES))){
     $myPublisher->savePictures();
 }
@@ -65,6 +70,36 @@ class Publisher
 
     public function deleteImage($srcImage){
         unlink($srcImage);
+    }
+
+    public function uploadImage(){
+
+        if(isset($_FILES['file']['name'])){
+
+            /* Getting file name */
+            $filename = $_FILES['file']['name'];
+
+            /* Location */
+            $location = "../publisher/images/".$filename;
+            $imageFileType = pathinfo($location,PATHINFO_EXTENSION);
+            $imageFileType = strtolower($imageFileType);
+
+            /* Valid extensions */
+            $valid_extensions = array("jpg","jpeg","png");
+
+            $response = 0;
+            /* Check file extension */
+            if(in_array(strtolower($imageFileType), $valid_extensions)) {
+                /* Upload file */
+
+                if(move_uploaded_file($_FILES['file']['tmp_name'],$location)){
+                    $response = $location;
+                }
+            }
+
+            echo $response;
+            exit;
+        }
     }
 
     public function savePictures(){

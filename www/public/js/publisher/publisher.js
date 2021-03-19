@@ -133,6 +133,10 @@ $(document).ready(function(){
     $("#containerPublisher").bind("DOMSubtreeModified", function() {
         $("#buttonSave").show();
     });
+
+    $("#listImages").click(function (){
+
+    });
 });
 
 
@@ -406,15 +410,11 @@ function read(data){
 
 //Apparition du modal images
 function modalImages(){
+
     $("#errorSelectionImage").remove();
     $("#errorImageExist").remove();
 
-    // $("#modalImages").show();
-    // $("#listImages").before("<div id='containerLoaderImages'>" +
-    //         "<div id='loadingImages'>" +
-    //             "<div class='spinner'></div>" +
-    //         "</div>" +
-    //     "</div>");
+    $("#modalImages").show();
 
 
     $.ajax({
@@ -425,10 +425,10 @@ function modalImages(){
             if (data) {
                 $("#listImages").html("");
                 if (data === "undefined"){
-                    $("#listImages").append("<h4>Aucune images sur le serveur</h4>");
+                    $("#listImages").append("<h4 class='center-margin'>Aucune images sur le serveur</h4>");
                     $("#successModalImages").hide();
                 }else {
-                    $("#listImages").append("<h4>Sélectionnez une image pour la supprimer du serveur</h4>");
+                    $("#listImages").before("<h4 class='center-margin'>Sélectionnez une image</h4>");
                     $("#successModalImages").show();
                     data.split("|").forEach(function (image){
                         if (image !== ""){
@@ -488,7 +488,6 @@ function confirmDeleteImage(){
 
 //Gestion des erreurs pour lers images
 function detectionErrorsDeleteImage(){
-
     $("#errorSelectionImage").remove();
     $("#errorImageExist").remove();
     $("#selectDeleteImage").hide();
@@ -522,3 +521,36 @@ function deleteImage(){
     });
 }
 
+function inputUpload(){
+    if($("#inputUpload").length === 0){
+        $("#listImages").before("<input type='file' accept='image/*' name='listImages[]' id='inputUpload' onchange='uploadImage()'>");
+    }
+    $("#inputUpload").click();
+}
+
+function uploadImage(){
+
+    var fd = new FormData();
+    var files = $('#inputUpload')[0].files;
+
+    if(files.length > 0 ){
+        fd.append('file',files[0]);
+
+        $.ajax({
+            url: '../.././Controllers/Publisher.php',
+            type: 'post',
+            data: fd,
+            contentType: false,
+            processData: false,
+            success: function(response){
+                if(response != 0){
+                    $("#listImages").prepend("<img src='"+response+"' alt='image' onclick='selectImage(this)'>")
+                }else{
+                    alert("Une erreur c'est produite pendant le téléchargement de l'image");
+                }
+            },
+        });
+    }else{
+        alert("Aucune image sélectionnée");
+    }
+}
