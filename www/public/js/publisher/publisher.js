@@ -43,56 +43,15 @@ $(document).ready(function(){
             width: '1000px',
             language: 'fr_FR',
             statusbar: false,
-            block_unsupported_drop: true,
-            file_picker_types: 'image',
-            image_description: false,
-            images_file_types: 'jpg,png,gif',
-            image_class_list: [
-                {title: 'Class', value: 'imageTiny'}
-            ],
             plugins: [
                 'lists',
                 'table',
-                'image',
-                'imagetools'
             ],
             toolbar: [
                 'undo redo | styleselect | forecolor backcolor bold italic underline fontselect fontsizeselect | alignleft aligncenter alignright alignjustify ' +
                 '| outdent indent',
-                'numlist bullist | table image',
+                'numlist bullist | table',
             ],
-            automatic_uploads: true,
-
-            images_upload_handler: function (blobInfo, success, failure) {
-                var xhr, formData;
-
-                xhr = new XMLHttpRequest();
-                xhr.withCredentials = false;
-                xhr.open('POST', '../.././Controllers/Publisher.php');
-
-                xhr.onload = function() {
-                    var json;
-
-                    if (xhr.status != 200) {
-                        failure('HTTP Error: ' + xhr.status);
-                        return;
-                    }
-
-                    json = JSON.parse(xhr.responseText);
-
-                    if (!json || typeof json.location != 'string') {
-                        failure('Invalid JSON: ' + xhr.responseText);
-                        return;
-                    }
-
-                    success(json.location);
-                };
-
-                formData = new FormData();
-                formData.append('file', blobInfo.blob(), blobInfo.filename());
-
-                xhr.send(formData);
-            },
         });
     }
 
@@ -133,16 +92,11 @@ $(document).ready(function(){
     $("#containerPublisher").bind("DOMSubtreeModified", function() {
         $("#buttonSave").show();
     });
-
-    $("#listImages").click(function (){
-
-    });
 });
 
 
 //Ajout d'un bloc
 function addBlock(colNumber) {
-
     if (colNumber > 12) {
         switch (colNumber){
 
@@ -215,13 +169,13 @@ function selectCol(col){
     contentCol = $("#"+idCol).html();
     $(".activeCol").removeClass("activeCol");
     $(".activeRow").removeClass("activeRow");
-    if ($("#"+col.id).children().attr('class') !== "jumbotron containerJumbo"){
+    // if ($("#"+col.id).children().attr('class') !== "jumbotron containerJumbo"){
         $("#"+col.id).addClass("activeCol");
         $("#"+col.id).parent().addClass("activeRow");
-    }else {
-        $("#"+col.id).children().addClass("activeCol");
-        $("#"+col.id).parent().addClass("activeRow");
-    }
+    // }else {
+    //     $("#"+col.id).children().addClass("activeCol");
+    //     $("#"+col.id).parent().addClass("activeRow");
+    // }
     $(".objectMenuHide").show();
 }
 
@@ -251,6 +205,7 @@ function closeModal(){
 //Fermeture du modal du gestionnaire des images
 function closeModalImages(){
     $("#modalImages").hide();
+    $(".titleUploadImage").remove();
 }
 
 //Apparition du modal Tiny
@@ -397,7 +352,6 @@ function read(data){
     if ($("#containerPublisher").html()){
         counterIdBlock = parseInt(($("#containerPublisher").children().last().attr("id")).split("_")[1])+1;
         counterIdCol = parseInt(($("#containerPublisher").children().children().children().last().attr("id")).split("_")[1])+1;
-
     }else {
         counterIdBlock = 1;
         counterIdCol = 1;
@@ -425,11 +379,14 @@ function modalImages(){
             if (data) {
                 $("#listImages").html("");
                 if (data === "undefined"){
-                    $("#listImages").append("<h4 class='center-margin'>Aucune images sur le serveur</h4>");
-                    $("#successModalImages").hide();
+                    if($(".titleUploadImage").length === 0) {
+                        $("#listImages").before("<h3 class='titleUploadImage'>Aucune images sur le serveur</h3>");
+                    }
+                    $(".buttonModalImage div").css("background-color", "transparent");
                 }else {
-                    $("#listImages").before("<h4 class='center-margin'>Sélectionnez une image</h4>");
-                    $("#successModalImages").show();
+                    if($(".titleUploadImage").length === 0) {
+                        $("#listImages").before("<h3 class='titleUploadImage'>Sélectionnez une image</h3>");
+                    }
                     data.split("|").forEach(function (image){
                         if (image !== ""){
                             $("#listImages").append("<img src='../publisher/images/"+image+"' alt='image' onclick='selectImage(this)'>");
@@ -455,30 +412,39 @@ function selectImage(image){
 
 //Apparition du modal de confirmation de suppression d'une image
 function confirmDeleteImage(){
-
+    $("#buttonModalImage").hide();
     $(".imageTiny").each(function (){
         if ($(".activeImage").length !== 0) {
             if (($(this).attr('src')).split("publisher")[1] === ($(".activeImage").attr("src")).split("publisher")[1]) {
                 if($("#errorImageExist").length === 0){
                     $("#errorSelectionImage").remove();
-                    $("#listImages").prepend("<div class='alert alert--red' id='errorImageExist'>Cette image ne peut pas être supprimée car elle est utilisée sur la page</div>")
+                    if ($(".errorMessageImage").length === 0) {
+                        $(".buttonModalImage div").append("<div class='alert alert--red errorMessageImage'>Cette image ne peut pas être supprimée<br> car elle est utilisée sur la page</div>");
+                        removeErrorMessage();
+                    }
                 }
             } else {
                 detectionErrorsDeleteImage();
             }
         }else{
-            if($("#errorSelectionImage").length === 0){
+            if($(".errorMessageImage").length === 0){
                 $("#errorImageExist").remove();
-                $("#listImages").prepend("<div class='alert alert--red' id='errorSelectionImage'>Aucune image sélectionnée</div>");
+                if ($(".errorMessageImage").length === 0) {
+                    $(".buttonModalImage div").append("<div class='alert alert--red errorMessageImage'>Aucune image sélectionnée</div>");
+                    removeErrorMessage();
+                }
             }
         }
     });
 
     if ($(".imageTiny").length === 0){
         if ($(".activeImage").length === 0){
-            if($("#errorSelectionImage").length === 0){
+            if($(".errorMessageImage").length === 0){
                 $("#errorImageExist").remove();
-                $("#listImages").prepend("<div class='alert alert--red' id='errorSelectionImage'>Aucune image sélectionnée</div>");
+                if ($(".errorMessageImage").length === 0) {
+                    $(".buttonModalImage div").append("<div class='alert alert--red errorMessageImage'>Aucune image sélectionnée</div>");
+                    removeErrorMessage();
+                }
             }
         }else{
             detectionErrorsDeleteImage();
@@ -490,14 +456,16 @@ function confirmDeleteImage(){
 function detectionErrorsDeleteImage(){
     $("#errorSelectionImage").remove();
     $("#errorImageExist").remove();
-    $("#selectDeleteImage").hide();
+    $(".buttonModalImage").hide();
+    $("#selectImage").hide();
     $("#confirmDeleteImage").show();
 }
 
 //Fermeture du modal de confirmation de suppression d'une image
 function closeModalConfirmImages(){
     $("#confirmDeleteImage").hide();
-    $("#selectDeleteImage").show();
+    $(".buttonModalImage").show();
+    $("#selectImage").show();
 }
 
 //Suppression de l'image
@@ -510,7 +478,8 @@ function deleteImage(){
         success: function(data) {
             $(".activeImage").remove();
             $("#confirmDeleteImage").hide();
-            $("#selectDeleteImage").show();
+            $(".buttonModalImage").show();
+            $("#selectImage").show();
         },
         error: function (xhr, ajaxOptions, thrownError){
             alert(xhr.responseText);
@@ -523,7 +492,7 @@ function deleteImage(){
 
 function inputUpload(){
     if($("#inputUpload").length === 0){
-        $("#listImages").before("<input type='file' accept='image/*' name='listImages[]' id='inputUpload' onchange='uploadImage()'>");
+        $("#listImages").before("<input type='file' accept='image/*' name='listImages' id='inputUpload' onchange='uploadImage()'>");
     }
     $("#inputUpload").click();
 }
@@ -553,4 +522,28 @@ function uploadImage(){
     }else{
         alert("Aucune image sélectionnée");
     }
+}
+
+function addImage() {
+    if ($(".activeCol").length === 0) {
+        if ($(".errorMessageImage").length === 0) {
+            $(".buttonModalImage div").append("<div class='alert alert--red errorMessageImage'>Aucun bloc sélectionné</div>");
+            removeErrorMessage()
+        }
+    }else if ($(".activeImage").length === 0){
+        if ($(".errorMessageImage").length === 0) {
+            $(".buttonModalImage div").append("<div class='alert alert--red errorMessageImage'>Aucun image sélectionnée</div>");
+            removeErrorMessage()
+        }
+    }else{
+        let link = $(".activeImage").attr("src");
+        $(".activeCol").html("<img src='" + link + "' alt='image' class='imageTiny' style='width: 100%; height: 100%; object-fit: cover'>");
+        closeModalImages();
+    }
+}
+
+function removeErrorMessage(){
+    setTimeout(function (){
+        $(".errorMessageImage").remove();
+    }, 5000);
 }

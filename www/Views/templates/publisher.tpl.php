@@ -133,14 +133,18 @@
                 </div>
 
                 <div class="modal" id="modalImages">
-                    <div class="modal-content">
-                        <div id="selectDeleteImage">
-                            <div id="listImages"></div>
-                            <div class="buttonModal">
-                                <button onclick="closeModalImages()" class="button button--alert">Fermer</button>
-                                <button class="button button--blue" onclick="inputUpload()">Ajouter</button>
-                                <button class="button button--blue" onclick="confirmDeleteImage()" id="successModalImages">Supprimer</button>
+                    <div class="modal-content" id="contentModalImage">
+                        <div class="buttonModalImage">
+                            <div>
+                                <button class="button button--success" onclick="addImage()">Ajouter</button>
+                                <button class="button button--blue" onclick="inputUpload()">Transférer</button>
+                                <button class="button button--warning" onclick="confirmDeleteImage()">Supprimer</button>
+                                <button class="button button--alert" onclick="closeModalImages()" >Fermer</button>
                             </div>
+                        </div>
+                        <div id="selectImage">
+                            <h4></h4>
+                            <div id="listImages"></div>
                         </div>
                         <div id="confirmDeleteImage">
                             <h4>Etes-vous sûr de vouloir supprimer cette image du serveur ?</h4>
