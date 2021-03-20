@@ -2,6 +2,10 @@
     background-color: #FFFFFF;
 }
 
+#bodyContainer{
+    transition: all 0.7s;
+}
+
 #containerLoader{
     position: fixed;
     left: 0;
@@ -33,7 +37,7 @@
     width: 2.2rem;
 }
 
-.sidenavPublisher img{
+#sidenavPublisher img{
     width: 2.5rem;
     cursor: pointer;
 }
@@ -44,7 +48,7 @@
     cursor: pointer;
 }
 
-.sidenavPublisher span{
+#sidenavPublisher span{
     display: block;
     margin-top: 8px;
 }
@@ -65,7 +69,8 @@ a{
     padding-bottom: 0px;
 }
 
-.sidenavPublisher {
+
+#sidenavPublisher {
     height: 100vh;
     position: fixed;
     width: 200px;
@@ -253,4 +258,13 @@ a{
 
 #contentModalImage{
     min-width: 550px;
+}
+
+#btnShowMenu{
+    cursor: pointer;
+    display: none;
+    transition: all 1s;
+    z-index: 10;
+    margin: 20px;
+    position: fixed;
 }

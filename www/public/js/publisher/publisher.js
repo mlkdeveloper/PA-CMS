@@ -83,6 +83,14 @@ $(document).ready(function(){
         moveDown();
     });
 
+    $("#btnHideMenu").on("click", function () {
+        hideMenu();
+    });
+
+    $("#btnShowMenu").on("click", function () {
+        showMenu();
+    });
+
     $("#containerDeleteSection").on("click", function () {
         $("#buttonModalTiny").attr("onclick", "deleteSection()");
         $("#alertMessage").html("Êtes-vous sûr de vouloir supprimer la section ?");
@@ -212,7 +220,9 @@ function closeModalImages(){
 function modalTiny(){
     $("#formTiny").show();
     $("#alertMessage").html("");
-    if ($("#"+idCol).children().hasClass("jumbotron") === true){
+    if ($("#"+idCol).children().hasClass("jumbotron") === true) {
+        tinyMCE.activeEditor.setContent("");
+    }else if ($("#"+idCol).children().hasClass("imageUploaded") === true){
         tinyMCE.activeEditor.setContent("");
     }else{
         tinyMCE.activeEditor.setContent(contentCol);
@@ -413,7 +423,7 @@ function selectImage(image){
 //Apparition du modal de confirmation de suppression d'une image
 function confirmDeleteImage(){
     $("#buttonModalImage").hide();
-    $(".imageTiny").each(function (){
+    $(".imageUploaded").each(function (){
         if ($(".activeImage").length !== 0) {
             if (($(this).attr('src')).split("publisher")[1] === ($(".activeImage").attr("src")).split("publisher")[1]) {
                 if($("#errorImageExist").length === 0){
@@ -437,7 +447,7 @@ function confirmDeleteImage(){
         }
     });
 
-    if ($(".imageTiny").length === 0){
+    if ($(".imageUploaded").length === 0){
         if ($(".activeImage").length === 0){
             if($(".errorMessageImage").length === 0){
                 $("#errorImageExist").remove();
@@ -490,6 +500,7 @@ function deleteImage(){
     });
 }
 
+//Clique sur l'input d'upload des images
 function inputUpload(){
     if($("#inputUpload").length === 0){
         $("#listImages").before("<input type='file' accept='image/*' name='listImages' id='inputUpload' onchange='uploadImage()'>");
@@ -497,6 +508,7 @@ function inputUpload(){
     $("#inputUpload").click();
 }
 
+//Upload sur le serveur de l'image
 function uploadImage(){
 
     var fd = new FormData();
@@ -524,6 +536,7 @@ function uploadImage(){
     }
 }
 
+//Ajout de l'image dans la gallerie
 function addImage() {
     if ($(".activeCol").length === 0) {
         if ($(".errorMessageImage").length === 0) {
@@ -537,13 +550,44 @@ function addImage() {
         }
     }else{
         let link = $(".activeImage").attr("src");
-        $(".activeCol").html("<img src='" + link + "' alt='image' class='imageTiny' style='width: 100%; height: 100%; object-fit: cover'>");
+        $(".activeCol").html("<img src='" + link + "' alt='image' class='imageUploaded' style='width: 100%; height: 100%; object-fit: cover'>");
         closeModalImages();
     }
 }
 
+//Suppresion des messages d'erreur
 function removeErrorMessage(){
     setTimeout(function (){
         $(".errorMessageImage").remove();
     }, 5000);
+}
+
+function hideMenu(){
+    $('#sidenavPublisher').animate({
+            width: 'toggle'
+        },
+        {
+            start: function(now, fx) {
+                $(".container-body").css("width", "100%");
+            },
+            complete: function(){
+                setTimeout(function (){
+                    $("#btnShowMenu").show();
+                }, 200);
+            }
+        }
+    );
+}
+
+function showMenu(){
+    $('#sidenavPublisher').animate({
+            width: 'toggle'
+        },
+        {
+            start: function(now, fx) {
+                $("#btnShowMenu").hide();
+                $(".container-body").css("width", "calc(100% - 200px)");
+            },
+        }
+    );
 }

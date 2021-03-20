@@ -24,13 +24,15 @@
 
         <main>
             <aside>
-                <nav class="sidenavPublisher">
+                <img src="../.././images/hamburger.svg" alt="hamburger" id="btnShowMenu">
+
+                <nav id="sidenavPublisher">
                     <div class="row align" id="headerMenu">
                         <div class="col-lg-6 col-md-6 col-sm-12 col">
                             <button class="button button--blue" id="buttonBack">Retour</button>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12 col">
-                            <img src="../.././images/hamburger.svg" alt="hamburger" id="hamburger">
+                            <img src="../.././images/hamburger.svg" alt="hamburger" id="btnHideMenu">
                         </div>
                     </div>
 
@@ -66,7 +68,7 @@
                 </nav>
             </aside>
 
-            <div class="container-body">
+            <div class="container-body" id="bodyContainer">
                 <header>
                     <div class="headerNavbar">
                         <h1>La navbar</h1>
