@@ -72,34 +72,6 @@
 
             </div>
         </section>
-
-        <section>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12 col-sm-12">
-                        <div class="jumbotron">
-                            <table id="table" class="row-border hover">
-                                <thead>
-                                <tr>
-                                    <th>Nom</th>
-                                    <th>Prénom</th>
-                                    <th>Email</th>
-                                    <th>Téléphone</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-        </section>
-
         <section>
             <div class="container" style="display: flex;justify-content: flex-end">
                 <input class="button--blue button" type="submit" value="Enregistrer">

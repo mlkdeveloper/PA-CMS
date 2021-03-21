@@ -84,10 +84,12 @@ class User extends Database
 
 
     public function displayClientAction(){
+        $clients = new UserModel();
+        $array = $clients->select()->get();
+
         $view = new View("clientList.back", "back");
         $view->assign("title", "Admin - Client");
-
-
+        $view->assign("array", $array);
     }
 
     public function newClientAction(){
