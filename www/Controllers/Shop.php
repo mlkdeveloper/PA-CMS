@@ -12,7 +12,13 @@ class Shop
     public function displayShopAction(){
         $view = new View("shopList.back", "back");
         $view->assign("title", "Admin - Magasin");
+
+        $shop = new ShopModel();
+        $listShop = $shop->select()->get();
+
+        $view->assign("shop", $listShop);
     }
+
     public function newShopAction(){
 
         $shop = new ShopModel();
@@ -35,6 +41,7 @@ class Shop
                 $shop->setPhoneNumber($_POST['telephone']);
                 $shop->save();
 
+                header('location:/admin/liste-magasin');
             }else{
                 $view->assign("errors", $errors);
             }
