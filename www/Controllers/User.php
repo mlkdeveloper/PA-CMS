@@ -106,7 +106,7 @@ class User extends Database
         if(!empty($_POST)){
             $error = FormValidator::check($form, $_POST);
         }
-        if(empty($errors)){
+        if (empty($errors) && !empty($_POST) ){
 
             $pwd = $this->pwdGenerator();
 
