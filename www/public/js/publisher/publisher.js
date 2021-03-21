@@ -567,8 +567,13 @@ function hideMenu(){
             width: 'toggle'
         },
         {
-            start: function(now, fx) {
+            start: function() {
                 $(".container-body").css("width", "100%");
+            },
+            step: function(now) {
+                if (now < 100){
+                    $('#sidenavPublisher > div').hide();
+                }
             },
             complete: function(){
                 setTimeout(function (){
@@ -584,9 +589,14 @@ function showMenu(){
             width: 'toggle'
         },
         {
-            start: function(now, fx) {
+            start: function() {
                 $("#btnShowMenu").hide();
                 $(".container-body").css("width", "calc(100% - 200px)");
+            },
+            step: function(now) {
+                if (now > 90){
+                    $('#sidenavPublisher > div').show();
+                }
             },
         }
     );
