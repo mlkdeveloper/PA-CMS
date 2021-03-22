@@ -26,6 +26,7 @@
                         <tbody>
                         <?php  foreach ($array as $client): ?>
                         <tr>
+                            <th hidden><?= $client['id'] ?></th>
                             <th><?= $client['firstname'] ?></th>
                             <th><?= $client['lastname'] ?></th>
                             <th><?= $client['email'] ?></th>
@@ -34,7 +35,7 @@
                                 <div class="align">
                                     <button class="button button--black">
                                         <i class="fas fa-pencil-alt"></i>
-                                        <a href="/admin/modification-categorie?id=<?= $value['id'] ?>">Modifier</a>
+                                        <a href="/admin/modification-client?id=<?= $client['id'] ?>">Modifier</a>
                                     </button>
                                     <i class="fas fa-trash"></i>
                                 </div>

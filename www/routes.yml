@@ -57,3 +57,7 @@
 /admin/liste-client:
   controller: User
   action: displayClient
+
+/admin/modification-client:
+  controller: User
+  action: updateClient

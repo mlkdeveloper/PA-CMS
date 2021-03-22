@@ -145,4 +145,28 @@ class User extends Database
         return $mdp;
     }
 
+    function updateClientAction(){
+        if (isset($_GET['id']) && !empty($_GET['id'])){
+
+            $client = new UserModel();
+            $verifyId = $client->select("id")->where("id = :id")->setParams(["id" => $_GET['id']])->get();
+
+            if (empty($verifyId))
+                header("Location: /admin/liste_client");
+
+            $view = new View("createClient.back", "back");
+
+            $form = $client->formBuilderRegister();
+            $this->saveForm($view,$client,$form,true);
+
+            $values = $client->select()->where("id = :id")->setParams(["id" => $_GET['id']])->get();
+            $view->assign("values", ...$values);
+            $view->assign("title", "Admin - Client");
+echo 'id get';
+        }else{
+            header("Location: /admin/liste_client");
+            echo 'ok';
+        }
+    }
+
 }
