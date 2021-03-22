@@ -91,6 +91,10 @@ $(document).ready(function(){
         showMenu();
     });
 
+    $("#paramBloc").on("click", function () {
+        paramBloc();
+    });
+
     $("#containerDeleteSection").on("click", function () {
         $("#buttonModalTiny").attr("onclick", "deleteSection()");
         $("#alertMessage").html("Êtes-vous sûr de vouloir supprimer la section ?");
@@ -99,6 +103,14 @@ $(document).ready(function(){
 
     $("#containerPublisher").bind("DOMSubtreeModified", function() {
         $("#buttonSave").show();
+    });
+
+    $("#checkBackgroud").on("click", function (){
+        if ($("#checkBackgroud").is(":checked")){
+            $("#backgroundBloc").show();
+        }else {
+            $("#backgroundBloc").hide();
+        }
     });
 });
 
@@ -550,7 +562,7 @@ function addImage() {
         }
     }else{
         let link = $(".activeImage").attr("src");
-        $(".activeCol").html("<img src='" + link + "' alt='image' class='imageUploaded' style='width: 100%; height: 100%; object-fit: cover'>");
+        $(".activeCol").html("<img src='" + link + "' alt='image' class='imageUploaded' style='width: 100%; height: 100%;'>");
         closeModalImages();
     }
 }
@@ -562,6 +574,7 @@ function removeErrorMessage(){
     }, 5000);
 }
 
+//Disparition du menu
 function hideMenu(){
     $('#sidenavPublisher').animate({
             width: 'toggle'
@@ -584,6 +597,7 @@ function hideMenu(){
     );
 }
 
+//Apparition du menu
 function showMenu(){
     $('#sidenavPublisher').animate({
             width: 'toggle'
@@ -600,4 +614,67 @@ function showMenu(){
             },
         }
     );
+}
+
+function paramBloc(){
+    if ($(".activeCol").children().attr("class") === "jumbotron containerJumbo"){
+        if ($("#noParamaBloc").length === 0) {
+            $("#modalparamBloc > div").prepend("<h3 id='noParamaBloc'>Aucun paramètres pour ce type de bloc</h3>");
+        }
+        $("#containerParamBloc").hide();
+    }else {
+        $("#noParamaBloc").remove();
+        $("#containerParamBloc").show();
+        if ($(".activeCol").find("img").length > 0 && $(".activeCol").find("img").attr("class") === "imageUploaded") {
+            var styleImage = $(".activeCol").find("img").attr("style");
+            var widthImage = styleImage.split(":")[1].split(";")[0].split("%")[0].trim();
+            var heightImage = styleImage.split(":")[2].split(";")[0].split("%")[0].trim()
+            $("#widthImage").val(widthImage);
+            $("#heightImage").val(heightImage);
+            $("#paramImage").show();
+        } else {
+            $("#paramImage").hide();
+        }
+
+        if ($(".activeCol").attr("style") === undefined) {
+            $("#checkBackgroud").prop("checked", false);
+        } else if ($(".activeCol").attr("style").search("background-color") !== -1) {
+            $("#checkBackgroud").prop("checked", true);
+            $("#backgroundBloc").val($(".activeCol").attr("style").split(":")[1].trim());
+        }
+
+        if (!$("#checkBackgroud").is(":checked")) {
+            $("#backgroundBloc").hide();
+        }
+    }
+
+    $("#modalparamBloc").show();
+}
+
+function closeModalParamBloc(){
+    $("#modalparamBloc").hide();
+}
+
+function saveParamBloc(){
+    if ($("#paramImage").is(":visible") === true){
+        var width = $("#widthImage").val();
+        var height = $("#heightImage").val();
+        if (width > 100 || width < 0 || height > 100 || height < 0){
+            if ($(".errorMessageImage").length === 0) {
+                $("#paramImage").prepend("<div class='alert alert--red errorMessageImage'>Les valeurs doivent être comprises entre 0 et 100</div>");
+                removeErrorMessage();
+            }
+        }else{
+            $(".activeCol").find("img").attr("style", "width: "+width+"%; height: "+height+"%");
+        }
+    }
+
+    if ($("#checkBackgroud").is(":checked")){
+        var color = $("#backgroundBloc").val();
+        $(".activeCol").attr("style", "background-color: "+color);
+    }else {
+        $(".activeCol").removeAttr("style");
+    }
+
+    $("#modalparamBloc").hide();
 }

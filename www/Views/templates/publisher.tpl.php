@@ -59,6 +59,9 @@
                                 <img src="../../images/publisher/icon-arrow-up.svg" alt="icon-arrow-down">
                             </div>
                         </div>
+                        <div class="row align objectMenuHide">
+                            <button class="button button--blue" id="paramBloc">Paramètres du bloc</button>
+                        </div>
 
                         <div id="containerDeleteSection" class="objectMenuHide">
                             <img src="../.././images/publisher/icon-trash.svg" alt="icon-trash">
@@ -157,6 +160,44 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="modal" id="modalparamBloc">
+                    <div class="modal-content">
+                        <div id="containerParamBloc">
+                            <div id="paramImage">
+                                <h3>Modification de l'image</h3>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col">
+                                        <label class="label" for="widthImage">Largeur en %</label>
+                                        <br>
+                                        <input type="number" class="input" id="widthImage" max="100" min="0">
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col">
+                                        <label class="label" for="heightImage">Hauteur en %</label>
+                                        <br>
+                                        <input type="number" class="input" id="heightImage" max="100" min="0">
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h3>Paramètres du bloc</h3>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col">
+                                        <label class="label" for="checkBackgroud">Couleur de fond</label>
+                                        <input type="checkbox" id="checkBackgroud">
+                                        <br>
+                                        <input type="color" id="backgroundBloc">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="buttonModal">
+                            <button onclick="closeModalParamBloc()" class="button button--alert">Fermer</button>
+                            <button onclick="saveParamBloc()" class="button button--success">Valider</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </main>
     </body>
