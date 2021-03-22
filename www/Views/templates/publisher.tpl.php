@@ -189,6 +189,30 @@
                                         <input type="color" id="backgroundBloc">
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col">
+                                        <label class="label" for="marginLeft">Marge de gauche en %</label>
+                                        <br>
+                                        <input type="number" class="input" id="marginLeft" max="100" min="0">
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col">
+                                        <label class="label" for="marginRight">Marge de droite en %</label>
+                                        <br>
+                                        <input type="number" class="input" id="marginRight" max="100" min="0">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col">
+                                        <label class="label" for="marginTop">Marge du haut en %</label>
+                                        <br>
+                                        <input type="number" class="input" id="marginTop" max="100" min="0">
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col">
+                                        <label class="label" for="marginBottom">Marge du bas en %</label>
+                                        <br>
+                                        <input type="number" class="input" id="marginBottom" max="100" min="0">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="buttonModal">

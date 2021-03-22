@@ -269,7 +269,7 @@ a{
     position: relative;
 }
 
-#modalparamBloc{
+#modalparamBloc > div{
     text-align: center;
     min-width: 550px;
 }

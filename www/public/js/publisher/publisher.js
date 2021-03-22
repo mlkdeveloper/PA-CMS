@@ -626,29 +626,46 @@ function paramBloc(){
         $("#noParamaBloc").remove();
         $("#containerParamBloc").show();
         if ($(".activeCol").find("img").length > 0 && $(".activeCol").find("img").attr("class") === "imageUploaded") {
-            var styleImage = $(".activeCol").find("img").attr("style");
-            var widthImage = styleImage.split(":")[1].split(";")[0].split("%")[0].trim();
-            var heightImage = styleImage.split(":")[2].split(";")[0].split("%")[0].trim()
-            $("#widthImage").val(widthImage);
-            $("#heightImage").val(heightImage);
+
+            var widthPx = $('.activeCol').children().width();
+            var parentWidthPx = $('.activeCol').width();
+            var width = 100*widthPx/parentWidthPx;
+
+            var heightPx = $('.activeCol').children().height();
+            var parentHeightPX = $('.activeCol').height();
+            var height = 100*heightPx/parentHeightPX;
+
+            $("#widthImage").val(Math.trunc(width));
+            $("#heightImage").val(Math.trunc(height));
             $("#paramImage").show();
         } else {
             $("#paramImage").hide();
         }
 
-        if ($(".activeCol").attr("style") === undefined) {
+        if ($(".activeCol").css("background-color") === "rgba(0, 0, 0, 0)"){
             $("#checkBackgroud").prop("checked", false);
-        } else if ($(".activeCol").attr("style").search("background-color") !== -1) {
+        }else {
+            var rgb = $(".activeCol").css("background-color");
             $("#checkBackgroud").prop("checked", true);
-            $("#backgroundBloc").val($(".activeCol").attr("style").split(":")[1].trim());
+            $("#backgroundBloc").val(hexa(rgb));
         }
 
         if (!$("#checkBackgroud").is(":checked")) {
             $("#backgroundBloc").hide();
+        }else {
+            $("#backgroundBloc").show();
         }
     }
 
     $("#modalparamBloc").show();
+}
+
+function hexa(rgb){
+    rgb = rgb.match(/^rgb\(([0-9]+)[,]\s([0-9]+)[,]\s([0-9]+)\)$/);
+    return "#" +
+        ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
+        ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
+        ("0" + parseInt(rgb[3],10).toString(16)).slice(-2);
 }
 
 function closeModalParamBloc(){
@@ -665,15 +682,15 @@ function saveParamBloc(){
                 removeErrorMessage();
             }
         }else{
-            $(".activeCol").find("img").attr("style", "width: "+width+"%; height: "+height+"%");
+            $(".activeCol").find("img").css({"width": width+"%", "height": height+"%"});
         }
     }
 
     if ($("#checkBackgroud").is(":checked")){
         var color = $("#backgroundBloc").val();
-        $(".activeCol").attr("style", "background-color: "+color);
+        $(".activeCol").css("background-color", color);
     }else {
-        $(".activeCol").removeAttr("style");
+        $(".activeCol").css("background-color", "transparent");
     }
 
     $("#modalparamBloc").hide();
