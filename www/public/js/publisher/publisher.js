@@ -189,13 +189,10 @@ function selectCol(col){
     contentCol = $("#"+idCol).html();
     $(".activeCol").removeClass("activeCol");
     $(".activeRow").removeClass("activeRow");
-    // if ($("#"+col.id).children().attr('class') !== "jumbotron containerJumbo"){
-        $("#"+col.id).addClass("activeCol");
-        $("#"+col.id).parent().addClass("activeRow");
-    // }else {
-    //     $("#"+col.id).children().addClass("activeCol");
-    //     $("#"+col.id).parent().addClass("activeRow");
-    // }
+
+    $("#"+col.id).addClass("activeCol");
+    $("#"+col.id).parent().addClass("activeRow");
+
     $(".objectMenuHide").show();
 }
 
@@ -655,6 +652,12 @@ function paramBloc(){
         }else {
             $("#backgroundBloc").show();
         }
+
+        $("#paddingLeft").val($(".activeCol").css("padding-left").split("px")[0]);
+        $("#paddingRight").val($(".activeCol").css("padding-right").split("px")[0]);
+        $("#paddingTop").val($(".activeCol").css("padding-top").split("px")[0]);
+        $("#paddingBottom").val($(".activeCol").css("padding-bottom").split("px")[0]);
+
     }
 
     $("#modalparamBloc").show();
@@ -678,7 +681,7 @@ function saveParamBloc(){
         var height = $("#heightImage").val();
         if (width > 100 || width < 0 || height > 100 || height < 0){
             if ($(".errorMessageImage").length === 0) {
-                $("#paramImage").prepend("<div class='alert alert--red errorMessageImage'>Les valeurs doivent être comprises entre 0 et 100</div>");
+                $("#paramImage").prepend("<div class='alert alert--red errorMessageImage'>Les valeurs de l'image doivent être comprises entre 0 et 100</div>");
                 removeErrorMessage();
             }
         }else{
@@ -693,5 +696,22 @@ function saveParamBloc(){
         $(".activeCol").css("background-color", "transparent");
     }
 
-    $("#modalparamBloc").hide();
+    var paddingLeft = $("#paddingLeft").val();
+    var paddingRight = $("#paddingRight").val();
+    var paddingTop = $("#paddingTop").val();
+    var paddingBottom = $("#paddingBottom").val();
+
+    if (paddingLeft < 0 || paddingRight < 0 || paddingTop < 0 || paddingBottom < 0){
+        $("#paramImage").prepend("<div class='alert alert--red errorMessageImage'>Les valeurs des padding doivent être supérieures ou égal à 0</div>");
+        removeErrorMessage();
+    }else {
+        $(".activeCol").css("padding-left", paddingLeft+"px");
+        $(".activeCol").css("padding-right", paddingRight+"px");
+        $(".activeCol").css("padding-top", paddingTop+"px");
+        $(".activeCol").css("padding-bottom", paddingBottom+"px");
+    }
+
+    if ($(".errorMessageImage").length === 0){
+        $("#modalparamBloc").hide();
+    }
 }
