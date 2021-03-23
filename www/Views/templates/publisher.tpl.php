@@ -165,6 +165,7 @@
                     <div class="modal-content">
                         <div id="containerParamBloc">
                             <div id="paramImage">
+
                                 <h3>Modification de l'image</h3>
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col">
@@ -178,7 +179,9 @@
                                         <input type="number" class="input" id="heightImage" max="100" min="0">
                                     </div>
                                 </div>
+                                <hr>
                             </div>
+
                             <div>
                                 <h3>Paramètres du bloc</h3>
                                 <div class="row">
@@ -190,29 +193,43 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col">
                                         <label class="label" for="paddingLeft">Padding de gauche en px</label>
                                         <br>
                                         <input type="number" class="input" id="paddingLeft" min="0">
                                     </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col">
                                         <label class="label" for="paddingRight">Padding de droite en px</label>
                                         <br>
                                         <input type="number" class="input" id="paddingRight" min="0">
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col">
                                         <label class="label" for="paddingTop">Padding du haut en px</label>
                                         <br>
                                         <input type="number" class="input" id="paddingTop" min="0">
                                     </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col">
                                         <label class="label" for="paddingBottom">Padding du bas en px</label>
                                         <br>
                                         <input type="number" class="input" id="paddingBottom" min="0">
                                     </div>
                                 </div>
+
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col">
+                                        <label class="label" for="radius">Arrondissement des angles en px</label>
+                                        <br>
+                                        <input type="number" class="input" id="radius" min="0">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col">
+                                        <label class="label" for="shadow">Ombre</label>
+                                        <input type="checkbox" id="shadow"">
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                         <div class="buttonModal">

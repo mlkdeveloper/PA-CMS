@@ -259,6 +259,7 @@ function savePage(){
 
     $( "#containerPublisher section" ).each(function(index) {
         let contentCol;
+        let css;
         let block = {
             "idBlock": $(this).attr('id'),
             "columns": [
@@ -274,10 +275,17 @@ function savePage(){
                 contentCol = $( this ).html();
             }
 
+            if ( $( this ).attr('style') !== undefined){
+                css = $( this ).attr('style');
+            }else {
+                css = "";
+            }
+
             let column = {
                 "idColumn": $( this ).attr('id'),
                 "numberCol": $( this ).attr('class').split(" ")[0].split("-")[2],
-                "content": contentCol
+                "content": contentCol,
+                "css": css
             }
 
             dataHtml["structure"][index]["columns"].push(column);
@@ -351,7 +359,7 @@ function read(data){
             '<div class="row">';
 
         $.each($(this)[0]["columns"], function () {
-            htmlPage += '<div class="col-lg-'+$(this)[0]["numberCol"]+' col-md-'+$(this)[0]["numberCol"]+' col-sm-12 col colBlock" id="'+$(this)[0]["idColumn"]+'" onclick="selectCol(this)">';
+            htmlPage += '<div class="col-lg-'+$(this)[0]["numberCol"]+' col-md-'+$(this)[0]["numberCol"]+' col-sm-12 col colBlock" id="'+$(this)[0]["idColumn"]+'" style="'+$(this)[0]["css"]+'" onclick="selectCol(this)">';
 
             if ($(this)[0]["content"] ){
                 htmlPage += $(this)[0]["content"];
@@ -658,6 +666,14 @@ function paramBloc(){
         $("#paddingTop").val($(".activeCol").css("padding-top").split("px")[0]);
         $("#paddingBottom").val($(".activeCol").css("padding-bottom").split("px")[0]);
 
+
+        $("#radius").val($(".activeCol").css("border-radius").split("px")[0]);
+
+        if ($(".activeCol").css("box-shadow") !== "none"){
+            $("#shadow").prop("checked", true);
+        }else{
+            $("#shadow").prop("checked", false);
+        }
     }
 
     $("#modalparamBloc").show();
@@ -701,7 +717,14 @@ function saveParamBloc(){
     var paddingTop = $("#paddingTop").val();
     var paddingBottom = $("#paddingBottom").val();
 
-    if (paddingLeft < 0 || paddingRight < 0 || paddingTop < 0 || paddingBottom < 0){
+    var radius = $("#radius").val();
+
+    if (paddingLeft < 0
+        || paddingRight < 0
+        || paddingTop < 0
+        || paddingBottom < 0
+        || radius < 0)
+    {
         $("#paramImage").prepend("<div class='alert alert--red errorMessageImage'>Les valeurs des padding doivent être supérieures ou égal à 0</div>");
         removeErrorMessage();
     }else {
@@ -709,9 +732,18 @@ function saveParamBloc(){
         $(".activeCol").css("padding-right", paddingRight+"px");
         $(".activeCol").css("padding-top", paddingTop+"px");
         $(".activeCol").css("padding-bottom", paddingBottom+"px");
+
+        $(".activeCol").css("border-radius", radius+"px");
+    }
+
+    if ($("#shadow").is(":checked")){
+        $(".activeCol").css("box-shadow", "0 0 10px rgb(0 0 0 / 8%");
+    }else {
+        $(".activeCol").css("box-shadow", "none")
     }
 
     if ($(".errorMessageImage").length === 0){
         $("#modalparamBloc").hide();
+        $("#buttonSave").show();
     }
 }
