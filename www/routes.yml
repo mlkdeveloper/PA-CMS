@@ -44,9 +44,9 @@
   controller: Shop
   action: newShop
 
-/admin/pages:
+/admin/display-pages:
   controller: Pages
-  action: pages
+  action: show
 
 /admin/publisher:
   controller: Publisher
@@ -55,3 +55,7 @@
 /admin/check-review:
   controller: Reviews
   action: checkReviews
+
+/admin/nouvelle-page:
+  controller: Pages
+  action: newPage
