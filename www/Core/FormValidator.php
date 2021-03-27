@@ -1,5 +1,6 @@
 <?php
 namespace App\Core;
+use App\Models\Category as modelCategory;
 
 class FormValidator
 {
@@ -66,6 +67,18 @@ class FormValidator
                     && strlen(trim($data[$name])) > $configInputs["maxLength"]) {
 
                     $errors[] = $configInputs["error"];
+                }
+
+                if (!empty($configInputs["unique"]) &&
+                    $configInputs["unique"] === true
+                ){
+                    $category = new modelCategory();
+                    $name = $category->select("name")->where("name = :name")->setParams([":name"=>htmlspecialchars($data[$name])])->get();
+
+                    if (!empty($name)){
+                        $errors[] = "Cette catégorie existe déjà !";
+                    }
+
                 }
 
                 if (!empty($configInputs["status"])

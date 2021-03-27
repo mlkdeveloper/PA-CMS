@@ -36,7 +36,7 @@ class Category{
 
                 if($_FILES["categoryImage"]["error"] === 0 ) {
                     $imageName = time() . '_' . $_FILES['categoryImage']['name'];
-                    $target = './images/' . $imageName;
+                    $target = './images/category/' . $imageName;
                     move_uploaded_file($_FILES['categoryImage']['tmp_name'], $target);
                     $category->setPicPath($imageName);
                 }
@@ -91,7 +91,7 @@ class Category{
 
                 if($_FILES["categoryImage"]["error"] === 0 ) {
                     $imageName = time() . '_' . $_FILES['categoryImage']['name'];
-                    $target = './images/' . $imageName;
+                    $target = './images/category/' . $imageName;
                     move_uploaded_file($_FILES['categoryImage']['tmp_name'], $target);
                     $category->setPicPath($imageName);
                 }

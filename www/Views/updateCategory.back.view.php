@@ -58,7 +58,7 @@
                             </div>
 
                           <div class="imageBlock">
-                             <img src="../images/<?= $category->getPicPath()??'cross-add.svg'?>" id="categoryImage">
+                             <img src="<?= "../images/category/" . $category->getPicPath()??'../images/cross-add.svg'?>" id="categoryImage">
                           </div>
                         </div>
                     </div>

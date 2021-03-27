@@ -108,6 +108,7 @@ class Category extends Database
                 "name"=>[
                     "minLength"=>2,
                     "maxLength"=>50,
+                    "unique"=>true,
                     "error"=>"Le nom de la catégorie doit être compris entre 2 et 50 caractères."
                 ],
                 "description"=>[
