@@ -6,12 +6,15 @@ let html;
 let idCol;
 let contentCol;
 let htmlPage = "";
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const namePage = urlParams.get('name')
 
 //Lecture du fichier JSON de la page
 $.ajax({
     type: 'POST',
     url: '../.././Controllers/Publisher.php',
-    data: {idPage: ""},
+    data: {namePage: namePage},
     success: function(data) {
         if (data) {
             read(data);
@@ -298,7 +301,10 @@ function savePage(){
     $.ajax({
         type: 'POST',
         url: '../.././Controllers/Publisher.php',
-        data: {dataHtml: dataHtml},
+        data: {
+            dataHtml: dataHtml,
+            namePage: namePage
+        },
         success: function(msg) {
             setTimeout(function(){
                 $("#loader").hide();
@@ -321,7 +327,7 @@ function savePage(){
 //Retour aux pages
 function backPages(){
     $("#modalTiny").hide();
-    document.location.replace("/admin/pages");
+    document.location.replace("/admin/display-pages");
 }
 
 //Suppresion de la section

@@ -5,12 +5,12 @@ use App\Core\View;
 
 $myPublisher = new Publisher();
 
-if (isset($_POST['dataHtml'])){
-    $myPublisher->savePublisher($_POST['dataHtml']);
+if (isset($_POST['dataHtml']) && isset($_POST['namePage'])){
+    $myPublisher->savePublisher($_POST['dataHtml'], $_POST['namePage']);
 }
 
-if (isset($_POST['idPage'])){
-    $myPublisher->readPublisher($_POST['idPage']);
+if (isset($_POST['namePage'])){
+    $myPublisher->readPublisher($_POST['namePage']);
 }
 
 if (isset($_POST['listImages'])){
@@ -28,21 +28,19 @@ if (isset($_FILES['file'])){
 
 class Publisher
 {
-
-
     public function publisherAction(){
         $view = new View("publisher.back", "publisher");
         $view->assign("title", "Editeur");
     }
 
-    public function savePublisher($dataHtml){
-        file_put_contents("../publisher/templatesPublisher/test.json", $dataHtml);
+    public function savePublisher($dataHtml, $namePage){
+        file_put_contents("../publisher/templatesPublisher/".$namePage.".json", $dataHtml);
     }
 
-    public function readPublisher($idPage){
+    public function readPublisher($namePage){
 
-        if (file_exists("../publisher/templatesPublisher/test.json")){
-            echo  file_get_contents("../publisher/templatesPublisher/test.json");
+        if (file_exists("../publisher/templatesPublisher/".$namePage.".json")){
+            echo  file_get_contents("../publisher/templatesPublisher/".$namePage.".json");
         }else {
             echo null;
         }

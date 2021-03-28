@@ -40,7 +40,7 @@ class Pages
                     $pages->setUserid(2);
                     $pages->save();
 
-                    file_put_contents("./publisher/templatesPublisher/".$_POST["name"], "ff(g");
+                    file_put_contents("./publisher/templatesPublisher/".$_POST["name"].".json", "");
 
                     header('location:/admin/display-pages');
                 }else{

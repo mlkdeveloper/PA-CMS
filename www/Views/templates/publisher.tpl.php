@@ -1,3 +1,10 @@
+<?php
+if (!file_exists("./publisher/templatesPublisher/".$_GET["name"].".json")){
+    header("Location: /admin/display-pages");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
     <head>

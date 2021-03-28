@@ -2,9 +2,7 @@
     <div class="container">
         <div class="align">
             <h1>Liste des pages</h1>
-            <button class="button button--blue">
-                <a href="/admin/nouvelle-page">Ajouter une page</a>
-            </button>
+            <a href="/admin/nouvelle-page"class="button button--blue">Ajouter une page</a>
         </div>
         <div class="row">
             <div class="col-md-12 col-sm-12 col">
@@ -29,10 +27,12 @@
                                 <td><?= $value['slug'] ?></td>
                                 <td>
                                     <div>
-                                        <button class="button button--blue">
-                                            <i class="fas fa-pencil-alt"></i>
-                                            <a href="/admin/modification-page?id=<?= $value['id'] ?>">Modifier</a>
-                                        </button>
+                                        <a href="/admin/modification-page?id=<?= $value['id'] ?>" class="button button--blue">
+                                            <i class="fas fa-pencil-alt"></i>Modifier
+                                        </a>
+                                        <a href="/admin/publisher?name=<?= $value['name'] ?>" class="button button--blue">
+                                            <i class="fas fa-eye"></i>Voir la page
+                                        </a>
                                     </div>
                                 </td>
                             </tr>
