@@ -105,7 +105,7 @@ class Pages extends Database
 
             "inputs"=>[
 
-                "title"=>[
+                "name"=>[
                     "minLength"=>2,
                     "maxLength"=>50,
                     "error"=>"Le nom de la page doit être compris entre 2 et 50 caractères."

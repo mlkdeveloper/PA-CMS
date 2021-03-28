@@ -59,3 +59,7 @@
 /admin/nouvelle-page:
   controller: Pages
   action: newPage
+
+/admin/modification-page:
+  controller: Pages
+  action: updatePage

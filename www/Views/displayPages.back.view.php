@@ -27,6 +27,14 @@
                                 <td><?= $value['name'] ?></td>
                                 <td><?= $value['createdAt'] ?></td>
                                 <td><?= $value['slug'] ?></td>
+                                <td>
+                                    <div>
+                                        <button class="button button--blue">
+                                            <i class="fas fa-pencil-alt"></i>
+                                            <a href="/admin/modification-page?id=<?= $value['id'] ?>">Modifier</a>
+                                        </button>
+                                    </div>
+                                </td>
                             </tr>
                         <?php endforeach;?>
 

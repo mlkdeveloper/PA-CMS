@@ -32,18 +32,52 @@ class Pages
         if(!empty($_POST)){
 
             $errors = FormValidator::check($form, $_POST);
+            $errorSlug = FormValidator::checkSlug($_POST["slug"]);
 
             if(empty($errors)){
-                $pages->setName($_POST['title']);
-                $pages->setSlug($_POST['slug']);
-                $pages->setUserid(2);
-                $pages->save();
+                if (empty($errorSlug)){
+                    $pages->populate($_POST);
+                    $pages->setUserid(2);
+                    $pages->save();
 
-                header('location:/admin/display-pages');
+                    file_put_contents("./publisher/templatesPublisher/".$_POST["name"], "ff(g");
+
+                    header('location:/admin/display-pages');
+                }else{
+                    $view->assign("errors", $errorSlug);
+                }
             }else{
                 $view->assign("errors", $errors);
             }
         }
 
+    }
+
+    public function updatePageAction(){
+
+        if (isset($_GET['id']) && !empty($_GET['id'])){
+
+            $pages = new modelPages();
+            $verifyId = $pages->select("id")->where("id = :id")->setParams(["id" => $_GET['id']])->get();
+
+            if (empty($verifyId)){
+                header("Location: /admin/display-pages");
+                exit();
+            }
+
+            $view = new View("updatePage.back", "back");
+
+            $form = $pages->formBuilderRegister();
+            $this->saveForm($view,$pages,$form,true);
+
+            $values = $pages->select("*")->where("id = :id")->setParams(["id" => $_GET['id']])->get();
+
+            $view->assign("values", $values);
+            $view->assign("title", "Admin - Page");
+
+        }else{
+            header("Location: /admin/display-page");
+            exit();
+        }
     }
 }

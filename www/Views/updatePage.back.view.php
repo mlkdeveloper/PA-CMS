@@ -13,7 +13,11 @@ if (isset($errors)){
     echo "</div>";
 }
 ?>
+<div class="container">
+    <h1><?= print_r($values) ?></h1>
+    <h1><?= $values["slug"] ?></h1>
 
+</div>
 
 <section>
     <div class="container">
@@ -29,21 +33,19 @@ if (isset($errors)){
                         <div class=" jumbotron">
                             <div class="form_align--top">
                                 <label class="label" for="name">Titre *</label>
-                                <input class="input" type="text" id="name" name="name" placeholder="Nom" required="required">
+                                <input class="input" type="text" name="name" placeholder="Ma page" required="required">
                             </div>
 
                             <div class="form_align--top mt-2">
                                 <label class="label" for="slug">Slug *</label>
-                                <input class="input" type="text" id="slug" name="slug" placeholder="/nom" required="required">
+                                <input class="input" type="text" name="slug" required="required">
                             </div>
 
                             <input class="button--blue button mt-2" type="submit" value="Enregistrer">
                         </div>
                     </div>
 
-            </div>
+                </div>
         </section>
     </form>
 </section>
-
-<script src="../public/js/pages.js" type="text/javascript"></script>
