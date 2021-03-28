@@ -60,7 +60,7 @@ class User extends Database
      */
     public function setFirstName($firstName): void
     {
-        $this->firstName = $firstName;
+        $this->firstName = htmlspecialchars(trim($firstName));
     }
 
 
@@ -69,7 +69,7 @@ class User extends Database
 	 */
 	public function setLastname($lastname)
 	{
-	    $this->lastname = $lastname;
+	    $this->lastname = htmlspecialchars(trim($lastname));
 	}
 	/**
 	 * @return mixed
@@ -83,7 +83,7 @@ class User extends Database
 	 */
 	public function setEmail($email)
 	{
-	    $this->email = $email;
+	    $this->email = htmlspecialchars(trim($email));
 	}
 	/**
 	 * @return mixed
@@ -97,7 +97,7 @@ class User extends Database
 	 */
 	public function setPwd($pwd)
 	{
-	    $this->pwd = $pwd;
+	    $this->pwd = htmlspecialchars(trim($pwd));
 	}
 	/**
 	 * @return mixed
@@ -111,7 +111,7 @@ class User extends Database
 	 */
 	public function setCountry($country)
 	{
-	    $this->country = $country;
+	    $this->country = htmlspecialchars(trim($country));
 	}
 	/**
 	 * @return int
@@ -169,7 +169,7 @@ class User extends Database
      */
     public function setAddress($address): void
     {
-        $this->address = $address;
+        $this->address = htmlspecialchars(trim($address));
     }
 
     /**
@@ -185,7 +185,7 @@ class User extends Database
      */
     public function setCity($city): void
     {
-        $this->city = $city;
+        $this->city = htmlspecialchars(trim($city));
     }
 
     /**
@@ -201,7 +201,7 @@ class User extends Database
      */
     public function setZipCode($zipCode): void
     {
-        $this->zipCode = $zipCode;
+        $this->zipCode = htmlspecialchars(trim($zipCode));
     }
 
     /**
@@ -217,7 +217,7 @@ class User extends Database
      */
     public function setPhoneNumber($phoneNumber): void
     {
-        $this->phoneNumber = $phoneNumber;
+        $this->phoneNumber = htmlspecialchars(trim($phoneNumber));
     }
 
     /**

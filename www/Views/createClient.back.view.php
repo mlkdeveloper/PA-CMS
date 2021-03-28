@@ -26,43 +26,43 @@
                             <div class="col-lg-6 col-md-6 col-sm-12 col">
                                 <div class="form_align form_align--top">
                                     <label class="label">Nom</label>
-                                    <input class="input" type="text" name="lastName" placeholder="Nom" required="required" value="<?php echo $values['lastname']; ?>">
+                                    <input class="input" type="text" name="lastName" placeholder="Nom" required="required" value="">
                                 </div>
 
                                 <div class="form_align form_align--top">
                                     <label class="label">Email</label>
-                                    <input class="input" type="text" name="email" placeholder="Email"  required="required" value="<?php echo $values['email']; ?>" >
+                                    <input class="input" type="text" name="email" placeholder="Email"  required="required" value="" >
                                 </div>
 
                                 <div class="form_align form_align--top">
                                     <label class="label">Adresse</label>
-                                    <input class="input" type="text" name="address" placeholder="Adresse"  required="required" value="<?php echo $values['address']; ?>" >
+                                    <input class="input" type="text" name="address" placeholder="Adresse"  required="required" value="" >
                                 </div>
                                 <div class="form_align form_align--top">
                                     <label class="label">Code postal</label>
-                                    <input class="input" type="text" name="zipCode" placeholder="Code postal"  required="required" value="<?php echo $values['zipcode']; ?> ">
+                                    <input class="input" type="text" name="zipCode" placeholder="Code postal"  required="required" value="">
                                 </div>
                             </div>
 
                             <div class="col-lg-6 col-md-6 col-sm-12 col">
                                 <div class="form_align form_align--top">
                                     <label class="label">Prénom</label>
-                                    <input class="input" type="text" name="firstName" placeholder="Prénom" required="required" value="<?php echo $values['firstname']; ?>">
+                                    <input class="input" type="text" name="firstName" placeholder="Prénom" required="required" value="">
                                 </div>
 
                                 <div class="form_align form_align--top">
                                     <label class="label">Téléphone</label>
-                                    <input class="input" type="text" name="phoneNumber" placeholder="Téléphone"  required="required" value="<?php echo $values['phoneNumber']; ?>">
+                                    <input class="input" type="text" name="phoneNumber" placeholder="Téléphone"  required="required" value="">
                                 </div>
 
                                 <div class="form_align form_align--top">
                                     <label class="label">Ville</label>
-                                    <input class="input" type="text" name="city" placeholder="Ville"  required="required" value="<?php echo $values['city']; ?>">
+                                    <input class="input" type="text" name="city" placeholder="Ville"  required="required" value="">
                                 </div>
 
                                 <div class="form_align form_align--top">
                                     <label class="label">Pays</label>
-                                    <input class="input" type="text" name="country" placeholder="Pays"  required="required" value="<?php echo $values['country']; ?>" >
+                                    <input class="input" type="text" name="country" placeholder="Pays"  required="required" value="" >
                                 </div>
 
                             </div>

@@ -37,7 +37,9 @@
                                         <i class="fas fa-pencil-alt"></i>
                                         <a href="/admin/modification-client?id=<?= $client['id'] ?>">Modifier</a>
                                     </button>
-                                    <i class="fas fa-trash"></i>
+                                    <i class="fas fa-trash">
+                                        <a href="/admin/suppression-client?id=<?= $client['id'] ?>"></a>
+                                    </i>
                                 </div>
                             </td>
                         </tr>

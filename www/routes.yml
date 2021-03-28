@@ -61,3 +61,7 @@
 /admin/modification-client:
   controller: User
   action: updateClient
+
+/admin/suppression-client:
+  controller: User
+  action: deleteClient

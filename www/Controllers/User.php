@@ -102,31 +102,35 @@ class User extends Database
         $this->saveForm($view, $client, $formCreateClient);
     }
 
-    public function saveForm($view, $client, $form){
-        if(!empty($_POST)){
+    public function saveForm($view, $client, $form, $formStatus = false){
+
+        if (!empty($_POST) ){
             $error = FormValidator::check($form, $_POST);
-        }
-        if (empty($errors) && !empty($_POST) ){
 
-            $pwd = $this->pwdGenerator();
+            if (empty($error)){
 
-            $client->setFirstName(htmlspecialchars($_POST['firstName']));
-            $client->setLastname(htmlspecialchars($_POST['lastName']));
-            $client->setEmail(htmlspecialchars($_POST['email']));
-            $client->setPhoneNumber(htmlspecialchars($_POST['phoneNumber']));
-            $client->setAddress(htmlspecialchars($_POST['address']));
-            $client->setCity(htmlspecialchars($_POST['city']));
-            $client->setZipCode(htmlspecialchars($_POST['zipCode']));
-            $client->setCountry(htmlspecialchars($_POST['country']));
-            $client->setStatus(1);
-            $client->setIsDeleted(0);
-            $client->setPwd(hash('sha256', $pwd));
-            $client->setCreatedAt(date("Y-m-d H:i:s"));
-            $client->setIdRole(1);
-            $client->save();
+                if ($formStatus)
+                    $client->setId($_GET['id']);
 
-        }else{
-            $view->assign("errors", $errors);
+                $pwd = $this->pwdGenerator();
+
+                $client->setFirstName($_POST['firstName']);
+                $client->setLastname($_POST['lastName']);
+                $client->setEmail($_POST['email']);
+                $client->setPhoneNumber($_POST['phoneNumber']);
+                $client->setAddress($_POST['address']);
+                $client->setCity($_POST['city']);
+                $client->setZipCode($_POST['zipCode']);
+                $client->setCountry($_POST['country']);
+                $client->setStatus(1);
+                $client->setIsDeleted(0);
+                $client->setPwd(password_hash($pwd, PASSWORD_BCRYPT));
+                $client->setCreatedAt(date("Y-m-d H:i:s"));
+                $client->setIdRole(1);
+                $client->save();
+            } else {
+                $view->assign("errors", $error);
+            }
         }
     }
 
@@ -154,19 +158,22 @@ class User extends Database
             if (empty($verifyId))
                 header("Location: /admin/liste_client");
 
-            $view = new View("createClient.back", "back");
+            $view = new View("updateClient.back", "back");
 
-            $form = $client->formBuilderRegister();
+            $form = $client->formBuilderCreateClient();
             $this->saveForm($view,$client,$form,true);
 
             $values = $client->select()->where("id = :id")->setParams(["id" => $_GET['id']])->get();
             $view->assign("values", ...$values);
             $view->assign("title", "Admin - Client");
-echo 'id get';
         }else{
             header("Location: /admin/liste_client");
-            echo 'ok';
         }
+    }
+
+    function deleteClientAction()
+    {
+
     }
 
 }
