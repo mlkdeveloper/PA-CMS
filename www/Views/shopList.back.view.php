@@ -33,7 +33,7 @@
                                 <div class="align">
                                     <div class="align">
                                         <button class="button button--black">
-                                            <a href="/admin/modifier-magasin?id=<?= $value['id']?>"><i class="fas fa-pencil-alt"></i>
+                                            <a href="/admin/detail-magasin?id=<?= $value['id']?>"><i class="fas fa-pencil-alt"></i>
                                             Modifier
                                             </a>
                                         </button>

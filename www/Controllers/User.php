@@ -28,6 +28,8 @@ class User
 	public function loginAction(){
 
 		$user = new UserModel();
+
+		$monUser = new UserModel();
 		$view = new View("login", "front");
 
 		$form = $user->formBuilderLogin();
@@ -41,6 +43,9 @@ class User
 				$user->setPwd($_POST["pwd"]);
 
                 if($user->select('email')->where('email=:email', 'pwd=:pwd')->setParams([":email" => $_POST['email'],":pwd" => $_POST['pwd'],])->get()){
+                    session_start();
+                    $monUser = $user->select('*')->where('email=:email', 'pwd=:pwd')->setParams([":email" => $_POST['email'],":pwd" => $_POST['pwd'],])->get();
+                    $_SESSION['user'] = $monUser;
                     header('location:/');
                 }else{
                     array_push($errors,"L'email et le mot de passe ne correspondent pas");
