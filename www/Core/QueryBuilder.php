@@ -12,6 +12,7 @@ class QueryBuilder
     private $where = [];
     private $order = [];
     private $limit;
+    private $join = [];
 
 
     protected $pdo;
@@ -20,9 +21,16 @@ class QueryBuilder
     {
         try {
             $this->pdo = new \PDO(DBDRIVER . ":host=" . DBHOST . ";dbname=" . DBNAME . ";port=" . DBPORT, DBUSER, DBPWD);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             die("Erreur SQL : " . $e->getMessage());
         }
+    }
+
+    public function innerJoin($table,$column1,$operator,$column2){
+
+        $this->join[] = " INNER JOIN " . $table . " ON " . $column1 . $operator . $column2;
+        return $this;
+
     }
 
     public function select(...$columns){
@@ -63,6 +71,10 @@ class QueryBuilder
         $this->select ? $this->request.= implode(',',$this->select) : $this->request.= "*";
         $this->request.= " FROM " . $this->table;
 
+        if (!empty($this->join)){
+            $this->request.= implode(' ',$this->join);
+        }
+
         if (!empty($this->where)){
             $this->request.= " WHERE ( ";
             $this->request.= implode(' ) AND ( ',$this->where);
@@ -70,13 +82,14 @@ class QueryBuilder
         }
 
         if (!empty($this->order)){
-            $this->request.= " ORDER BY " . implode(', ',$this->where);
+            $this->request.= " ORDER BY " . implode(', ',$this->order);
 
         }
 
         if ($this->limit){
             $this->request.= " LIMIT " . $this->limit;
         }
+
 
         return $this->execute();
 

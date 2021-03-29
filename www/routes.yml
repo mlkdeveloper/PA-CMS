@@ -14,13 +14,15 @@
   controller: User
   action: add
 
-/s-inscrire:
+
+/connexion:
   controller: User
-  action: register
+  action: login
 
 /afficher-un-utilisateur:
   controller: User
   action: show
+
 
 /afficher-les-utilisateurs:
   controller: User
@@ -45,6 +47,10 @@
 /admin/pages:
   controller: Pages
   action: pages
+
+/admin/publisher:
+  controller: Publisher
+  action: publisher
 
 /admin/check-review:
   controller: Reviews
