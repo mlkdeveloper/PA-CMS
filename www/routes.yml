@@ -59,3 +59,11 @@
 /admin/nouveau-role:
   controller: Role
   action: newRole
+
+/admin/role:
+  controller: Role
+  action: showAll
+
+/admin/modification-role:
+  controller: Role
+  action: updateRole
