@@ -105,11 +105,7 @@ class QueryBuilder
         }else {
             $query = $this->pdo->query($this->request);
         }
-
-        print_r($this->request);
-
         return $query->fetchAll(\PDO::FETCH_ASSOC);
-
     }
 
 }

@@ -56,21 +56,52 @@ class Reviews
             $review->save();
             header("Location: /admin/reviews");
         }
-
     }
 
-    public function showReviewsFromProductsAction(){
+    public function showReviewsFromProductsAction()
+    {
         $view = new View("reviewsProducts.back", "back");
         $view->assign("title", "Liste des produits");
         $review = new Review();
         $datas = $review
-            ->select("cc_products.id as id_product, Products_id, commentary, AVG(mark) as mark, 
-            (SELECT COUNT(*) as nb FROM cc_review WHERE status = 1 GROUP BY commentary) as nb_check_commentary, COUNT(commentary) as nb_commentary")
+            ->select("cc_products.id as id_product, Products_id, commentary, AVG(mark) as mark, COUNT(commentary) as nb_commentary")
             ->innerJoin("cc_products", "cc_products.id", "=", "Products_id")
             ->groupBy("Products_id")
             ->get();
-        $view->assign("datas", $datas);
+        $nb_commentary_check =  $review
+            ->select("count(*) as nb_commentary_check")
+            ->where("cc_review.status = 1")
+            ->groupBy("Products_id")
+            ->get();
 
+        if (!empty($nb_commentary_check))
+            foreach ($datas as $key => $v){
+                array_push($datas[$key], $nb_commentary_check[$key]);
+            }
+
+        $view->assign("datas", $datas);
+    }
+
+    public function showProductsAction()
+    {
+        if (isset($_GET["id"]) && !empty($_GET["id"]) && is_numeric($_GET["id"])) {
+            $view = new View("infoProducts.back", "back");
+            $view->assign("title", "Liste des produits");
+            $review = new Review();
+            $datas = $review
+                ->select("*, cc_products.id as id_p, cc_review.id as id_r")
+                ->innerJoin("cc_products", "cc_products.id", "=", "Products_id")
+                ->innerJoin("cc_user", "User_id", "=", "cc_user.id")
+                ->where("cc_products.id = :id")
+                ->setParams(["id" => $_GET["id"]])
+                ->get();
+            $view->assign("datas", $datas);
+            $view->assign("product", $datas[0]["Products_id"]);
+            $view->assign("product_name", $datas[0]["name"]);
+
+        } else {
+            header("Location: /admin/reviews");
+        }
     }
 
 }
