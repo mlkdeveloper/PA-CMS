@@ -56,6 +56,10 @@
   controller: Reviews
   action: checkReviews
 
+/admin/del-review:
+  controller: Reviews
+  action: deleteReviews
+
 /admin/orders:
   controller: Orders
   action: showOrders

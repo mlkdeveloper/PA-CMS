@@ -30,7 +30,6 @@ class QueryBuilder
 
         $this->join[] = " INNER JOIN " . $table . " ON " . $column1 . $operator . $column2;
         return $this;
-
     }
 
     public function select(...$columns){
