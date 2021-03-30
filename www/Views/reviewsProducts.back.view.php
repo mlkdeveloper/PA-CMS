@@ -19,7 +19,7 @@
                         <tr>
                             <td><?= $product["id_product"] ?></td>
                             <td><?= $product["commentary"] ?></td>
-                            <td><?= ($product[0]["nb_commentary_check"])??"0" . " commentaire(s) vérifié(s) / ". $product["nb_commentary"] . " commentaires totaux" ?></td>
+                            <td><?= (($product[0]["nb_commentary_check"]) ?? "0"). " commentaire(s) vérifié(s) / ". $product["nb_commentary"] . " commentaires totaux" ?></td>
                             <td><?= $product["mark"] ?></td>
                             <td>
                                 <a href="/admin/info-reviews?id=<?= $product["id_product"] ?>"  class="button button--black">

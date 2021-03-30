@@ -68,16 +68,15 @@ class Reviews
             ->innerJoin("cc_products", "cc_products.id", "=", "Products_id")
             ->groupBy("Products_id")
             ->get();
-        $nb_commentary_check =  $review
+        $nb_commentary_check = $review
             ->select("count(*) as nb_commentary_check")
             ->where("cc_review.status = 1")
             ->groupBy("Products_id")
             ->get();
 
-        if (!empty($nb_commentary_check))
-            foreach ($datas as $key => $v){
-                array_push($datas[$key], $nb_commentary_check[$key]);
-            }
+        foreach ($datas as $key => $v) {
+            array_push($datas[$key], $nb_commentary_check[$key]??"");
+        }
 
         $view->assign("datas", $datas);
     }
