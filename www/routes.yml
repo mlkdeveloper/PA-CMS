@@ -60,6 +60,10 @@
   controller: Reviews
   action: deleteReviews
 
+/admin/show-reviews-from-products:
+  controller: Reviews
+  action: showReviewsFromProducts
+
 /admin/orders:
   controller: Orders
   action: showOrders
