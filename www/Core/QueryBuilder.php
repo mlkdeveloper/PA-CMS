@@ -11,6 +11,7 @@ class QueryBuilder
     private $select;
     private $where = [];
     private $order = [];
+    private $groupBy;
     private $limit;
     private $join = [];
 
@@ -26,42 +27,39 @@ class QueryBuilder
         }
     }
 
-    public function innerJoin($table,$column1,$operator,$column2){
+    public function groupBy($column){
+        $this->groupBy = "$column";
+        return $this;
+    }
 
+    public function innerJoin($table,$column1,$operator,$column2){
         $this->join[] = " INNER JOIN " . $table . " ON " . $column1 . $operator . $column2;
         return $this;
-
     }
 
     public function select(...$columns){
-
         $this->select = $columns;
         return $this;
     }
 
     public function where(...$condition){
-
         $this->where = array_merge($condition);
         return $this;
     }
 
     public function setParams(array $params){
-
         $this->params = $params;
         return $this;
     }
 
     public function limit($nb){
-
         $this->limit = $nb;
         return $this;
     }
 
     public function orderBy($column,$direction){
-
         $this->order[] = "$column $direction";
         return $this;
-
     }
 
 
@@ -81,10 +79,14 @@ class QueryBuilder
             $this->request.= " )";
         }
 
+        if (!empty($this->groupBy)){
+            $this->request.= " GROUP BY " . $this->groupBy;
+        }
+
         if (!empty($this->order)){
             $this->request.= " ORDER BY " . implode(', ',$this->order);
-
         }
+
 
         if ($this->limit){
             $this->request.= " LIMIT " . $this->limit;
@@ -103,6 +105,7 @@ class QueryBuilder
         }else {
             $query = $this->pdo->query($this->request);
         }
+
         return $query->fetchAll(\PDO::FETCH_ASSOC);
 
     }
