@@ -64,9 +64,10 @@ class Reviews
         $view->assign("title", "Liste des produits");
         $review = new Review();
         $datas = $review
-            ->select("cc_products.id as id_product, cc_review.Products_id, cc_review.commentary, cc_review.mark, count(cc_review.commentary) as nb_commentary")
-            ->innerJoin("cc_products", "cc_products.id", "=", "cc_review.Products_id")
-            ->groupBy("cc_review.Products_id")
+            ->select("cc_products.id as id_product, Products_id, commentary, AVG(mark) as mark, 
+            (SELECT COUNT(*) as nb FROM cc_review WHERE status = 1 GROUP BY commentary) as nb_check_commentary, COUNT(commentary) as nb_commentary")
+            ->innerJoin("cc_products", "cc_products.id", "=", "Products_id")
+            ->groupBy("Products_id")
             ->get();
         $view->assign("datas", $datas);
 

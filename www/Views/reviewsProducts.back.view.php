@@ -19,16 +19,14 @@
                         <tr>
                             <td><?= $product["id_product"] ?></td>
                             <td><?= $product["commentary"] ?></td>
-                            <td><?= $product["nb_check_commentary"] . "/". $product["nb_commentary"] ?></td>
-                                <td><?= $product["mark"] ?></td>
+                            <td><?= $product["nb_check_commentary"] . " commentaire(s) vérifié(s) / ". $product["nb_commentary"] . " commentaires totaux" ?></td>
+                            <td><?= $product["mark"] ?></td>
                             <td>
-                                <a href="/admin/check-review?id=<?= $product["id"] ?>" class="button button--success">
-                                    <i class="bi bi-check"></i>
-                                </a>
-                                <a href="/admin/del-review?id=<?= $product["id"] ?>" class="button button--alert">
-                                    <i class="bi bi-trash-fill"></i>
+                                <a href="#" class="button button--black">
+                                    Informations
                                 </a>
                             </td>
+
                         </tr>
                     <?php endforeach; ?>
                     </tbody>
