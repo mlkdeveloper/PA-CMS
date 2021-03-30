@@ -5,13 +5,13 @@ namespace App\Core;
 class FormBuilder
 {
 
-	public function __construct(){
+    public function __construct(){
 
-	}
+    }
 
-	public static function render($config, $show=true){
+    public static function render($config, $show=true){
 
-		$html = "<form 
+        $html = "<form 
 				method='".($config["config"]["method"]??"GET")."' 
 				action='".($config["config"]["action"]??"")."'
 				class='".($config["config"]["class"]??"")."'
@@ -19,10 +19,13 @@ class FormBuilder
 				>";
 
 
-		foreach ($config["inputs"] as $name => $configInput) {
-			$html .="<label for='".($configInput["id"]??$name)."'>".($configInput["label"]??"")." </label>";
+        foreach ($config["inputs"] as $name => $configInput) {
 
-			$html .="<input 
+            $html .= "<div class='".($configInput["divClass"]??"")."'>";
+
+            $html .="<label for='".($configInput["id"]??$name)."'>".($configInput["label"]??"")." </label>";
+
+            $html .="<input 
 						type='".($configInput["type"]??"text")."'
 						name='".$name."'
 						placeholder='".($configInput["placeholder"]??"")."'
@@ -30,21 +33,23 @@ class FormBuilder
 						id='".($configInput["id"]??$name)."'
 						".(!empty($configInput["required"])?"required='required'":"")."
 						 ><br>";
-		}
+
+            $html .= "</div>";
+        }
 
 
 
 
-		$html .= "<input type='submit' value=\"".($config["config"]["submit"]??"Valider")."\">";
-		$html .= "</form>";
+        $html .= "<input type='submit' class='".($config["config"]["classButton"]??"")."' value=\"".($config["config"]["submit"]??"Valider")."\">";
+        $html .= "</form>";
 
 
-		if($show){
-			echo $html;
-		}else{
-			return $html;
-		}
+        if($show){
+            echo $html;
+        }else{
+            return $html;
+        }
 
-	}
+    }
 
 }

@@ -141,13 +141,15 @@ class Shop extends Database
                 "action"=>"",
                 "class"=>"form_control",
                 "id"=>"form_register",
-                "submit"=>"Enregistrer"
+                "submit"=>"Enregistrer",
+                "classButton" => "button button--blue"
             ],
             "inputs"=>[
 
                 "nom"=>[
                     "type"=>"text",
                     "placeholder"=>"Chez Jacquie",
+                    "divClass"=> "form_align--top",
                     "label"=>"Nom",
                     "required"=>true,
                     "class"=>"form_input",
@@ -159,6 +161,7 @@ class Shop extends Database
                 "address"=>[
                     "type"=>"text",
                     "label"=>"Adresse",
+                    "divClass"=> "form_align--top",
                     "placeholder"=>"ex : 29 rue de la liberte",
                     "required"=>true,
                     "class"=>"form_input",
@@ -168,6 +171,7 @@ class Shop extends Database
                 "ville"=>[
                     "type"=>"text",
                     "label"=>"Ville",
+                    "divClass"=> "form_align--top",
                     "placeholder"=>"ex : Paris",
                     "required"=>true,
                     "class"=>"form_input",
@@ -177,6 +181,7 @@ class Shop extends Database
                 "zipCode"=>[
                     "type"=>"text",
                     "label"=>"Code postal",
+                    "divClass"=> "form_align--top",
                     "placeholder"=>"ex : 75015",
                     "required"=>true,
                     "class"=>"form_input",
@@ -186,6 +191,7 @@ class Shop extends Database
                 "description"=>[
                     "type"=>"text",
                     "label"=>"Description",
+                    "divClass"=> "form_align--top",
                     "placeholder"=>"Votre description",
                     "required"=>true,
                     "class"=>"form_input",
@@ -195,6 +201,7 @@ class Shop extends Database
                 "telephone"=>[
                     "type"=>"text",
                     "label"=>"N° Telephone",
+                    "divClass"=> "form_align--top",
                     "placeholder"=>"Numero de telephone",
                     "required"=>true,
                     "class"=>"form_input",
