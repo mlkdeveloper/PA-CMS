@@ -58,4 +58,20 @@ class FormValidator
 
         return $errors; //[] vide si ok
     }
+
+    public static function returnValue($data, $statut){
+
+        $message = [];
+
+        if ($data == true && $statut == 1){
+            $message = "Utilisateur ajouté !";
+        } else if ($data == true && $statut == 2){
+            $message = "Utilisateur modifié !";
+        } else {
+            $message = "Utilisateur supprimé !";
+        }
+
+
+        return $message;
+    }
 }

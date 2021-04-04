@@ -5,6 +5,8 @@
         <li><?=$error?></li>
     <?php endforeach;?>
 
+<?php elseif(isset($message)):?>
+    <li><?=$message?></li>
 <?php endif;?>
 
 

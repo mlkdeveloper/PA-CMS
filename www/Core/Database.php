@@ -6,6 +6,15 @@ class Database extends QueryBuilder
 {
     protected $table;
 
+//    Global variables
+
+    const NEW_OBJECT = 1;
+    const UPDATE_OBJECT = 2;
+    const DELETE_OBJECT = 3;
+
+    const USER_TABLE = 'cc_user';
+
+
     public function __construct()
     {
 
@@ -36,7 +45,19 @@ class Database extends QueryBuilder
 
             $query = $this->pdo->prepare("UPDATE " . $this->table . " SET " . implode(',', $sqlColumn) . " WHERE id = :id");
         }
-        $query->execute($column);
+        $value = $query->execute($column);
+        return $value;
+    }
+
+    public function deleteUser($id)
+    {
+        $column["id"] = $this->getId();
+        $column["isDeleted"] = $this->getIsDeleted();
+
+        $query = $this->pdo->prepare("UPDATE " . self::USER_TABLE  . " SET isDeleted = :isDeleted" . " WHERE id = :id");
+
+        $value = $query->execute($column);
+       return $value;
     }
 
     public function populate($data){

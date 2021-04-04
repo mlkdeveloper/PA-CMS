@@ -4,6 +4,8 @@
         <li><?=$error?></li>
     <?php endforeach;?>
 
+<?php elseif(isset($message)):?>
+    <li><?=$message?></li>
 <?php endif;?>
 
 
@@ -31,15 +33,16 @@
                             <th><?= $client['lastname'] ?></th>
                             <th><?= $client['email'] ?></th>
                             <th><?= $client['phoneNumber'] ?></th>
-                            <td >
+                            <td>
                                 <div class="align">
                                     <button class="button button--black">
                                         <i class="fas fa-pencil-alt"></i>
                                         <a href="/admin/modification-client?id=<?= $client['id'] ?>">Modifier</a>
                                     </button>
-                                    <i class="fas fa-trash">
-                                        <a href="/admin/suppression-client?id=<?= $client['id'] ?>"></a>
-                                    </i>
+                                    <form method="POST" action="/admin/suppression-client">
+                                            <input type="hidden" name="id" value="<?= $client['id'] ?>">
+                                            <button type="submit" class="button button--black"><i class="fas fa-trash"></i></button>
+                                    </form>
                                 </div>
                             </td>
                         </tr>

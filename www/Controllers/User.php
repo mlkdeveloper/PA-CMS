@@ -85,8 +85,7 @@ class User extends Database
 
     public function displayClientAction(){
         $clients = new UserModel();
-        $array = $clients->select()->get();
-
+        $array = $clients->select()->where("isDeleted = :delete")->setParams(["delete" => 0])->get();
         $view = new View("clientList.back", "back");
         $view->assign("title", "Admin - Client");
         $view->assign("array", $array);
@@ -102,14 +101,14 @@ class User extends Database
         $this->saveForm($view, $client, $formCreateClient);
     }
 
-    public function saveForm($view, $client, $form, $formStatus = false){
+    public function saveForm($view, $client, $form, $formStatus = Database::NEW_OBJECT){
 
-        if (!empty($_POST) ){
+        if (!empty($_POST) && $formStatus != Database::DELETE_OBJECT) {
             $error = FormValidator::check($form, $_POST);
 
-            if (empty($error)){
+            if (empty($error) && $formStatus != Database::DELETE_OBJECT) {
 
-                if ($formStatus)
+                if ($formStatus == Database::UPDATE_OBJECT)
                     $client->setId($_GET['id']);
 
                 $pwd = $this->pwdGenerator();
@@ -126,11 +125,24 @@ class User extends Database
                 $client->setIsDeleted(0);
                 $client->setPwd(password_hash($pwd, PASSWORD_BCRYPT));
                 $client->setCreatedAt(date("Y-m-d H:i:s"));
-                $client->setIdRole(1);
-                $client->save();
+                $client->setIdRole(2);
+                $retrunValue = $client->save();
+
+                $message = FormValidator::returnValue($retrunValue, $formStatus); // 1 create , 2 update , 3 delete
+                $view->assign("message", $message);
             } else {
                 $view->assign("errors", $error);
             }
+        }
+        if ($formStatus == Database::DELETE_OBJECT){
+
+            $client->setId($_POST['id']);
+            $client->setIsDeleted(1);
+
+            $retrunValue = $client->deleteUser($_POST['id']);
+
+            $message = FormValidator::returnValue($retrunValue, $formStatus);
+            $view->assign("message", $message);
         }
     }
 
@@ -161,7 +173,7 @@ class User extends Database
             $view = new View("updateClient.back", "back");
 
             $form = $client->formBuilderCreateClient();
-            $this->saveForm($view,$client,$form,true);
+            $this->saveForm($view,$client,$form,Database::UPDATE_OBJECT);
 
             $values = $client->select()->where("id = :id")->setParams(["id" => $_GET['id']])->get();
             $view->assign("values", ...$values);
@@ -174,6 +186,25 @@ class User extends Database
     function deleteClientAction()
     {
 
+        if (isset($_POST['id']) && !empty($_POST['id'])){
+
+            $client = new UserModel();
+            $verifyId = $client->select("id")->where("id = :id")->setParams(["id" => $_POST['id']])->get();
+
+            if (empty($verifyId))
+                header("Location: /admin/liste_client");
+
+            $view = new View("clientList.back", "back");
+
+            $form = $client->formDeleteClient();
+            $this->saveForm($view,$client,$form,Database::DELETE_OBJECT);
+
+            header("Location: /admin/liste-client");
+
+        }else{
+
+            header("Location: /admin/liste-client");
+        }
     }
 
 }

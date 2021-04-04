@@ -367,6 +367,22 @@ class User extends Database
 
 	}
 
+	public function formDeleteClient(){
+        return [
+            "config"=>[
+                "method"=>"POST",
+                "action"=>"",
+                "class"=>"",
+                "id"=>"form_create_client",
+                "submit"=>"Supprimer"
+            ],
+            "input"=>[
+                "id"=>[
+                    "type"=>"hidden"
+                ]
+            ]
+        ];
+    }
     public function formBuilderCreateClient(){
         return [
 
