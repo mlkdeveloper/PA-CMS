@@ -110,11 +110,8 @@ class Pages extends Database
                     "errorLength"=>"Le nom de la page doit être compris entre 2 et 50 caractères."
                 ],
                 "slug"=>[
-                    "minLength"=>2,
-                    "maxLength"=>50,
-                    "errorLength"=>"Le slug doit être compris entre 2 et 50 caractères.",
-                    "errorRegex"=>"Le slug doit commencer par un /. Les caractères autorisés sont: les lettres de l'alphabet en minuscules et/ou en minuscules ainsi que les caractères - et _",
-                    "regex"=>"/^\/[a-zA-Z-_]+$/"
+                    "errorRegex"=>"Le slug doit être compris entre 2 et 50 caractères et il doit commencer par un /. Les caractères autorisés sont: les lettres de l'alphabet en minuscules et/ou en minuscules ainsi que les caractères - et _",
+                    "regex"=>"/^\/[a-zA-Z-_]{2,50}$/"
                 ]
             ]
         ];
