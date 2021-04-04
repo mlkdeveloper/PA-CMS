@@ -24,18 +24,17 @@ class Pages
 
         $pages = new modelPages();
         $view = new View("createPage.back", "back");
-        $view->assign("title", "Admin - page");
+        $view->assign("title", "Création de la page");
 
 
         $form = $pages->formBuilderRegister();
 
         if(!empty($_POST)){
 
-            $errors = FormValidator::check($form, $_POST);
-            $errorSlug = FormValidator::checkSlug($_POST["slug"]);
+            $errors = FormValidator::checkPage($form, $_POST);
 
             if(empty($errors)){
-                if (empty($errorSlug)){
+
                     $pages->populate($_POST);
                     $pages->setUserid(2);
                     $pages->save();
@@ -43,9 +42,7 @@ class Pages
                     file_put_contents("./publisher/templatesPublisher/".$_POST["name"].".json", "");
 
                     header('location:/admin/display-pages');
-                }else{
-                    $view->assign("errors", $errorSlug);
-                }
+
             }else{
                 $view->assign("errors", $errors);
             }
@@ -58,7 +55,7 @@ class Pages
         if (isset($_GET['id']) && !empty($_GET['id'])){
 
             $pages = new modelPages();
-            $verifyId = $pages->select("id")->where("id = :id")->setParams(["id" => $_GET['id']])->get();
+            $verifyId = $pages->select()->where("id = :id")->setParams(["id" => $_GET['id']])->get();
 
             if (empty($verifyId)){
                 header("Location: /admin/display-pages");
@@ -68,13 +65,30 @@ class Pages
             $view = new View("updatePage.back", "back");
 
             $form = $pages->formBuilderRegister();
-            $this->saveForm($view,$pages,$form,true);
 
-            $values = $pages->select("*")->where("id = :id")->setParams(["id" => $_GET['id']])->get();
+            if(!empty($_POST)){
 
-            $view->assign("values", $values);
-            $view->assign("title", "Admin - Page");
+                $errors = FormValidator::checkPage($form, $_POST);
 
+                if(empty($errors)){
+                    $test = $pages->getSlug();
+                    $pages->populate($_POST);
+                    $pages->setUserid(2);
+                    $pages->setId($_GET['id']);
+                    $pages->save();
+
+                    rename("./publisher/templatesPublisher/".$verifyId[0]["name"].".json","./publisher/templatesPublisher/".$_POST["name"].".json");
+
+                    header('location:/admin/display-pages');
+
+                }else{
+                    $view->assign("errors", $errors);
+                }
+            }
+
+            $pages->populate($verifyId[0]);
+            $view->assign("title", "Modification de la page");
+            $view->assign("values", $pages);
         }else{
             header("Location: /admin/display-page");
             exit();

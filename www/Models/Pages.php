@@ -102,20 +102,21 @@ class Pages extends Database
     public function formBuilderRegister(){
 
         return [
-
             "inputs"=>[
 
                 "name"=>[
                     "minLength"=>2,
                     "maxLength"=>50,
-                    "error"=>"Le nom de la page doit être compris entre 2 et 50 caractères."
+                    "errorLength"=>"Le nom de la page doit être compris entre 2 et 50 caractères."
                 ],
                 "slug"=>[
-                    "maxLength"=>100,
-                    "error"=>"Le slug doit être inférieur à 100 caractères."
+                    "minLength"=>2,
+                    "maxLength"=>50,
+                    "errorLength"=>"Le slug doit être compris entre 2 et 50 caractères.",
+                    "errorRegex"=>"Le slug doit commencer par un /. Les caractères autorisés sont: les lettres de l'alphabet en minuscules et/ou en minuscules ainsi que les caractères - et _",
+                    "regex"=>"/^\/[a-zA-Z-_]+$/"
                 ]
             ]
-
         ];
     }
 }

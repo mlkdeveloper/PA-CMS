@@ -13,15 +13,9 @@ if (isset($errors)){
     echo "</div>";
 }
 ?>
-<div class="container">
-    <h1><?= print_r($values) ?></h1>
-    <h1><?= $values["slug"] ?></h1>
-
-</div>
-
 <section>
     <div class="container">
-        <h1 class="centered">Créer une page</h1>
+        <h1 class="centered">Modification de la page</h1>
     </div>
 </section>
 <section>
@@ -33,12 +27,12 @@ if (isset($errors)){
                         <div class=" jumbotron">
                             <div class="form_align--top">
                                 <label class="label" for="name">Titre *</label>
-                                <input class="input" type="text" name="name" placeholder="Ma page" required="required">
+                                <input class="input" type="text" name="name" placeholder="Ma page" required="required" value="<?= $values->getName()?>">
                             </div>
 
                             <div class="form_align--top mt-2">
                                 <label class="label" for="slug">Slug *</label>
-                                <input class="input" type="text" name="slug" required="required">
+                                <input class="input" type="text" name="slug" required="required" value="<?= $values->getSlug()?>">
                             </div>
 
                             <input class="button--blue button mt-2" type="submit" value="Enregistrer">

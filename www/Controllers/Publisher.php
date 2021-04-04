@@ -29,6 +29,10 @@ if (isset($_FILES['file'])){
 class Publisher
 {
     public function publisherAction(){
+        if (!file_exists("./publisher/templatesPublisher/".$_GET["name"].".json")){
+            header("Location: /admin/display-pages");
+            exit();
+        }
         $view = new View("publisher.back", "publisher");
         $view->assign("title", "Editeur");
     }

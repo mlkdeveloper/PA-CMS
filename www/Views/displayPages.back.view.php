@@ -33,6 +33,7 @@
                                         <a href="/admin/publisher?name=<?= $value['name'] ?>" class="button button--blue">
                                             <i class="fas fa-eye"></i>Voir la page
                                         </a>
+                                        <i class="fas fa-trash"></i>
                                     </div>
                                 </td>
                             </tr>
