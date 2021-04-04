@@ -73,9 +73,14 @@
             </div>
         </section>
         <section>
-            <div class="container" style="display: flex;justify-content: flex-end">
+            <div class="container " style="display: flex;justify-content: flex-end">
                 <input class="button--blue button" type="submit" value="Enregistrer">
             </div>
+
+            <div class="container">
+                <a class="button button--blue" href="/admin/liste-client" > Retour </a>
+            </div>
+
         </section>
     </form>
 </section>

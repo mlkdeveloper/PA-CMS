@@ -15,6 +15,11 @@
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <div class="jumbotron">
+
+                    <div class="container" style="display: flex;justify-content: flex-end">
+                        <a class="button button--blue" href="/admin/ajout-client" >Nouveau client</a>
+                    </div>
+
                     <table id="table" class="row-border hover">
                         <thead>
                         <tr>
