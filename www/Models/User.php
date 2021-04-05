@@ -244,29 +244,30 @@ class User extends Database
 			"config"=>[
 				"method"=>"POST",
 				"action"=>"",
-				"class"=>"form_control",
+				"class"=>"form_control col col-md-6 container",
 				"id"=>"form_register",
-				"submit"=>"S'inscrire"
+				"submit"=>"Connexion",
+                "classButton" => "button button--blue"
 			],
 			"inputs"=>[
 
 				"email"=>[
 								"type"=>"email",
+                                "divClass"=> "form_align--top",
 								"placeholder"=>"Exemple : nom@gmail.com",
 								"label"=>"Votre Email",
 								"required"=>true,
 								"class"=>"form_input",
-								"minLength"=>8,
-								"maxLength"=>320,
 								"error"=>"Votre email doit faire entre 8 et 320 caractères"
 							],
 
 				"pwd"=>[
 								"type"=>"password",
+                                "divClass"=> "form_align--top",
+                                "placeholder"=>"Saisir votre mot de passe",
 								"label"=>"Votre mot de passe",
 								"required"=>true,
 								"class"=>"form_input",
-								"minLength"=>8,
 								"error"=>"Votre mot de passe doit faire au minimum 8 caractères"
 							]
 			]

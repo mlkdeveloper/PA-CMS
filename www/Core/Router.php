@@ -53,6 +53,48 @@ class Router
         }
     }
 
+    public function run(){
+
+        $a = $this->getAction();
+        if( file_exists("./Controllers/".$this->getController().".php") ){
+
+            //include car on vérifie avant l'existance du fichier et surtout
+            //le include est plus rapide à executer
+            include "./Controllers/".$this->getController().".php";
+
+            //Le fichie existe mais est-ce que la classe existe ?
+
+            $c = "App\\Controller\\".$this->getController();
+            if( class_exists($c)){
+
+                // $c = UserController
+                // Instance de la classe : la classe dépend du fichier routes.yml qui lui dépend  du slug
+                //$c  =  User
+
+                $cObject = new $c(); // new App\User
+                //Est-ce que la méthode existe dans l'objet
+                if(method_exists($cObject, $this->getAction())){
+
+                    //$a => addAction
+                    //Appel de la méthode dans l'objet, exemple UserController->addAction();
+                    $cObject->$a();
+
+
+
+                }else{
+                    throw new MyException("Error la methode n'existe pas !!!");
+                }
+
+            }else{
+                throw new MyException("Error la classe n'existe pas!!!");
+            }
+
+
+        }else{
+            throw new MyException("Error le fichier controller n'existe pas !!!");
+        }
+    }
+
 
     public function getSlug($controller = "Main", $action = "default")
     {
@@ -83,7 +125,7 @@ class Router
 
     public function exception404()
     {
-        die("Erreur 404");
+        throw new MyException("Erreur 404 !",404);
     }
 
 }

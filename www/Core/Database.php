@@ -45,6 +45,7 @@ class Database extends QueryBuilder
 
             $query = $this->pdo->prepare("UPDATE " . $this->table . " SET " . implode(',', $sqlColumn) . " WHERE id = :id");
         }
+
         $value = $query->execute($column);
         return $value;
     }
@@ -58,6 +59,7 @@ class Database extends QueryBuilder
 
         $value = $query->execute($column);
         return $value;
+      
     }
 
     public function populate($data){
@@ -71,5 +73,19 @@ class Database extends QueryBuilder
             }
         }
         return $this;
+    }
+
+    public function find_duplicates_sql($col, $value): bool
+    {
+        $class = get_called_class();
+        $model = new $class;
+        $datas = $model
+            ->select("$col")
+            ->where("$col = :$col")
+            ->setParams(["$col" => $value])
+            ->get();
+
+        if (empty($datas)) return true;
+        else return false;
     }
 }
