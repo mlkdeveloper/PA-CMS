@@ -139,7 +139,7 @@ class User extends Database
             $client->setId($_POST['id']);
             $client->setIsDeleted(1);
 
-            $retrunValue = $client->deleteUser($_POST['id']);
+            $retrunValue = $client->deleteObject($_POST['id'], Database::USER_TABLE);
 
             $message = FormValidator::returnValue($retrunValue, $formStatus);
             $view->assign("message", $message);

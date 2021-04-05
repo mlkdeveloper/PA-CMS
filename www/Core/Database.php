@@ -49,15 +49,15 @@ class Database extends QueryBuilder
         return $value;
     }
 
-    public function deleteUser($id)
+    public function deleteObject($id, $table)
     {
         $column["id"] = $this->getId();
         $column["isDeleted"] = $this->getIsDeleted();
 
-        $query = $this->pdo->prepare("UPDATE " . self::USER_TABLE  . " SET isDeleted = :isDeleted" . " WHERE id = :id");
+        $query = $this->pdo->prepare("UPDATE " . $table  . " SET isDeleted = :isDeleted" . " WHERE id = :id");
 
         $value = $query->execute($column);
-       return $value;
+        return $value;
     }
 
     public function populate($data){
