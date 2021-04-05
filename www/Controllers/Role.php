@@ -49,10 +49,35 @@ class Role
 
     public function updateRoleAction(){
 
-        $role = new modelRole();
-        $view = new View("updateRole.back", "back");
-        $view->assign("title", "Admin - Rôle");
+        if (isset($_GET['id']) && !empty($_GET['id'])){
 
+            $role = new modelRole();
+            $verifyId = $role->select("id")->where("id = :id")->setParams(["id" => $_GET['id']])->get();
+            if (empty($verifyId))
+                header("Location: /admin/role");
+
+            $view = new View("updateRole.back", "back");
+
+            $form = $role->formBuilderRegister();
+
+            if (!empty($_POST)){
+
+                $errors = FormValidator::checkFormRole($form, $_POST);
+                if (empty($errors)){
+                    $role->populate($_POST);
+                    $role->setId($_GET['id']);
+                    $role->save();
+                }else{
+                    $view->assign("errors", $errors);
+                }
+            }
+
+            $values = $role->select()->where("id = :id")->setParams(["id" => $_GET['id']])->get();
+            $view->assign("values", ...$values);
+            $view->assign("title", "Admin - Rôle");
+
+        }else{
+            header("Location: /admin/role");
+        }
     }
-
 }

@@ -194,6 +194,7 @@ class Role extends Database
                 "name"=>[
                     "minLength"=>2,
                     "maxLength"=>50,
+                    "uniq" => true,
                     "error"=>"Le nom du rôle doit être compris entre 2 et 50 caractères."
                 ],
                 "role"=>[
