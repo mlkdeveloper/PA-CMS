@@ -52,9 +52,9 @@ class Database extends QueryBuilder
     public function deleteObject($id, $table)
     {
         $column["id"] = $this->getId();
-        $column["isDeleted"] = $this->getIsDeleted();
+        $column["status"] = $this->getStatus();
 
-        $query = $this->pdo->prepare("UPDATE " . $table  . " SET isDeleted = :isDeleted" . " WHERE id = :id");
+        $query = $this->pdo->prepare("UPDATE " . $table  . " SET status = :status" . " WHERE id = :id");
 
         $value = $query->execute($column);
         return $value;

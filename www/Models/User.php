@@ -20,7 +20,6 @@ class User extends Database
     protected $createdAt;
     protected $id_role;
     protected $status;
-    protected $isDeleted = 0;
 
 
 	public function __construct(){
@@ -140,20 +139,6 @@ class User extends Database
 	public function setStatus(int $status)
 	{
 	    $this->status = $status;
-	}
-	/**
-	 * @return int
-	 */
-	public function getIsDeleted()
-	{
-	    return $this->isDeleted;
-	}
-	/**
-	 * @param int $isDeleted
-	 */
-	public function setIsDeleted(int $isDeleted)
-	{
-	    $this->isDeleted = $isDeleted;
 	}
 
     /**

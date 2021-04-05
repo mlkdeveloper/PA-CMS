@@ -85,7 +85,7 @@ class User extends Database
 
     public function displayClientAction(){
         $clients = new UserModel();
-        $array = $clients->select()->where("isDeleted = :delete")->setParams(["delete" => 0])->get();
+        $array = $clients->select()->where("status = :status")->setParams(["status" => 1])->get();
         $view = new View("clientList.back", "back");
         $view->assign("title", "Admin - Client");
         $view->assign("array", $array);
@@ -122,7 +122,6 @@ class User extends Database
                 $client->setZipCode($_POST['zipCode']);
                 $client->setCountry($_POST['country']);
                 $client->setStatus(1);
-                $client->setIsDeleted(0);
                 $client->setPwd(password_hash($pwd, PASSWORD_BCRYPT));
                 $client->setCreatedAt(date("Y-m-d H:i:s"));
                 $client->setIdRole(2);
@@ -137,7 +136,7 @@ class User extends Database
         if ($formStatus == Database::DELETE_OBJECT){
 
             $client->setId($_POST['id']);
-            $client->setIsDeleted(1);
+            $client->setStatus(0);
 
             $retrunValue = $client->deleteObject($_POST['id'], Database::USER_TABLE);
 
