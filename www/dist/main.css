@@ -242,8 +242,8 @@
   }
 
   .col-lg-8 {
-    flex-basis: 66.6666666667%;
-    width: 66.6666666667%;
+    flex-basis: 66.66666667%;
+    width: 66.66666667%;
     padding: 10px 10px;
   }
 
@@ -336,6 +336,7 @@ p {
   border-radius: 0.25rem;
   border: none;
   font-size: 1rem;
+  text-decoration: none;
 }
 
 @media screen and (max-width: 800px) {
@@ -365,7 +366,7 @@ p {
 }
 
 .button--black:hover {
-  background-color: #1a1a1a;
+  background-color: #1a1919;
 }
 
 .button--blue {
