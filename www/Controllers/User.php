@@ -25,31 +25,37 @@ class User
 
 
 	//Method : Action
-	public function registerAction(){
+	public function loginAction(){
 
 		$user = new UserModel();
-		$view = new View("register"); 
+		$view = new View("login", "front");
 
-		$form = $user->formBuilderRegister();
+		$form = $user->formBuilderLogin();
 
 		if(!empty($_POST)){
 			
 			$errors = FormValidator::check($form, $_POST);
 
 			if(empty($errors)){
-				$user->setFirstname($_POST["firstname"]);
-				$user->setLastname($_POST["lastname"]);
 				$user->setEmail($_POST["email"]);
 				$user->setPwd($_POST["pwd"]);
-				$user->setCountry($_POST["country"]);
 
-				$user->save();
+                if($user->select('email')->where('email=:email', 'pwd=:pwd')->setParams([":email" => $_POST['email'],":pwd" => $_POST['pwd'],])->get()){
+                    header('location:/');
+                }else{
+                    array_push($errors,"L'email et le mot de passe ne correspondent pas");
+                    $view->assign("errors", $errors);
+                }
+
+
+				//$user->save();
 			}else{
 				$view->assign("errors", $errors);
 			}
 		}
 
 		$view->assign("form", $form);
+        $view->assign("title", "C&C - Connexion");
 		$view->assign("formLogin", $user->formBuilderLogin());
 	}
 

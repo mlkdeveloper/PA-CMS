@@ -15,9 +15,9 @@
   action: add
 
 
-/s-inscrire:
+/connexion:
   controller: User
-  action: register
+  action: login
 
 /afficher-un-utilisateur:
   controller: User
