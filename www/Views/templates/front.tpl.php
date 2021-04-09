@@ -10,10 +10,14 @@
     <link rel="stylesheet" href="../../dist/main.css">
 </head>
 <body>
+<div class="container-body">
+    <main>
 
+        <!-- afficher la vue -->
+        <?php include $this->view ?>
 
-	<!-- afficher la vue -->
-	<?php include $this->view ?>
+    </main>
+</div>
 
 
 

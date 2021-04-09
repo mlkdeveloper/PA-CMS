@@ -13,14 +13,6 @@ class User
 	//Method : Action
 	public function defaultAction(){
         $user = new UserModel();
-
-
-
-        //$user->selectAll(2);
-        /*
-        $user->setFirstname("Toto");
-        $user->save();
-        */
 	}
 
 
@@ -64,6 +56,46 @@ class User
 		$view->assign("formLogin", $user->formBuilderLogin());
 	}
 
+    //Method : Action
+    public function loginAdminAction(){
+
+        $user = new UserModel();
+
+        $monUser = new UserModel();
+        $view = new View("login", "front");
+
+        $form = $user->formBuilderLogin();
+
+        if(!empty($_POST)){
+
+            $errors = FormValidator::check($form, $_POST);
+
+            if(empty($errors)){
+                $user->setEmail($_POST["email"]);
+                $user->setPwd($_POST["pwd"]);
+
+                if($user->select('email')->where('email=:email', 'pwd=:pwd', 'id_role = 1')->setParams([":email" => $_POST['email'],":pwd" => $_POST['pwd'],])->get()){
+                    session_start();
+                    $monUser = $user->select('*')->where('email=:email', 'pwd=:pwd')->setParams([":email" => $_POST['email'],":pwd" => $_POST['pwd'],])->get();
+                    $_SESSION['user'] = $monUser;
+                    header('location:/');
+                }else{
+                    array_push($errors,"L'email et le mot de passe ne correspondent pas / Vous n'avez pas les droits requis");
+                    $view->assign("errors", $errors);
+                }
+
+
+                //$user->save();
+            }else{
+                $view->assign("errors", $errors);
+            }
+        }
+
+        $view->assign("form", $form);
+        $view->assign("title", "C&C - Connexion");
+        $view->assign("formLogin", $user->formBuilderLogin());
+    }
+
 
 	//Method : Action
 	public function addAction(){
@@ -92,6 +124,33 @@ class User
 		
 	}
 
+	public function registerAction(){
+        $user = new UserModel();
+
+        $monUser = new UserModel();
+        $view = new View("register");
+
+        $form = $user->formBuilderRegister();
+        $view->assign("form", $form);
+        $view->assign("title", "C&C - Inscription");
 
 
+        if(empty($errors)){
+            $email = $_POST["email"];
+            $pwd = $_POST["pwd"];
+            $pwdConfirm = $_POST['pwdConfirm'];
+            $country = $_POST['country'];
+
+            if(empty($errors)) {
+                if ($pwd != $pwdConfirm) {
+                    array_push($errors, "Le mot de passe de confirmation ne correspond pas");
+                    $view->assign("errors", $errors);
+                }
+            }
+            //$user->save();
+        }else{
+            $view->assign("errors", $errors);
+        }
+
+    }
 }

@@ -15,7 +15,23 @@ class Shop extends Database
     protected $zipCode;
     protected $phoneNumber;
     protected $description;
+    protected $isDeleted;
 
+    /**
+     * @return mixed
+     */
+    public function getIsDeleted()
+    {
+        return $this->isDeleted;
+    }
+
+    /**
+     * @param mixed $isDeleted
+     */
+    public function setIsDeleted($isDeleted)
+    {
+        $this->isDeleted = $isDeleted;
+    }
 
     public function __construct(){
         parent::__construct();
@@ -293,6 +309,27 @@ class Shop extends Database
                     "minLength"=>5,
                     "error"=>"La description doit faire au minimum 5 caractères"
                 ],
+            ]
+        ];
+    }
+
+    public function formBuilderDeleteShop($value){
+        return [
+
+            "config"=>[
+                "method"=>"POST",
+                "action"=>"",
+                "divClass"=> "align",
+                "id"=>"form_register",
+                "submit"=>"X",
+                "classButton" => "button button--alert"
+            ],
+            "inputs"=>[
+
+                "id"=>[
+                    "type"=>"hidden",
+                    "value" => $value
+                ]
             ]
         ];
     }

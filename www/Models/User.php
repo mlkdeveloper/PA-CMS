@@ -209,7 +209,7 @@ class User extends Database
 			"config"=>[
 				"method"=>"POST",
 				"action"=>"",
-				"class"=>"form_control",
+                "class"=>"form_control col col-md-10 container",
 				"id"=>"form_register",
 				"submit"=>"S'inscrire"
 			],
@@ -217,6 +217,7 @@ class User extends Database
 				"firstname"=>[
 								"type"=>"text",
 								"placeholder"=>"Exemple : Yves",
+                                "divClass"=> "form_align--top",
 								"label"=>"Votre Prénom",
 								"required"=>true,
 								"class"=>"form_input",
@@ -226,6 +227,7 @@ class User extends Database
 							],
 				"lastname"=>[
 								"type"=>"text",
+                                "divClass"=> "form_align--top",
 								"placeholder"=>"Exemple : Skrzypczyk",
 								"label"=>"Votre Nom",
 								"required"=>true,
@@ -237,6 +239,7 @@ class User extends Database
 
 				"email"=>[
 								"type"=>"email",
+                                "divClass"=> "form_align--top",
 								"placeholder"=>"Exemple : nom@gmail.com",
 								"label"=>"Votre Email",
 								"required"=>true,
@@ -248,6 +251,7 @@ class User extends Database
 
 				"pwd"=>[
 								"type"=>"password",
+                                "divClass"=> "form_align--top",
 								"label"=>"Votre mot de passe",
 								"required"=>true,
 								"class"=>"form_input",
@@ -257,6 +261,7 @@ class User extends Database
 
 				"pwdConfirm"=>[
 								"type"=>"password",
+                                "divClass"=> "form_align--top",
 								"label"=>"Confirmation",
 								"required"=>true,
 								"class"=>"form_input",
@@ -266,6 +271,7 @@ class User extends Database
 
 				"country"=>[
 								"type"=>"text",
+                                "divClass"=> "form_align--top",
 								"placeholder"=>"Exemple : fr",
 								"label"=>"Votre Pays",
 								"required"=>true,

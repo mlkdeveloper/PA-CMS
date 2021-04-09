@@ -39,6 +39,7 @@
                                         </button>
                                     </div>
                                     <div class="align">
+                                        <?php  //App\Core\FormBuilder::render($form); ?>
                                         <i class="fas fa-trash"></i>
                                     </div>
                                 </div>

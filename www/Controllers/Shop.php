@@ -7,6 +7,9 @@ namespace App\Controller;
 use App\Core\View;
 use App\Core\FormValidator;
 use App\Models\Shop as ShopModel;
+use App\Models\Products as ProductsModel;
+use App\Models\Products_model as ProductsMModel;
+
 class Shop
 {
     public function displayShopAction(){
@@ -16,6 +19,12 @@ class Shop
         $shop = new ShopModel();
         $listShop = $shop->select()->get();
 
+        //$formDeleteShop = $shop->formBuilderDeleteShop();
+        //if (isset($formDeleteShop)){
+          //  $this->deleteShop($_POST['id']);
+        //}
+
+        //$view->assign("form", $formDeleteShop);
         $view->assign("shop", $listShop);
     }
 
@@ -51,11 +60,15 @@ class Shop
 
     public function detailShopAction(){
         $shop = new ShopModel();
+        $product = new ProductsModel();
+        $productModel = new ProductsMModel();
 
         $idShop = $_GET['id'];
         $shopGet = $shop->select('*')->where('id = :id')->setParams([":id" => $idShop])->get();
+        $productsGet = $product->select('*')->where('id = :id')->setParams([":id" => $idShop])->get();
 
         $view = new View("detailShop.back", "back");
+        $view->assign("products", $productsGet);
 
         $formUpdateShop = $shop->formBuilderUpdateShop(...$shopGet);
 
@@ -83,6 +96,16 @@ class Shop
         $view->assign("values", ...$shopGet);
         $view->assign("form", $formUpdateShop);
         $view->assign("title", "Admin - Detail du magasin");
+
+    }
+
+    function deleteShop($id){
+        $shop = new ShopModel();
+
+        var_dump($id);
+        exit();
+
+
 
     }
 }
