@@ -107,11 +107,15 @@ class Pages extends Database
                 "name"=>[
                     "minLength"=>2,
                     "maxLength"=>50,
-                    "errorLength"=>"Le nom de la page doit être compris entre 2 et 50 caractères."
+                    "errorLength"=>"Le nom de la page doit être compris entre 2 et 50 caractères",
+                    "errorBdd"=>"Une page avec ce nom existe déjà",
+                    "uniq"=>true
                 ],
                 "slug"=>[
                     "errorRegex"=>"Le slug doit être compris entre 2 et 50 caractères et il doit commencer par un /. Les caractères autorisés sont: les lettres de l'alphabet en minuscules et/ou en minuscules ainsi que les caractères - et _",
-                    "regex"=>"/^\/[a-zA-Z-_]{2,50}$/"
+                    "regex"=>"/^\/[a-zA-Z-_]{2,50}$/",
+                    "errorBdd"=>"Ce slug existe déjà",
+                    "uniq"=>true
                 ]
             ]
         ];

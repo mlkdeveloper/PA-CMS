@@ -1,6 +1,8 @@
 <?php
 namespace App\Core;
 
+use App\Models\Pages;
+
 class FormValidator
 {
 
@@ -41,6 +43,13 @@ class FormValidator
         }else{
 
             foreach ($config["inputs"] as $name => $configInputs) {
+
+                if (!empty($configInputs["uniq"]) && $configInputs["uniq"] === true){
+                    $page = new Pages();
+                    if ($page->find_duplicates_sql($name, $data[$name])){
+                        $errors[] = $configInputs["errorBdd"];
+                    }
+                }
 
                 if(	!empty($configInputs["minLength"])
                     && is_numeric($configInputs["minLength"])

@@ -17,6 +17,7 @@ if (isset($errors)){
 
 <section>
     <div class="container">
+        <a href="/admin/display-pages"><button class="button button--blue">Retour</button></a>
         <h1 class="centered">Créer une page</h1>
     </div>
 </section>

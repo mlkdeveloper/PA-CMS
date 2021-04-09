@@ -63,3 +63,7 @@
 /admin/modification-page:
   controller: Pages
   action: updatePage
+
+/admin/delete-page:
+  controller: Pages
+  action: deletePage

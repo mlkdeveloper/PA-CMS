@@ -71,7 +71,6 @@ class Pages
                 $errors = FormValidator::checkPage($form, $_POST);
 
                 if(empty($errors)){
-                    $test = $pages->getSlug();
                     $pages->populate($_POST);
                     $pages->setUserid(2);
                     $pages->setId($_GET['id']);
@@ -93,5 +92,14 @@ class Pages
             header("Location: /admin/display-page");
             exit();
         }
+    }
+
+    public function deletePageAction(){
+        $idPage = $_GET["idPage"];
+        $name = $_GET["name"];
+        $pages = new modelPages();
+        $pages->where("id =:id")->setParams(["id" => $idPage])->delete();
+        unlink("./publisher/templatesPublisher/".$name.".json");
+        header("Location: /admin/display-pages");
     }
 }

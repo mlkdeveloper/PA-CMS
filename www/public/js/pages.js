@@ -11,3 +11,13 @@ $(document).ready(function(){
         check = true;
     });
 });
+
+function showModalDeletePage(id, name){
+    $("#buttonDeletPage").attr("href", "/admin/delete-page?idPage="+id+"&name="+name)
+    $("#modalDeletePage").show();
+}
+
+function hideModalDeletePage(){
+    $("#modalDeletePage").hide();
+}
+
