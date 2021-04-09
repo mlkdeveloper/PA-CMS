@@ -134,22 +134,41 @@ class User
         $view->assign("form", $form);
         $view->assign("title", "C&C - Inscription");
 
+$errors = [];
+        if(!empty($_POST)){
 
-        if(empty($errors)){
+            $errors = FormValidator::check($form, $_POST);
+
+            $lastname = $_POST["lastname"];
+            $firstname = $_POST["firstname"];
             $email = $_POST["email"];
             $pwd = $_POST["pwd"];
             $pwdConfirm = $_POST['pwdConfirm'];
             $country = $_POST['country'];
 
             if(empty($errors)) {
-                if ($pwd != $pwdConfirm) {
+
+                if ($pwd == $pwdConfirm) {
+
+                    $user->setLastname($lastname);
+                    $user->setFirstname($firstname);
+                    $user->setEmail($email);
+                    $user->setPwd($pwd);
+                    $user->setStatus(1);
+                    $user->setIsDeleted(0);
+                    $user->setIdRole(2);
+                    $user->save();
+
+
+                    header('location:/');
+                }else{
                     array_push($errors, "Le mot de passe de confirmation ne correspond pas");
                     $view->assign("errors", $errors);
                 }
+            }else{
+                $view->assign("errors", $errors);
             }
-            //$user->save();
-        }else{
-            $view->assign("errors", $errors);
+
         }
 
     }

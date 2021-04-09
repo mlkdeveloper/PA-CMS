@@ -13,12 +13,112 @@ class User extends Database
 	protected $email;
 	protected $pwd;
 	protected $country;
-	protected $role = 0;
+	protected $id_role = 1;
 	protected $status = 1;
 	protected $isDeleted = 0;
+	protected $address;
+	protected $city;
+	protected $zipcode;
+	protected $phoneNumber;
+	protected $token;
+
+    /**
+     * @return int
+     */
+    public function getIdRole(): int
+    {
+        return $this->id_role;
+    }
+
+    /**
+     * @param int $id_role
+     */
+    public function setIdRole(int $id_role)
+    {
+        $this->id_role = $id_role;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param mixed $address
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param mixed $city
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getZipcode()
+    {
+        return $this->zipcode;
+    }
+
+    /**
+     * @param mixed $zipcode
+     */
+    public function setZipcode($zipcode)
+    {
+        $this->zipcode = $zipcode;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPhoneNumber()
+    {
+        return $this->phoneNumber;
+    }
+
+    /**
+     * @param mixed $phoneNumber
+     */
+    public function setPhoneNumber($phoneNumber)
+    {
+        $this->phoneNumber = $phoneNumber;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param mixed $token
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+    }
 
 	/*
-		role
 		status
 		createdAt
 		updatedAt
@@ -120,20 +220,6 @@ class User extends Database
 	public function setCountry($country)
 	{
 	    $this->country = $country;
-	}
-	/**
-	 * @return int
-	 */
-	public function getRole()
-	{
-	    return $this->role;
-	}
-	/**
-	 * @param int $role
-	 */
-	public function setRole(int $role)
-	{
-	    $this->role = $role;
 	}
 	/**
 	 * @return int
