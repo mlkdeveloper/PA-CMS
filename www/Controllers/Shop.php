@@ -48,6 +48,7 @@ class Shop
                 $shop->setZipCode($_POST['zipCode']);
                 $shop->setDescription($_POST['description']);
                 $shop->setPhoneNumber($_POST['telephone']);
+                $shop->setIsDeleted(0);
                 $shop->save();
 
                 header('location:/admin/liste-magasin');
@@ -84,6 +85,7 @@ class Shop
                 $shop->setZipCode($_POST['zipCode']);
                 $shop->setDescription($_POST['description']);
                 $shop->setPhoneNumber($_POST['telephone']);
+                $shop->setIsDeleted(0);
                 $shop->save();
 
                 header('location:/admin/liste-magasin');
