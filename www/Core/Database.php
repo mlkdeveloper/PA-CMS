@@ -6,6 +6,15 @@ class Database extends QueryBuilder
 {
     protected $table;
 
+//    Global variables
+
+    const NEW_OBJECT = 1;
+    const UPDATE_OBJECT = 2;
+    const DELETE_OBJECT = 3;
+
+    const USER_TABLE = 'cc_user';
+
+
     public function __construct()
     {
 
@@ -36,7 +45,21 @@ class Database extends QueryBuilder
 
             $query = $this->pdo->prepare("UPDATE " . $this->table . " SET " . implode(',', $sqlColumn) . " WHERE id = :id");
         }
-        $query->execute($column);
+
+        $value = $query->execute($column);
+        return $value;
+    }
+
+    public function deleteObject($id, $table)
+    {
+        $column["id"] = $this->getId();
+        $column["status"] = $this->getStatus();
+
+        $query = $this->pdo->prepare("UPDATE " . $table  . " SET status = :status" . " WHERE id = :id");
+
+        $value = $query->execute($column);
+        return $value;
+      
     }
 
     public function populate($data){
@@ -50,5 +73,17 @@ class Database extends QueryBuilder
             }
         }
         return $this;
+    }
+
+    public function find_duplicates_sql($col, $value): bool
+    {
+        $datas = $this
+            ->select("$col")
+            ->where("$col = :$col")
+            ->setParams(["$col" => $value])
+            ->get();
+
+        if (empty($datas)) return false;
+        else return true;
     }
 }
