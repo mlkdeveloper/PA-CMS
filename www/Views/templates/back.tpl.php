@@ -31,15 +31,20 @@ if (!$aut->isConnected()){
 </head>
 <body>
 
-<nav class="sidenav">
-    <ul>
-        <li><a href="#">Dashboard</a></li>
-        <li><a href="#">Commandes</a></li>
-        <a class="dropdown-btn">Produit<i class="fa fa-caret-down"></i></a>
-        <ul class="dropdown-container">
-            <li><a href="#">Categories</a>
-            <li><a href="#">Promotions</a>
-            <li><a href="#">Link 3</a>
+
+    <nav class="sidenav">
+        <ul>
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Commandes</a></li>
+            <a class="dropdown-btn">Produit<i class="fa fa-caret-down"></i></a>
+            <ul class="dropdown-container">
+                <li><a href="#">Categories</a>
+                <li><a href="#">Promotions</a>
+                <li><a href="#">Link 3</a>
+            </ul>
+            <li><a href="#">Pages</a></li>
+            <li><a href="/admin/liste-client">Clients</a></li>
+            <li><a href="#">Avis</a></li>
         </ul>
         <li><a href="#">Pages</a></li>
         <li><a href="#">Clients</a></li>
