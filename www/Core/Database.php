@@ -77,15 +77,13 @@ class Database extends QueryBuilder
 
     public function find_duplicates_sql($col, $value): bool
     {
-        $class = get_called_class();
-        $model = new $class;
-        $datas = $model
+        $datas = $this
             ->select("$col")
             ->where("$col = :$col")
             ->setParams(["$col" => $value])
             ->get();
 
-        if (empty($datas)) return true;
-        else return false;
+        if (empty($datas)) return false;
+        else return true;
     }
 }

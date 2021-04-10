@@ -19,6 +19,14 @@
   controller: User
   action: login
 
+/connexion-admin:
+  controller: User
+  action: loginAdmin
+
+/deconnexion:
+  controller: Auth
+  action: logout
+
 /afficher-un-utilisateur:
   controller: User
   action: show
@@ -56,6 +64,7 @@
   controller: Reviews
   action: checkReviews
 
+
 /admin/ajout-client:
   controller: User
   action: newClient
@@ -71,3 +80,12 @@
 /admin/suppression-client:
   controller: User
   action: deleteClient
+
+/admin/detail-magasin:
+  controller : Shop
+  action : detailShop
+
+/inscription:
+  controller : User
+  action: register
+

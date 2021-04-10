@@ -1,3 +1,11 @@
+<?php
+$aut = new \App\Controller\Auth();
+session_start();
+if (!$aut->isConnected()){
+    header('location:/connexion');
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -50,6 +58,7 @@
             <li><a href="#">Theme</a>
             <li><a href="#">Navigation</a>
         </ul>
+
         <li><a href="#">Paramètres du CMS</a></li>
     </ul>
 </nav>
