@@ -64,6 +64,10 @@ class Shop
         $product = new ProductsModel();
         $productModel = new ProductsMModel();
 
+        if (empty($_GET['id'])){
+            header('location:/admin/liste-magasin');
+        }
+
         $idShop = $_GET['id'];
         $shopGet = $shop->select('*')->where('id = :id')->setParams([":id" => $idShop])->get();
         $productsGet = $product->select('*')->where('id = :id')->setParams([":id" => $idShop])->get();
