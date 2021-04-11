@@ -124,7 +124,7 @@ class User
 		
 	}
 
-	public function registerAction(){
+    public function registerAction(){
         $user = new UserModel();
 
         $monUser = new UserModel();
@@ -134,7 +134,10 @@ class User
         $view->assign("form", $form);
         $view->assign("title", "C&C - Inscription");
 
-$errors = [];
+        $errors = [];
+
+
+
         if(!empty($_POST)){
 
             $errors = FormValidator::check($form, $_POST);
@@ -150,6 +153,12 @@ $errors = [];
 
                 if ($pwd == $pwdConfirm) {
 
+                    //Generate a random string.
+                    $token = openssl_random_pseudo_bytes(32);
+                    //Convert the binary data into hexadecimal representation.
+                    $token = bin2hex($token);
+
+
                     $user->setLastname($lastname);
                     $user->setFirstname($firstname);
                     $user->setEmail($email);
@@ -157,10 +166,12 @@ $errors = [];
                     $user->setStatus(1);
                     $user->setIsDeleted(0);
                     $user->setIdRole(2);
+                    $user->setToken($token);
+
                     $user->save();
 
 
-                    header('location:/');
+                    header('location:/connexion');
                 }else{
                     array_push($errors, "Le mot de passe de confirmation ne correspond pas");
                     $view->assign("errors", $errors);
@@ -168,8 +179,6 @@ $errors = [];
             }else{
                 $view->assign("errors", $errors);
             }
-
         }
-
     }
 }

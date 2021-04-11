@@ -62,7 +62,7 @@ if (!$aut->isConnected()){
     <header>
         <div class="headerBack">
             <h1>Header</h1>
-            <button class="button button--blue">Déconnexion</button>
+            <button onclick="location.href='/deconnexion';" class="button button--blue">Déconnexion</button>
         </div>
     </header>
 

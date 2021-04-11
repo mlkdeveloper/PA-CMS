@@ -372,6 +372,36 @@ class User extends Database
 
 	}
 
+    public function formBuilderpwdOublie(){
+
+        return [
+
+            "config"=>[
+                "method"=>"POST",
+                "action"=>"",
+                "class"=>"form_control col col-md-10 container",
+                "id"=>"form_register",
+                "submit"=>"Envoyé",
+                "classButton" => "button button--blue"
+            ],
+            "inputs"=>[
+                "email"=>[
+                    "type"=>"text",
+                    "placeholder"=>"ex : example@gmail.com",
+                    "divClass"=> "form_align--top",
+                    "label"=>"Votre email",
+                    "required"=>true,
+                    "class"=>"form_input",
+                    "minLength"=>2,
+                    "maxLength"=>50,
+                    "error"=>"Votre prénom doit faire entre 2 et 50 caractères"
+                ],
+            ]
+
+        ];
+
+    }
+
 }
 
 

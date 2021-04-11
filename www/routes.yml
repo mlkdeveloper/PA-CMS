@@ -24,7 +24,7 @@
   action: loginAdmin
 
 /deconnexion:
-  controller: Auth
+  controller: Security
   action: logout
 
 /afficher-un-utilisateur:
@@ -71,3 +71,11 @@
 /inscription:
   controller : User
   action: register
+
+/mot-de-passe-oublie:
+  controller : Security
+  action : pwdPerdu
+
+/recuperation-mot-de-passe:
+  controller : Security
+  action : recuperationpwd
