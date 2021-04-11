@@ -65,6 +65,27 @@
   action: checkReviews
 
 
+/admin/info-reviews:
+  controller: Reviews
+  action: showProducts
+
+/admin/del-review:
+  controller: Reviews
+  action: deleteReviews
+
+/admin/show-reviews-from-products:
+  controller: Reviews
+  action: showReviewsFromProducts
+
+/admin/orders:
+  controller: Orders
+  action: showOrders
+
+/admin/info-order:
+  controller: Orders
+  action: infoOrder
+
+
 /admin/ajout-client:
   controller: User
   action: newClient
@@ -88,4 +109,5 @@
 /inscription:
   controller : User
   action: register
+
 

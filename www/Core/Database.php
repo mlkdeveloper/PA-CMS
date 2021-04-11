@@ -46,6 +46,7 @@ class Database extends QueryBuilder
             $query = $this->pdo->prepare("UPDATE " . $this->table . " SET " . implode(',', $sqlColumn) . " WHERE id = :id");
         }
 
+
         $value = $query->execute($column);
         return $value;
     }
@@ -60,6 +61,7 @@ class Database extends QueryBuilder
         $value = $query->execute($column);
         return $value;
       
+
     }
 
     public function populate($data){
