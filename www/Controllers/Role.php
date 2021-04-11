@@ -93,8 +93,10 @@ class Role
             if (empty($isAssign)){
                 $role->where("id = :id")->setParams(["id" => $_GET['id']])->delete();
                 header("Location: /admin/role");
+                $_SESSION['successDeleteRole'] = "Le rôle a bien été supprimé !";
             }else{
                 header("Location: /admin/role");
+                $_SESSION['errorDeleteRole'] = "Le rôle n'a pas pu être supprimé car il est assigné à un utilisateur !";
             }
 
         }

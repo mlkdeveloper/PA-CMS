@@ -1,5 +1,15 @@
 <div class="container">
 
+    <?php if(isset($_SESSION['successDeleteRole'])):?>
+            <div class="alert alert--green"><?= $_SESSION['successDeleteRole']?></div>
+            <?php unset($_SESSION['successDeleteRole']); ?>
+    <?php endif;?>
+
+    <?php if(isset($_SESSION['errorDeleteRole'])):?>
+        <div class="alert alert--red"><?= $_SESSION['errorDeleteRole']?></div>
+        <?php unset($_SESSION['errorDeleteRole']); ?>
+    <?php endif;?>
+
     <div class="align">
         <h1>Liste des rôles</h1>
         <button class="button button--blue">
