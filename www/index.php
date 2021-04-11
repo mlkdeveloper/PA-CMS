@@ -7,6 +7,7 @@ use App\Core\Router;
 use App\Core\ConstantManager;
 
 require "Autoload.php";
+require "Controllers/Auth.php";
 Autoload::register();
 
 new ConstantManager();

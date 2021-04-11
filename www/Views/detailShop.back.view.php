@@ -1,51 +1,51 @@
 <div class="container">
     <div class="row">
         <div class="col col-lg-12">
-            <h1 style="text-align: center;font-size: 40px">Gestion des magasins </h1>
+            <h1 style="text-align: center;font-size: 40px">Modification du magasin</h1>
             <div class="jumbotron">
-                <div class="flex-end mb-1">
-                    <button class="button button--blue"><a href="/admin/nouveau-magasin">Nouveau magasin</a></button>
-                </div>
+                <?php if(isset($errors)):?>
+
+                    <?php foreach ($errors as $error):?>
+                        <li><?=$error?></li>
+                    <?php endforeach;?>
+
+                <?php endif;?>
+                <?php App\Core\FormBuilder::render($form); ?>
+
+                <br><hr>
+                <h2 style="text-align: center;font-size: 30px">Liste des produits</h2>
                 <table id="table" class="row-border hover" style="width:100%">
                     <thead>
                     <tr>
                         <th>Id</th>
                         <th>Nom</th>
-                        <th>N° Tel.</th>
-                        <th>Adresse</th>
-                        <th>Ville</th>
-                        <th>Code postal</th>
+                        <th>Description</th>
+                        <th>Status</th>
                         <th style="width:150px">Action</th>
                     </tr>
                     </thead>
                     <tbody>
-                        <?php
-                            foreach ($shop as $value):
+                    <?php
+                    foreach ($products as $value):
                         ?>
                         <tr>
                             <td><?= $value['id'] ?></td>
                             <td><?= $value['name'] ?></td>
-                            <td><?= $value['phoneNumber'] ?></td>
-                            <td><?= $value['address'] ?></td>
-                            <td><?= $value['city'] ?></td>
-                            <td><?= $value['zipCode'] ?></td>
+                            <td><?= $value['description'] ?></td>
+                            <td><?= $value['status'] ?></td>
                             <td>
                                 <div class="align">
                                     <div class="align">
                                         <button class="button button--black">
-                                            <a href="/admin/detail-magasin?id=<?= $value['id']?>"><i class="fas fa-pencil-alt"></i>
-                                            Modifier
+                                            <a href="/admin/detail-products?id=<?= $value['id']?>"><i class="fas fa-pencil-alt"></i>
+                                                Modifier
                                             </a>
                                         </button>
-                                    </div>
-                                    <div class="align">
-                                        <?php  //App\Core\FormBuilder::render($form); ?>
-                                        <i class="fas fa-trash"></i>
                                     </div>
                                 </div>
                             </td>
                         </tr>
-                        <?php endforeach;?>
+                    <?php endforeach;?>
                     </tbody>
                 </table>
             </div>

@@ -15,7 +15,23 @@ class Shop extends Database
     protected $zipCode;
     protected $phoneNumber;
     protected $description;
+    protected $isDeleted;
 
+    /**
+     * @return mixed
+     */
+    public function getIsDeleted()
+    {
+        return $this->isDeleted;
+    }
+
+    /**
+     * @param mixed $isDeleted
+     */
+    public function setIsDeleted($isDeleted)
+    {
+        $this->isDeleted = $isDeleted;
+    }
 
     public function __construct(){
         parent::__construct();
@@ -211,4 +227,111 @@ class Shop extends Database
             ]
         ];
     }
+
+    public function formBuilderUpdateShop($values){
+        return [
+
+            "config"=>[
+                "method"=>"POST",
+                "action"=>"",
+                "class"=>"form_control",
+                "id"=>"form_register",
+                "submit"=>"Enregistrer",
+                "classButton" => "button button--blue"
+            ],
+            "inputs"=>[
+
+                "nom"=>[
+                    "type"=>"text",
+                    "placeholder"=>"Chez Jacquie",
+                    "divClass"=> "form_align--top",
+                    "value"=>$values['name'],
+                    "label"=>"Nom",
+                    "required"=>true,
+                    "class"=>"form_input",
+                    "minLength"=>2,
+                    "maxLength"=>320,
+                    "error"=>"Le nom doit faire entre 2 et 320 caractères"
+                ],
+
+                "address"=>[
+                    "type"=>"text",
+                    "value"=>$values['address'],
+                    "label"=>"Adresse",
+                    "divClass"=> "form_align--top",
+                    "placeholder"=>"ex : 29 rue de la liberte",
+                    "required"=>true,
+                    "class"=>"form_input",
+                    "minLength"=>5,
+                    "error"=>"L'adresse doit faire au minimum 5 caractères"
+                ],
+                "ville"=>[
+                    "type"=>"text",
+                    "label"=>"Ville",
+                    "value"=>$values['city'],
+                    "divClass"=> "form_align--top",
+                    "placeholder"=>"ex : Paris",
+                    "required"=>true,
+                    "class"=>"form_input",
+                    "minLength"=>2,
+                    "error"=>"La ville doit faire au minimum 2 caractères"
+                ],
+                "zipCode"=>[
+                    "type"=>"text",
+                    "label"=>"Code postal",
+                    "value"=>$values['zipCode'],
+                    "divClass"=> "form_align--top",
+                    "placeholder"=>"ex : 75015",
+                    "required"=>true,
+                    "class"=>"form_input",
+                    "minLength"=>2,
+                    "error"=>"Le code postal doit faire au 5 caractères"
+                ],
+                "telephone"=>[
+                    "type"=>"text",
+                    "label"=>"N° Telephone",
+                    "value"=>$values['phoneNumber'],
+                    "divClass"=> "form_align--top",
+                    "placeholder"=>"Numero de telephone",
+                    "required"=>true,
+                    "class"=>"form_input",
+                    "minLength"=>1,
+                    "error"=>"le numero de telphone est obligatoire"
+                ],
+                "description"=>[
+                    "type"=>"text",
+                    "label"=>"Description",
+                    "value"=>$values['description'],
+                    "divClass"=> "form_align--top",
+                    "placeholder"=>"Votre description",
+                    "required"=>true,
+                    "class"=>"form_input input--textarea",
+                    "minLength"=>5,
+                    "error"=>"La description doit faire au minimum 5 caractères"
+                ],
+            ]
+        ];
+    }
+
+    public function formBuilderDeleteShop($value){
+        return [
+
+            "config"=>[
+                "method"=>"POST",
+                "action"=>"",
+                "divClass"=> "align",
+                "id"=>"form_register",
+                "submit"=>"X",
+                "classButton" => "button button--alert"
+            ],
+            "inputs"=>[
+
+                "id"=>[
+                    "type"=>"hidden",
+                    "value" => $value
+                ]
+            ]
+        ];
+    }
+
 }

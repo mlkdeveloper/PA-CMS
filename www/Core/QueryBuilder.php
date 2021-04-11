@@ -97,6 +97,25 @@ class QueryBuilder
 
     }
 
+    public function delete(){
+
+        $this->request = "DELETE FROM " .$this->table;
+
+        if (!empty($this->where)){
+            $this->request.= " WHERE ( ";
+            $this->request.= implode(' ) AND ( ',$this->where);
+            $this->request.= " )";
+        }
+
+        if ($this->params) {
+            $query = $this->pdo->prepare($this->request);
+           $response = $query->execute($this->params);
+        }else {
+            $response = $this->pdo->query($this->request);
+        }
+
+        return $response;
+    }
     public function execute(){
 
         if ($this->params) {
@@ -105,6 +124,7 @@ class QueryBuilder
         }else {
             $query = $this->pdo->query($this->request);
         }
+
         return $query->fetchAll(\PDO::FETCH_ASSOC);
     }
 
