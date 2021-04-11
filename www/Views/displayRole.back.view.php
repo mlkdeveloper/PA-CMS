@@ -31,7 +31,7 @@
                                         <i class="fas fa-pencil-alt"></i>
                                         <a href="/admin/modification-role?id=<?= $value['id'] ?>">Modifier</a>
                                     </button>
-                                    <i class="fas fa-trash"></i>
+                                    <i class="fas fa-trash" onclick="showModalDeleteRole(<?= $value['id'] ?>)"></i>
                                 </div>
                             </td>
                         </tr>
@@ -43,7 +43,16 @@
         </div>
     </div>
 
+    <div class="modal" id="modalDeleteRole">
+        <div class="modal-content">
+            <h3>Voulez-vous vraiment supprimer ce rôle ?</h3>
+            <a id="buttonDeleteRole"><button class="button button--success">Oui</button></a>
+            <button class="button button--alert" onclick="hideModalDeleteRole()">Non</button>
+        </div>
+    </div>
+
 
 </div>
 
 <script src="../public/js/datatable.js"></script>
+<script src="../public/js/role.js" type="text/javascript"></script>

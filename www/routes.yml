@@ -77,6 +77,10 @@
   controller: Role
   action: updateRole
 
+/admin/suppression-role:
+  controller: Role
+  action: deleteRole
+
 
 /admin/ajout-client:
   controller: User

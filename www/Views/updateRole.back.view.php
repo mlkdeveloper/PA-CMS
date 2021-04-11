@@ -7,6 +7,11 @@
             <?php endforeach;?>
 
         <?php endif;?>
+
+        <?php if(isset($success)):?>
+                <li><?=$success?></li>
+        <?php endif;?>
+
         <h1><?= $values["name"] ?></h1>
 
 

@@ -195,7 +195,8 @@ class Role extends Database
                     "minLength"=>2,
                     "maxLength"=>50,
                     "uniq" => true,
-                    "error"=>"Le nom du rôle doit être compris entre 2 et 50 caractères."
+                    "error"=>"Le nom du rôle doit être compris entre 2 et 50 caractères.",
+                    "errorUniq"=>"Le nom existe déjà."
                 ],
                 "role"=>[
                     "value" => 1,

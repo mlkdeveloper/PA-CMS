@@ -1,6 +1,8 @@
 <?php
 namespace App\Core;
 
+use App\Models\Role;
+
 class FormValidator
 {
 
@@ -59,7 +61,7 @@ class FormValidator
         return $errors; //[] vide si ok
     }
 
-    public static function checkFormRole($config,$data){
+    public static function checkFormRole($config,$data,$isCreated){
 
         $errors = [];
 
@@ -89,6 +91,17 @@ class FormValidator
                 ){
                     $errors[] = $configInputs["error"];
                 }
+
+                if (!$isCreated) {
+                    if (!empty($configInputs["uniq"]) &&
+                        $configInputs["uniq"] === true
+                    ) {
+                        $role = new Role();
+                        if ($role->find_duplicates_sql($name, $data[$name]))
+                            $errors[] = $configInputs["errorUniq"];
+                    }
+                }
+
 
             }
         }

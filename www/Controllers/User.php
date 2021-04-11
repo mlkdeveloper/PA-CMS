@@ -169,6 +169,8 @@ $errors = [];
             }else{
                 $view->assign("errors", $errors);
             }
+        }
+	}
 
 
     public function displayClientAction(){
