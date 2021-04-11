@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Core\FormValidator;
+use App\Core\Routes;
 use App\Core\View;
 use App\Models\Pages as modelPages;
 
@@ -40,6 +41,14 @@ class Pages
                     $pages->save();
 
                     file_put_contents("./publisher/templatesPublisher/".$_POST["name"].".json", "");
+
+                    $pageRoute = new Routes(explode("/", $_POST["slug"])[1]);
+
+                    try {
+                        $pageRoute->addRoute();
+                    }catch (MyException $e){
+                        echo $e->error();
+                    }
 
                     header('location:/admin/display-pages');
 
@@ -97,9 +106,20 @@ class Pages
     public function deletePageAction(){
         $idPage = $_GET["idPage"];
         $name = $_GET["name"];
+        $slug = explode("/", $_GET["slug"])[1];
+
         $pages = new modelPages();
         $pages->where("id =:id")->setParams(["id" => $idPage])->delete();
         unlink("./publisher/templatesPublisher/".$name.".json");
+
+        $pageRoute = new Routes($slug);
+
+        try {
+            $pageRoute->deleteRoute();
+        }catch (MyException $e){
+            echo $e->error();
+        }
+
         header("Location: /admin/display-pages");
     }
 }

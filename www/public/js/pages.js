@@ -12,8 +12,8 @@ $(document).ready(function(){
     });
 });
 
-function showModalDeletePage(id, name){
-    $("#buttonDeletPage").attr("href", "/admin/delete-page?idPage="+id+"&name="+name)
+function showModalDeletePage(id, name, slug){
+    $("#buttonDeletPage").attr("href", "/admin/delete-page?idPage="+id+"&name="+name+"&slug="+slug);
     $("#modalDeletePage").show();
 }
 

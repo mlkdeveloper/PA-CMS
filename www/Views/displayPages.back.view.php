@@ -33,7 +33,7 @@
                                     <a href="/admin/publisher?name=<?= $value['name'] ?>" class="button button--blue">
                                         <i class="fas fa-eye"></i>Voir la page
                                     </a>
-                                    <i class="fas fa-trash" onclick="showModalDeletePage(<?= $value['id'] ?>, '<?= $value['name'] ?>')"></i>
+                                    <i class="fas fa-trash" onclick="showModalDeletePage(<?= $value['id'] ?>, '<?= $value['name'] ?>', '<?= $value['slug'] ?>')"></i>
                                 </div>
                             </td>
                         </tr>
