@@ -14,7 +14,6 @@
   controller: User
   action: add
 
-
 /connexion:
   controller: User
   action: login
@@ -30,7 +29,6 @@
 /afficher-un-utilisateur:
   controller: User
   action: show
-
 
 /afficher-les-utilisateurs:
   controller: User
