@@ -29,7 +29,7 @@ class User extends Database
 
 		if(!empty($_POST)){
 			
-			$errors = FormValidator::check($form, $_POST);
+			//$errors = FormValidator::check($form, $_POST);
 
 			if(empty($errors)){
 				$user->setEmail($_POST["email"]);
@@ -125,7 +125,8 @@ class User extends Database
 		
 	}
 
-	public function registerAction(){
+	public function registerAction()
+    {
         $user = new UserModel();
 
         $monUser = new UserModel();
@@ -135,10 +136,10 @@ class User extends Database
         $view->assign("form", $form);
         $view->assign("title", "C&C - Inscription");
 
-$errors = [];
-        if(!empty($_POST)){
+        $errors = [];
+        if (!empty($_POST)) {
 
-            $errors = FormValidator::check($form, $_POST);
+            //$errors = FormValidator::check($form, $_POST);
 
             $lastname = $_POST["lastname"];
             $firstname = $_POST["firstname"];
@@ -147,7 +148,7 @@ $errors = [];
             $pwdConfirm = $_POST['pwdConfirm'];
             $country = $_POST['country'];
 
-            if(empty($errors)) {
+            if (empty($errors)) {
 
                 if ($pwd == $pwdConfirm) {
 
@@ -156,17 +157,18 @@ $errors = [];
                     $user->setEmail($email);
                     $user->setPwd($pwd);
                     $user->setStatus(1);
+
                     $user->setIsDeleted(0);
                     $user->setIdRole(2);
                     $user->save();
 
 
                     header('location:/');
-                }else{
+                } else {
                     array_push($errors, "Le mot de passe de confirmation ne correspond pas");
                     $view->assign("errors", $errors);
                 }
-            }else{
+            } else {
                 $view->assign("errors", $errors);
             }
         }

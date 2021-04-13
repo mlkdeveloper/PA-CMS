@@ -19,7 +19,24 @@ class User extends Database
     protected $phoneNumber;
     protected $createdAt;
     protected $id_role;
+    protected $isDeleted = 0;
     protected $status;
+
+    /**
+     * @return int
+     */
+    public function getIsDeleted(): int
+    {
+        return $this->isDeleted;
+    }
+
+    /**
+     * @param int $isDeleted
+     */
+    public function setIsDeleted(int $isDeleted)
+    {
+        $this->isDeleted = $isDeleted;
+    }
 
 	public function __construct(){
 		parent::__construct();

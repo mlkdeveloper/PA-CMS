@@ -127,7 +127,6 @@ class QueryBuilder
         }
 
         return $query->fetchAll(\PDO::FETCH_ASSOC);
-
     }
 
 }
