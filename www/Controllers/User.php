@@ -172,7 +172,7 @@ class User extends Database
                 $view->assign("errors", $errors);
             }
         }
-    }
+	}
 
 
     public function displayClientAction(){

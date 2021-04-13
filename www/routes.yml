@@ -14,7 +14,6 @@
   controller: User
   action: add
 
-
 /connexion:
   controller: User
   action: login
@@ -30,7 +29,6 @@
 /afficher-un-utilisateur:
   controller: User
   action: show
-
 
 /afficher-les-utilisateurs:
   controller: User
@@ -64,6 +62,21 @@
   controller: Reviews
   action: checkReviews
 
+/admin/nouveau-role:
+  controller: Role
+  action: newRole
+
+/admin/role:
+  controller: Role
+  action: showAll
+
+/admin/modification-role:
+  controller: Role
+  action: updateRole
+
+/admin/suppression-role:
+  controller: Role
+  action: deleteRole
 
 /admin/info-reviews:
   controller: Reviews
@@ -84,7 +97,6 @@
 /admin/info-order:
   controller: Orders
   action: infoOrder
-
 
 /admin/ajout-client:
   controller: User

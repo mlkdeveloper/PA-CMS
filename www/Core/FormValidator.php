@@ -1,6 +1,8 @@
 <?php
 namespace App\Core;
 
+use App\Models\Role;
+
 class FormValidator
 {
 
@@ -58,6 +60,54 @@ class FormValidator
 
         return $errors; //[] vide si ok
     }
+
+    public static function checkFormRole($config,$data,$isCreated){
+
+        $errors = [];
+
+        if( count($data) < 1 ){
+            $errors[] = "Tentative de HACK - Faille XSS";
+        }else {
+
+            foreach ($config["inputs"] as $name => $configInputs) {
+
+                if (!empty($configInputs["minLength"])
+                    && is_numeric($configInputs["minLength"])
+                    && strlen(trim($data[$name])) < $configInputs["minLength"]) {
+
+                    $errors[] = $configInputs["error"];
+                }
+
+                if (!empty($configInputs["maxLength"])
+                    && is_numeric($configInputs["maxLength"])
+                    && strlen(trim($data[$name])) > $configInputs["maxLength"]) {
+
+                    $errors[] = $configInputs["error"];
+                }
+
+                if (!empty($configInputs["value"]) &&
+                    isset($data[$name]) &&
+                    $data[$name] != $configInputs["value"]
+                ){
+                    $errors[] = $configInputs["error"];
+                }
+
+                if (!$isCreated) {
+                    if (!empty($configInputs["uniq"]) &&
+                        $configInputs["uniq"] === true
+                    ) {
+                        $role = new Role();
+                        if ($role->find_duplicates_sql($name, $data[$name]))
+                            $errors[] = $configInputs["errorUniq"];
+                    }
+                }
+
+
+            }
+        }
+        return $errors;
+    }
+
 
     public static function returnValue($data, $statut){
 
