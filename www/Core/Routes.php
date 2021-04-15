@@ -21,7 +21,7 @@ class Routes
     {
         file_put_contents($this->fileRoutes,
             PHP_EOL.PHP_EOL."#FRONT_".$this->slug.
-            PHP_EOL.$this->slug.":".
+            PHP_EOL."/".$this->slug.":".
             PHP_EOL."  controller: Front".
             PHP_EOL."  action: display"
             , FILE_APPEND);
@@ -29,32 +29,36 @@ class Routes
 
     public function updateRoute()
     {
-//        $ptr = fopen("$this->fileRoutes", "r");
-//        $contenu = fread($ptr, filesize($this->fileRoutes));
-//
-//        fclose($ptr);
-//        $contenu = explode(PHP_EOL, $contenu);
-//
-//        $line = false;
-//
-//        foreach ($contenu as $index => $value) {
-//            if (strpos($value, "#FRONT_".$this->slug) !== false) {
-//                $line = $index;
-//                break;
-//            }
-//        }
-//
-//        if ($line !== false){
-//            for ($i = 0; $i < 4; $i++){
-//                unset($contenu[$line+$i]);
-//            }
-//
+
+        $ptr = fopen("$this->fileRoutes", "r");
+        $contenu = fread($ptr, filesize($this->fileRoutes));
+
+        fclose($ptr);
+        $contenu = explode(PHP_EOL, $contenu);
+
+        $line = false;
+        file_put_contents("./zrbhbfhbr", "");
+
+        foreach ($contenu as $index => $value) {
+            if (strpos($value, "#FRONT_".$this->slug) !== false) {
+                $line = $index;
+                break;
+            }
+        }
+
+        if ($line !== false){
+            file_put_contents("./test", $contenu[$line+1]);
+
+            $contenu[$line+1] = "/".$this->slug;
+            file_put_contents("./test2", $contenu[$line+1]);
+
+
 //            $contenu = array_values($contenu);
 //
 //            $contenu = implode(PHP_EOL, $contenu);
 //            $ptr = fopen($this->fileRoutes, "w");
 //            fwrite($ptr, $contenu);
-//        }
+        }
     }
 
     public function deleteRoute()

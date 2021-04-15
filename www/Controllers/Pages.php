@@ -42,7 +42,7 @@ class Pages
 
                     file_put_contents("./publisher/templatesPublisher/".$_POST["name"].".json", "");
 
-                    $pageRoute = new Routes(explode("/", $_POST["slug"])[1]);
+                    $pageRoute = new Routes($_POST["slug"]);
 
                     try {
                         $pageRoute->addRoute();
@@ -86,6 +86,14 @@ class Pages
                     $pages->save();
 
                     rename("./publisher/templatesPublisher/".$verifyId[0]["name"].".json","./publisher/templatesPublisher/".$_POST["name"].".json");
+
+                    $pageRoute = new Routes(explode("/", $_POST["slug"])[1]);
+
+                    try {
+                        $pageRoute->updateRoute();
+                    }catch (MyException $e){
+                        echo $e->error();
+                    }
 
                     header('location:/admin/display-pages');
 
