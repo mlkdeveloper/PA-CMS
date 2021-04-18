@@ -49,9 +49,6 @@ if (!$aut->isConnected()){
             <li><a href="/admin/liste-client">Clients</a></li>
             <li><a href="#">Avis</a></li>
         </ul>
-        <li><a href="#">Pages</a></li>
-        <li><a href="#">Clients</a></li>
-        <li><a href="#">Avis</a></li>
     </ul>
     <ul>
         <hr>
