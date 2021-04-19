@@ -37,12 +37,12 @@ class Pages
             if(empty($errors)){
 
                     $pages->populate($_POST);
-                    $pages->setUserid(2);
+                    $pages->setUserid(3);
                     $pages->save();
 
                     file_put_contents("./publisher/templatesPublisher/".$_POST["name"].".json", "");
 
-                    $pageRoute = new Routes($_POST["slug"]);
+                    $pageRoute = new Routes(explode("/", $_POST["slug"])[1]);
 
                     try {
                         $pageRoute->addRoute();
@@ -60,7 +60,6 @@ class Pages
     }
 
     public function updatePageAction(){
-
         if (isset($_GET['id']) && !empty($_GET['id'])){
 
             $pages = new modelPages();
@@ -81,7 +80,7 @@ class Pages
 
                 if(empty($errors)){
                     $pages->populate($_POST);
-                    $pages->setUserid(2);
+                    $pages->setUserid(3);
                     $pages->setId($_GET['id']);
                     $pages->save();
 
@@ -90,7 +89,7 @@ class Pages
                     $pageRoute = new Routes(explode("/", $_POST["slug"])[1]);
 
                     try {
-                        $pageRoute->updateRoute();
+                        $pageRoute->updateRoute(explode("/", $_GET["slug"])[1]);
                     }catch (MyException $e){
                         echo $e->error();
                     }

@@ -26,7 +26,7 @@
                             <td><?= $value['slug'] ?></td>
                             <td>
                                 <div>
-                                    <a href="/admin/modification-page?id=<?= $value['id'] ?>"
+                                    <a href="/admin/modification-page?id=<?= $value['id'] ?>&slug=<?= $value['slug'] ?>"
                                        class="button button--blue">
                                         <i class="fas fa-pencil-alt"></i>Modifier
                                     </a>

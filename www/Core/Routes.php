@@ -27,7 +27,7 @@ class Routes
             , FILE_APPEND);
     }
 
-    public function updateRoute()
+    public function updateRoute($oldSlug)
     {
 
         $ptr = fopen("$this->fileRoutes", "r");
@@ -37,27 +37,24 @@ class Routes
         $contenu = explode(PHP_EOL, $contenu);
 
         $line = false;
-        file_put_contents("./zrbhbfhbr", "");
 
         foreach ($contenu as $index => $value) {
-            if (strpos($value, "#FRONT_".$this->slug) !== false) {
+            if (strpos($value, "#FRONT_".$oldSlug) !== false) {
                 $line = $index;
                 break;
             }
         }
 
         if ($line !== false){
-            file_put_contents("./test", $contenu[$line+1]);
 
-            $contenu[$line+1] = "/".$this->slug;
-            file_put_contents("./test2", $contenu[$line+1]);
+            $contenu[$line] = "#FRONT_".$this->slug;
+            $contenu[$line+1] = "/".$this->slug.":";
 
+            $contenu = array_values($contenu);
 
-//            $contenu = array_values($contenu);
-//
-//            $contenu = implode(PHP_EOL, $contenu);
-//            $ptr = fopen($this->fileRoutes, "w");
-//            fwrite($ptr, $contenu);
+            $contenu = implode(PHP_EOL, $contenu);
+            $ptr = fopen($this->fileRoutes, "w");
+            fwrite($ptr, $contenu);
         }
     }
 
