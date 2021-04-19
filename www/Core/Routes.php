@@ -22,8 +22,8 @@ class Routes
         file_put_contents($this->fileRoutes,
             PHP_EOL.PHP_EOL."#FRONT_".$this->slug.
             PHP_EOL."/".$this->slug.":".
-            PHP_EOL."  controller: Front".
-            PHP_EOL."  action: display"
+            PHP_EOL."  controller: Pages".
+            PHP_EOL."  action: displayFront"
             , FILE_APPEND);
     }
 

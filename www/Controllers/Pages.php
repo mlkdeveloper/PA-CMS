@@ -6,9 +6,15 @@ use App\Core\Routes;
 use App\Core\View;
 use App\Models\Pages as modelPages;
 
+$myPage = new Pages();
+
+if (isset($_POST['jsonPage'])){
+    $myPage->readPage($_POST['jsonPage']);
+}
 
 class Pages
 {
+
     public function showAction(){
 
         $pages = new modelPages();
@@ -128,5 +134,23 @@ class Pages
         }
 
         header("Location: /admin/display-pages");
+    }
+
+    public function displayFrontAction(){
+        $test = $_SERVER['REQUEST_URI'];
+        $pages = new modelPages();
+        $arrayPage = $pages->select("name")->where("slug = :slug")->setParams(["slug" => $test])->get();
+        foreach ($arrayPage as $value);
+
+        $view = new View("displayPagesFront", "front");
+        $view->assign("title", $value['name']);
+    }
+
+    public function readPage($namePage){
+        if (file_exists("../publisher/templatesPublisher/".$namePage.".json")){
+            echo (file_get_contents("../publisher/templatesPublisher/".$namePage.".json"));
+        }else {
+            echo null;
+        }
     }
 }

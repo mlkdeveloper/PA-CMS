@@ -1,11 +1,11 @@
-let counterIdBlock;
-let counterIdCol;
+var counterIdBlock;
+var counterIdCol;
 const prefixIdBlock = "block_";
 const prefixIdCol = "col_";
-let html;
-let idCol;
-let contentCol;
-let htmlPage = "";
+var html;
+var idCol;
+var contentCol;
+var htmlPage = "";
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const namePage = urlParams.get('name')
