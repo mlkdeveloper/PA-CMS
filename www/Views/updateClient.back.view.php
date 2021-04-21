@@ -1,25 +1,22 @@
-
-<?php if(isset($errors)):?>
-
-    <?php foreach ($errors as $error):?>
-        <li><?=$error?></li>
-    <?php endforeach;?>
-
-<?php elseif(isset($message)):?>
-    <li><?=$message?></li>
-<?php endif;?>
-
-
-
-
 <section>
     <div class="container">
+        <?php if(isset($errors)):?>
+            <div class="alert alert--red">
+                <?php foreach ($errors as $error):?>
+                    <li><?=$error?></li>
+                <?php endforeach;?>
+            </div>
+        <?php endif;?>
+
+        <?php if(isset($message)):?>
+            <div class="alert alert--green"><?= $message?></div>
+        <?php endif;?>
         <h1>Modifier les informations : <?php echo $values['lastname']; ?> </h1>
     </div>
 </section>
 <section>
 
-    <form method="POST" enctype="multipart/form-data">
+    <form method="POST">
         <section>
             <div class="container">
                 <div class="row">
@@ -33,7 +30,7 @@
 
                                 <div class="form_align form_align--top">
                                     <label class="label">Email</label>
-                                    <input class="input" type="text" name="email" placeholder="Email"  required="required" value="<?php if (isset($values)) echo $values['email']; ?>" >
+                                    <input class="input" type="email" name="email" placeholder="Email"  required="required" value="<?php if (isset($values)) echo $values['email']; ?>" >
                                 </div>
 
                                 <div class="form_align form_align--top">

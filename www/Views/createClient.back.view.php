@@ -1,28 +1,28 @@
-
-<?php if(isset($errors)):?>
-
-    <?php foreach ($errors as $error):?>
-        <li><?=$error?></li>
-    <?php endforeach;?>
-
-<?php elseif(isset($message)):?>
-    <li><?=$message?></li>
-<?php endif;?>
-
-
 <section>
     <div class="container">
+        <?php if(isset($errors)):?>
+            <div class="alert alert--red">
+                <?php foreach ($errors as $error):?>
+                    <li><?=$error?></li>
+                <?php endforeach;?>
+            </div>
+        <?php endif;?>
+
+        <?php if(isset($message)):?>
+            <div class="alert alert--green"><?= $message?></div>
+        <?php endif;?>
+
         <h1>Créer un client</h1>
     </div>
 </section>
 <section>
-<!--   <?php //App\Core\FormBuilder::render($formCreateClient); ?> -->
-    <form method="POST" enctype="multipart/form-data">
+
+    <form method="POST">
         <section>
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col">
-                        <div class=" align  jumbotron form">
+                        <div class="align  jumbotron form">
                             <div class="col-lg-6 col-md-6 col-sm-12 col">
                                 <div class="form_align form_align--top">
                                     <label class="label">Nom</label>
@@ -31,7 +31,7 @@
 
                                 <div class="form_align form_align--top">
                                     <label class="label">Email</label>
-                                    <input class="input" type="text" name="email" placeholder="Email"  required="required" value="" >
+                                    <input class="input" type="email" name="email" placeholder="Email"  required="required" value="" >
                                 </div>
 
                                 <div class="form_align form_align--top">

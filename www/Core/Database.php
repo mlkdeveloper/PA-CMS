@@ -51,12 +51,12 @@ class Database extends QueryBuilder
         return $value;
     }
 
-    public function deleteObject($id, $table)
+    public function deleteObject()
     {
         $column["id"] = $this->getId();
         $column["status"] = $this->getStatus();
 
-        $query = $this->pdo->prepare("UPDATE " . $table  . " SET status = :status" . " WHERE id = :id");
+        $query = $this->pdo->prepare("UPDATE " . $this->table  . " SET status = :status" . " WHERE id = :id");
 
         $value = $query->execute($column);
         return $value;

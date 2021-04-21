@@ -12,31 +12,13 @@ class User extends Database
     protected $lastname;
     protected $email;
     protected $pwd;
-    protected $country;
-    protected $address;
-    protected $city;
-    protected $zipCode;
-    protected $phoneNumber;
-    protected $createdAt;
+    protected $country = null;
+    protected $address = null;
+    protected $city = null;
+    protected $zipCode = null;
+    protected $phoneNumber = null;
     protected $id_role;
-    protected $isDeleted = 0;
     protected $status;
-
-    /**
-     * @return int
-     */
-    public function getIsDeleted(): int
-    {
-        return $this->isDeleted;
-    }
-
-    /**
-     * @param int $isDeleted
-     */
-    public function setIsDeleted(int $isDeleted)
-    {
-        $this->isDeleted = $isDeleted;
-    }
 
 	public function __construct(){
 		parent::__construct();
@@ -112,7 +94,7 @@ class User extends Database
 	 */
 	public function setPwd($pwd)
 	{
-	    $this->pwd = htmlspecialchars(trim($pwd));
+	    $this->pwd = htmlspecialchars($pwd);
 	}
 	/**
 	 * @return mixed
@@ -205,22 +187,6 @@ class User extends Database
     public function setPhoneNumber($phoneNumber): void
     {
         $this->phoneNumber = htmlspecialchars(trim($phoneNumber));
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param mixed $createdAt
-     */
-    public function setCreatedAt($createdAt): void
-    {
-        $this->createdAt = $createdAt;
     }
 
     /**
@@ -361,22 +327,6 @@ class User extends Database
 
 	}
 
-	public function formDeleteClient(){
-        return [
-            "config"=>[
-                "method"=>"POST",
-                "action"=>"",
-                "class"=>"",
-                "id"=>"form_create_client",
-                "submit"=>"Supprimer"
-            ],
-            "input"=>[
-                "id"=>[
-                    "type"=>"hidden"
-                ]
-            ]
-        ];
-    }
     public function formBuilderCreateClient(){
         return [
 
@@ -395,8 +345,8 @@ class User extends Database
                     "required"=>true,
                     "class"=>"form_input",
                     "minLength"=>2,
-                    "maxLength"=>320,
-                    "error"=>"Le nom doit faire entre 2 et 320 caractères"
+                    "maxLength"=>50,
+                    "error"=>"Le nom doit faire entre 2 et 50 caractères."
                 ],
                 "firstName"=>[
                     "type"=>"text",
@@ -405,8 +355,8 @@ class User extends Database
                     "required"=>true,
                     "class"=>"form_input",
                     "minLength"=>2,
-                    "maxLength"=>320,
-                    "error"=>"Le prénom doit faire entre 2 et 320 caractères"
+                    "maxLength"=>100,
+                    "error"=>"Le prénom doit faire entre 2 et 100 caractères."
                 ],
 
                 "address"=>[
@@ -416,7 +366,8 @@ class User extends Database
                     "required"=>true,
                     "class"=>"form_input",
                     "minLength"=>5,
-                    "error"=>"L'adresse doit faire au minimum 5 caractères"
+                    "maxLength"=>255,
+                    "error"=>"L'adresse doit faire entre 5 et 254 caractères."
                 ],
                 "city"=>[
                     "type"=>"text",
@@ -425,7 +376,8 @@ class User extends Database
                     "required"=>true,
                     "class"=>"form_input",
                     "minLength"=>2,
-                    "error"=>"La ville doit faire au minimum 2 caractères"
+                    "maxLength"=>20,
+                    "error"=>"La ville doit faire entre 2 et 20 caractères"
                 ],
                 "zipCode"=>[
                     "type"=>"text",
@@ -433,36 +385,37 @@ class User extends Database
                     "placeholder"=>"ex : 75015",
                     "required"=>true,
                     "class"=>"form_input",
-                    "minLength"=>2,
-                    "error"=>"Le code postal doit faire au 5 caractères"
+                    "regex" => "/^[0-9]{5}/",
+                    "errorRegex" => "Code postal invalide !"
                 ],
                 "country"=>[
                     "type"=>"text",
                     "label"=>"Pays",
-                    "placeholder"=>"ex : France",
+                    "placeholder"=>"ex : fr",
                     "required"=>true,
                     "class"=>"form_input",
                     "minLength"=> 2,
-                    "error"=>"Le code postal doit faire au 2 caractères"
+                    "maxLength"=> 2,
+                    "error"=>"Le pays doit faire 2 caractères"
                 ],
                 "email"=>[
-                    "type"=>"text",
+                    "type"=>"email",
                     "label"=>"Email",
                     "placeholder"=>"Email",
                     "required"=>true,
                     "class"=>"form_input",
-                    "minLength"=>5,
-                    "maxLenght"=>254,
-                    "error"=>"L'adresse mail doit contenir entre 5 et 254 caractères"
+                    "minLength"=>8,
+                    "maxLenght"=>320,
+                    "error"=>"L'email doit contenir entre 8 et 320 caractères"
                 ],
                 "phoneNumber"=>[
                     "type"=>"text",
                     "label"=>"N° Telephone",
-                    "placeholder"=>"Numero de telephone",
+                    "placeholder"=>"0122334455",
                     "required"=>true,
                     "class"=>"form_input",
-                    "minLength"=>1,
-                    "error"=>"le numero de telphone est obligatoire"
+                    "regex" => "/^[0-9]{10}/",
+                    "errorRegex" => "Numéro de téléphone invalide !"
                 ],
             ]
 
