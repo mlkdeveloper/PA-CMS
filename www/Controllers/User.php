@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Core\Database;
+use App\Core\Helpers;
 use App\Core\View;
 use App\Core\FormValidator;
 use App\Models\User as UserModel;
@@ -10,14 +11,6 @@ use App\Models\Page;
 
 class User extends Database
 {
-
-	//Method : Action
-	public function defaultAction(){
-        $user = new UserModel();
-	}
-
-
-	//Method : Action
 	public function loginAction(){
 
 		$user = new UserModel();
@@ -98,33 +91,6 @@ class User extends Database
     }
 
 
-	//Method : Action
-	public function addAction(){
-		
-		//Récupérer le formulaire
-		//Récupérer les valeurs de l'internaute si il y a validation du formulaire
-		//Vérification des champs (uncitié de l'email, complexité du pwd, ...)
-		//Affichage du résultat
-
-	}
-
-	//Method : Action
-	public function showAction(){
-		
-		//Affiche la vue user intégrée dans le template du front
-		$view = new View("user"); 
-	}
-
-
-
-	//Method : Action
-	public function showAllAction(){
-		
-		//Affiche la vue users intégrée dans le template du back
-		$view = new View("users", "back"); 
-		
-	}
-
 	public function registerAction()
     {
         $user = new UserModel();
@@ -175,9 +141,11 @@ class User extends Database
 	}
 
 
+	// CLIENTS //
+
     public function displayClientAction(){
         $clients = new UserModel();
-        $array = $clients->select()->where("status = :status")->setParams(["status" => 1])->get();
+        $array = $clients->select()->where("status = 1","id_role = 2")->get();
         $view = new View("clientList.back", "back");
         $view->assign("title", "Admin - Client");
         $view->assign("array", $array);
@@ -189,112 +157,117 @@ class User extends Database
         $view->assign("title", "Admin - Nouveau client");
 
         $formCreateClient = $client->formBuilderCreateClient();
-      //  $view->assign("form", $formCreateClient);
-        $this->saveForm($view, $client, $formCreateClient);
+
+        if (!empty($_POST)) {
+            $this->saveForm($view, $client, $formCreateClient, false);
+        }
     }
 
-    public function saveForm($view, $client, $form, $formStatus = Database::NEW_OBJECT){
+    public function saveForm($view, $client, $form, $isCreated, $formStatus = Database::NEW_OBJECT){
 
-        if (!empty($_POST) && $formStatus != Database::DELETE_OBJECT) {
-            $error = FormValidator::check($form, $_POST);
+            $error = FormValidator::checkClient($form, $_POST, $isCreated);
 
-            if (empty($error) && $formStatus != Database::DELETE_OBJECT) {
+            if (empty($error)) {
 
-                if ($formStatus == Database::UPDATE_OBJECT)
+                if ($formStatus == Database::UPDATE_OBJECT) {
                     $client->setId($_GET['id']);
+                    $pwd = $client->select('pwd')->where("id = :id ")->setParams(["id" => $_GET['id'] ])->get();
+                    $client->setPwd( $pwd[0]['pwd']);
+                }else{
+                    $pwd = Helpers::pwdGenerator();
+                    $client->setPwd(password_hash($pwd, PASSWORD_DEFAULT));
+                }
 
-                $pwd = $this->pwdGenerator();
-
-                $client->setFirstName($_POST['firstName']);
-                $client->setLastname($_POST['lastName']);
-                $client->setEmail($_POST['email']);
-                $client->setPhoneNumber($_POST['phoneNumber']);
-                $client->setAddress($_POST['address']);
-                $client->setCity($_POST['city']);
-                $client->setZipCode($_POST['zipCode']);
-                $client->setCountry($_POST['country']);
+                $client->populate($_POST);
                 $client->setStatus(1);
-                $client->setPwd(password_hash($pwd, PASSWORD_BCRYPT));
-                $client->setCreatedAt(date("Y-m-d H:i:s"));
                 $client->setIdRole(2);
-                $retrunValue = $client->save();
 
-                $message = FormValidator::returnValue($retrunValue, $formStatus); // 1 create , 2 update , 3 delete
-                $view->assign("message", $message);
-            } else {
+                $returnValue = $client->save();
+                $message = $this->returnValue($returnValue,$formStatus);
+
+                if ($message != false){
+                    $view->assign("message", $message);
+                }else{
+                    http_response_code(400);
+                }
+            }else {
                 $view->assign("errors", $error);
             }
-        }
-        if ($formStatus == Database::DELETE_OBJECT){
-
-            $client->setId($_POST['id']);
-            $client->setStatus(0);
-
-            $retrunValue = $client->deleteObject($_POST['id'], Database::USER_TABLE);
-
-            $message = FormValidator::returnValue($retrunValue, $formStatus);
-            $view->assign("message", $message);
-        }
     }
 
-    function pwdGenerator()
-    {
-        // Liste des caractères possibles
-        $char = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVW0123456789!<>/=:?";
-        $mdp = '';
-        $long = strlen($char);
-
-        //Nombre aléatoire
-        srand((double)microtime() * 1000000);
-        for ($i = 0; $i < 10; $i++){
-            $mdp = $mdp . substr($char, rand(0, $long - 1), 1);
-        }
-        return $mdp;
-    }
 
     function updateClientAction(){
         if (isset($_GET['id']) && !empty($_GET['id'])){
 
             $client = new UserModel();
-            $verifyId = $client->select("id")->where("id = :id")->setParams(["id" => $_GET['id']])->get();
+            $verifyId = $client->select("id,email")->where("id = :id","id_role = 2","status = 1")->setParams(["id" => $_GET['id']])->get();
 
-            if (empty($verifyId))
-                header("Location: /admin/liste_client");
+            if (empty($verifyId)) {
+                header("Location: /admin/liste-client");
+                exit();
+            }
 
             $view = new View("updateClient.back", "back");
 
             $form = $client->formBuilderCreateClient();
-            $this->saveForm($view,$client,$form,Database::UPDATE_OBJECT);
+            if (!empty($_POST)) {
+                $this->saveForm($view, $client, $form, trim($_POST['email']) === $verifyId[0]["email"], Database::UPDATE_OBJECT);
+            }
 
             $values = $client->select()->where("id = :id")->setParams(["id" => $_GET['id']])->get();
             $view->assign("values", ...$values);
             $view->assign("title", "Admin - Client");
         }else{
-            header("Location: /admin/liste_client");
+            header("Location: /admin/liste-client");
         }
     }
 
     function deleteClientAction()
     {
 
-        if (isset($_POST['id']) && !empty($_POST['id'])){
+        if (isset($_GET['id']) && !empty($_GET['id'])){
 
             $client = new UserModel();
-            $verifyId = $client->select("id")->where("id = :id")->setParams(["id" => $_POST['id']])->get();
+            $verifyId = $client->select("id")->where("id = :id", "id_role = 2","status = 1")->setParams(["id" => $_GET['id']])->get();
 
-            if (empty($verifyId))
-                header("Location: /admin/liste_client");
+            if (empty($verifyId)) {
+                header("Location: /admin/liste-client");
+                exit();
+            }
 
-            $view = new View("clientList.back", "back");
+            $client->setId($_GET['id']);
+            $client->setStatus(0);
 
-            $form = $client->formDeleteClient();
-            $this->saveForm($view,$client,$form,Database::DELETE_OBJECT);
+            $returnValue = $client->deleteObject();
+            $message = $this->returnValue($returnValue,3);
 
+            if ($message != false) {
+                session_start();
+                $_SESSION['deleteClient'] = $message;
+            }
             header("Location: /admin/liste-client");
 
         }else{
 
             header("Location: /admin/liste-client");
         }
+    }
+
+    public function returnValue($data, $statut){
+
+	    $message = false;
+
+	    if($data){
+            if ($statut == 1 ){
+                $message = "Utilisateur ajouté !";
+            }
+            if ($statut == 2){
+                $message = "Utilisateur modifié !";
+            }
+            if ($statut == 3){
+                $message = "Utilisateur supprimé !";
+            }
+        }
+        return $message;
     }
 }
