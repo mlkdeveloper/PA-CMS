@@ -55,6 +55,7 @@ class Routes
             $contenu = implode(PHP_EOL, $contenu);
             $ptr = fopen($this->fileRoutes, "w");
             fwrite($ptr, $contenu);
+            fclose($ptr);
         }
     }
 
@@ -85,6 +86,7 @@ class Routes
             $contenu = implode(PHP_EOL, $contenu);
             $ptr = fopen($this->fileRoutes, "w");
             fwrite($ptr, $contenu);
+            fclose($ptr);
         }
     }
 }

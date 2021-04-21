@@ -69,7 +69,7 @@ class Pages
         if (isset($_GET['id']) && !empty($_GET['id'])){
 
             $pages = new modelPages();
-            $verifyId = $pages->select()->where("id = :id")->setParams(["id" => $_GET['id']])->get();
+            $verifyId = $pages->select()->where("id = :id", "slug = :slug")->setParams(["id" => $_GET['id'], "slug" => $_GET['slug']])->get();
 
             if (empty($verifyId)){
                 header("Location: /admin/display-pages");

@@ -201,9 +201,9 @@ function selectCol(col){
 
 //Ajout de contenu de Tiny dans la colonne
 function getTiny(){
-    let checkCol = ($(".activeCol").children()[0]);
+    var checkCol = ($(".activeCol").children()[0]);
 
-    let textTiny = tinyMCE.get('tiny').getContent();
+    var textTiny = tinyMCE.get('tiny').getContent();
     if (textTiny !==""){
         $("#"+idCol).html('<div>'+textTiny+'</div>');
     }else if (checkCol.className !== "cross-add"){
@@ -211,6 +211,8 @@ function getTiny(){
                 '<img src="../../../images/cross-add.svg" class="cross-add" alt="cross-add">' +
             '</div>');
     }
+    $(".activeCol").removeClass("activeCol");
+    $(".activeRow").removeClass("activeRow");
     $("#modalTiny").hide();
     $("#formTiny").hide();
 }
@@ -253,7 +255,7 @@ function savePage(){
     $("#buttonSave").hide();
     $("#loader").show();
 
-    let dataHtml =
+    var dataHtml =
         {
             "structure": [
 
@@ -261,9 +263,9 @@ function savePage(){
         }
 
     $( "#containerPublisher section" ).each(function(index) {
-        let contentCol;
-        let css;
-        let block = {
+        var contentCol;
+        var css;
+        var block = {
             "idBlock": $(this).attr('id'),
             "columns": [
             ]
@@ -284,7 +286,7 @@ function savePage(){
                 css = "";
             }
 
-            let column = {
+            var column = {
                 "idColumn": $( this ).attr('id'),
                 "numberCol": $( this ).attr('class').split(" ")[0].split("-")[2],
                 "content": contentCol,
@@ -340,7 +342,7 @@ function deleteSection(){
 
 //Déplacement vers le haut de la section
 function moveUp(){
-    let prevSection = $(".activeRow").parent().prev()[0];
+    var prevSection = $(".activeRow").parent().prev()[0];
     if (prevSection){
         prevSection.before($(".activeRow").parent()[0]);
     }
@@ -348,7 +350,7 @@ function moveUp(){
 
 //Déplacement vers le bas de la section
 function moveDown(){
-    let nextSection = $(".activeRow").parent().next()[0];
+    var nextSection = $(".activeRow").parent().next()[0];
     if (nextSection){
         nextSection.after($(".activeRow").parent()[0]);
     }

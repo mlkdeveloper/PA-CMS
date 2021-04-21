@@ -1,15 +1,13 @@
 var htmlPage = "";
-console.log($("#namePage").val());
 $.ajax({
     type: 'POST',
     url: '.././Controllers/Pages.php',
     data: {jsonPage: $("#namePage").val()},
     success: function(data) {
-        console.log(data);
         if (data) {
             read(data);
         }else{
-
+            document.location.replace("/");
         }
     },
     error: function (xhr, ajaxOptions, thrownError){
