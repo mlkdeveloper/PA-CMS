@@ -11,6 +11,7 @@ class Pages extends Database
 	protected $name;
 	protected $createdAt;
 	protected $slug;
+	protected $publication;
 	protected $User_id;
 
 	public function __construct(){
@@ -96,6 +97,23 @@ class Pages extends Database
     {
         $this->User_id = $User_id;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getPublication()
+    {
+        return $this->publication;
+    }
+
+    /**
+     * @param mixed $publication
+     */
+    public function setPublication($publication): void
+    {
+        $this->publication = $publication;
+    }
+
 
 
 

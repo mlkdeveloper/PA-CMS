@@ -67,3 +67,8 @@
 /admin/delete-page:
   controller: Pages
   action: deletePage
+
+/admin/update-publication:
+  controller: Pages
+  action: updatePublication
+

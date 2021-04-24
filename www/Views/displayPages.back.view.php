@@ -12,6 +12,7 @@
                         <th>Nom</th>
                         <th>Date de création</th>
                         <th>Chemin d'accès</th>
+                        <th>Publier</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -24,6 +25,18 @@
                             <td><?= $value['name'] ?></td>
                             <td><?= $value['createdAt'] ?></td>
                             <td><?= $value['slug'] ?></td>
+                            <td>
+                                <label class="switch">
+                                    <?php
+                                        if ($value['publication'] == 1){
+                                            echo ('<input id="publicationSwitch" name="'.$value["id"].'" type="checkbox" checked>');
+                                        }else{
+                                            echo ('<input id="publicationSwitch" name="'.$value["id"].'" type="checkbox">');
+                                        }
+                                    ?>
+                                    <span class="sliderSwitch roundSwitch"></span>
+                                </label>
+                            </td>
                             <td>
                                 <div>
                                     <a href="/admin/modification-page?id=<?= $value['id'] ?>&slug=<?= $value['slug'] ?>"

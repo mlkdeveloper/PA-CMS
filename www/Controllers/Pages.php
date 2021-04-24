@@ -44,6 +44,7 @@ class Pages
 
                     $pages->populate($_POST);
                     $pages->setUserid(3);
+                    $pages->setPublication(0);
                     $pages->save();
 
                     file_put_contents("./publisher/templatesPublisher/".$_POST["name"].".json", "");
@@ -70,11 +71,11 @@ class Pages
 
             $pages = new modelPages();
             $verifyId = $pages->select()->where("id = :id", "slug = :slug")->setParams(["id" => $_GET['id'], "slug" => $_GET['slug']])->get();
-
             if (empty($verifyId)){
                 header("Location: /admin/display-pages");
                 exit();
             }
+            $pages->populate($verifyId[0]);
 
             $view = new View("updatePage.back", "back");
 
@@ -107,7 +108,7 @@ class Pages
                 }
             }
 
-            $pages->populate($verifyId[0]);
+
             $view->assign("title", "Modification de la page");
             $view->assign("values", $pages);
         }else{
@@ -134,16 +135,22 @@ class Pages
         }
 
         header("Location: /admin/display-pages");
+        exit();
     }
 
     public function displayFrontAction(){
-        $test = $_SERVER['REQUEST_URI'];
+        $uri = $_SERVER['REQUEST_URI'];
         $pages = new modelPages();
-        $arrayPage = $pages->select("name")->where("slug = :slug")->setParams(["slug" => $test])->get();
+        $arrayPage = $pages->select("name", "publication")->where("slug = :slug")->setParams(["slug" => $uri])->get();
         foreach ($arrayPage as $value);
 
-        $view = new View("displayPagesFront", "front");
-        $view->assign("title", $value['name']);
+        if ($value["publication"] == 1) {
+            $view = new View("displayPagesFront", "front");
+            $view->assign("title", $value['name']);
+        }else{
+            header("Location: /");
+            exit();
+        }
     }
 
     public function readPage($namePage){
@@ -151,6 +158,34 @@ class Pages
             echo (file_get_contents("../publisher/templatesPublisher/".$namePage.".json"));
         }else {
             echo null;
+        }
+    }
+
+    public function updatePublicationAction(){
+
+        if(isset($_POST['valuePublication'])
+        && isset($_POST['idPage'])
+        && ($_POST['valuePublication'] == 0 || $_POST['valuePublication'] == 1)){
+
+            $pages = new modelPages();
+
+            $verifyId = $pages->select()->where("id = :id")->setParams(["id" => $_POST['idPage']])->get();
+
+            $pages->populate($verifyId[0]);
+
+
+            if (empty($verifyId)){
+                header("Location: /admin/display-pages");
+                exit();
+            }
+
+            $pages->setPublication($_POST['valuePublication']);
+            $pages->setUserid(3);
+            $pages->setId($_POST['idPage']);
+            $pages->save();
+        }else{
+            header("Location: /admin/display-pages");
+            exit();
         }
     }
 }

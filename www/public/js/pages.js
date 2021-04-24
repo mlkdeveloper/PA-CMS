@@ -10,6 +10,37 @@ $(document).ready(function(){
     $("#slug").on("keyup paste change", function (){
         check = true;
     });
+
+    $("#publicationSwitch").on("click", function (){
+        var idPage;
+        var valuePublication;
+
+        if ($("#publicationSwitch").is(":checked"))
+        {
+            idPage = $("#publicationSwitch").attr("name");
+            valuePublication = 1;
+        }else{
+            idPage = $("#publicationSwitch").attr("name");
+            valuePublication = 0;
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/admin/update-publication',
+            data: {
+                idPage: idPage,
+                valuePublication: valuePublication
+            },
+            success: function(data) {
+            },
+            error: function (xhr, ajaxOptions, thrownError){
+                alert(xhr.responseText);
+                alert(ajaxOptions);
+                alert(thrownError);
+                alert(xhr.status);
+            }
+        });
+    });
 });
 
 function showModalDeletePage(id, name, slug){
