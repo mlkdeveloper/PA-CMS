@@ -130,8 +130,8 @@ class Pages extends Database
                     "uniq"=>true
                 ],
                 "slug"=>[
-                    "errorRegex"=>"Le slug doit être compris entre 2 et 50 caractères et il doit commencer par un /. Les caractères autorisés sont: les lettres de l'alphabet en minuscules et/ou en minuscules ainsi que les caractères - et _",
-                    "regex"=>"/^\/[a-zA-Z-_]{2,50}$/",
+                    "errorRegex"=>"Le slug doit être compris entre 2 et 50 caractères et il doit commencer par un /. Les caractères autorisés sont: les lettres de l'alphabet en minuscules ainsi que les caractères - et _",
+                    "regex"=>"/^\/[a-z-_]{2,50}$/",
                     "errorBdd"=>"Ce slug existe déjà",
                     "uniq"=>true
                 ]
