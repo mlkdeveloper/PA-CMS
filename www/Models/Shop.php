@@ -216,13 +216,14 @@ class Shop extends Database
                 ],
                 "telephone"=>[
                     "type"=>"text",
+                    "data-format"=>"telephone",
                     "label"=>"N° Telephone",
                     "divClass"=> "form_align--top",
                     "placeholder"=>"Numero de telephone",
                     "required"=>true,
                     "class"=>"form_input",
                     "minLength"=>1,
-                    "error"=>"le numero de telphone est obligatoire"
+                    "error"=>"le numero de telphone est obligatoire et doit être composé uniquement de 10 chiffres"
                 ],
             ]
         ];
@@ -295,8 +296,9 @@ class Shop extends Database
                     "placeholder"=>"Numero de telephone",
                     "required"=>true,
                     "class"=>"form_input",
+                    "data-format"=>"telephone",
                     "minLength"=>1,
-                    "error"=>"le numero de telphone est obligatoire"
+                    "error"=>"le numero de telephone est obligatoire et doit être uniquement être composé de chiffres"
                 ],
                 "description"=>[
                     "type"=>"text",

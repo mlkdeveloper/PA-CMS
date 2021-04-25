@@ -281,7 +281,7 @@ class User extends Database
 								"label"=>"Votre mot de passe",
 								"required"=>true,
 								"class"=>"form_input",
-								"error"=>"Votre mot de passe doit faire au minimum 8 caractères"
+								"error"=>"Votre mot de passe doit faire au minimum 7 caractères"
 							]
 			]
 

@@ -28,21 +28,32 @@ class User
 
 		if(!empty($_POST)){
 			
-			$errors = FormValidator::check($form, $_POST);
-
+			//$errors = FormValidator::check($form, $_POST);
+            $errors = [];
 			if(empty($errors)){
-				$user->setEmail($_POST["email"]);
-				$user->setPwd($_POST["pwd"]);
 
-                if($user->select('email')->where('email=:email', 'pwd=:pwd')->setParams([":email" => $_POST['email'],":pwd" => $_POST['pwd'],])->get()){
-                    session_start();
-                    $monUser = $user->select('*')->where('email=:email', 'pwd=:pwd')->setParams([":email" => $_POST['email'],":pwd" => $_POST['pwd'],])->get();
-                    $_SESSION['user'] = $monUser;
-                    header('location:/');
+
+			    if ($user->select('*')->where('email=:email')->setParams([":email" => $_POST['email']])->get()){
+                    $pwdGet = $user->select('pwd')->where('email=:email')->setParams([":email" => $_POST['email']])->get();
+
+
+                    if(password_verify($_POST["pwd"], $pwdGet[0]["pwd"])){
+                        session_start();
+                        $monUser = $user->select('*')->where('email=:email', 'pwd=:pwd')->setParams([":email" => $_POST['email'],":pwd" => $pwdGet[0]["pwd"],])->get();
+                        $_SESSION['user'] = $monUser;
+                        var_dump($_SESSION["user"]);
+                        header('location:/');
+                    }else{
+                        array_push($errors,"L'email et le mot de passe ne correspondent pas");
+                        $view->assign("errors", $errors);
+
+                    }
                 }else{
-                    array_push($errors,"L'email et le mot de passe ne correspondent pas");
+                    array_push($errors,"L'email inconnu");
                     $view->assign("errors", $errors);
                 }
+
+
 
 
 				//$user->save();
@@ -71,12 +82,13 @@ class User
             $errors = FormValidator::check($form, $_POST);
 
             if(empty($errors)){
-                $user->setEmail($_POST["email"]);
-                $user->setPwd($_POST["pwd"]);
 
-                if($user->select('email')->where('email=:email', 'pwd=:pwd', 'id_role = 1')->setParams([":email" => $_POST['email'],":pwd" => $_POST['pwd'],])->get()){
+                $pwdGet = $user->select('pwd')->where('email=:email')->setParams([":email" => $_POST['email']])->get();
+
+
+                if(password_verify(htmlspecialchars($_POST["pwd"]), $pwdGet[0]["pwd"])){
                     session_start();
-                    $monUser = $user->select('*')->where('email=:email', 'pwd=:pwd')->setParams([":email" => $_POST['email'],":pwd" => $_POST['pwd'],])->get();
+                    $monUser = $user->select('*')->where('email=:email', 'pwd=:pwd')->setParams([":email" => $_POST['email'],":pwd" => $_POST['pwd']])->get();
                     $_SESSION['user'] = $monUser;
                     header('location:/');
                 }else{
@@ -158,11 +170,12 @@ class User
                     //Convert the binary data into hexadecimal representation.
                     $token = bin2hex($token);
 
+                    $pwdHash = password_hash($pwd, PASSWORD_BCRYPT);
 
                     $user->setLastname($lastname);
                     $user->setFirstname($firstname);
                     $user->setEmail($email);
-                    $user->setPwd($pwd);
+                    $user->setPwd($pwdHash);
                     $user->setStatus(1);
                     $user->setIsDeleted(0);
                     $user->setIdRole(2);

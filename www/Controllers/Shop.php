@@ -41,7 +41,11 @@ class Shop
 
             $errors = FormValidator::check($formCreateShop, $_POST);
 
+            if (!is_numeric($_POST['zipCode'])){
+                array_push($errors,"Le code postale doit etre composé uniquement de chiffres");
+            }
             if(empty($errors)){
+
                 $shop->setName($_POST['nom']);
                 $shop->setAddress($_POST['address']);
                 $shop->setCity($_POST['ville']);
@@ -80,8 +84,12 @@ class Shop
         if(!empty($_POST)){
 
             $errors = FormValidator::check($formUpdateShop, $_POST);
+            if (!is_numeric($_POST['zipCode'])){
+                array_push($errors,"Le code postale doit etre composé uniquement de chiffres");
+            }
 
             if(empty($errors)){
+
                 $shop->setId($_GET['id']);
                 $shop->setName($_POST['nom']);
                 $shop->setAddress($_POST['address']);
