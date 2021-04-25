@@ -25,7 +25,7 @@ class Review extends Database
      */
     public function setId($id): void
     {
-        $this->id = htmlspecialchars(trim($id));
+        $this->id = intval($id);
     }
 
     /**
@@ -57,7 +57,7 @@ class Review extends Database
      */
     public function setMark($mark): void
     {
-        $this->mark = htmlspecialchars($mark);
+        $this->mark = floatval($mark);
     }
 
     /**
@@ -73,7 +73,7 @@ class Review extends Database
      */
     public function setStatus($status): void
     {
-        $this->status = htmlspecialchars($status);
+        $this->status = intval($status);
     }
 
 
