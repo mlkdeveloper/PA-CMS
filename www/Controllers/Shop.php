@@ -17,14 +17,8 @@ class Shop
         $view->assign("title", "Admin - Magasin");
 
         $shop = new ShopModel();
-        $listShop = $shop->select()->get();
+        $listShop = $shop->select('*')->where('isDeleted=0')->get();
 
-        //$formDeleteShop = $shop->formBuilderDeleteShop();
-        //if (isset($formDeleteShop)){
-          //  $this->deleteShop($_POST['id']);
-        //}
-
-        //$view->assign("form", $formDeleteShop);
         $view->assign("shop", $listShop);
     }
 
@@ -113,13 +107,22 @@ class Shop
 
     }
 
-    function deleteShop($id){
+    function deleteShopAction(){
         $shop = new ShopModel();
+        $shopTemp = new ShopModel();
+        if (empty($_GET['id']) && !is_numeric($_GET['id'])){
+            header('location:/admin/liste-magasin');
+        }
+        $shop =$shopTemp->select('*')->where('id=:id')->setParams(["id" => $_GET['id']])->get();
 
-        var_dump($id);
-        exit();
+        $shopTemp->populate($shop[0]);
+        $shopTemp->setIsDeleted(1);
+        $shopTemp->save();
 
 
+
+
+        header('location:/admin/liste-magasin?deleteShop=done');
 
     }
 }

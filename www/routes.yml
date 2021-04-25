@@ -79,3 +79,7 @@
 /recuperation-mot-de-passe:
   controller : Security
   action : recuperationpwd
+
+/admin/delete-shop:
+  controller: Shop
+  action: deleteShop
