@@ -146,13 +146,10 @@ class User
         $view->assign("form", $form);
         $view->assign("title", "C&C - Inscription");
 
-        $errors = [];
-
-
 
         if(!empty($_POST)){
 
-            $errors = FormValidator::check($form, $_POST);
+            //$errors = FormValidator::check($form, $_POST);
 
             $lastname = $_POST["lastname"];
             $firstname = $_POST["firstname"];
@@ -161,9 +158,20 @@ class User
             $pwdConfirm = $_POST['pwdConfirm'];
             $country = $_POST['country'];
 
+            $emailVerif = $user->select('email')->where("email=:email")->setParams(["email" => $email])->get();
+            $errors = [];
+            if ($emailVerif){
+                array_push($errors, "L'email est deja connu de notre base de données");
+                $view->assign("errors", $errors);
+            }
+
             if(empty($errors)) {
 
                 if ($pwd == $pwdConfirm) {
+
+
+
+
 
                     //Generate a random string.
                     $token = openssl_random_pseudo_bytes(32);

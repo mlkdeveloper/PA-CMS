@@ -341,8 +341,8 @@ class User extends Database
 								"label"=>"Votre mot de passe",
 								"required"=>true,
 								"class"=>"form_input",
-								"minLength"=>8,
-								"error"=>"Votre mot de passe doit faire au minimum 8 caractères"
+								"minLength"=>5,
+								"error"=>"Votre mot de passe doit faire au minimum 7 caractères"
 							],
 
 				"pwdConfirm"=>[
