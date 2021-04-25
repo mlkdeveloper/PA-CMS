@@ -422,6 +422,60 @@ class User extends Database
         ];
     }
 
+
+
+    public function formUsers(){
+        return [
+
+            "config"=>[
+                "method"=>"POST",
+                "action"=>"",
+            ],
+            "inputs"=>[
+
+                "lastname"=>[
+                    "type"=>"text",
+                    "required"=>true,
+                    "minLength"=>2,
+                    "maxLength"=>50,
+                    "error"=>"Le nom doit faire entre 2 et 50 caractères."
+                ],
+                "firstName"=>[
+                    "type"=>"text",
+                    "required"=>true,
+                    "minLength"=>2,
+                    "maxLength"=>100,
+                    "error"=>"Le prénom doit faire entre 2 et 100 caractères."
+                ],
+
+                "email"=>[
+                    "type"=>"email",
+                    "required"=>true,
+                    "minLength"=>8,
+                    "maxLenght"=>320,
+                    "error"=>"Votre email doit faire entre 8 et 320 caractères"
+                ],
+
+                "pwd"=>[
+                    "type"=>"password",
+                    "required"=>true,
+                    "regex"=>"/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]){8,}/",
+                    "errorRegex"=>"Votre mot de passe doit faire au minimum 8 caractères, contenir une majuscule et un chiffre."
+                ],
+
+                "idRole"=>[
+                    "type"=>"text",
+                    "statusRole" => [1,2],
+                    "required"=>true,
+                    "error"=>"Erreur au niveau du rôle !"
+                ]
+            ]
+
+        ];
+    }
+
+
+
 }
 
 

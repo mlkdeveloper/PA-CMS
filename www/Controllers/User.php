@@ -8,6 +8,7 @@ use App\Core\View;
 use App\Core\FormValidator;
 use App\Models\User as UserModel;
 use App\Models\Page;
+use App\Models\Role;
 
 class User extends Database
 {
@@ -269,5 +270,71 @@ class User extends Database
             }
         }
         return $message;
+    }
+
+
+    public function addUsersAction(){
+
+        $user = new UserModel();
+        $role = new Role();
+        $view = new View("createUser.back", "back");
+        $view->assign("title", "Admin - Utilisateur");
+
+        $getRoles = $role->select("id,name")->where("id > 2")->get();
+        $view->assign("roles", $getRoles);
+
+        $form = $user->formUsers();
+
+        if(!empty($_POST)) {
+
+            $errors = FormValidator::checkClient($form, $_POST, false);
+
+            if (empty($errors)) {
+                $user->populate($_POST);
+                $user->setPwd(password_hash($_POST['pwd'],PASSWORD_DEFAULT));
+                $user->setStatus(1);
+                $user->save();
+
+                $view->assign("success", "L'utilisateur a bien été créé !");
+            } else {
+                $view->assign("errors", $errors);
+            }
+        }
+    }
+
+    public function displayUsersAction(){
+
+        $user = new UserModel();
+        $view = new View("usersList.back", "back");
+        $view->assign("title", "Admin - Utilisateurs");
+
+        $users = $user->select("cc_user.id,cc_user.lastname,cc_user.firstname,cc_user.email,cc_role.name")
+            ->where("cc_user.id_role > 2")
+            ->innerJoin("cc_role","cc_role.id","=","cc_user.id_role")
+            ->get();
+
+        $view->assign("users", $users);
+
+
+    }
+
+    public function deleteUserAction(){
+
+        $user = new UserModel();
+        $verifyId = $user->select("id")->where("id = :id", "id_role > 2")->setParams(["id" => $_GET['id']])->get();
+
+        if (empty($verifyId)) {
+            header("Location: /admin/liste-utilisateur");
+            exit();
+        }
+
+        $user->setId($_GET['id']);
+        $user->where("id= :id")->setParams(["id" => $_GET['id']])->delete();
+
+        session_start();
+        $_SESSION['deleteUser'] = "Utilisateur supprimé ! ";
+
+        header("Location: /admin/liste-utilisateurs");
+
     }
 }

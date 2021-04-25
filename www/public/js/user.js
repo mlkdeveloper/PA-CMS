@@ -6,3 +6,13 @@ function showModalDeleteClient(id){
 function hideModalDeleteClient(){
     $("#modalDeleteClient").hide();
 }
+
+
+function showModalDeleteUser(id){
+    $("#buttonDeleteUser").attr("href", "/admin/suppression-utilisateur?id="+id);
+    $("#modalDeleteUser").show();
+}
+
+function hideModalDeleteUser(){
+    $("#modalDeleteUser").hide();
+}

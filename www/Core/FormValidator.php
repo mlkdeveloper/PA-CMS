@@ -67,7 +67,6 @@ class FormValidator
     public static function checkClient($config,$data,$isCreated)
     {
         $errors = [];
-        $regex =  "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]){8,}/";
         if( count($data) != count($config["inputs"]) ){
             $errors[] = "Tentative de HACK - Faille XSS";
 
@@ -124,6 +123,12 @@ class FormValidator
                     && strlen(trim($data[$name])) <= 0
 
                 ){
+                    $errors[] = $configInputs["error"];
+                }
+
+                if (!empty($configInputs["statusRole"])
+                    && in_array($data[$name], $configInputs["statusRole"])) {
+
                     $errors[] = $configInputs["error"];
                 }
 

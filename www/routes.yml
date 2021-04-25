@@ -122,4 +122,15 @@
   controller : User
   action: register
 
+/admin/liste-utilisateurs:
+  controller: User
+  action: displayUsers
+
+/admin/ajout-utilisateur:
+  controller: User
+  action: addUsers
+
+/admin/suppression-utilisateur:
+  controller: User
+  action: deleteUser
 
