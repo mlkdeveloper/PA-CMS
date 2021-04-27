@@ -62,7 +62,6 @@ class Publisher
         }else {
             echo("undefined");
         }
-
     }
 
     public function deleteImage($srcImage){
@@ -77,14 +76,26 @@ class Publisher
 
             $location = "../publisher/images/".$filename;
 
-            $response = 0;
 
-            if(move_uploaded_file($_FILES['file']['tmp_name'],$location)){
-                $response = $location;
+            $regex = '/(jpg|png|jpeg)$/i';
+
+            if (preg_match($regex, $filename) == 0) {
+                $error = (json_encode(array("error" => "Ce type d'image n'est pas pris en charge")));
+            }else{
+                if ($_FILES['file']['size'] > 15000000) {
+                    $error = (json_encode(array("error" => "Le poids de l'image doit être inférieure à 15 MO")));
+                }
             }
 
-            echo $response;
-            exit;
+            if (empty($error)){
+                if(move_uploaded_file($_FILES['file']['tmp_name'],$location)){
+                    echo (json_encode(array("success" => $location)));
+                }else{
+                    echo (json_encode(array("error" => "Impossible d'enregistrer l'image")));
+                }
+            }else{
+                echo $error;
+            }
         }
     }
 }

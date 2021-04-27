@@ -549,10 +549,15 @@ function uploadImage(){
             contentType: false,
             processData: false,
             success: function(response){
-                if(response != 0){
-                    $("#listImages").prepend("<img src='"+response+"' alt='image' onclick='selectImage(this)'>")
+                var message = JSON.parse(response);
+
+                if(message.error === undefined){
+                    $("#listImages").prepend("<img src='"+message.success+"' alt='image' onclick='selectImage(this)'>")
                 }else{
-                    alert("Une erreur c'est produite pendant le téléchargement de l'image");
+                    if ($(".errorMessageImage").length === 0) {
+                        $(".buttonModalImage div").append("<div class='alert alert--red errorMessageImage'>"+message.error+"</div>");
+                        removeErrorMessage()
+                    }
                 }
             },
         });

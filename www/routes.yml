@@ -71,4 +71,3 @@
 /admin/update-publication:
   controller: Pages
   action: updatePublication
-
