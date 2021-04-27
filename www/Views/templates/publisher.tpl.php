@@ -86,24 +86,24 @@
                             <div class="jumbotron containerJumbo" id="selectCol">
                                 <h3>Sélectionnez le modèle de la section</h3>
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-3 col-sm-3 col">
+                                    <div class="col-lg-3 col-md-4 col-sm-12 col">
                                         <img src="../../images/publisher/col-12.svg" alt="col-12" onclick="addBlock(12)">
                                     </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-3 col">
+                                    <div class="col-lg-3 col-md-4 col-sm-12 col">
                                         <img src="../../images/publisher/col-6.svg" alt="col-6" onclick="addBlock(6)">
                                     </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-3 col">
+                                    <div class="col-lg-3 col-md-4 col-sm-12 col">
                                         <img src="../../images/publisher/col-4.svg" alt="col-4" onclick="addBlock(4)">
                                     </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-3 col">
+                                    <div class="col-lg-3 col-md-4 col-sm-12 col">
                                         <img src="../../images/publisher/col-3.svg" alt="col-3" onclick="addBlock(3)">
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-3 col-sm-3 col">
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col">
                                         <img src="../../images/publisher/col-3-9.svg" alt="col-3-9" onclick="addBlock(39)">
                                     </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-3 col">
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col">
                                         <img src="../../images/publisher/col-9-3.svg" alt="col-9-3" onclick="addBlock(93)">
                                     </div>
                                 </div>
