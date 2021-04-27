@@ -445,6 +445,35 @@ function selectImage(image){
     image.classList.add("activeImage");
 }
 
+function checkTemplateImage(){
+    var result;
+
+    $.ajax({
+        type: 'POST',
+        url: '../.././Controllers/Publisher.php',
+        data: {
+            checkDeleteImage: $(".activeImage").attr("src"),
+            namePage: namePage
+        },
+        success: function(data) {
+            if (data !== "false"){
+                if ($(".errorMessageImage").length === 0) {
+                    $("#selectImage h3").append("<div class='alert alert--red errorMessageImage'>Cette image ne peut pas être supprimée<br> car elle est utilisée sur la page: "+data+"</div>");
+                    removeErrorMessage();
+                }
+            }else{
+                detectionErrorsDeleteImage();
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError){
+            alert(xhr.responseText);
+            alert(ajaxOptions);
+            alert(thrownError);
+            alert(xhr.status);
+        }
+    });
+}
+
 //Apparition du modal de confirmation de suppression d'une image
 function confirmDeleteImage(){
     $("#buttonModalImage").hide();
@@ -454,19 +483,21 @@ function confirmDeleteImage(){
                 if($("#errorImageExist").length === 0){
                     $("#errorSelectionImage").remove();
                     if ($(".errorMessageImage").length === 0) {
-                        $(".buttonModalImage div").append("<div class='alert alert--red errorMessageImage'>Cette image ne peut pas être supprimée<br> car elle est utilisée sur la page</div>");
+                        $("#selectImage h3").append("<div class='alert alert--red errorMessageImage'>Cette image ne peut pas être supprimée<br> car elle est utilisée sur cette page</div>");
                         removeErrorMessage();
+                        return false;
                     }
                 }
             } else {
-                detectionErrorsDeleteImage();
+                checkTemplateImage();
             }
         }else{
             if($(".errorMessageImage").length === 0){
                 $("#errorImageExist").remove();
                 if ($(".errorMessageImage").length === 0) {
-                    $(".buttonModalImage div").append("<div class='alert alert--red errorMessageImage'>Aucune image sélectionnée</div>");
+                    $("#selectImage h3").append("<div class='alert alert--red errorMessageImage'>Aucune image sélectionnée</div>");
                     removeErrorMessage();
+                    return false;
                 }
             }
         }
@@ -477,12 +508,12 @@ function confirmDeleteImage(){
             if($(".errorMessageImage").length === 0){
                 $("#errorImageExist").remove();
                 if ($(".errorMessageImage").length === 0) {
-                    $(".buttonModalImage div").append("<div class='alert alert--red errorMessageImage'>Aucune image sélectionnée</div>");
+                    $("#selectImage h3").append("<div class='alert alert--red errorMessageImage'>Aucune image sélectionnée</div>");
                     removeErrorMessage();
                 }
             }
         }else{
-            detectionErrorsDeleteImage();
+            checkTemplateImage();
         }
     }
 }
@@ -555,7 +586,7 @@ function uploadImage(){
                     $("#listImages").prepend("<img src='"+message.success+"' alt='image' onclick='selectImage(this)'>")
                 }else{
                     if ($(".errorMessageImage").length === 0) {
-                        $(".buttonModalImage div").append("<div class='alert alert--red errorMessageImage'>"+message.error+"</div>");
+                        $("#selectImage h3").append("<div class='alert alert--red errorMessageImage'>"+message.error+"</div>");
                         removeErrorMessage()
                     }
                 }

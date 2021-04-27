@@ -148,7 +148,6 @@
                             </div>
                         </div>
                         <div id="selectImage">
-                            <h4></h4>
                             <div id="listImages"></div>
                         </div>
                         <div id="confirmDeleteImage">

@@ -17,6 +17,10 @@ if (isset($_POST['listImages'])){
     $myPublisher->listImages();
 }
 
+if (isset($_POST['checkDeleteImage']) && isset($_POST['namePage'])){
+    $myPublisher->checkDeleteImage($_POST['checkDeleteImage'], $_POST['namePage']);
+}
+
 if (isset($_POST['srcImage'])){
     $myPublisher->deleteImage($_POST['srcImage']);
 }
@@ -64,6 +68,23 @@ class Publisher
         }
     }
 
+    public function checkDeleteImage($srcImage, $namePage){
+        $result = "false";
+
+        $list =array_diff(scandir("../publisher/templatesPublisher"), array('.', '..'));
+        foreach ($list as $template){
+            if ($template !== $namePage.".json"){
+                $content = file_get_contents("../publisher/templatesPublisher/".$template);
+
+                if(strpos($content, $srcImage) !== false) {
+                    $result = explode(".", $template)[0];
+                    break;
+                }
+            }
+        }
+        echo $result;
+    }
+
     public function deleteImage($srcImage){
         unlink($srcImage);
     }
@@ -82,6 +103,15 @@ class Publisher
             if (preg_match($regex, $filename) == 0) {
                 $error = (json_encode(array("error" => "Ce type d'image n'est pas pris en charge")));
             }else{
+
+                $list =array_diff(scandir("../publisher/images"), array('.', '..'));
+                foreach ($list as $image){
+                    if ($image === "$filename"){
+                        $error = (json_encode(array("error" => "Une image avec ce nom existe déjà")));
+                        break;
+                    }
+                }
+
                 if ($_FILES['file']['size'] > 15000000) {
                     $error = (json_encode(array("error" => "Le poids de l'image doit être inférieure à 15 MO")));
                 }
