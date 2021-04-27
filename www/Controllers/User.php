@@ -76,23 +76,35 @@ class User
         $view = new View("login", "front");
 
         $form = $user->formBuilderLogin();
-
+        //echo "<pre>";
+        //var_dump($user->select('id')->where("email=:email", "id_role = :role")->setParams([":email" => "samy.saberi@gmail.com", ":role" => 1])->get());
+        //exit();
         if(!empty($_POST)){
-
-            $errors = FormValidator::check($form, $_POST);
-
+            $errors = [];
             if(empty($errors)){
 
                 $pwdGet = $user->select('pwd')->where('email=:email')->setParams([":email" => $_POST['email']])->get();
 
 
-                if(password_verify(htmlspecialchars($_POST["pwd"]), $pwdGet[0]["pwd"])){
-                    session_start();
-                    $monUser = $user->select('*')->where('email=:email', 'pwd=:pwd')->setParams([":email" => $_POST['email'],":pwd" => $_POST['pwd']])->get();
-                    $_SESSION['user'] = $monUser;
-                    header('location:/');
+
+
+                if ($user->select('*')->where("email=:email", "id_role = 1")->setParams([":email" => $_POST['email']])->get()){
+                    $pwdGet = $user->select('pwd')->where('email=:email')->setParams([":email" => $_POST['email']])->get();
+
+
+                    if(password_verify($_POST["pwd"], $pwdGet[0]["pwd"])){
+                        session_start();
+                        $monUser = $user->select('*')->where('email=:email', 'pwd=:pwd')->setParams([":email" => $_POST['email'],":pwd" => $pwdGet[0]["pwd"],])->get();
+                        $_SESSION['user'] = $monUser;
+                        var_dump($_SESSION["user"]);
+                        header('location:/');
+                    }else{
+                        array_push($errors,"L'email et le mot de passe ne correspondent pas");
+                        $view->assign("errors", $errors);
+
+                    }
                 }else{
-                    array_push($errors,"L'email et le mot de passe ne correspondent pas / Vous n'avez pas les droits requis");
+                    array_push($errors,"Cette adresse mail est inconnu ou n'a pas les droits administrateur");
                     $view->assign("errors", $errors);
                 }
 
