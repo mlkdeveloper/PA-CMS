@@ -71,8 +71,3 @@
 /admin/update-publication:
   controller: Pages
   action: updatePublication
-
-#FRONT_test
-/test:
-  controller: Pages
-  action: displayFront
