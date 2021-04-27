@@ -402,6 +402,45 @@ class User extends Database
 
     }
 
+    public function formBuildermodifyPwd(){
+
+        return [
+
+            "config"=>[
+                "method"=>"POST",
+                "action"=>"",
+                "class"=>"form_control col col-md-10 container",
+                "id"=>"form_register",
+                "submit"=>"Envoyé",
+                "classButton" => "button button--blue"
+            ],
+            "inputs"=>[
+                "pwd"=>[
+                    "type"=>"password",
+                    "divClass"=> "form_align--top",
+                    "label"=>"Votre mot de passe",
+                    "required"=>true,
+                    "class"=>"form_input",
+                    "minLength"=>5,
+                    "error"=>"Votre mot de passe doit faire au minimum 7 caractères et doit être composé de lettres et de chiffres"
+                ],
+
+                "pwdConfirm"=>[
+                    "type"=>"password",
+                    "divClass"=> "form_align--top",
+                    "label"=>"Confirmation",
+                    "required"=>true,
+                    "data-format"=> "confirmPwd",
+                    "class"=>"form_input",
+                    "confirm"=>"pwd",
+                    "error"=>"Mot de passe différent"
+                ],
+            ]
+
+        ];
+
+    }
+
 }
 
 
