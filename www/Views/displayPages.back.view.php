@@ -26,27 +26,39 @@
                             <td><?= $value['createdAt'] ?></td>
                             <td><?= $value['slug'] ?></td>
                             <td>
-                                <label class="switch">
-                                    <?php
-                                        if ($value['publication'] == 1){
-                                            echo ('<input id="publicationSwitch" name="'.$value["id"].'" type="checkbox" checked>');
-                                        }else{
-                                            echo ('<input id="publicationSwitch" name="'.$value["id"].'" type="checkbox">');
-                                        }
-                                    ?>
-                                    <span class="sliderSwitch roundSwitch"></span>
-                                </label>
+                                <?php
+                                    if ($value['id'] != 1) {
+                                        echo '<label class="switch">';
+                                            if ($value['publication'] == 1) {
+                                                echo('<input id="publicationSwitch" name="' . $value["id"] . '" type="checkbox" checked>');
+                                            } else {
+                                                echo('<input id="publicationSwitch" name="' . $value["id"] . '" type="checkbox">');
+                                            }
+
+                                            echo '<span class="sliderSwitch roundSwitch"></span>';
+                                        echo '</label>';
+                                    }else{
+                                        echo '<p>Non modifiable</p>';
+                                    }
+                                ?>
                             </td>
                             <td>
                                 <div>
-                                    <a href="/admin/modification-page?id=<?= $value['id'] ?>&slug=<?= $value['slug'] ?>"
-                                       class="button button--blue">
-                                        <i class="fas fa-pencil-alt"></i>Modifier
-                                    </a>
+                                    <?php
+                                        if ($value['id'] != 1) {
+                                            echo '<a href = "/admin/modification-page?id='.$value["id"].'&slug='.$value["slug"].'" class="button button--blue">';
+                                                echo '<i class="fas fa-pencil-alt" ></i > Modifier';
+                                            echo '</a>';
+                                        }
+                                    ?>
                                     <a href="/admin/publisher?name=<?= $value['name'] ?>" class="button button--blue">
                                         <i class="fas fa-eye"></i>Voir la page
                                     </a>
-                                    <i class="fas fa-trash" onclick="showModalDeletePage(<?= $value['id'] ?>, '<?= $value['name'] ?>', '<?= $value['slug'] ?>')"></i>
+                                    <?php
+                                        if ($value['id'] != 1){
+                                            echo '<i class="fas fa-trash" onclick="showModalDeletePage('.$value["id"].', \''.$value["name"].'\', \''.$value["slug"].'\')"></i>';
+                                        }
+                                    ?>
                                 </div>
                             </td>
                         </tr>

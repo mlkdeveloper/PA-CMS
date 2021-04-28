@@ -67,7 +67,7 @@ class Pages
     }
 
     public function updatePageAction(){
-        if (isset($_GET['id']) && !empty($_GET['id'])){
+        if (isset($_GET['id']) && isset($_GET['slug']) && $_GET['id'] != 1){
 
             $pages = new modelPages();
             $verifyId = $pages->select()->where("id = :id", "slug = :slug")->setParams(["id" => $_GET['id'], "slug" => $_GET['slug']])->get();
@@ -118,24 +118,32 @@ class Pages
     }
 
     public function deletePageAction(){
-        $idPage = $_GET["idPage"];
-        $name = $_GET["name"];
-        $slug = explode("/", $_GET["slug"])[1];
 
-        $pages = new modelPages();
-        $pages->where("id =:id")->setParams(["id" => $idPage])->delete();
-        unlink("./publisher/templatesPublisher/".$name.".json");
+        if(isset($_GET["idPage"])
+            && isset($_GET["name"])
+            && $_GET['idPage'] != 1) {
+            $idPage = $_GET["idPage"];
+            $name = $_GET["name"];
+            $slug = explode("/", $_GET["slug"])[1];
 
-        $pageRoute = new Routes($slug);
+            $pages = new modelPages();
+            $pages->where("id =:id")->setParams(["id" => $idPage])->delete();
+            unlink("./publisher/templatesPublisher/" . $name . ".json");
 
-        try {
-            $pageRoute->deleteRoute();
-        }catch (MyException $e){
-            echo $e->error();
+            $pageRoute = new Routes($slug);
+
+            try {
+                $pageRoute->deleteRoute();
+            } catch (MyException $e) {
+                echo $e->error();
+            }
+
+            header("Location: /admin/display-pages");
+            exit();
+        }else{
+            header("Location: /admin/display-pages");
+            exit();
         }
-
-        header("Location: /admin/display-pages");
-        exit();
     }
 
     public function displayFrontAction(){
@@ -165,6 +173,7 @@ class Pages
 
         if(isset($_POST['valuePublication'])
         && isset($_POST['idPage'])
+        && $_POST['idPage'] != 1
         && ($_POST['valuePublication'] == 0 || $_POST['valuePublication'] == 1)){
 
             $pages = new modelPages();
