@@ -17,8 +17,8 @@ if (isset($_POST['listImages'])){
     $myPublisher->listImages();
 }
 
-if (isset($_POST['checkDeleteImage']) && isset($_POST['namePage'])){
-    $myPublisher->checkDeleteImage($_POST['checkDeleteImage'], $_POST['namePage']);
+if (isset($_POST['checkDeleteImage']) && isset($_POST['namePageDeleteImage'])){
+    $myPublisher->checkDeleteImage($_POST['checkDeleteImage'], $_POST['namePageDeleteImage']);
 }
 
 if (isset($_POST['srcImage'])){

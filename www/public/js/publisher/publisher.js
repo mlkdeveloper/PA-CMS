@@ -446,14 +446,14 @@ function selectImage(image){
 }
 
 function checkTemplateImage(){
-    var result;
+    console.log(namePage);
 
     $.ajax({
         type: 'POST',
         url: '../.././Controllers/Publisher.php',
         data: {
             checkDeleteImage: $(".activeImage").attr("src"),
-            namePage: namePage
+            namePageDeleteImage: namePage
         },
         success: function(data) {
             if (data !== "false"){
