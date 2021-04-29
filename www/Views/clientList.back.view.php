@@ -52,7 +52,7 @@
 
     <div class="modal" id="modalDeleteClient">
         <div class="modal-content">
-            <h3>Voulez-vous vraiment supprimer ce rôle ?</h3>
+            <h3>Voulez-vous vraiment supprimer ce client ?</h3>
             <a id="buttonDeleteClient"><button class="button button--success">Oui</button></a>
             <button class="button button--alert" onclick="hideModalDeleteClient()">Non</button>
         </div>
