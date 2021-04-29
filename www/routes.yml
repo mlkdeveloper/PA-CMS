@@ -122,4 +122,23 @@
   controller : User
   action: register
 
+/admin/liste-utilisateurs:
+  controller: User
+  action: displayUsers
+
+/admin/ajout-utilisateur:
+  controller: User
+  action: addUsers
+
+/admin/suppression-utilisateur:
+  controller: User
+  action: deleteUser
+
+/admin/modification-utilisateur:
+  controller: User
+  action: updateUser
+
+/admin/utilisateur-changement-mdp:
+  controller: User
+  action : changeUserPwd
 
