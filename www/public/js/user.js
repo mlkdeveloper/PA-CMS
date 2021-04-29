@@ -16,3 +16,13 @@ function showModalDeleteUser(id){
 function hideModalDeleteUser(){
     $("#modalDeleteUser").hide();
 }
+
+
+
+function showModalPwd(id){
+    $("#modalPwd").show();
+}
+
+function hideModalPwd(){
+    $("#modalPwd").hide();
+}

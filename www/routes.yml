@@ -134,3 +134,11 @@
   controller: User
   action: deleteUser
 
+/admin/modification-utilisateur:
+  controller: User
+  action: updateUser
+
+/admin/utilisateur-changement-mdp:
+  controller: User
+  action : changeUserPwd
+

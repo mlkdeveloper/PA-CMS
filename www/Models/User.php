@@ -24,7 +24,7 @@ class User extends Database
 		parent::__construct();
 	}
 
-	//Parse error: syntax error, unexpected 'return' (T_RETURN) in /var/www/html/Models/User.php on line 41
+
 
 	/**
 	 * @return mixed
@@ -55,7 +55,7 @@ class User extends Database
     /**
      * @param mixed $firstName
      */
-    public function setFirstName($firstName): void
+    public function setFirstName($firstName)
     {
         $this->firstName = htmlspecialchars(trim($firstName));
     }
@@ -345,8 +345,8 @@ class User extends Database
                     "required"=>true,
                     "class"=>"form_input",
                     "minLength"=>2,
-                    "maxLength"=>50,
-                    "error"=>"Le nom doit faire entre 2 et 50 caractères."
+                    "maxLength"=>100,
+                    "error"=>"Le nom doit faire entre 2 et 100 caractères."
                 ],
                 "firstName"=>[
                     "type"=>"text",
@@ -355,8 +355,8 @@ class User extends Database
                     "required"=>true,
                     "class"=>"form_input",
                     "minLength"=>2,
-                    "maxLength"=>100,
-                    "error"=>"Le prénom doit faire entre 2 et 100 caractères."
+                    "maxLength"=>50,
+                    "error"=>"Le prénom doit faire entre 2 et 50 caractères."
                 ],
 
                 "address"=>[
@@ -437,15 +437,15 @@ class User extends Database
                     "type"=>"text",
                     "required"=>true,
                     "minLength"=>2,
-                    "maxLength"=>50,
-                    "error"=>"Le nom doit faire entre 2 et 50 caractères."
+                    "maxLength"=>100,
+                    "error"=>"Le nom doit faire entre 2 et 100 caractères."
                 ],
                 "firstName"=>[
                     "type"=>"text",
                     "required"=>true,
                     "minLength"=>2,
-                    "maxLength"=>100,
-                    "error"=>"Le prénom doit faire entre 2 et 100 caractères."
+                    "maxLength"=>50,
+                    "error"=>"Le prénom doit faire entre 2 et 50 caractères."
                 ],
 
                 "email"=>[
@@ -461,6 +461,71 @@ class User extends Database
                     "required"=>true,
                     "regex"=>"/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]){8,}/",
                     "errorRegex"=>"Votre mot de passe doit faire au minimum 8 caractères, contenir une majuscule et un chiffre."
+                ],
+
+                "idRole"=>[
+                    "type"=>"text",
+                    "statusRole" => [1,2],
+                    "required"=>true,
+                    "error"=>"Erreur au niveau du rôle !"
+                ]
+            ]
+
+        ];
+    }
+
+    public function formPwdUsers(){
+
+        return [
+
+            "config"=>[
+                "method"=>"POST",
+                "action"=>"",
+            ],
+            "inputs"=>[
+
+                "pwd"=>[
+                    "type"=>"password",
+                    "required"=>true,
+                    "regex"=>"/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]){8,}/",
+                    "errorRegex"=>"Votre mot de passe doit faire au minimum 8 caractères, contenir une majuscule et un chiffre."
+                ]
+            ]
+        ];
+    }
+
+
+    public function formUpdateUsers(){
+
+        return [
+
+            "config"=>[
+                "method"=>"POST",
+                "action"=>"",
+            ],
+            "inputs"=>[
+
+                "lastname"=>[
+                    "type"=>"text",
+                    "required"=>true,
+                    "minLength"=>2,
+                    "maxLength"=>100,
+                    "error"=>"Le nom doit faire entre 2 et 100 caractères."
+                ],
+                "firstName"=>[
+                    "type"=>"text",
+                    "required"=>true,
+                    "minLength"=>2,
+                    "maxLength"=>50,
+                    "error"=>"Le prénom doit faire entre 2 et 50 caractères."
+                ],
+
+                "email"=>[
+                    "type"=>"email",
+                    "required"=>true,
+                    "minLength"=>8,
+                    "maxLenght"=>320,
+                    "error"=>"Votre email doit faire entre 8 et 320 caractères"
                 ],
 
                 "idRole"=>[

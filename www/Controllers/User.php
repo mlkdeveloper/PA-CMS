@@ -320,21 +320,115 @@ class User extends Database
 
     public function deleteUserAction(){
 
-        $user = new UserModel();
-        $verifyId = $user->select("id")->where("id = :id", "id_role > 2")->setParams(["id" => $_GET['id']])->get();
+        if (isset($_GET['id']) && !empty($_GET['id'])) {
 
-        if (empty($verifyId)) {
-            header("Location: /admin/liste-utilisateur");
-            exit();
+            $user = new UserModel();
+            $verifyId = $user->select("id")->where("id = :id", "id_role > 2")->setParams(["id" => $_GET['id']])->get();
+
+            if (empty($verifyId)) {
+                header("Location: /admin/liste-utilisateur");
+                exit();
+            }
+
+            $user->setId($_GET['id']);
+            $user->where("id= :id")->setParams(["id" => $_GET['id']])->delete();
+
+            session_start();
+            $_SESSION['deleteUser'] = "Utilisateur supprimé ! ";
+
+            header("Location: /admin/liste-utilisateurs");
         }
 
-        $user->setId($_GET['id']);
-        $user->where("id= :id")->setParams(["id" => $_GET['id']])->delete();
-
-        session_start();
-        $_SESSION['deleteUser'] = "Utilisateur supprimé ! ";
-
-        header("Location: /admin/liste-utilisateurs");
-
     }
+
+    public function updateUserAction(){
+
+        if (isset($_GET['id']) && !empty($_GET['id'])) {
+
+            $userId = new UserModel();
+            $verifyId = $userId->select("id, email,pwd")->where("id = :id", "id_role > 2")->setParams(["id" => $_GET['id']])->get();
+
+            if (empty($verifyId)) {
+                header("Location: /admin/liste-utilisateurs");
+                exit();
+            }
+
+            $role = new Role();
+            $getRoles = $role->select("id,name")->where("id > 2")->get();
+
+            $view = new View("updateUser.back", "back");
+            $view->assign("roles", $getRoles);
+            $view->assign("title", "Admin - Utilisateur");
+
+            $form = $userId->formUpdateUsers();
+
+            if(!empty($_POST)) {
+
+                $errors = FormValidator::checkClient($form, $_POST, trim($_POST['email']) === $verifyId[0]["email"]);
+
+                if (empty($errors)) {
+                    $userId->populate($_POST);
+                    $userId->setId($_GET['id']);
+                    $userId->setPwd($verifyId[0]["pwd"]);
+                    $userId->setStatus(1);
+                    $userId->save();
+
+                    $view->assign("success", "L'utilisateur a bien été modifié !");
+                } else {
+                    $view->assign("errors", $errors);
+                }
+            }
+
+            $users = $userId->select("cc_user.pwd,cc_user.id,cc_user.lastname,cc_user.firstname,cc_user.email,cc_role.name")
+                ->where("cc_user.id = :id","cc_user.id_role > 2")
+                ->setParams(['id' => $_GET['id']])
+                ->innerJoin("cc_role","cc_role.id","=","cc_user.id_role")
+                ->get();
+
+            $view->assign("users", $users[0]);
+
+        }else{
+            header("Location: /admin/liste-utilisateurs");
+        }
+    }
+
+
+    public function changeUserPwdAction(){
+
+        if (isset($_GET['id']) && !empty($_GET['id'])) {
+
+            $user = new UserModel();
+            $verifyId = $user->select()->where("id = :id", "id_role > 2")->setParams(["id" => $_GET['id']])->get();
+
+            if (empty($verifyId)) {
+                header("Location: /admin/liste-utilisateurs");
+                exit();
+            }
+            $form = $user->formPwdUsers();
+
+            if(!empty($_POST)) {
+
+                $errors = FormValidator::checkClient($form, $_POST, false);
+                session_start();
+                if (empty($errors)) {
+                    $user->populate($verifyId[0]);
+                    $user->setId($_GET['id']);
+                    $user->setPwd(password_hash($_POST['pwd'], PASSWORD_DEFAULT));
+                    $user->save();
+
+                    $_SESSION['successChangePwd'] = "Mot de passe modifié !";
+
+                } else {
+                    $_SESSION['errorChangePwd'] = "Votre mot de passe doit faire au minimum 8 caractères, contenir une majuscule et un chiffre.";
+                }
+
+                header("Location: /admin/modification-utilisateur?id=" . $_GET['id']);
+            }else{
+                header("Location: /admin/liste-utilisateurs");
+            }
+        }else{
+            header("Location: /admin/liste-utilisateurs");
+        }
+    }
+
 }
