@@ -413,6 +413,7 @@ class User extends Database
                 if (empty($errors)) {
                     $user->populate($verifyId[0]);
                     $user->setId($_GET['id']);
+                    $user->setIdRole($verifyId[0]['id_role']);
                     $user->setPwd(password_hash($_POST['pwd'], PASSWORD_DEFAULT));
                     $user->save();
 
@@ -421,7 +422,6 @@ class User extends Database
                 } else {
                     $_SESSION['errorChangePwd'] = "Votre mot de passe doit faire au minimum 8 caractères, contenir une majuscule et un chiffre.";
                 }
-
                 header("Location: /admin/modification-utilisateur?id=" . $_GET['id']);
             }else{
                 header("Location: /admin/liste-utilisateurs");
