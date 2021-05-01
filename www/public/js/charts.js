@@ -1,5 +1,5 @@
 var ctx = document.getElementById('turnover').getContext('2d');
-var myChart = new Chart(ctx, {
+const chartTurnover = new Chart(ctx, {
     type: 'line',
     data: {
         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
@@ -16,7 +16,8 @@ var myChart = new Chart(ctx, {
         scales: {
             xAxes: [{
                 ticks: {
-                    fontSize: 18
+                    fontSize: 18,
+                    padding: 20
                 }
             }],
             yAxes: [{
@@ -66,7 +67,8 @@ const chartSales = new Chart(ctx, {
         scales: {
             xAxes: [{
                 ticks: {
-                    fontSize: 18
+                    fontSize: 18,
+                    padding: 20
                 }
             }],
             yAxes: [{
@@ -88,80 +90,6 @@ const chartSales = new Chart(ctx, {
 });
 
 
-orders = [
-    { name: 'Luis', orders_by_user: '2' },
-    { name: 'Jose', orders_by_user: '1' },
-    { name: 'Miguel', orders_by_user: '3' }
-];
-console.log(orders);
-var myChart = new Chart(document.getElementById('orders'), {
-    type: 'bar',
-    data: {
-        labels: orders.map(o => o.name),
-        datasets: [{
-            label: 'Terminadas',
-            data: orders.map(o => o.orders_by_user),
-            borderColor: 'rgba(75, 192, 192, 1)',
-            backgroundColor: "#229954",
-            borderWidth: 1,
-            yAxisID: 'Ordenes',
-            xAxisID: 'Operarios',
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                id: "Ordenes",
-                ticks: {
-                    beginAtZero: true,
-                    stepSize: 1
-                },
-                scaleLabel: {
-                    display: true,
-                    labelString: 'Ordenes'
-                }
-            }],
-            xAxes: [{
-                id: "Operarios",
-                scaleLabel: {
-                    display: true,
-                    labelString: 'Operarios'
-                }
-
-            }],
-        },
-        title: {
-            display: true,
-            text: "Ordenes en estado terminado"
-        },
-        legend: {
-            display: true,
-            position: 'bottom',
-            labels: {
-                fontColor: "#17202A",
-            }
-        },
-    }
-});
-//
-// orders.forEach(o => {
-//     const opt = document.createElement('option');
-//     opt.value = o.name;
-//     opt.appendChild(document.createTextNode(o.name));
-//     document.getElementById('operator').appendChild(opt);
-// });
-//
-// function refreshChart(name) {
-//     myChart.data.labels = [name];
-//     if (name == 'All') {
-//         myChart.data.labels = orders.map(o => o.name),
-//             myChart.data.datasets[0].data = orders.map(o => o.orders_by_user);
-//     } else {
-//         myChart.data.labels = [name];
-//         myChart.data.datasets[0].data = orders.find(o => o.name == name).orders_by_user;
-//     }
-//     myChart.update();
-// }
 getData("month");
 
 function getData(type){
@@ -186,7 +114,7 @@ function getData(type){
 
 function refreshChartSales(data) {
     chartSales.data.labels = data.map(o => o.name);
-    chartSales.data.datasets[0].data = data.map(o => o.orders_by_user);
+    chartSales.data.datasets[0].data = data.map(o => o.value);
 
     chartSales.update();
 }

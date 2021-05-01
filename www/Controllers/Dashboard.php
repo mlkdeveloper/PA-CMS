@@ -51,10 +51,13 @@ class Dashboard
     }
 
     public function month(){
-        $arrayData = [
-            ['name'=> $this->monthsFR(date("n")).' '.date("Y"), 'value'=> 0]
-        ];
 
+        for ($p = 1; $p <= date("t", date("m")); $p++){
+            $arrayData[$p-1] = [
+                'name'=> $p,
+                'value'=> 0
+            ];
+        }
         return $arrayData;
     }
 
