@@ -71,3 +71,7 @@
 /admin/update-publication:
   controller: Pages
   action: updatePublication
+
+/admin/get-data-charts:
+  controller: Dashboard
+  action: getData
