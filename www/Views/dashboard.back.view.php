@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col">
         <div class="jumbotron">
-            <select class="input">
+            <select class="input" onchange="getData(this.value, 'turnover')">
                 <option value="month">1 Mois</option>
                 <option value="months">6 Mois</option>
                 <option value="year">1 An</option>
@@ -18,7 +18,7 @@
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col">
             <div class="jumbotron">
-                <select class="input" id="sales" onchange="getData(this.value)">
+                <select class="input" onchange="getData(this.value, 'sales')">
                     <option value="month">1 Mois</option>
                     <option value="months">6 Mois</option>
                     <option value="year">1 An</option>

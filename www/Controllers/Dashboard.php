@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 use App\Core\View;
+use App\Models\Pages as modelPages;
 
 
 class Dashboard
@@ -17,9 +18,14 @@ class Dashboard
 
     public function getDataAction(){
 
+        $pages = new modelPages();
+
+        $arrayTest = $pages->select("createdAt")->get();
+
+
         switch ($_POST['type']){
             case 'month':
-                $arrayData = $this->month();
+                $arrayData = $this->month($arrayTest);
                 break;
             case 'months':
                 $arrayData = $this->months();
@@ -31,26 +37,14 @@ class Dashboard
                 $arrayData = $this->all();
                 break;
             default:
-                echo 'Error';
+                echo 'error';
                 exit();
         }
 
-//        $array = [
-//            [ 'name'=> 'Janvier', 'orders_by_user'=> '12' ],
-//            [ 'name'=> 'Février', 'orders_by_user'=> '19' ],
-//            [ 'name'=> 'Mars', 'orders_by_user'=> '3' ],
-//            [ 'name'=> 'Avril', 'orders_by_user'=> '5' ],
-//            [ 'name'=> 'Mai', 'orders_by_user'=> '2' ],
-//            [ 'name'=> 'Juin', 'orders_by_user'=> '3' ]
-//        ];
-
-//        foreach ($array as $value){
-////            echo $value['name'];
-//        }
         echo json_encode($arrayData);
     }
 
-    public function month(){
+    public function month($data){
 
         for ($p = 1; $p <= date("t", date("m")); $p++){
             $arrayData[$p-1] = [
@@ -58,6 +52,23 @@ class Dashboard
                 'value'=> 0
             ];
         }
+
+        switch ($_POST['chart']){
+            case 'sales':
+                foreach ($data as $value){
+                    $tmpSale = explode("-", $value["createdAt"])[2];
+                    $tmpSale = explode(" ", $tmpSale)[0];//LIGNE A SUPPRIMER
+                    $arrayData[$tmpSale-1]['value'] = $arrayData[$tmpSale-1]['value']+1;
+                }
+                break;
+            case 'turnover':
+                break;
+            default:
+                echo 'error';
+                exit();
+        }
+
+
         return $arrayData;
     }
 
@@ -134,5 +145,9 @@ class Dashboard
                 return 'Décembre';
         }
         return false;
+    }
+
+    public function getSql(){
+
     }
 }

@@ -2,14 +2,16 @@ var ctx = document.getElementById('turnover').getContext('2d');
 const chartTurnover = new Chart(ctx, {
     type: 'line',
     data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: '',
         datasets: [{
-            label: 'Chiffre d\'affaire',
-            data: [12, 19, 3, 5, 2, 3],
+            label: 'Chiffre d\'affaires',
+            data: '',
             backgroundColor: 'rgba(111,207,151,0.3)',
             borderColor: '#27AE60',
             pointBackgroundColor: '#27AE60',
-            borderWidth: 1
+            borderWidth: 1,
+            pointRadius: 5,
+            pointHoverRadius: 10
         }]
     },
     options: {
@@ -25,7 +27,8 @@ const chartTurnover = new Chart(ctx, {
                     beginAtZero: true,
                     responsive: true,
                     maintainAspectRatio: false,
-                    fontSize: 18
+                    fontSize: 18,
+                    suggestedMax: 10
                 }
             }]
         },
@@ -53,14 +56,16 @@ var ctx = document.getElementById('chartSales').getContext('2d');
 const chartSales = new Chart(ctx, {
     type: 'line',
     data: {
-        labels: arraySales.map(o => o.name),
+        labels: '',
         datasets: [{
             label: 'Ventes',
-            data: [12, 19, 3, 5, 2, 1000],
+            data: '',
             backgroundColor: 'rgba(111,207,151,0.3)',
             borderColor: '#27AE60',
             pointBackgroundColor: '#27AE60',
-            borderWidth: 1
+            borderWidth: 1,
+            pointRadius: 5,
+            pointHoverRadius: 10
         }]
     },
     options: {
@@ -76,7 +81,8 @@ const chartSales = new Chart(ctx, {
                     beginAtZero: true,
                     responsive: true,
                     maintainAspectRatio: false,
-                    fontSize: 18
+                    fontSize: 18,
+                    suggestedMax: 10
                 }
             }]
         },
@@ -90,18 +96,28 @@ const chartSales = new Chart(ctx, {
 });
 
 
-getData("month");
+getData('month', 'turnover');
+getData('month', 'sales');
 
-function getData(type){
+function getData(type, chart){
     $.ajax({
         type: 'POST',
         url: '/admin/get-data-charts',
         data: {
-            type: type
+            type: type,
+            chart: chart
         },
         success: function(data) {
             console.log(JSON.parse(data));
-            refreshChartSales(JSON.parse(data));
+            if (data === 'error'){
+                alert('ERROR')
+            }else{
+                if (chart === 'sales'){
+                    refreshChartSales(JSON.parse(data));
+                }else if (chart === 'turnover'){
+                    refreshChartTurnover(JSON.parse(data));
+                }
+            }
         },
         error: function (xhr, ajaxOptions, thrownError){
             alert(xhr.responseText);
@@ -117,4 +133,11 @@ function refreshChartSales(data) {
     chartSales.data.datasets[0].data = data.map(o => o.value);
 
     chartSales.update();
+}
+
+function refreshChartTurnover(data) {
+    chartTurnover.data.labels = data.map(o => o.name);
+    chartTurnover.data.datasets[0].data = data.map(o => o.value);
+
+    chartTurnover.update();
 }
