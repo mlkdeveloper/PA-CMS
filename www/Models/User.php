@@ -21,6 +21,23 @@ class User extends Database
 	protected $zipcode;
 	protected $phoneNumber;
 	protected $token;
+	protected $isConfirmed = 0;
+
+    /**
+     * @return int
+     */
+    public function getIsConfirmed(): int
+    {
+        return $this->isConfirmed;
+    }
+
+    /**
+     * @param int $isConfirmed
+     */
+    public function setIsConfirmed(int $isConfirmed)
+    {
+        $this->isConfirmed = $isConfirmed;
+    }
 
     /**
      * @return int

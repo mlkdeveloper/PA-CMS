@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Core\Email;
 use App\Core\View;
 use App\Core\FormValidator;
 use App\Models\User as UserModel;
@@ -181,10 +182,6 @@ class User
 
                 if ($pwd == $pwdConfirm) {
 
-
-
-
-
                     //Generate a random string.
                     $token = openssl_random_pseudo_bytes(32);
                     //Convert the binary data into hexadecimal representation.
@@ -202,6 +199,8 @@ class User
                     $user->setToken($token);
 
                     $user->save();
+
+                    Email::sendEmail("samy.sab92@gmail.com", "Veuillez confirmer votre compte", "http://localhost:8080/confirmation-inscription?tkn=".$token,"Confimer mon compte", "/");
 
 
                     header('location:/connexion');

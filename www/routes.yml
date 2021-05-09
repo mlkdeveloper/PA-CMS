@@ -83,3 +83,7 @@
 /admin/delete-shop:
   controller: Shop
   action: deleteShop
+
+/confirmation-inscription:
+  controller: Security
+  action: confirmedRegister
