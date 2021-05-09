@@ -18,14 +18,9 @@ class Dashboard
 
     public function getDataAction(){
 
-        $pages = new modelPages();
-
-        $arrayTest = $pages->select("createdAt")->get();
-
-
         switch ($_POST['type']){
             case 'month':
-                $arrayData = $this->month($arrayTest);
+                $arrayData = $this->month();
                 break;
             case 'months':
                 $arrayData = $this->months();
@@ -44,7 +39,9 @@ class Dashboard
         echo json_encode($arrayData);
     }
 
-    public function month($data){
+    public function month(){
+
+        $data = $this->getSql("01-".date("m-Y"), date("t", date("m")).date("-m-Y"), true);
 
         for ($p = 1; $p <= date("t", date("m")); $p++){
             $arrayData[$p-1] = [
@@ -62,6 +59,11 @@ class Dashboard
                 }
                 break;
             case 'turnover':
+                foreach ($data as $value){
+                    $tmpSale = explode("-", $value["createdAt"])[2];
+                    $tmpSale = explode(" ", $tmpSale)[0];//LIGNE A SUPPRIMER
+                    $arrayData[$tmpSale-1]['value'] = $arrayData[$tmpSale-1]['value']+$value["price"];
+                }
                 break;
             default:
                 echo 'error';
@@ -73,7 +75,9 @@ class Dashboard
     }
 
     public function months(){
+
         $newMonths = [];
+        $dateForSql = "";
         $date_now = date("Y-n-d");
         $tmpYear = date("Y");
 
@@ -96,12 +100,60 @@ class Dashboard
                     'value'=> 0
                 ];
                 $date_now = date($tmpYear."-".$tmpMonth."-d");
+
+                if ($i === 5){
+                    if ((int)$tmpMonth < 10){
+                        $tmpMonth = "0".$tmpMonth;
+                    }
+                   $dateForSql = "01-".$tmpMonth."-".$tmpYear;
+                }
             }
         }
+
+        $data = $this->getSql($dateForSql, date("t", date("m")).date("-m-Y"), true);
+
+        switch ($_POST['chart']){
+            case 'sales':
+                foreach ($data as $value){
+                    $tmpSale = explode("-", $value["createdAt"])[1];
+                    $tmpSale = explode(" ", $tmpSale)[0];//LIGNE A SUPPRIMER
+                    if ((int)$tmpSale < 10){
+                        $tmpSale = substr($tmpSale, -1);
+                    }
+
+                    for ($i = 0; $i < count($newMonths); $i++){
+                        if (explode(" ",$newMonths[$i]['name'])[0] === $this->monthsFR($tmpSale)){
+                            $newMonths[$i]['value'] = $newMonths[$i]['value']+1;
+                        }
+                    }
+                }
+                break;
+            case 'turnover':
+                foreach ($data as $value){
+                    $tmpSale = explode("-", $value["createdAt"])[1];
+                    $tmpSale = explode(" ", $tmpSale)[0];//LIGNE A SUPPRIMER
+                    if ((int)$tmpSale < 10){
+                        $tmpSale = substr($tmpSale, -1);
+                    }
+
+                    for ($i = 0; $i < count($newMonths); $i++){
+                        if (explode(" ",$newMonths[$i]['name'])[0] === $this->monthsFR($tmpSale)){
+                            $newMonths[$i]['value'] = $newMonths[$i]['value']+$value["price"];
+                        }
+                    }
+                }
+                break;
+            default:
+                echo 'error';
+                exit();
+        }
+
         return array_reverse($newMonths);
     }
 
     public function year(){
+
+        $data = $this->getSql("01-01-".date("Y"), "31-12-".date("Y"), true);
 
         for ($j = 0; $j < 12; $j++){
             $arrayData[$j] = [
@@ -110,11 +162,89 @@ class Dashboard
             ];
         }
 
+        switch ($_POST['chart']){
+            case 'sales':
+                foreach ($data as $value){
+                    $tmpSale = explode("-", $value["createdAt"])[1];
+                    $tmpSale = explode(" ", $tmpSale)[0];//LIGNE A SUPPRIMER
+                    if ((int)$tmpSale < 10){
+                        $tmpSale = substr($tmpSale, -1);
+                    }
+
+                    for ($i = 0; $i < count($arrayData); $i++){
+                        if (explode(" ",$arrayData[$i]['name'])[0] === $this->monthsFR($tmpSale)){
+                            $arrayData[$i]['value'] = $arrayData[$i]['value']+1;
+                        }
+                    }
+                }
+                break;
+            case 'turnover':
+                foreach ($data as $value){
+                    $tmpSale = explode("-", $value["createdAt"])[1];
+                    $tmpSale = explode(" ", $tmpSale)[0];//LIGNE A SUPPRIMER
+                    if ((int)$tmpSale < 10){
+                        $tmpSale = substr($tmpSale, -1);
+                    }
+
+                    for ($i = 0; $i < count($arrayData); $i++){
+                        if (explode(" ",$arrayData[$i]['name'])[0] === $this->monthsFR($tmpSale)){
+                            $arrayData[$i]['value'] = $arrayData[$i]['value']+$value["price"];
+                        }
+                    }
+                }
+                break;
+            default:
+                echo 'error';
+                exit();
+        }
+
         return $arrayData;
     }
 
     public function all(){
+        $countAll = 0;
 
+        $data = $this->getSql("","",false);
+
+        $firstDate = explode("-", $data[0]["createdAt"])[0];
+
+        for ($p = $firstDate; $p <= date("Y"); $p++){
+            $arrayData[$countAll] = [
+                'name'=> strval($p),
+                'value'=> 0
+            ];
+            $countAll++;
+        }
+
+        switch ($_POST['chart']){
+            case 'sales':
+                foreach ($data as $value){
+                    $tmpAll = explode("-", $value["createdAt"])[0];
+
+                    for ($i = 0; $i < count($arrayData); $i++){
+                        if ($arrayData[$i]['name'] === $tmpAll){
+                            $arrayData[$i]['value'] = $arrayData[$i]['value']+1;
+                        }
+                    }
+                }
+                break;
+            case 'turnover':
+                foreach ($data as $value){
+                    $tmpAll = explode("-", $value["createdAt"])[0];
+
+                    for ($i = 0; $i < count($arrayData); $i++){
+                        if ($arrayData[$i]['name'] === $tmpAll){
+                            $arrayData[$i]['value'] = $arrayData[$i]['value']+$value["price"];
+                        }
+                    }
+                }
+                break;
+            default:
+                echo 'error';
+                exit();
+        }
+
+        return $arrayData;
     }
 
     public function monthsFR($oldMonth){
@@ -147,7 +277,14 @@ class Dashboard
         return false;
     }
 
-    public function getSql(){
+    public function getSql($dateStart, $dateEnd, $withDate){
+        $pages = new modelPages();
+        if ($withDate === true){
+            $dataSQL = $pages->select("createdAt")->where("createdAt BETWEEN STR_TO_DATE(:dateStart, '%d-%m-%Y') AND STR_TO_DATE(:dateEnd, '%d-%m-%Y')")->setParams(["dateStart" => $dateStart, "dateEnd" => $dateEnd])->get();
+        }else{
+            $dataSQL = $pages->select("createdAt")->orderBy("id", "ASC")->get();
+        }
 
+        return $dataSQL;
     }
 }

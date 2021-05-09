@@ -96,7 +96,7 @@ const chartSales = new Chart(ctx, {
 });
 
 
-getData('month', 'turnover');
+// getData('month', 'turnover');
 getData('month', 'sales');
 
 function getData(type, chart){
@@ -108,7 +108,6 @@ function getData(type, chart){
             chart: chart
         },
         success: function(data) {
-            console.log(JSON.parse(data));
             if (data === 'error'){
                 alert('ERROR')
             }else{
