@@ -100,6 +100,12 @@ const chartSales = new Chart(ctx, {
 getData('month', 'sales');
 
 function getData(type, chart){
+    if (chart === 'sales'){
+        $("#containerLoaderSales").show();
+    }else if (chart === 'turnover'){
+        $("#containerLoaderTurnover").show();
+    }
+
     $.ajax({
         type: 'POST',
         url: '/admin/get-data-charts',
@@ -113,8 +119,16 @@ function getData(type, chart){
             }else{
                 if (chart === 'sales'){
                     refreshChartSales(JSON.parse(data));
+
+                    setTimeout(function (){
+                        $("#containerLoaderSales").fadeOut(700);
+                    }, 500);
                 }else if (chart === 'turnover'){
                     refreshChartTurnover(JSON.parse(data));
+
+                    setTimeout(function (){
+                        $("#containerLoaderTurnover").fadeOut(700);
+                    }, 500);
                 }
             }
         },
