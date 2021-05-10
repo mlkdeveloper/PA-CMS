@@ -1,6 +1,6 @@
 /:
-  controller: Security
-  action: registerInstall
+  controller: Installation
+  action: install
 
 /404:
   controller: Main
@@ -49,3 +49,7 @@
 /admin/check-review:
   controller: Reviews
   action: checkReviews
+
+/start-install:
+  controller: Installation
+  action: startInstall

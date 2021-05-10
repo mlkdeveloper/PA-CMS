@@ -8,7 +8,7 @@ use App\Core\ConstantManager;
 require "Autoload.php";
 Autoload::register();
 
-new ConstantManager();
+//new ConstantManager('config-sample.env');
 
 
 //require "Core/Router.php";
