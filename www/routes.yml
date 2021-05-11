@@ -142,3 +142,23 @@
   controller: User
   action : changeUserPwd
 
+
+/admin/attribut:
+  controller : Attribute
+  action : attribute
+
+/admin/valeurs-attribut:
+  controller: Attribute
+  action: termsAttribute
+
+/admin/modification-attribut:
+  controller: Attribute
+  action: updateAttribute
+
+/admin/suppression-attribut:
+  controller: Attribute
+  action : deleteAttribute
+
+/admin/suppression-terme:
+  controller: Attribute
+  action : deleteTerm

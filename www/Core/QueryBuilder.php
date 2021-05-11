@@ -113,7 +113,7 @@ class QueryBuilder
         }else {
             $response = $this->pdo->query($this->request);
         }
-
+        
 
         return $response;
     }

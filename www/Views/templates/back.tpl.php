@@ -43,7 +43,7 @@ if (!$aut->isConnected()){
             <ul class="dropdown-container">
                 <li><a href="#">Categories</a>
                 <li><a href="#">Promotions</a>
-                <li><a href="#">Link 3</a>
+                <li><a href="/admin/attribut">Attributs</a>
             </ul>
             <li><a href="#">Pages</a></li>
             <li><a href="/admin/liste-client">Clients</a></li>
