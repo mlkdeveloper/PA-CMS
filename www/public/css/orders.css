@@ -1,0 +1,12 @@
+.profil-picture img{
+    border: solid black 2px;
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    padding: 0;
+    margin: 0;
+}
+
+a{
+    text-decoration: none;
+}

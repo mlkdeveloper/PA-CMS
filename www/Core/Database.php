@@ -6,6 +6,15 @@ class Database extends QueryBuilder
 {
     protected $table;
 
+//    Global variables
+
+    const NEW_OBJECT = 1;
+    const UPDATE_OBJECT = 2;
+    const DELETE_OBJECT = 3;
+
+    const USER_TABLE = 'cc_user';
+
+
     public function __construct()
     {
 
@@ -19,42 +28,65 @@ class Database extends QueryBuilder
 
     public function save()
     {
-
         //INSERT OU UPDATE
-
         //Array ( [firstname] => Yves [lastname] => SKRZYPCZYK [email] => y.skrzypczyk@gmail.com [pwd] => Test1234 [country] => fr [role] => 0 [status] => 1 [isDeleted] => 0)
-
-        $column = array_diff_key(
-            get_object_vars($this)
-            ,
-            get_class_vars(get_class())
-        );
-
+        $column = array_diff_key(get_object_vars($this), get_class_vars(get_class()));
 
         if (is_null($this->getId())) {
-            //INSERT
 
-
-            $query = $this->pdo->prepare("INSERT INTO " . $this->table . " 
-						(" . implode(',', array_keys($column)) . ") 
-						VALUES 
-						(:" . implode(',:', array_keys($column)) . ") "); //1
+            $query = $this->pdo->prepare("INSERT INTO " . $this->table . " (" . implode(',', array_keys($column)) . ") VALUES (:" . implode(',:', array_keys($column)) . ") "); //1
 
 
         } else {
-            //UPDATE
-            $keySql = [];
-            foreach ($column as $key => $value) {
-                if ($value == null) {
-                    unset($column[$key]);
-                } else {
-                    array_push($keySql, $key . " = :" . $key);
-                }
-            }
-            print_r($column);
-            $query = $this->pdo->prepare("UPDATE " . $this->table . " SET " . implode(',', $keySql) . " WHERE id = " . $this->getId() . ";");
 
+            foreach($column as $key => $value){
+                $sqlColumn[] = $key . "=:". $key;
+            }
+            $column["id"] = $this->getId();
+
+            $query = $this->pdo->prepare("UPDATE " . $this->table . " SET " . implode(',', $sqlColumn) . " WHERE id = :id");
         }
-        $query->execute($column);
+
+
+        $value = $query->execute($column);
+        return $value;
+    }
+
+    public function deleteObject()
+    {
+        $column["id"] = $this->getId();
+        $column["status"] = $this->getStatus();
+
+        $query = $this->pdo->prepare("UPDATE " . $this->table  . " SET status = :status" . " WHERE id = :id");
+
+        $value = $query->execute($column);
+        return $value;
+      
+
+    }
+
+    public function populate($data){
+
+        foreach ($data as $key => $value){
+
+            $method = 'set'.ucfirst($key);
+
+            if (method_exists($this,$method)){
+                $this->$method($value);
+            }
+        }
+        return $this;
+    }
+
+    public function find_duplicates_sql($col, $value): bool
+    {
+        $datas = $this
+            ->select("$col")
+            ->where("$col = :$col")
+            ->setParams(["$col" => $value])
+            ->get();
+
+        if (empty($datas)) return false;
+        else return true;
     }
 }

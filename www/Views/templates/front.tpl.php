@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 	<meta charset="UTF-8">
-	<title>Template de front</title>
+    <title><?= $title ?></title>
 	<meta name="description" content="description de la page de front">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
@@ -10,10 +10,14 @@
     <link rel="stylesheet" href="../../dist/main.css">
 </head>
 <body>
+<div class="container-body">
+    <main>
 
+        <!-- afficher la vue -->
+        <?php include $this->view ?>
 
-	<!-- afficher la vue -->
-	<?php include $this->view ?>
+    </main>
+</div>
 
 
 
