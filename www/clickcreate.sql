@@ -21,10 +21,18 @@ USE `clickCreate` ;
 -- Table `clickCreate`.`cc_role`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `clickCreate`.`cc_role` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(50) NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `roles` tinyint(1) NOT NULL DEFAULT '0',
+  `users` tinyint(1) NOT NULL DEFAULT '0',
+  `customers` tinyint(1) NOT NULL DEFAULT '0',
+  `products` tinyint(1) NOT NULL DEFAULT '0',
+  `categories` tinyint(1) NOT NULL DEFAULT '0',
+  `orders` tinyint(1) NOT NULL DEFAULT '0',
+  `opinions` tinyint(1) NOT NULL DEFAULT '0',
+  `pages` tinyint(1) NOT NULL DEFAULT '0',
+   PRIMARY KEY (`id`))
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 -- -----------------------------------------------------
@@ -37,8 +45,7 @@ CREATE TABLE IF NOT EXISTS `clickCreate`.`cc_user` (
   `email` VARCHAR(350) NOT NULL,
   `pwd` VARCHAR(255) NOT NULL,
   `country` CHAR(2) NOT NULL,
-  `status` TINYINT(4) NOT NULL,
-  `isDeleted` TINYINT(1) NOT NULL,
+  `status` TINYINT(1) NOT NULL,
   `createdAt` TIMESTAMP NOT NULL,
   `updatedAt` TIMESTAMP NULL,
   `id_role` INT NOT NULL,
@@ -206,18 +213,21 @@ ENGINE = InnoDB;
 -- Table `clickCreate`.`cc_promotion`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `clickCreate`.`cc_promotion` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NULL,
-  `status` TINYINT(5) NULL,
-  `type` TINYINT(2) NULL,
-  `valueType` FLOAT NULL,
-  `createdAt` TIMESTAMP NOT NULL,
-  `expiryDate` DATE NOT NULL,
-  `quantity` INT NOT NULL,
-  `minimumAmount` FLOAT NULL,
-  `minimumQuantity` INT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  `status` tinyint(5) DEFAULT NULL,
+  `type` tinyint(2) DEFAULT NULL,
+  `valueType` float DEFAULT NULL,
+  `startDate` date DEFAULT NULL,
+  `expiryDate` date DEFAULT NULL,
+  `usageLimit` int(11) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `minimumAmount` float DEFAULT NULL,
+  `minimumQuantity` int(11) DEFAULT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 
 
 -- -----------------------------------------------------
@@ -298,6 +308,7 @@ CREATE TABLE IF NOT EXISTS `clickCreate`.`cc_review` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `commentary` LONGTEXT NULL,
   `mark` FLOAT NULL,
+  `status` tinyint(4) NOT NULL,
   `Products_id` INT NOT NULL,
   `User_id` INT NOT NULL,
   PRIMARY KEY (`id`, `Products_id`, `User_id`),
@@ -321,10 +332,10 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `clickCreate`.`cc_pages` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(255) NULL,
+  `name` VARCHAR(255) NOT NULL,
   `createdAt` TIMESTAMP NOT NULL,
-  `slug` VARCHAR(255) NULL,
-  `path` VARCHAR(255) NULL,
+  `slug` VARCHAR(255) NOT NULL,
+  `publication` int(1) NOT NULL,
   `User_id` INT NOT NULL,
   PRIMARY KEY (`id`, `User_id`),
   INDEX `fk_Pages_User1_idx` (`User_id` ASC),
@@ -334,7 +345,6 @@ CREATE TABLE IF NOT EXISTS `clickCreate`.`cc_pages` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `clickCreate`.`cc_products_model`

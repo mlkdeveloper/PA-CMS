@@ -11,6 +11,8 @@ session_start();
 class Installation
 {
     private $pdo;
+    private $fileRoutes = "./routes.yml";
+    private $fileConstantManager = "./Core/ConstantManager.php";
 
     public function installAction(){
         $view = new View("install", "install");
@@ -21,9 +23,11 @@ class Installation
 
         $dataArray = $this->checkInformations($_POST);
         $this->createFile($dataArray);
+        $this->changeFile($this->fileConstantManager, 'changeConstantManager');
         $this->insertBDD($dataArray[5], $dataArray[0]);
-
-        //Redirection
+        $this->changeFile($this->fileRoutes, 'deleteStartInstallation');
+        $this->changeFile($this->fileRoutes, 'changeRoute');
+        header('Location: /');
     }
 
     private function checkInformations($data){
@@ -34,7 +38,7 @@ class Installation
             $dataArray = [];
 
             array_push($dataArray, htmlspecialchars(trim($data['name_bdd'])));
-            array_push( $dataArray, htmlspecialchars(trim($data['user_bdd'])));
+            array_push($dataArray, htmlspecialchars(trim($data['user_bdd'])));
             array_push($dataArray, htmlspecialchars(trim($data['pwd_bdd'])));
             array_push($dataArray, htmlspecialchars(trim($data['address_bdd'])));
             array_push($dataArray, htmlspecialchars(trim($data['port_bdd'])));
@@ -127,4 +131,60 @@ class Installation
         die();
     }
 
+    private function changeFile($file, $type){
+        $ptr = fopen("$file", "r");
+        $contenu = fread($ptr, filesize($file));
+
+        fclose($ptr);
+        $contenu = explode(PHP_EOL, $contenu);
+
+        $line = false;
+        $searchValue = '';
+
+        switch ($type){
+            case 'changeRoute':
+                $searchValue = '/:';
+                break;
+            case 'changeConstantManager':
+                $searchValue = 'config-sample.env';
+                break;
+            case 'deleteStartInstallation':
+                $searchValue = '/start-install:';
+                break;
+        }
+
+        foreach ($contenu as $index => $value) {
+            if (strpos($value, $searchValue) !== false) {
+                $line = $index;
+                break;
+            }
+        }
+
+        if ($line !== false){
+
+
+            switch ($type){
+                case 'changeRoute':
+                    $contenu[$line+1] = "  controller: Security";
+                    $contenu[$line+2] = "  action: registerInstall";
+                    break;
+                case 'changeConstantManager':
+                    $contenu[$line] = '    private $envFile = "config.env";';
+                    break;
+                case 'deleteStartInstallation':
+                    for ($i = -1; $i < 4; $i++){
+                        unset($contenu[$line+$i]);
+                    }
+                    break;
+            }
+
+            $contenu = array_values($contenu);
+
+            $contenu = implode(PHP_EOL, $contenu);
+
+            $ptr = fopen($file, "w");
+            fwrite($ptr, $contenu);
+            fclose($ptr);
+        }
+    }
 }
