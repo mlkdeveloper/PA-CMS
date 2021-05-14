@@ -200,7 +200,7 @@ class User
 
                     $user->save();
 
-                    Email::sendEmail("samy.sab92@gmail.com", "Veuillez confirmer votre compte", "http://localhost:8080/confirmation-inscription?tkn=".$token,"Confimer mon compte", "/");
+                    Email::sendEmail($email, "Veuillez confirmer votre compte", "http://localhost:8080/confirmation-inscription?tkn=".$token,"Confimer mon compte", "/");
 
 
                     header('location:/connexion');
