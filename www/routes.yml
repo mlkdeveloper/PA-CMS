@@ -1,6 +1,6 @@
 /:
-  controller: Security
-  action: registerInstall
+  controller: Installation
+  action: install
 
 /404:
   controller: Main
@@ -141,3 +141,7 @@
 /admin/utilisateur-changement-mdp:
   controller: User
   action : changeUserPwd
+
+/start-install:
+  controller: Installation
+  action: startInstall
