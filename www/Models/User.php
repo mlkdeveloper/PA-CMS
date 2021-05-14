@@ -8,122 +8,158 @@ class User extends Database
 {
 
     private $id = null;
-    protected $firstName;
+    protected $firstname;
     protected $lastname;
     protected $email;
     protected $pwd;
-    protected $country = null;
-    protected $address = null;
-    protected $city = null;
-    protected $zipCode = null;
-    protected $phoneNumber = null;
-    protected $id_role;
-    protected $status;
+    protected $country;
+    protected $id_role = 1;
+    protected $status = 1;
+    protected $isDeleted = 0;
+    protected $address;
+    protected $city;
+    protected $zipcode;
+    protected $phoneNumber;
+    protected $token;
+    protected $isConfirmed = 0;
 
-	public function __construct(){
-		parent::__construct();
-	}
+    /**
+     * @return int
+     */
+    public function getIsConfirmed(): int
+    {
+        return $this->isConfirmed;
+    }
 
-
-
-	/**
-	 * @return mixed
-	 */
-	public function getId()
-	{
-	    return $this->id;
-	}
-	/**
-	 * @param mixed $id
-	 */
-	public function setId($id)
-	{
-	    $this->id = $id;
-
-	    //ON doit peupler (populate) l'objet avec les valeurs de la bdd ...
-
-	}
+    /**
+     * @param int $isConfirmed
+     */
+    public function setIsConfirmed(int $isConfirmed)
+    {
+        $this->isConfirmed = $isConfirmed;
+    }
 
     /**
      * @return mixed
      */
-    public function getFirstName()
+    public function getToken()
     {
-        return $this->firstName;
+        return $this->token;
     }
 
     /**
-     * @param mixed $firstName
+     * @param mixed $token
      */
-    public function setFirstName($firstName)
+    public function setToken($token)
     {
-        $this->firstName = htmlspecialchars(trim($firstName));
+        $this->token = $token;
     }
 
 
-	/**
-	 * @param mixed $lastname
-	 */
-	public function setLastname($lastname)
-	{
-	    $this->lastname = htmlspecialchars(trim($lastname));
-	}
-	/**
-	 * @return mixed
-	 */
-	public function getEmail()
-	{
-	    return $this->email;
-	}
-	/**
-	 * @param mixed $email
-	 */
-	public function setEmail($email)
-	{
-	    $this->email = htmlspecialchars(trim($email));
-	}
-	/**
-	 * @return mixed
-	 */
-	public function getPwd()
-	{
-	    return $this->pwd;
-	}
-	/**
-	 * @param mixed $pwd
-	 */
-	public function setPwd($pwd)
-	{
-	    $this->pwd = htmlspecialchars($pwd);
-	}
-	/**
-	 * @return mixed
-	 */
-	public function getCountry()
-	{
-	    return $this->country;
-	}
-	/**
-	 * @param mixed $country
-	 */
-	public function setCountry($country)
-	{
-	    $this->country = htmlspecialchars(trim($country));
-	}
-	/**
-	 * @return int
-	 */
-	public function getStatus()
-	{
-	    return $this->status;
-	}
-	/**
-	 * @param int $status
-	 */
-	public function setStatus(int $status)
-	{
-	    $this->status = $status;
-	}
+    /*
+        role
+        status
+        createdAt
+        updatedAt
+        isDeleted (hard delete du soft delete) attention au RGPD
+    */
+
+
+    public function __construct(){
+        parent::__construct();
+    }
+
+    //Parse error: syntax error, unexpected 'return' (T_RETURN) in /var/www/html/Models/User.php on line 41
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        //ON doit peupler (populate) l'objet avec les valeurs de la bdd ...
+
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
+    /**
+     * @param mixed $firstname
+     */
+    public function setFirstname($firstname)
+    {
+        $this->firstname = $firstname;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastname()
+    {
+        return $this->lastname;
+    }
+    /**
+     * @param mixed $lastname
+     */
+    public function setLastname($lastname)
+    {
+        $this->lastname = $lastname;
+    }
+    /**
+     * @return mixed
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+    /**
+     * @param mixed $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+    /**
+     * @return mixed
+     */
+    public function getPwd()
+    {
+        return $this->pwd;
+    }
+    /**
+     * @param mixed $pwd
+     */
+    public function setPwd($pwd)
+    {
+        $this->pwd = $pwd;
+    }
+    /**
+     * @return mixed
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+    /**
+     * @param mixed $country
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+    }
 
     /**
      * @return mixed
@@ -136,9 +172,9 @@ class User extends Database
     /**
      * @param mixed $address
      */
-    public function setAddress($address): void
+    public function setAddress($address)
     {
-        $this->address = htmlspecialchars(trim($address));
+        $this->address = $address;
     }
 
     /**
@@ -152,25 +188,25 @@ class User extends Database
     /**
      * @param mixed $city
      */
-    public function setCity($city): void
+    public function setCity($city)
     {
-        $this->city = htmlspecialchars(trim($city));
+        $this->city = $city;
     }
 
     /**
      * @return mixed
      */
-    public function getZipCode()
+    public function getZipcode()
     {
-        return $this->zipCode;
+        return $this->zipcode;
     }
 
     /**
-     * @param mixed $zipCode
+     * @param mixed $zipcode
      */
-    public function setZipCode($zipCode): void
+    public function setZipcode($zipcode)
     {
-        $this->zipCode = htmlspecialchars(trim($zipCode));
+        $this->zipcode = $zipcode;
     }
 
     /**
@@ -184,13 +220,13 @@ class User extends Database
     /**
      * @param mixed $phoneNumber
      */
-    public function setPhoneNumber($phoneNumber): void
+    public function setPhoneNumber($phoneNumber)
     {
-        $this->phoneNumber = htmlspecialchars(trim($phoneNumber));
+        $this->phoneNumber = $phoneNumber;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getIdRole()
     {
@@ -198,349 +234,229 @@ class User extends Database
     }
 
     /**
-     * @param mixed $id_role
+     * @param int $id_role
      */
-    public function setIdRole($id_role): void
+    public function setIdRole($id_role)
     {
         $this->id_role = $id_role;
     }
 
+    /**
+     * @return int
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+    /**
+     * @param int $status
+     */
+    public function setStatus(int $status)
+    {
+        $this->status = $status;
+    }
+    /**
+     * @return int
+     */
+    public function getIsDeleted()
+    {
+        return $this->isDeleted;
+    }
+    /**
+     * @param int $isDeleted
+     */
+    public function setIsDeleted(int $isDeleted)
+    {
+        $this->isDeleted = $isDeleted;
+    }
 
-	public function formBuilderLogin(){
-		return [
 
-			"config"=>[
-				"method"=>"POST",
-				"action"=>"",
-				"class"=>"form_control col col-md-6 container",
-				"id"=>"form_register",
-				"submit"=>"Connexion",
-                "classButton" => "button button--blue"
-			],
-			"inputs"=>[
-
-				"email"=>[
-								"type"=>"email",
-                                "divClass"=> "form_align--top",
-								"placeholder"=>"Exemple : nom@gmail.com",
-								"label"=>"Votre Email",
-								"required"=>true,
-								"class"=>"form_input",
-								"error"=>"Votre email doit faire entre 8 et 320 caractères"
-							],
-
-				"pwd"=>[
-								"type"=>"password",
-                                "divClass"=> "form_align--top",
-                                "placeholder"=>"Saisir votre mot de passe",
-								"label"=>"Votre mot de passe",
-								"required"=>true,
-								"class"=>"form_input",
-								"error"=>"Votre mot de passe doit faire au minimum 8 caractères"
-							]
-			]
-
-		];
-	}
-
-	public function formBuilderInstallRegister(){
-
-		return [
-
-			"config"=>[
-				"method"=>"POST",
-				"action"=>"",
-                "class"=>"form_control col col-md-10 container",
-				"id"=>"form_register",
-				"submit"=>"Terminer l'installation",
-                "classButton" => "button button--blue"
-			],
-			"inputs"=>[
-				"firstname"=>[
-								"type"=>"text",
-								"placeholder"=>"Exemple : Yves",
-                                "divClass"=> "form_align--top",
-								"label"=>"Votre Prénom",
-								"required"=>true,
-								"class"=>"input",
-								"minLength"=>2,
-								"maxLength"=>50,
-								"error"=>"Votre prénom doit faire entre 2 et 50 caractères"
-							],
-				"lastname"=>[
-								"type"=>"text",
-                                "divClass"=> "form_align--top",
-								"placeholder"=>"Exemple : Skrzypczyk",
-								"label"=>"Votre Nom",
-								"required"=>true,
-								"class"=>"input",
-								"minLength"=>2,
-								"maxLength"=>100,
-								"error"=>"Votre nom doit faire entre 2 et 100 caractères"
-							],
-
-				"email"=>[
-								"type"=>"email",
-                                "divClass"=> "form_align--top",
-								"placeholder"=>"Exemple : nom@gmail.com",
-								"label"=>"Votre Email",
-								"required"=>true,
-								"class"=>"input",
-								"minLength"=>8,
-								"maxLength"=>320,
-								"error"=>"Votre email doit faire entre 8 et 320 caractères"
-							],
-
-				"pwd"=>[
-								"type"=>"password",
-                                "divClass"=> "form_align--top",
-								"label"=>"Votre mot de passe",
-								"required"=>true,
-								"class"=>"input",
-								"minLength"=>8,
-								"error"=>"Votre mot de passe doit faire au minimum 8 caractères et il doit contenir une majuscule et un chiffre"
-							],
-
-				"pwdConfirm"=>[
-								"type"=>"password",
-                                "divClass"=> "form_align--top",
-								"label"=>"Confirmation",
-								"required"=>true,
-								"class"=>"input",
-								"confirm"=>"pwd",
-								"error"=>"Votre mot de passe de confirmation ne correspond pas"
-							],
-
-				"country"=>[
-								"type"=>"text",
-                                "divClass"=> "form_align--top",
-								"placeholder"=>"Exemple : fr",
-								"label"=>"Votre Pays",
-								"required"=>true,
-								"class"=>"input",
-								"minLength"=>2,
-								"maxLength"=>2,
-								"error"=>"Votre pays doit faire 2 caractères"
-							],
-			]
-
-		];
-
-	}
-
-    public function formBuilderCreateClient(){
+    public function formBuilderLogin(){
         return [
 
             "config"=>[
                 "method"=>"POST",
                 "action"=>"",
-                "class"=>"",
-                "id"=>"form_create_client",
-                "submit"=>"Créer"
+                "class"=>"form_control",
+                "id"=>"form_register",
+                "submit"=>"S'inscrire"
             ],
             "inputs"=>[
-                "lastName"=>[
+
+                "email"=>[
+                    "type"=>"email",
+                    "placeholder"=>"Exemple : nom@gmail.com",
+                    "label"=>"Votre Email",
+                    "required"=>true,
+                    "class"=>"form_input",
+                    "minLength"=>8,
+                    "maxLength"=>320,
+                    "error"=>"Votre email doit faire entre 8 et 320 caractères"
+                ],
+
+                "pwd"=>[
+                    "type"=>"password",
+                    "label"=>"Votre mot de passe",
+                    "required"=>true,
+                    "class"=>"form_input",
+                    "minLength"=>8,
+                    "error"=>"Votre mot de passe doit faire au minimum 8 caractères"
+                ]
+            ]
+
+        ];
+    }
+
+    public function formBuilderRegister(){
+
+        return [
+
+            "config"=>[
+                "method"=>"POST",
+                "action"=>"",
+                "class"=>"form_control",
+                "id"=>"form_register",
+                "submit"=>"S'inscrire"
+            ],
+            "inputs"=>[
+                "firstname"=>[
                     "type"=>"text",
-                    "placeholder"=>"Nom",
-                    "label"=>"Nom",
+                    "placeholder"=>"Exemple : Yves",
+                    "label"=>"Votre Prénom",
+                    "required"=>true,
+                    "class"=>"form_input",
+                    "minLength"=>2,
+                    "maxLength"=>50,
+                    "error"=>"Votre prénom doit faire entre 2 et 50 caractères"
+                ],
+                "lastname"=>[
+                    "type"=>"text",
+                    "placeholder"=>"Exemple : Skrzypczyk",
+                    "label"=>"Votre Nom",
                     "required"=>true,
                     "class"=>"form_input",
                     "minLength"=>2,
                     "maxLength"=>100,
-                    "error"=>"Le nom doit faire entre 2 et 100 caractères."
+                    "error"=>"Votre nom doit faire entre 2 et 100 caractères"
                 ],
-                "firstName"=>[
+
+                "email"=>[
+                    "type"=>"email",
+                    "placeholder"=>"Exemple : nom@gmail.com",
+                    "label"=>"Votre Email",
+                    "required"=>true,
+                    "class"=>"form_input",
+                    "minLength"=>8,
+                    "maxLength"=>320,
+                    "error"=>"Votre email doit faire entre 8 et 320 caractères"
+                ],
+
+                "pwd"=>[
+                    "type"=>"password",
+                    "label"=>"Votre mot de passe",
+                    "required"=>true,
+                    "class"=>"form_input",
+                    "minLength"=>8,
+                    "error"=>"Votre mot de passe doit faire au minimum 8 caractères"
+                ],
+
+                "pwdConfirm"=>[
+                    "type"=>"password",
+                    "label"=>"Confirmation",
+                    "required"=>true,
+                    "class"=>"form_input",
+                    "confirm"=>"pwd",
+                    "error"=>"Votre mot de passe de confirmation ne correspond pas"
+                ],
+
+                "country"=>[
                     "type"=>"text",
-                    "placeholder"=>"Prénom",
+                    "placeholder"=>"Exemple : fr",
+                    "label"=>"Votre Pays",
+                    "required"=>true,
+                    "class"=>"form_input",
+                    "minLength"=>2,
+                    "maxLength"=>2,
+                    "error"=>"Votre pays doit faire 2 caractères"
+                ],
+            ]
+
+        ];
+
+    }
+
+
+    public function formBuilderInstallRegister(){
+
+        return [
+
+            "config"=>[
+                "method"=>"POST",
+                "action"=>"",
+                "class"=>"form_control",
+                "id"=>"form_register",
+                "submit"=>"S'enregistrer",
+                "classButton" => "button button--blue"
+            ],
+            "inputs"=>[
+                "firstname"=>[
+                    "type"=>"text",
+                    "divClass"=> "form_align--top",
+                    "placeholder"=>"Exemple : Yves",
                     "label"=>"Prénom",
                     "required"=>true,
                     "class"=>"form_input",
                     "minLength"=>2,
                     "maxLength"=>50,
-                    "error"=>"Le prénom doit faire entre 2 et 50 caractères."
+                    "error"=>"Votre prénom doit faire entre 2 et 50 caractères"
                 ],
-
-                "address"=>[
+                "lastname"=>[
                     "type"=>"text",
-                    "label"=>"Adresse",
-                    "placeholder"=>"ex : 29 rue de la liberte",
-                    "required"=>true,
-                    "class"=>"form_input",
-                    "minLength"=>5,
-                    "maxLength"=>255,
-                    "error"=>"L'adresse doit faire entre 5 et 254 caractères."
-                ],
-                "city"=>[
-                    "type"=>"text",
-                    "label"=>"Ville",
-                    "placeholder"=>"ex : Paris",
+                    "divClass"=> "form_align--top",
+                    "placeholder"=>"Exemple : Skrzypczyk",
+                    "label"=>"Nom",
                     "required"=>true,
                     "class"=>"form_input",
                     "minLength"=>2,
-                    "maxLength"=>20,
-                    "error"=>"La ville doit faire entre 2 et 20 caractères"
+                    "maxLength"=>100,
+                    "error"=>"Votre nom doit faire entre 2 et 100 caractères"
                 ],
-                "zipCode"=>[
-                    "type"=>"text",
-                    "label"=>"Code postal",
-                    "placeholder"=>"ex : 75015",
-                    "required"=>true,
-                    "class"=>"form_input",
-                    "regex" => "/^[0-9]{5}/",
-                    "errorRegex" => "Code postal invalide !"
-                ],
-                "country"=>[
-                    "type"=>"text",
-                    "label"=>"Pays",
-                    "placeholder"=>"ex : fr",
-                    "required"=>true,
-                    "class"=>"form_input",
-                    "minLength"=> 2,
-                    "maxLength"=> 2,
-                    "error"=>"Le pays doit faire 2 caractères"
-                ],
+
                 "email"=>[
                     "type"=>"email",
+                    "divClass"=> "form_align--top",
+                    "placeholder"=>"Exemple : nom@gmail.com",
                     "label"=>"Email",
-                    "placeholder"=>"Email",
                     "required"=>true,
                     "class"=>"form_input",
                     "minLength"=>8,
-                    "maxLenght"=>320,
-                    "error"=>"L'email doit contenir entre 8 et 320 caractères"
-                ],
-                "phoneNumber"=>[
-                    "type"=>"text",
-                    "label"=>"N° Telephone",
-                    "placeholder"=>"0122334455",
-                    "required"=>true,
-                    "class"=>"form_input",
-                    "regex" => "/^[0-9]{10}/",
-                    "errorRegex" => "Numéro de téléphone invalide !"
-                ],
-            ]
-
-        ];
-    }
-
-
-
-    public function formUsers(){
-        return [
-
-            "config"=>[
-                "method"=>"POST",
-                "action"=>"",
-            ],
-            "inputs"=>[
-
-                "lastname"=>[
-                    "type"=>"text",
-                    "required"=>true,
-                    "minLength"=>2,
-                    "maxLength"=>100,
-                    "error"=>"Le nom doit faire entre 2 et 100 caractères."
-                ],
-                "firstName"=>[
-                    "type"=>"text",
-                    "required"=>true,
-                    "minLength"=>2,
-                    "maxLength"=>50,
-                    "error"=>"Le prénom doit faire entre 2 et 50 caractères."
-                ],
-
-                "email"=>[
-                    "type"=>"email",
-                    "required"=>true,
-                    "minLength"=>8,
-                    "maxLenght"=>320,
+                    "maxLength"=>320,
                     "error"=>"Votre email doit faire entre 8 et 320 caractères"
                 ],
 
                 "pwd"=>[
                     "type"=>"password",
+                    "divClass"=> "form_align--top",
+                    "label"=>"Mot de passe",
                     "required"=>true,
-                    "regex"=>"/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]){8,}/",
-                    "errorRegex"=>"Votre mot de passe doit faire au minimum 8 caractères, contenir une majuscule et un chiffre."
-                ],
-
-                "idRole"=>[
-                    "type"=>"text",
-                    "statusRole" => [1,2],
-                    "required"=>true,
-                    "error"=>"Erreur au niveau du rôle !"
-                ]
-            ]
-
-        ];
-    }
-
-    public function formPwdUsers(){
-
-        return [
-
-            "config"=>[
-                "method"=>"POST",
-                "action"=>"",
-            ],
-            "inputs"=>[
-
-                "pwd"=>[
-                    "type"=>"password",
-                    "required"=>true,
-                    "regex"=>"/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]){8,}/",
-                    "errorRegex"=>"Votre mot de passe doit faire au minimum 8 caractères, contenir une majuscule et un chiffre."
-                ]
-            ]
-        ];
-    }
-
-
-    public function formUpdateUsers(){
-
-        return [
-
-            "config"=>[
-                "method"=>"POST",
-                "action"=>"",
-            ],
-            "inputs"=>[
-
-                "lastname"=>[
-                    "type"=>"text",
-                    "required"=>true,
-                    "minLength"=>2,
-                    "maxLength"=>100,
-                    "error"=>"Le nom doit faire entre 2 et 100 caractères."
-                ],
-                "firstName"=>[
-                    "type"=>"text",
-                    "required"=>true,
-                    "minLength"=>2,
-                    "maxLength"=>50,
-                    "error"=>"Le prénom doit faire entre 2 et 50 caractères."
-                ],
-
-                "email"=>[
-                    "type"=>"email",
-                    "required"=>true,
+                    "class"=>"form_input",
                     "minLength"=>8,
-                    "maxLenght"=>320,
-                    "error"=>"Votre email doit faire entre 8 et 320 caractères"
+                    "error"=>"Votre mot de passe doit faire au minimum 8 caractères"
                 ],
-
-                "idRole"=>[
-                    "type"=>"text",
-                    "statusRole" => [1,2],
+                "pwdConfirm"=>[
+                    "type"=>"password",
+                    "divClass"=> "form_align--top",
+                    "label"=>"Confirmation",
                     "required"=>true,
-                    "error"=>"Erreur au niveau du rôle !"
-                ]
+                    "class"=>"form_input",
+                    "confirm"=>"pwd",
+                    "error"=>"Votre mot de passe de confirmation ne correspond pas"
+                ],
             ]
 
         ];
+
     }
-
-
 
 }
 

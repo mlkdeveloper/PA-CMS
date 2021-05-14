@@ -92,6 +92,7 @@ class Installation
 
         $dbDriver = explode('=', $dbDriver);
 
+
         try{
             $this->pdo = new \PDO( $dbDriver[1].":host=".$dataArray[3].";dbnamehost=".$dataArray[0].";port=".$dataArray[4] , $dataArray[1] , $dataArray[2]);
         }catch(\Exception $e){
