@@ -1,17 +1,18 @@
-<?php
-    if(isset($_SESSION['securityInstall'])){
-        echo '<h1>'.$_SESSION['securityInstall'].'</h1>';
-        unset($_SESSION['securityInstall']);
-    }
-?>
 <div class="container">
     <div class="row">
         <div class="col-lg-8 col-md-8 col-sm-12 col center-margin">
             <div class="jumbotron">
-                <h4>Bienvenue dans l’installation de Click & Create !
+                <h4 id="titleInstall">Bienvenue dans l’installation de Click & Create !<br><br>
                     Vous n’avez qu’à remplir les informations demandées ci-dessous et vous serez prêt à utiliser Click &
                     Create.
                 </h4>
+
+                <?php
+                if(isset($_SESSION['securityInstall'])){
+                    echo '<div class="alert alert--red errorMessageImage"><h4>'.$_SESSION['securityInstall'].'</h4></div>';
+                    unset($_SESSION['securityInstall']);
+                }
+                ?>
 
                 <form class="form" method="POST" action="/start-install">
                     <div class="col-lg-12 col-md-12 col-sm-12 col">

@@ -37,14 +37,4 @@ class Security
         $view->assign("form", $formInstallRegister);
 
     }
-
-    public function installAction(){
-        $view = new View("install", "install");
-        $view->assign("title", "Intallation");
-    }
-
-    public function startInstall(){
-
-
-    }
 }

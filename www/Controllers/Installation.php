@@ -103,7 +103,7 @@ class Installation
                     $this->errorRedirection("Les identifiants de connexion à la base de données sont incorrects");
                     die();
                 case 2002:
-                    $this->errorRedirection("L'adresse de la base de données ou le port est incorrecte");
+                    $this->errorRedirection("Vérifier l'adresse de la base de données et le port");
                     die();
                 default:
                     $this->errorRedirection("Une erreur s'est produite pendant la connexion à la base de données");

@@ -42,15 +42,15 @@ class FormBuilder
 
 
         $html .= "<input type='submit' class='".($config["config"]["classButton"]??"")."' value=\"".($config["config"]["submit"]??"Valider")."\">";
-        $html .= "</form>";
+		$html .= "</form>";
 
 
-        if($show){
-            echo $html;
-        }else{
-            return $html;
-        }
+		if($show){
+			echo $html;
+		}else{
+			return $html;
+		}
 
-    }
+	}
 
 }

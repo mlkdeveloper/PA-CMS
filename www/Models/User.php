@@ -243,7 +243,7 @@ class User extends Database
 		];
 	}
 
-	public function formBuilderRegister(){
+	public function formBuilderInstallRegister(){
 
 		return [
 
@@ -252,7 +252,8 @@ class User extends Database
 				"action"=>"",
                 "class"=>"form_control col col-md-10 container",
 				"id"=>"form_register",
-				"submit"=>"S'inscrire"
+				"submit"=>"Terminer l'installation",
+                "classButton" => "button button--blue"
 			],
 			"inputs"=>[
 				"firstname"=>[
@@ -261,7 +262,7 @@ class User extends Database
                                 "divClass"=> "form_align--top",
 								"label"=>"Votre Prénom",
 								"required"=>true,
-								"class"=>"form_input",
+								"class"=>"input",
 								"minLength"=>2,
 								"maxLength"=>50,
 								"error"=>"Votre prénom doit faire entre 2 et 50 caractères"
@@ -272,7 +273,7 @@ class User extends Database
 								"placeholder"=>"Exemple : Skrzypczyk",
 								"label"=>"Votre Nom",
 								"required"=>true,
-								"class"=>"form_input",
+								"class"=>"input",
 								"minLength"=>2,
 								"maxLength"=>100,
 								"error"=>"Votre nom doit faire entre 2 et 100 caractères"
@@ -284,7 +285,7 @@ class User extends Database
 								"placeholder"=>"Exemple : nom@gmail.com",
 								"label"=>"Votre Email",
 								"required"=>true,
-								"class"=>"form_input",
+								"class"=>"input",
 								"minLength"=>8,
 								"maxLength"=>320,
 								"error"=>"Votre email doit faire entre 8 et 320 caractères"
@@ -295,9 +296,9 @@ class User extends Database
                                 "divClass"=> "form_align--top",
 								"label"=>"Votre mot de passe",
 								"required"=>true,
-								"class"=>"form_input",
+								"class"=>"input",
 								"minLength"=>8,
-								"error"=>"Votre mot de passe doit faire au minimum 8 caractères et une maj avec un nbr numérique"
+								"error"=>"Votre mot de passe doit faire au minimum 8 caractères et il doit contenir une majuscule et un chiffre"
 							],
 
 				"pwdConfirm"=>[
@@ -305,7 +306,7 @@ class User extends Database
                                 "divClass"=> "form_align--top",
 								"label"=>"Confirmation",
 								"required"=>true,
-								"class"=>"form_input",
+								"class"=>"input",
 								"confirm"=>"pwd",
 								"error"=>"Votre mot de passe de confirmation ne correspond pas"
 							],
@@ -316,7 +317,7 @@ class User extends Database
 								"placeholder"=>"Exemple : fr",
 								"label"=>"Votre Pays",
 								"required"=>true,
-								"class"=>"form_input",
+								"class"=>"input",
 								"minLength"=>2,
 								"maxLength"=>2,
 								"error"=>"Votre pays doit faire 2 caractères"
