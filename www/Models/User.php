@@ -15,7 +15,6 @@ class User extends Database
     protected $country;
     protected $id_role = 1;
     protected $status = 1;
-    protected $isDeleted = 0;
     protected $address;
     protected $city;
     protected $zipcode;

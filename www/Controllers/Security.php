@@ -52,7 +52,6 @@ class Security
                     $user->setEmail($email);
                     $user->setPwd($pwdHash);
                     $user->setStatus(1);
-                    $user->setIsDeleted(0);
                     $user->setIdRole(1);
                     $user->setToken($token);
 
