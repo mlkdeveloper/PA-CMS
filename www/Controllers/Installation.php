@@ -60,6 +60,10 @@ class Installation
                 $this->errorRedirection("Le port n'est pas valide");
             }
 
+            if(!preg_match("/^[a-zA-z]*$/", $dataArray[0])){
+                $this->errorRedirection("Le nom de la base de données ne peut contenir ques des lettres minuscules ou majuscules");
+            }
+
             return $dataArray;
         }
         return null;
@@ -132,7 +136,7 @@ class Installation
         die();
     }
 
-    private function changeFile($file, $type){
+    public function changeFile($file, $type){
         $ptr = fopen("$file", "r");
         $contenu = fread($ptr, filesize($file));
 
@@ -144,6 +148,7 @@ class Installation
 
         switch ($type){
             case 'changeRoute':
+            case 'finalChangeRoute':
                 $searchValue = '/:';
                 break;
             case 'changeConstantManager':
@@ -168,6 +173,10 @@ class Installation
                 case 'changeRoute':
                     $contenu[$line+1] = "  controller: Security";
                     $contenu[$line+2] = "  action: registerInstall";
+                    break;
+                case 'finalChangeRoute':
+//                    $contenu[$line+1] = "  controller: Security";
+//                    $contenu[$line+2] = "  action: registerInstall";
                     break;
                 case 'changeConstantManager':
                     $contenu[$line] = '    private $envFile = "config.env";';

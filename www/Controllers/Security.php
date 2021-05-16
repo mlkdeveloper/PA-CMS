@@ -54,6 +54,10 @@ class Security
                     $user->setToken($token);
 
                     $user->save();
+
+                    $controllerInstall = new Installation();
+//                    $controllerInstall->changeFile('./routes.yml', 'finalChangeRoute');
+
                     header('location:/');
                 }else{
                     array_push($errors, "Le mot de passe de confirmation ne correspond pas");
