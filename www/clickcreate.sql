@@ -136,7 +136,7 @@ CREATE TABLE `cc_promotion` (
                                 `minimumAmount` float DEFAULT NULL,
                                 `minimumQuantity` int(11) DEFAULT NULL,
                                 `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -269,6 +269,7 @@ CREATE TABLE `cc_user` (
                            `lastname` varchar(100) NOT NULL,
                            `email` varchar(350) NOT NULL,
                            `pwd` varchar(255) NOT NULL,
+                           `token` varchar(255) NOT NULL,
                            `country` char(2) DEFAULT NULL,
                            `status` tinyint(1) NOT NULL,
                            `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

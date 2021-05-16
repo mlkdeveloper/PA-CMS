@@ -4,7 +4,7 @@ namespace App\Core;
 
 class ConstantManager {
 
-    private $envFile = "config.env";
+    private $envFile = "config-sample.env";
 	private $data = [];
 
 	public function __construct(){
