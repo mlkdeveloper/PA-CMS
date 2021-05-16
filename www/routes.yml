@@ -1,6 +1,6 @@
 /:
-  controller: Security
-  action: install
+  controller: Pages
+  action: displayFront
 
 /404:
   controller: Main
