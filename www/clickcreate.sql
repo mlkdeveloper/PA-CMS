@@ -14,7 +14,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema clickCreate
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `clickCreate` DEFAULT CHARACTER SET utf8 ;
+CREATE SCHEMA IF NOT EXISTS `clickCreate` DEFAULT CHARACTER SET utf8 COLLATE=utf8_bin;
 USE `clickCreate` ;
 
 --
@@ -26,7 +26,7 @@ CREATE TABLE `cc_category` (
                                `name` varchar(150) NOT NULL,
                                `description` longtext,
                                `picPath` varchar(350) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -39,7 +39,7 @@ CREATE TABLE `cc_model` (
                             `size` varchar(5) DEFAULT NULL,
                             `color` varchar(45) DEFAULT NULL,
                             `price` float NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -50,7 +50,7 @@ CREATE TABLE `cc_model` (
 CREATE TABLE `cc_model_productPic` (
                                        `Model_id` int(11) NOT NULL,
                                        `ProductPic_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -64,7 +64,7 @@ CREATE TABLE `cc_orders` (
                              `User_id` int(11) NOT NULL,
                              `CreatedAt` timestamp NULL DEFAULT NULL,
                              `status` tinyint(5) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -79,7 +79,7 @@ CREATE TABLE `cc_pages` (
                             `slug` varchar(255) NOT NULL,
                             `publication` int(1) NOT NULL,
                             `User_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -90,7 +90,7 @@ CREATE TABLE `cc_pages` (
 CREATE TABLE `cc_productPic` (
                                  `id` int(11) NOT NULL,
                                  `path` varchar(350) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -104,7 +104,7 @@ CREATE TABLE `cc_products` (
                                `description` longtext NOT NULL,
                                `status` tinyint(5) NOT NULL,
                                `Category_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -115,7 +115,7 @@ CREATE TABLE `cc_products` (
 CREATE TABLE `cc_products_model` (
                                      `Products_id` int(11) NOT NULL,
                                      `Model_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -136,7 +136,7 @@ CREATE TABLE `cc_promotion` (
                                 `minimumAmount` float DEFAULT NULL,
                                 `minimumQuantity` int(11) DEFAULT NULL,
                                 `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -148,7 +148,7 @@ CREATE TABLE `cc_promotion_category` (
                                          `id` int(11) NOT NULL,
                                          `Promotion_id` int(11) NOT NULL,
                                          `Category_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -160,7 +160,7 @@ CREATE TABLE `cc_promotion_product` (
                                         `id` int(11) NOT NULL,
                                         `Products_id` int(11) NOT NULL,
                                         `Promotion_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -173,7 +173,7 @@ CREATE TABLE `cc_quantityShop` (
                                    `Quantity` int(11) DEFAULT NULL,
                                    `Shop_id` int(11) NOT NULL,
                                    `Model_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -188,7 +188,7 @@ CREATE TABLE `cc_review` (
                              `status` tinyint(4) NOT NULL,
                              `Products_id` int(11) NOT NULL,
                              `User_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -207,7 +207,7 @@ CREATE TABLE `cc_role` (
                            `orders` tinyint(1) NOT NULL DEFAULT '0',
                            `opinions` tinyint(1) NOT NULL DEFAULT '0',
                            `pages` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Déchargement des données de la table `cc_role`
@@ -228,7 +228,7 @@ CREATE TABLE `cc_schedule` (
                                `day` varchar(8) DEFAULT NULL,
                                `openHour` varchar(2) DEFAULT NULL,
                                `closeHour` varchar(2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -244,7 +244,7 @@ CREATE TABLE `cc_shop` (
                            `zipCode` varchar(5) NOT NULL,
                            `phoneNumber` varchar(10) NOT NULL,
                            `description` longtext
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -255,7 +255,7 @@ CREATE TABLE `cc_shop` (
 CREATE TABLE `cc_shop_schedule` (
                                     `id_schedule` int(11) NOT NULL,
                                     `id_shop` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -279,7 +279,7 @@ CREATE TABLE `cc_user` (
                            `city` varchar(45) DEFAULT NULL,
                            `zipcode` varchar(45) DEFAULT NULL,
                            `phoneNumber` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Index pour les tables déchargées

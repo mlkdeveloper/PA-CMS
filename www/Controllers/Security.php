@@ -20,13 +20,11 @@ class Security
 
         if(!empty($_POST)){
 
-            //$errors = FormValidator::check($form, $_POST);
-
-            $lastname = $_POST["lastname"];
-            $firstname = $_POST["firstname"];
-            $email = $_POST["email"];
-            $pwd = $_POST["pwd"];
-            $pwdConfirm = $_POST['pwdConfirm'];
+            $lastname = htmlspecialchars(trim($_POST["lastname"]));
+            $firstname = htmlspecialchars(trim($_POST["firstname"]));
+            $email = htmlspecialchars(trim($_POST["email"]));
+            $pwd = htmlspecialchars(trim($_POST["pwd"]));
+            $pwdConfirm = htmlspecialchars(trim($_POST['pwdConfirm']));
 
             $emailVerif = $user->select('email')->where("email=:email")->setParams(["email" => $email])->get();
 
