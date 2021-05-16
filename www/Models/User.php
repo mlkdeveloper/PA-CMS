@@ -20,23 +20,7 @@ class User extends Database
     protected $zipcode;
     protected $phoneNumber;
     protected $token;
-    protected $isConfirmed = 0;
 
-    /**
-     * @return int
-     */
-    public function getIsConfirmed(): int
-    {
-        return $this->isConfirmed;
-    }
-
-    /**
-     * @param int $isConfirmed
-     */
-    public function setIsConfirmed(int $isConfirmed)
-    {
-        $this->isConfirmed = $isConfirmed;
-    }
 
     /**
      * @return mixed
@@ -254,20 +238,7 @@ class User extends Database
     {
         $this->status = $status;
     }
-    /**
-     * @return int
-     */
-    public function getIsDeleted()
-    {
-        return $this->isDeleted;
-    }
-    /**
-     * @param int $isDeleted
-     */
-    public function setIsDeleted(int $isDeleted)
-    {
-        $this->isDeleted = $isDeleted;
-    }
+
 
 
     public function formBuilderLogin(){

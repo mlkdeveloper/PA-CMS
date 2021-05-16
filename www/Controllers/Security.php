@@ -56,9 +56,6 @@ class Security
                     $user->setToken($token);
 
                     $user->save();
-                    echo '<pre>';
-                    var_dump($user);
-                    exit();
                     header('location:/');
                 }else{
                     array_push($errors, "Le mot de passe de confirmation ne correspond pas");
