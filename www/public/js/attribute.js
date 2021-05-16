@@ -26,6 +26,7 @@ function handleDeleteTerm(id, idAttribute){
             
             $("#term-" + id).remove();
             $('#msg').html('<div class="alert alert--green">'+ response + '</div>');
+            
    
         },
         error: function (res){

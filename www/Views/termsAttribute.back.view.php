@@ -1,17 +1,18 @@
 <section>
     <div class="container">
+        <div id="msg">
+            <?php if(isset($errors)):?>
+                <div class="alert alert--red">
+                    <?php foreach ($errors as $error):?>
+                        <li><?=$error?></li>
+                    <?php endforeach;?>
+                </div>
+            <?php endif;?>
 
-        <?php if(isset($errors)):?>
-            <div class="alert alert--red">
-                <?php foreach ($errors as $error):?>
-                    <li><?=$error?></li>
-                <?php endforeach;?>
-            </div>
-        <?php endif;?>
-
-        <?php if(isset($message)):?>
-            <div class="alert alert--green"><?= $message?></div>
-        <?php endif;?>
+            <?php if(isset($message)):?>
+                <div class="alert alert--green"><?= $message?></div>
+            <?php endif;?>
+        </div>
 
         <h1>Nouvelle valeur de  <?= $nameAttribute ?></h1>
     </div>
