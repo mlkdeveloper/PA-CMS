@@ -17,356 +17,554 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 CREATE SCHEMA IF NOT EXISTS `clickCreate` DEFAULT CHARACTER SET utf8 ;
 USE `clickCreate` ;
 
--- -----------------------------------------------------
--- Table `clickCreate`.`cc_role`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `clickCreate`.`cc_role` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL,
-  `roles` tinyint(1) NOT NULL DEFAULT '0',
-  `users` tinyint(1) NOT NULL DEFAULT '0',
-  `customers` tinyint(1) NOT NULL DEFAULT '0',
-  `products` tinyint(1) NOT NULL DEFAULT '0',
-  `categories` tinyint(1) NOT NULL DEFAULT '0',
-  `orders` tinyint(1) NOT NULL DEFAULT '0',
-  `opinions` tinyint(1) NOT NULL DEFAULT '0',
-  `pages` tinyint(1) NOT NULL DEFAULT '0',
-   PRIMARY KEY (`id`))
-ENGINE=InnoDB DEFAULT CHARSET=utf8;
+--
+-- Structure de la table `cc_category`
+--
 
+CREATE TABLE `cc_category` (
+                               `id` int(11) NOT NULL,
+                               `name` varchar(150) NOT NULL,
+                               `description` longtext,
+                               `picPath` varchar(350) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- -----------------------------------------------------
--- Table `clickCreate`.`cc_user`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `clickCreate`.`cc_user` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `firstname` VARCHAR(50) NOT NULL,
-  `lastname` VARCHAR(100) NOT NULL,
-  `email` VARCHAR(350) NOT NULL,
-  `pwd` VARCHAR(255) NOT NULL,
-  `country` CHAR(2) NOT NULL,
-  `status` TINYINT(1) NOT NULL,
-  `createdAt` TIMESTAMP NOT NULL,
-  `updatedAt` TIMESTAMP NULL,
-  `id_role` INT NOT NULL,
-  `address` VARCHAR(350) NULL,
-  `city` VARCHAR(45) NULL,
-  `zipcode` VARCHAR(45) NULL,
-  `phoneNumber` VARCHAR(10) NULL,
-  PRIMARY KEY (`id`, `id_role`),
-  INDEX `fk_User_role1_idx` (`id_role` ASC),
-  CONSTRAINT `fk_User_role1`
-    FOREIGN KEY (`id_role`)
-    REFERENCES `clickCreate`.`cc_role` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+-- --------------------------------------------------------
 
+--
+-- Structure de la table `cc_model`
+--
 
--- -----------------------------------------------------
--- Table `clickCreate`.`cc_shop`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `clickCreate`.`cc_shop` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(100) NULL,
-  `address` VARCHAR(255) NOT NULL,
-  `city` VARCHAR(150) NOT NULL,
-  `zipCode` VARCHAR(5) NOT NULL,
-  `phoneNumber` VARCHAR(10) NOT NULL,
-  `description` LONGTEXT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+CREATE TABLE `cc_model` (
+                            `id` int(11) NOT NULL,
+                            `size` varchar(5) DEFAULT NULL,
+                            `color` varchar(45) DEFAULT NULL,
+                            `price` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
 
--- -----------------------------------------------------
--- Table `clickCreate`.`cc_schedule`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `clickCreate`.`cc_schedule` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `day` VARCHAR(8) NULL,
-  `openHour` VARCHAR(2) NULL,
-  `closeHour` VARCHAR(2) NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+--
+-- Structure de la table `cc_model_productPic`
+--
 
+CREATE TABLE `cc_model_productPic` (
+                                       `Model_id` int(11) NOT NULL,
+                                       `ProductPic_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- -----------------------------------------------------
--- Table `clickCreate`.`cc_category`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `clickCreate`.`cc_category` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(150) NOT NULL,
-  `description` LONGTEXT NULL,
-  `picPath` VARCHAR(350) NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+-- --------------------------------------------------------
 
+--
+-- Structure de la table `cc_orders`
+--
 
--- -----------------------------------------------------
--- Table `clickCreate`.`cc_products`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `clickCreate`.`cc_products` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
-  `description` LONGTEXT NOT NULL,
-  `status` TINYINT(5) NOT NULL,
-  `Category_id` INT NOT NULL,
-  PRIMARY KEY (`id`, `Category_id`),
-  INDEX `fk_Products_Category1_idx` (`Category_id` ASC),
-  CONSTRAINT `fk_Products_Category1`
-    FOREIGN KEY (`Category_id`)
-    REFERENCES `clickCreate`.`cc_category` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+CREATE TABLE `cc_orders` (
+                             `id` int(11) NOT NULL,
+                             `Products_id` int(11) NOT NULL,
+                             `User_id` int(11) NOT NULL,
+                             `CreatedAt` timestamp NULL DEFAULT NULL,
+                             `status` tinyint(5) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
 
--- -----------------------------------------------------
--- Table `clickCreate`.`cc_model`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `clickCreate`.`cc_model` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `size` VARCHAR(5) NULL,
-  `color` VARCHAR(45) NULL,
-  `price` FLOAT NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+--
+-- Structure de la table `cc_pages`
+--
 
+CREATE TABLE `cc_pages` (
+                            `id` int(11) NOT NULL,
+                            `name` varchar(255) NOT NULL,
+                            `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                            `slug` varchar(255) NOT NULL,
+                            `publication` int(1) NOT NULL,
+                            `User_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- -----------------------------------------------------
--- Table `clickCreate`.`cc_productPic`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `clickCreate`.`cc_productPic` (
-  `id` INT NOT NULL,
-  `path` VARCHAR(350) NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+-- --------------------------------------------------------
 
+--
+-- Structure de la table `cc_productPic`
+--
 
--- -----------------------------------------------------
--- Table `clickCreate`.`cc_shop_schedule`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `clickCreate`.`cc_shop_schedule` (
-  `id_schedule` INT NOT NULL,
-  `id_shop` INT NOT NULL,
-  PRIMARY KEY (`id_schedule`, `id_shop`),
-  INDEX `fk_shop_schedule_Shop1_idx` (`id_shop` ASC),
-  CONSTRAINT `fk_shop_schedule_Schedule1`
-    FOREIGN KEY (`id_schedule`)
-    REFERENCES `clickCreate`.`cc_schedule` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_shop_schedule_Shop1`
-    FOREIGN KEY (`id_shop`)
-    REFERENCES `clickCreate`.`cc_shop` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+CREATE TABLE `cc_productPic` (
+                                 `id` int(11) NOT NULL,
+                                 `path` varchar(350) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
 
--- -----------------------------------------------------
--- Table `clickCreate`.`cc_quantityShop`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `clickCreate`.`cc_quantityShop` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `Quantity` INT NULL,
-  `Shop_id` INT NOT NULL,
-  `Model_id` INT NOT NULL,
-  PRIMARY KEY (`id`, `Shop_id`, `Model_id`),
-  INDEX `fk_QuantityProduct_Shop1_idx` (`Shop_id` ASC),
-  INDEX `fk_QuantityProduct_Model1_idx` (`Model_id` ASC),
-  CONSTRAINT `fk_QuantityProduct_Shop1`
-    FOREIGN KEY (`Shop_id`)
-    REFERENCES `clickCreate`.`cc_shop` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_QuantityProduct_Model1`
-    FOREIGN KEY (`Model_id`)
-    REFERENCES `clickCreate`.`cc_model` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+--
+-- Structure de la table `cc_products`
+--
 
+CREATE TABLE `cc_products` (
+                               `id` int(11) NOT NULL,
+                               `name` varchar(45) NOT NULL,
+                               `description` longtext NOT NULL,
+                               `status` tinyint(5) NOT NULL,
+                               `Category_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- -----------------------------------------------------
--- Table `clickCreate`.`cc_model_productPic`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `clickCreate`.`cc_model_productPic` (
-  `Model_id` INT NOT NULL,
-  `ProductPic_id` INT NOT NULL,
-  PRIMARY KEY (`Model_id`, `ProductPic_id`),
-  INDEX `fk_Model_productPic_ProductPic1_idx` (`ProductPic_id` ASC),
-  CONSTRAINT `fk_Model_productPic_Model1`
-    FOREIGN KEY (`Model_id`)
-    REFERENCES `clickCreate`.`cc_model` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Model_productPic_ProductPic1`
-    FOREIGN KEY (`ProductPic_id`)
-    REFERENCES `clickCreate`.`cc_productPic` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+-- --------------------------------------------------------
 
+--
+-- Structure de la table `cc_products_model`
+--
 
--- -----------------------------------------------------
--- Table `clickCreate`.`cc_promotion`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `clickCreate`.`cc_promotion` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
-  `status` tinyint(5) DEFAULT NULL,
-  `type` tinyint(2) DEFAULT NULL,
-  `valueType` float DEFAULT NULL,
-  `startDate` date DEFAULT NULL,
-  `expiryDate` date DEFAULT NULL,
-  `usageLimit` int(11) DEFAULT NULL,
-  `quantity` int(11) DEFAULT NULL,
-  `minimumAmount` float DEFAULT NULL,
-  `minimumQuantity` int(11) DEFAULT NULL,
-  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`))
-ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `cc_products_model` (
+                                     `Products_id` int(11) NOT NULL,
+                                     `Model_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
 
+--
+-- Structure de la table `cc_promotion`
+--
 
--- -----------------------------------------------------
--- Table `clickCreate`.`cc_promotion_product`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `clickCreate`.`cc_promotion_product` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `Products_id` INT NOT NULL,
-  `Promotion_id` INT NOT NULL,
-  PRIMARY KEY (`id`, `Products_id`, `Promotion_id`),
-  INDEX `fk_Promotion_product_Products1_idx` (`Products_id` ASC),
-  INDEX `fk_Promotion_product_Promotion1_idx` (`Promotion_id` ASC),
-  CONSTRAINT `fk_Promotion_product_Products1`
-    FOREIGN KEY (`Products_id`)
-    REFERENCES `clickCreate`.`cc_products` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Promotion_product_Promotion1`
-    FOREIGN KEY (`Promotion_id`)
-    REFERENCES `clickCreate`.`cc_promotion` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+CREATE TABLE `cc_promotion` (
+                                `id` int(11) NOT NULL,
+                                `name` varchar(45) DEFAULT NULL,
+                                `status` tinyint(5) DEFAULT NULL,
+                                `type` tinyint(2) DEFAULT NULL,
+                                `valueType` float DEFAULT NULL,
+                                `startDate` date DEFAULT NULL,
+                                `expiryDate` date DEFAULT NULL,
+                                `usageLimit` int(11) DEFAULT NULL,
+                                `quantity` int(11) DEFAULT NULL,
+                                `minimumAmount` float DEFAULT NULL,
+                                `minimumQuantity` int(11) DEFAULT NULL,
+                                `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
 
--- -----------------------------------------------------
--- Table `clickCreate`.`cc_promotion_category`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `clickCreate`.`cc_promotion_category` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `Promotion_id` INT NOT NULL,
-  `Category_id` INT NOT NULL,
-  PRIMARY KEY (`id`, `Promotion_id`, `Category_id`),
-  INDEX `fk_Promotion_category_Promotion1_idx` (`Promotion_id` ASC),
-  INDEX `fk_Promotion_category_Category1_idx` (`Category_id` ASC),
-  CONSTRAINT `fk_Promotion_category_Promotion1`
-    FOREIGN KEY (`Promotion_id`)
-    REFERENCES `clickCreate`.`cc_promotion` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Promotion_category_Category1`
-    FOREIGN KEY (`Category_id`)
-    REFERENCES `clickCreate`.`cc_category` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+--
+-- Structure de la table `cc_promotion_category`
+--
 
+CREATE TABLE `cc_promotion_category` (
+                                         `id` int(11) NOT NULL,
+                                         `Promotion_id` int(11) NOT NULL,
+                                         `Category_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- -----------------------------------------------------
--- Table `clickCreate`.`cc_orders`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `clickCreate`.`cc_orders` (
-  `id` INT NOT NULL,
-  `Products_id` INT NOT NULL,
-  `User_id` INT NOT NULL,
-  `CreatedAt` TIMESTAMP NULL,
-  `status` TINYINT(5) NULL,
-  PRIMARY KEY (`id`, `Products_id`, `User_id`),
-  INDEX `fk_Orders_Products1_idx` (`Products_id` ASC),
-  INDEX `fk_Orders_User1_idx` (`User_id` ASC),
-  CONSTRAINT `fk_Orders_Products1`
-    FOREIGN KEY (`Products_id`)
-    REFERENCES `clickCreate`.`cc_products` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Orders_User1`
-    FOREIGN KEY (`User_id`)
-    REFERENCES `clickCreate`.`cc_user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+-- --------------------------------------------------------
 
+--
+-- Structure de la table `cc_promotion_product`
+--
 
--- -----------------------------------------------------
--- Table `clickCreate`.`cc_review`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `clickCreate`.`cc_review` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `commentary` LONGTEXT NULL,
-  `mark` FLOAT NULL,
-  `status` tinyint(4) NOT NULL,
-  `Products_id` INT NOT NULL,
-  `User_id` INT NOT NULL,
-  PRIMARY KEY (`id`, `Products_id`, `User_id`),
-  INDEX `fk_Review_Products1_idx` (`Products_id` ASC),
-  INDEX `fk_Review_User1_idx` (`User_id` ASC),
-  CONSTRAINT `fk_Review_Products1`
-    FOREIGN KEY (`Products_id`)
-    REFERENCES `clickCreate`.`cc_products` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Review_User1`
-    FOREIGN KEY (`User_id`)
-    REFERENCES `clickCreate`.`cc_user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+CREATE TABLE `cc_promotion_product` (
+                                        `id` int(11) NOT NULL,
+                                        `Products_id` int(11) NOT NULL,
+                                        `Promotion_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
 
--- -----------------------------------------------------
--- Table `clickCreate`.`cc_pages`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `clickCreate`.`cc_pages` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(255) NOT NULL,
-  `createdAt` TIMESTAMP NOT NULL,
-  `slug` VARCHAR(255) NOT NULL,
-  `publication` int(1) NOT NULL,
-  `User_id` INT NOT NULL,
-  PRIMARY KEY (`id`, `User_id`),
-  INDEX `fk_Pages_User1_idx` (`User_id` ASC),
-  CONSTRAINT `fk_Pages_User1`
-    FOREIGN KEY (`User_id`)
-    REFERENCES `clickCreate`.`cc_user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+--
+-- Structure de la table `cc_quantityShop`
+--
 
--- -----------------------------------------------------
--- Table `clickCreate`.`cc_products_model`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `clickCreate`.`cc_products_model` (
-  `Products_id` INT NOT NULL,
-  `Model_id` INT NOT NULL,
-  PRIMARY KEY (`Products_id`, `Model_id`),
-  INDEX `fk_table1_Model1_idx` (`Model_id` ASC),
-  CONSTRAINT `fk_table1_Products1`
-    FOREIGN KEY (`Products_id`)
-    REFERENCES `clickCreate`.`cc_products` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_table1_Model1`
-    FOREIGN KEY (`Model_id`)
-    REFERENCES `clickCreate`.`cc_model` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+CREATE TABLE `cc_quantityShop` (
+                                   `id` int(11) NOT NULL,
+                                   `Quantity` int(11) DEFAULT NULL,
+                                   `Shop_id` int(11) NOT NULL,
+                                   `Model_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+--
+-- Structure de la table `cc_review`
+--
+
+CREATE TABLE `cc_review` (
+                             `id` int(11) NOT NULL,
+                             `commentary` longtext,
+                             `mark` float DEFAULT NULL,
+                             `status` tinyint(4) NOT NULL,
+                             `Products_id` int(11) NOT NULL,
+                             `User_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `cc_role`
+--
+
+CREATE TABLE `cc_role` (
+                           `id` int(11) NOT NULL,
+                           `name` varchar(50) NOT NULL,
+                           `roles` tinyint(1) NOT NULL DEFAULT '0',
+                           `users` tinyint(1) NOT NULL DEFAULT '0',
+                           `customers` tinyint(1) NOT NULL DEFAULT '0',
+                           `products` tinyint(1) NOT NULL DEFAULT '0',
+                           `categories` tinyint(1) NOT NULL DEFAULT '0',
+                           `orders` tinyint(1) NOT NULL DEFAULT '0',
+                           `opinions` tinyint(1) NOT NULL DEFAULT '0',
+                           `pages` tinyint(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `cc_role`
+--
+
+INSERT INTO `cc_role` (`id`, `name`, `roles`, `users`, `customers`, `products`, `categories`, `orders`, `opinions`, `pages`) VALUES
+(1, 'admin', 1, 1, 1, 1, 1, 1, 1, 1),
+(2, 'client', 0, 0, 0, 0, 0, 0, 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `cc_schedule`
+--
+
+CREATE TABLE `cc_schedule` (
+                               `id` int(11) NOT NULL,
+                               `day` varchar(8) DEFAULT NULL,
+                               `openHour` varchar(2) DEFAULT NULL,
+                               `closeHour` varchar(2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `cc_shop`
+--
+
+CREATE TABLE `cc_shop` (
+                           `id` int(11) NOT NULL,
+                           `name` varchar(100) DEFAULT NULL,
+                           `address` varchar(255) NOT NULL,
+                           `city` varchar(150) NOT NULL,
+                           `zipCode` varchar(5) NOT NULL,
+                           `phoneNumber` varchar(10) NOT NULL,
+                           `description` longtext
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `cc_shop_schedule`
+--
+
+CREATE TABLE `cc_shop_schedule` (
+                                    `id_schedule` int(11) NOT NULL,
+                                    `id_shop` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `cc_user`
+--
+
+CREATE TABLE `cc_user` (
+                           `id` int(11) NOT NULL,
+                           `firstname` varchar(50) NOT NULL,
+                           `lastname` varchar(100) NOT NULL,
+                           `email` varchar(350) NOT NULL,
+                           `pwd` varchar(255) NOT NULL,
+                           `country` char(2) DEFAULT NULL,
+                           `status` tinyint(1) NOT NULL,
+                           `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                           `updatedAt` timestamp NULL DEFAULT NULL,
+                           `id_role` int(11) NOT NULL,
+                           `address` varchar(350) DEFAULT NULL,
+                           `city` varchar(45) DEFAULT NULL,
+                           `zipcode` varchar(45) DEFAULT NULL,
+                           `phoneNumber` varchar(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Index pour les tables déchargées
+--
+
+--
+-- Index pour la table `cc_category`
+--
+ALTER TABLE `cc_category`
+    ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `cc_model`
+--
+ALTER TABLE `cc_model`
+    ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `cc_model_productPic`
+--
+ALTER TABLE `cc_model_productPic`
+    ADD PRIMARY KEY (`Model_id`,`ProductPic_id`),
+  ADD KEY `fk_Model_productPic_ProductPic1_idx` (`ProductPic_id`);
+
+--
+-- Index pour la table `cc_orders`
+--
+ALTER TABLE `cc_orders`
+    ADD PRIMARY KEY (`id`,`Products_id`,`User_id`),
+  ADD KEY `fk_Orders_Products1_idx` (`Products_id`),
+  ADD KEY `fk_Orders_User1_idx` (`User_id`);
+
+--
+-- Index pour la table `cc_pages`
+--
+ALTER TABLE `cc_pages`
+    ADD PRIMARY KEY (`id`,`User_id`),
+  ADD KEY `fk_Pages_User1_idx` (`User_id`);
+
+--
+-- Index pour la table `cc_productPic`
+--
+ALTER TABLE `cc_productPic`
+    ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `cc_products`
+--
+ALTER TABLE `cc_products`
+    ADD PRIMARY KEY (`id`,`Category_id`),
+  ADD KEY `fk_Products_Category1_idx` (`Category_id`);
+
+--
+-- Index pour la table `cc_products_model`
+--
+ALTER TABLE `cc_products_model`
+    ADD PRIMARY KEY (`Products_id`,`Model_id`),
+  ADD KEY `fk_table1_Model1_idx` (`Model_id`);
+
+--
+-- Index pour la table `cc_promotion`
+--
+ALTER TABLE `cc_promotion`
+    ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `cc_promotion_category`
+--
+ALTER TABLE `cc_promotion_category`
+    ADD PRIMARY KEY (`id`,`Promotion_id`,`Category_id`),
+  ADD KEY `fk_Promotion_category_Promotion1_idx` (`Promotion_id`),
+  ADD KEY `fk_Promotion_category_Category1_idx` (`Category_id`);
+
+--
+-- Index pour la table `cc_promotion_product`
+--
+ALTER TABLE `cc_promotion_product`
+    ADD PRIMARY KEY (`id`,`Products_id`,`Promotion_id`),
+  ADD KEY `fk_Promotion_product_Products1_idx` (`Products_id`),
+  ADD KEY `fk_Promotion_product_Promotion1_idx` (`Promotion_id`);
+
+--
+-- Index pour la table `cc_quantityShop`
+--
+ALTER TABLE `cc_quantityShop`
+    ADD PRIMARY KEY (`id`,`Shop_id`,`Model_id`),
+  ADD KEY `fk_QuantityProduct_Shop1_idx` (`Shop_id`),
+  ADD KEY `fk_QuantityProduct_Model1_idx` (`Model_id`);
+
+--
+-- Index pour la table `cc_review`
+--
+ALTER TABLE `cc_review`
+    ADD PRIMARY KEY (`id`,`Products_id`,`User_id`),
+  ADD KEY `fk_Review_Products1_idx` (`Products_id`),
+  ADD KEY `fk_Review_User1_idx` (`User_id`);
+
+--
+-- Index pour la table `cc_role`
+--
+ALTER TABLE `cc_role`
+    ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `cc_schedule`
+--
+ALTER TABLE `cc_schedule`
+    ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `cc_shop`
+--
+ALTER TABLE `cc_shop`
+    ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `cc_shop_schedule`
+--
+ALTER TABLE `cc_shop_schedule`
+    ADD PRIMARY KEY (`id_schedule`,`id_shop`),
+  ADD KEY `fk_shop_schedule_Shop1_idx` (`id_shop`);
+
+--
+-- Index pour la table `cc_user`
+--
+ALTER TABLE `cc_user`
+    ADD PRIMARY KEY (`id`,`id_role`),
+  ADD KEY `fk_User_role1_idx` (`id_role`);
+
+--
+-- AUTO_INCREMENT pour les tables déchargées
+--
+
+--
+-- AUTO_INCREMENT pour la table `cc_category`
+--
+ALTER TABLE `cc_category`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `cc_model`
+--
+ALTER TABLE `cc_model`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `cc_pages`
+--
+ALTER TABLE `cc_pages`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `cc_products`
+--
+ALTER TABLE `cc_products`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `cc_promotion`
+--
+ALTER TABLE `cc_promotion`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `cc_promotion_category`
+--
+ALTER TABLE `cc_promotion_category`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `cc_promotion_product`
+--
+ALTER TABLE `cc_promotion_product`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `cc_quantityShop`
+--
+ALTER TABLE `cc_quantityShop`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `cc_review`
+--
+ALTER TABLE `cc_review`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `cc_role`
+--
+ALTER TABLE `cc_role`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT pour la table `cc_schedule`
+--
+ALTER TABLE `cc_schedule`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `cc_shop`
+--
+ALTER TABLE `cc_shop`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `cc_user`
+--
+ALTER TABLE `cc_user`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Contraintes pour les tables déchargées
+--
+
+--
+-- Contraintes pour la table `cc_model_productPic`
+--
+ALTER TABLE `cc_model_productPic`
+    ADD CONSTRAINT `fk_Model_productPic_Model1` FOREIGN KEY (`Model_id`) REFERENCES `cc_model` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Model_productPic_ProductPic1` FOREIGN KEY (`ProductPic_id`) REFERENCES `cc_productPic` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Contraintes pour la table `cc_orders`
+--
+ALTER TABLE `cc_orders`
+    ADD CONSTRAINT `fk_Orders_Products1` FOREIGN KEY (`Products_id`) REFERENCES `cc_products` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Orders_User1` FOREIGN KEY (`User_id`) REFERENCES `cc_user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Contraintes pour la table `cc_pages`
+--
+ALTER TABLE `cc_pages`
+    ADD CONSTRAINT `fk_Pages_User1` FOREIGN KEY (`User_id`) REFERENCES `cc_user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Contraintes pour la table `cc_products`
+--
+ALTER TABLE `cc_products`
+    ADD CONSTRAINT `fk_Products_Category1` FOREIGN KEY (`Category_id`) REFERENCES `cc_category` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Contraintes pour la table `cc_products_model`
+--
+ALTER TABLE `cc_products_model`
+    ADD CONSTRAINT `fk_table1_Model1` FOREIGN KEY (`Model_id`) REFERENCES `cc_model` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_table1_Products1` FOREIGN KEY (`Products_id`) REFERENCES `cc_products` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Contraintes pour la table `cc_promotion_category`
+--
+ALTER TABLE `cc_promotion_category`
+    ADD CONSTRAINT `fk_Promotion_category_Category1` FOREIGN KEY (`Category_id`) REFERENCES `cc_category` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Promotion_category_Promotion1` FOREIGN KEY (`Promotion_id`) REFERENCES `cc_promotion` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Contraintes pour la table `cc_promotion_product`
+--
+ALTER TABLE `cc_promotion_product`
+    ADD CONSTRAINT `fk_Promotion_product_Products1` FOREIGN KEY (`Products_id`) REFERENCES `cc_products` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Promotion_product_Promotion1` FOREIGN KEY (`Promotion_id`) REFERENCES `cc_promotion` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Contraintes pour la table `cc_quantityShop`
+--
+ALTER TABLE `cc_quantityShop`
+    ADD CONSTRAINT `fk_QuantityProduct_Model1` FOREIGN KEY (`Model_id`) REFERENCES `cc_model` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_QuantityProduct_Shop1` FOREIGN KEY (`Shop_id`) REFERENCES `cc_shop` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Contraintes pour la table `cc_review`
+--
+ALTER TABLE `cc_review`
+    ADD CONSTRAINT `fk_Review_Products1` FOREIGN KEY (`Products_id`) REFERENCES `cc_products` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Review_User1` FOREIGN KEY (`User_id`) REFERENCES `cc_user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Contraintes pour la table `cc_shop_schedule`
+--
+ALTER TABLE `cc_shop_schedule`
+    ADD CONSTRAINT `fk_shop_schedule_Schedule1` FOREIGN KEY (`id_schedule`) REFERENCES `cc_schedule` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_shop_schedule_Shop1` FOREIGN KEY (`id_shop`) REFERENCES `cc_shop` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Contraintes pour la table `cc_user`
+--
+ALTER TABLE `cc_user`
+    ADD CONSTRAINT `fk_User_role1` FOREIGN KEY (`id_role`) REFERENCES `cc_role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+COMMIT;
