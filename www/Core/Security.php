@@ -4,7 +4,7 @@
 namespace App\Core;
 
 
-class InstallationChangeRoutes
+class Security
 {
     public static function changeFile($file, $type){
         $ptr = fopen("$file", "r");

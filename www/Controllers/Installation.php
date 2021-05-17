@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Core\ConstantManager;
 use App\Core\View;
-use App\Core\InstallationChangeRoutes;
+use App\Core\Security;
 
 session_start();
 
@@ -24,10 +24,10 @@ class Installation
 
         $dataArray = $this->checkInformations($_POST);
         $this->createFile($dataArray);
-        InstallationChangeRoutes::changeFile($this->fileConstantManager, 'changeConstantManager');
+        Security::changeFile($this->fileConstantManager, 'changeConstantManager');
         $this->insertBDD($dataArray[5], $dataArray[0]);
-        InstallationChangeRoutes::changeFile($this->fileRoutes, 'deleteStartInstallation');
-        InstallationChangeRoutes::changeFile($this->fileRoutes, 'changeRoute');
+        Security::changeFile($this->fileRoutes, 'deleteStartInstallation');
+        Security::changeFile($this->fileRoutes, 'changeRoute');
 
         header('Location: /');
     }
