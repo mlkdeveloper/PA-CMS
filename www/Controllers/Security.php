@@ -1,6 +1,8 @@
 <?php
 namespace App\Controller;
+
 use App\Core\FormValidator;
+use App\Core\InstallationChangeRoutes;
 use App\Core\View;
 use App\Models\User as UserModel;
 
@@ -55,8 +57,7 @@ class Security
 
                     $user->save();
 
-                    $controllerInstall = new Installation();
-//                    $controllerInstall->changeFile('./routes.yml', 'finalChangeRoute');
+                    InstallationChangeRoutes::changeFile('./routes.yml', 'finalChangeRoute');
 
                     header('location:/');
                 }else{
