@@ -24,8 +24,11 @@ class Installation
 
         $dataArray = $this->checkInformations($_POST);
         $this->createFile($dataArray);
+
         Security::changeFile($this->fileConstantManager, 'changeConstantManager');
+
         $this->insertBDD($dataArray[5], $dataArray[0]);
+
         Security::changeFile($this->fileRoutes, 'deleteStartInstallation');
         Security::changeFile($this->fileRoutes, 'changeRoute');
 
@@ -33,8 +36,8 @@ class Installation
     }
 
     private function checkInformations($data){
-        if(count($data) != 6){
-            $this->errorRedirection("Formulaire non conforme");
+        if(count($data) != 12){
+            $this->errorRedirection('Formulaire non conforme');
         }else{
 
             $dataArray = [];
@@ -45,6 +48,12 @@ class Installation
             array_push($dataArray, htmlspecialchars(trim($data['address_bdd'])));
             array_push($dataArray, htmlspecialchars(trim($data['port_bdd'])));
             array_push($dataArray, htmlspecialchars(trim($data['prefix_bdd'])));
+            array_push($dataArray, htmlspecialchars(trim($data['smtp_mail'])));
+            array_push($dataArray, htmlspecialchars(trim($data['smtp_password'])));
+            array_push($dataArray, htmlspecialchars(trim($data['smtp_host'])));
+            array_push($dataArray, htmlspecialchars(trim($data['smtp_auth'])));
+            array_push($dataArray, htmlspecialchars(trim($data['smtp_port'])));
+            array_push($dataArray, htmlspecialchars(trim($data['smtp_encrypt'])));
 
             $_SESSION['dataInstall'] = $dataArray;
 
@@ -53,20 +62,51 @@ class Installation
                 ||empty($dataArray[2])
                 ||empty($dataArray[3])
                 ||empty($dataArray[4])
-                ||empty($dataArray[5])){
+                ||empty($dataArray[5])
+                ||empty($dataArray[6])
+                ||empty($dataArray[7])
+                ||empty($dataArray[8])
+                ||empty($dataArray[9])
+                ||empty($dataArray[10])
+                ||empty($dataArray[11])){
 
-                $this->errorRedirection("Veuillez remplir tous les champs");
+                $this->errorRedirection('Veuillez remplir tous les champs');
             }
 
-            if(!preg_match("/^[0-9]*$/", $dataArray[4])){
-                $this->errorRedirection("Le port n'est pas valide");
+            if(!preg_match("/^[0-9]+$/", $dataArray[4])){
+                $this->errorRedirection('Le port n\'est pas valide');
             }
 
-            if(!preg_match("/^[a-zA-z]*$/", $dataArray[0])){
-                $this->errorRedirection("Le nom de la base de données ne peut contenir ques des lettres minuscules ou majuscules");
+            if(!preg_match("/^[a-zA-z]+$/", $dataArray[0])){
+                $this->errorRedirection('Le nom de la base de données ne peut contenir ques des lettres minuscules ou majuscules');
+            }
+            
+            if(!filter_var($dataArray[6], FILTER_VALIDATE_EMAIL)){
+                $this->errorRedirection('L\'email du serveur SMTP n\'est pas valide');
             }
 
-            return $dataArray;
+            if(!preg_match("/^[a-z]+[.][a-z]+[.][a-z]+$/", $dataArray[8])){
+                $this->errorRedirection('La valeur de l\'host n\'est pas correct');
+            }
+
+            if(!preg_match("/^[0-9]+$/", $dataArray[10])){
+                $this->errorRedirection('Le port SMTP n\'est pas valide');
+            }
+
+            if($dataArray[9] !== 'true' && $dataArray[9] !== 'false') {
+                $this->errorRedirection('Formulaire non conforme');
+            }
+
+            if($dataArray[11] !== 'tls' && $dataArray[11] !== 'none') {
+                $this->errorRedirection('Formulaire non conforme');
+            }
+
+            if($dataArray[11] === 'none'){
+              $dataArray[11] = '';
+            }
+
+
+                return $dataArray;
         }
         return null;
     }
@@ -135,6 +175,6 @@ class Installation
     private function errorRedirection($error){
         $_SESSION['securityInstall'] = $error;
         header('Location: /');
-        die();
+        exit();
     }
 }
