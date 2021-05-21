@@ -15,7 +15,6 @@ class User extends Database
 	protected $country;
 	protected $id_role = 1;
 	protected $status = 1;
-	protected $isDeleted = 0;
 	protected $address;
 	protected $city;
 	protected $zipcode;
@@ -252,20 +251,8 @@ class User extends Database
 	{
 	    $this->status = $status;
 	}
-	/**
-	 * @return int
-	 */
-	public function getIsDeleted()
-	{
-	    return $this->isDeleted;
-	}
-	/**
-	 * @param int $isDeleted
-	 */
-	public function setIsDeleted(int $isDeleted)
-	{
-	    $this->isDeleted = $isDeleted;
-	}
+
+
 
 
 	public function formBuilderLogin(){

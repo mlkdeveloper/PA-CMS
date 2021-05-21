@@ -194,7 +194,6 @@ class User
                     $user->setEmail($email);
                     $user->setPwd($pwdHash);
                     $user->setStatus(1);
-                    $user->setIsDeleted(0);
                     $user->setIdRole(2);
                     $user->setToken($token);
 
