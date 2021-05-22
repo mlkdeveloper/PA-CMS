@@ -18,39 +18,39 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 col">
                         <div class="form_align container-input">
                             <label for="name_bdd">Nom de la base de données:</label>
-                            <input class="input" type="text" id="name_bdd" name="name_bdd" value="<?php echo isset($_SESSION["dataInstall"][0])?$_SESSION["dataInstall"][0]:"" ?>">
+                            <input class="input" type="text" id="name_bdd" name="name_bdd" required value="<?php echo isset($_SESSION["dataInstall"][0])?$_SESSION["dataInstall"][0]:"" ?>">
                         </div>
                     </div>
 
                     <div class="col-lg-12 col-md-12 col-sm-12 col">
                         <div class="form_align container-input">
                             <label for="user_bdd">Identidiant:</label>
-                            <input class="input" type="text" id="user_bdd" name="user_bdd" value="<?php echo isset($_SESSION["dataInstall"][1])?$_SESSION["dataInstall"][1]:"" ?>">
+                            <input class="input" type="text" id="user_bdd" name="user_bdd" required value="<?php echo isset($_SESSION["dataInstall"][1])?$_SESSION["dataInstall"][1]:"" ?>">
                         </div>
                     </div>
 
                     <div class="col-lg-12 col-md-12 col-sm-12 col">
                         <div class="form_align container-input">
                             <label for="pwd_bdd">Mot de passe:</label>
-                            <input class="input" type="text" id="pwd_bdd" name="pwd_bdd" value="<?php echo isset($_SESSION["dataInstall"][2])?$_SESSION["dataInstall"][2]:"" ?>">
+                            <input class="input" type="text" id="pwd_bdd" name="pwd_bdd" required value="<?php echo isset($_SESSION["dataInstall"][2])?$_SESSION["dataInstall"][2]:"" ?>">
                         </div>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col">
                         <div class="form_align container-input">
                             <label for="address_bdd">Adresse de la base de données:</label>
-                            <input class="input" type="text" id="address_bdd" name="address_bdd" value="<?php echo isset($_SESSION["dataInstall"][3])?$_SESSION["dataInstall"][3]:"localhost" ?>">
+                            <input class="input" type="text" id="address_bdd" name="address_bdd" required value="<?php echo isset($_SESSION["dataInstall"][3])?$_SESSION["dataInstall"][3]:"localhost" ?>">
                         </div>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col">
                         <div class="form_align container-input">
                             <label for="port_bdd">Port:</label>
-                            <input class="input" type="text" id="port_bdd" name="port_bdd" value="<?php echo isset($_SESSION["dataInstall"][4])?$_SESSION["dataInstall"][4]:"3306" ?>">
+                            <input class="input" type="text" id="port_bdd" name="port_bdd" required value="<?php echo isset($_SESSION["dataInstall"][4])?$_SESSION["dataInstall"][4]:"3306" ?>">
                         </div>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col">
                         <div class="form_align container-input">
                             <label for="prefix_bdd">Préfixe des tables:</label>
-                            <input class="input" type="text" id="prefix_bdd" name="prefix_bdd" value="<?php echo isset($_SESSION["dataInstall"][5])?$_SESSION["dataInstall"][5]:"cc_" ?>">
+                            <input class="input" type="text" id="prefix_bdd" name="prefix_bdd" required value="<?php echo isset($_SESSION["dataInstall"][5])?$_SESSION["dataInstall"][5]:"cc_" ?>">
                         </div>
                     </div>
 
@@ -59,19 +59,19 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 col">
                         <div class="form_align container-input">
                             <label for="smtp_mail">Adresse mail:</label>
-                            <input class="input" type="email" id="smtp_mail" name="smtp_mail" value="<?php echo isset($_SESSION["dataInstall"][6])?$_SESSION["dataInstall"][6]:"" ?>">
+                            <input class="input" type="email" id="smtp_mail" name="smtp_mail" required value="<?php echo isset($_SESSION["dataInstall"][6])?$_SESSION["dataInstall"][6]:"" ?>">
                         </div>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col">
                         <div class="form_align container-input">
                             <label for="smtp_password">Mot de passe du mail:</label>
-                            <input class="input" type="text" id="smtp_password" name="smtp_password" value="<?php echo isset($_SESSION["dataInstall"][7])?$_SESSION["dataInstall"][7]:"" ?>">
+                            <input class="input" type="text" id="smtp_password" name="smtp_password" required value="<?php echo isset($_SESSION["dataInstall"][7])?$_SESSION["dataInstall"][7]:"" ?>">
                         </div>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col">
                         <div class="form_align container-input">
                             <label for="smtp_host">Host:</label>
-                            <input class="input" type="text" id="smtp_host" name="smtp_host" placeholder="smtp.gmail.com" value="<?php echo isset($_SESSION["dataInstall"][8])?$_SESSION["dataInstall"][8]:"" ?>">
+                            <input class="input" type="text" id="smtp_host" name="smtp_host" required placeholder="smtp.gmail.com" value="<?php echo isset($_SESSION["dataInstall"][8])?$_SESSION["dataInstall"][8]:"" ?>">
                         </div>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col">
@@ -86,7 +86,7 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 col">
                         <div class="form_align container-input">
                             <label for="smtp_port">Port SMTP:</label>
-                            <input class="input" type="text" id="smtp_port" name="smtp_port" placeholder="587" value="<?php echo isset($_SESSION["dataInstall"][10])?$_SESSION["dataInstall"][10]:"" ?>">
+                            <input class="input" type="text" id="smtp_port" name="smtp_port" required placeholder="587" value="<?php echo isset($_SESSION["dataInstall"][10])?$_SESSION["dataInstall"][10]:"" ?>">
                         </div>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col">

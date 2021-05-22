@@ -106,14 +106,13 @@ class User extends Database
         $errors = [];
         if (!empty($_POST)) {
 
-            //$errors = FormValidator::check($form, $_POST);
+//            $errors = FormValidator::check($form, $_POST);
 
             $lastname = $_POST["lastname"];
             $firstname = $_POST["firstname"];
             $email = $_POST["email"];
             $pwd = $_POST["pwd"];
             $pwdConfirm = $_POST['pwdConfirm'];
-            $country = $_POST['country'];
 
             if (empty($errors)) {
 
@@ -129,7 +128,7 @@ class User extends Database
                     $user->save();
 
 
-                    header('location:/');
+                    header('Location: /');
                 } else {
                     array_push($errors, "Le mot de passe de confirmation ne correspond pas");
                     $view->assign("errors", $errors);

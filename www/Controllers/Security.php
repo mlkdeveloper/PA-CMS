@@ -59,7 +59,7 @@ class Security
 
                     SecurityCore::changeFile('./routes.yml', 'finalChangeRoute');
 
-                    header('location:/');
+                    header('Location: /');
                 }else{
                     array_push($errors, "Le mot de passe de confirmation ne correspond pas");
                     $view->assign("errors", $errors);
