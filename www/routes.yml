@@ -162,3 +162,11 @@
 /admin/suppression-terme:
   controller: Attribute
   action : deleteTerm
+
+/admin/ajout-produit:
+  controller: Product
+  action : addProduct
+
+/admin/valeurs-attribut-ajax:
+  controller : Product
+  action : getValuesAttribute
