@@ -20,6 +20,7 @@ class Product
         $attributes = $attribute->select("id, name")->get();
 
         $view->assign("attributes", $attributes);
+        $view->assign("file_stylesheet","../../dist/product.css");
     }
 
 

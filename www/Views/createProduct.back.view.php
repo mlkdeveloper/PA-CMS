@@ -28,6 +28,11 @@
                         <option value="1">Pantalon</option>
                     </select>
                 </div>
+
+                <div class="mt-3">
+                    <input id="variant" type="checkbox" checked onclick="isVariant()">
+                    <label>Ce produit comporte plusieurs variantes, ex. différentes tailles ou couleurs. *</label>
+                </div>
             </div>
         </div>
     </div>
@@ -36,39 +41,48 @@
             <div class="col col-md-12 col-sm-12 col-lg-12">
                 <div class="jumbotron">
 
-                    <div class="align">
+                    <div class="">
                         <h3>Les attributs</h3>
-                        <i onclick="displayAttribute()" class="fas fa-plus"></i>
+                        <hr>
                     </div>
 
-                    <div id="blockAttribute">
 
-                        <div class="row">
-                            <div class="col-md-6 col-lg-6 col-sm-6 col">
-                                <div class="form_align--top">
-                                    <label class="label">Attribut *</label>
-                                    <select class="input" id="attribute" onchange="getValueAttribute()">
-                                        <?php foreach ($attributes as $attribute): ?>
-                                            <option value="<?= $attribute['id'] ?>"><?= $attribute['name'] ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6 col-sm-6 col">
+                            <div id="blockAttributes" class="attributes">
+                                <?php  foreach ($attributes as $attribute): ?>
+                                <div class="mb-1">
+                                    <input class="checked" id="attr-<?= $attribute['id'] ?>" type="checkbox" value="<?= $attribute['id'] ?>" name="attribute" onclick="getSelectedAttributes(<?= $attribute['id']?>)">
+                                    <label id="lab-<?= $attribute['id'] ?>"><?= $attribute['name'] ?></label>
                                 </div>
+                                <?php endforeach;?>
                             </div>
-                            <div class="col-md-6 col-lg-6 col-sm-6 col">
-                                <div class="form_align--top">
-                                    <label class="label">Valeurs</label>
-                                    <div id="value"></div>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <div class="container">
+        <div class="row">
+            <div class="col col-md-12 col-sm-12 col-lg-12">
+                <div class="jumbotron">
 
-
+                    <div class="">
+                        <h3>Valeurs</h3>
+                        <hr>
+                    </div>
+                    <div id="selectedAttributes"></div>
 
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="container">
+        <button class="button button--blue">Valider</button>
     </div>
 </section>
 

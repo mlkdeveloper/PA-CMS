@@ -1,54 +1,63 @@
+function getSelectedAttributes(id){
 
-
-
-function getValueAttribute() {
-
-    let getId = $('#attribute').val();
-    $("#value").empty();
-    if (getId !== '1'){
-
-        $.ajax({
-            url: "/admin/valeurs-attribut-ajax?id=" + getId,
-            type: 'GET',
-            success: (data) => {
-                let array = JSON.parse(data);
-                displayInputValue(array);
-            },
-            error: () => {
-              //error
-            }
-        })
+    if($('#attr-' + id ).is(':checked')){
+        addAttribute(id)
     }else{
-        displayInputValue([]);
+        deleteAttributes(id);
     }
 }
 
-function displayInputValue(array) {
 
-    array.map( (value) => {
-        $("#value").append("<li><input class='' type='checkbox' value='"+ value.id+"'><label>"+ value.name+"</label>")
-    } );
+
+function deleteAttributes(id) {
+    $("#selectedAttributes-" + id).remove();
 }
 
-function displayAttribute() {
+function addAttribute(id) {
 
-    let html = "                    <div class=\"row\">\n" +
-        "                        <div class=\"col-md-6 col-lg-6 col-sm-6 col\">\n" +
-        "                            <div class=\"form_align--top\">\n" +
-        "                                <label class=\"label\">Attribut *</label>\n" +
-        "                                <select class=\"input\" id=\"attribute\" onchange=\"getValueAttribute()\">\n" +
+        let name = $("#lab-" + id).text();
 
-        "                                </select>\n" +
-        "                            </div>\n" +
-        "                        </div>\n" +
-        "                        <div class=\"col-md-6 col-lg-6 col-sm-6 col\">\n" +
-        "                            <div class=\"form_align--top\">\n" +
-        "                                <label class=\"label\">Valeurs</label>\n" +
-        "                                <div id=\"value\"></div>\n" +
-        "                            </div>\n" +
-        "                        </div>\n" +
-        "                    </div>\n";
+        $.ajax({
+            url: "/admin/valeurs-attribut-ajax?id=" + id,
+            type: 'GET',
+            success: (data) => {
 
+               let array = JSON.parse(data);
 
-    $("#blockAttribute").append(html)
+               let html =
+                   "<div id='selectedAttributes-"+id+"' class='row'>" +
+                   "<div class=\"col-md-6\">" +
+                   "<h4>"+ name +"</h4>" +
+                   "</div>" +
+                   "<div class=\"col-md-6\">" +
+                   "<div class='attributes' id='val-"+id+"'>\n";
+
+              array.map((value) => {
+                    html += "<div class='mb-1'><input type='checkbox' value=' "+ value.id+"'><label>" + value.name + "</label></div>"
+               });
+
+              html +=
+                  "</div>\n" +
+                  "</div>\n" +
+                  "</div>";
+
+              $("#selectedAttributes").append(html);
+
+            },
+            error: () => {
+                //error
+            }
+        })
 }
+
+
+function isVariant() {
+    if($('#variant' ).is(':checked')){
+        $('#blockAttributes').show();
+        $(".checked").prop('checked', false);
+    }else{
+        $('#blockAttributes').hide();
+        $('#selectedAttributes').html("")
+    }
+}
+
