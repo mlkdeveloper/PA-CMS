@@ -61,9 +61,9 @@ class Security
                     break;
                 case 'removeRedirection':
 
-                    unset($contenu[$line-1]);
                     unset($contenu[$line]);
                     unset($contenu[$line+1]);
+                    unset($contenu[$line+2]);
                     break;
             }
 
