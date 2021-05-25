@@ -22,17 +22,22 @@ class Installation
 
     public function startInstallAction(){
 
-        $dataArray = $this->checkInformations($_POST);
-        $this->createFile($dataArray);
+        if (!empty($_POST)){
 
-        Security::changeFile($this->fileConstantManager, 'changeConstantManager');
+            $dataArray = $this->checkInformations($_POST);
+            $this->createFile($dataArray);
 
-        $this->insertBDD($dataArray[5], $dataArray[0]);
+            Security::changeFile($this->fileConstantManager, 'changeConstantManager');
 
-        Security::changeFile($this->fileRoutes, 'deleteStartInstallation');
-        Security::changeFile($this->fileRoutes, 'changeRoute');
+            $this->insertBDD($dataArray[5], $dataArray[0]);
 
-        header('Location: /');
+            Security::changeFile($this->fileRoutes, 'deleteStartInstallation');
+            Security::changeFile($this->fileRoutes, 'changeRoute');
+
+            header('Location: /');
+        }else{
+            header('Location: /');
+        }
     }
 
     private function checkInformations($data){

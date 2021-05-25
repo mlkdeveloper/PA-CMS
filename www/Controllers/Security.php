@@ -58,6 +58,7 @@ class Security
                     $user->save();
 
                     SecurityCore::changeFile('./routes.yml', 'finalChangeRoute');
+                    SecurityCore::changeFile('./index.php', 'removeRedirection');
 
                     header('Location: /');
                 }else{

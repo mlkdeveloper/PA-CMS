@@ -27,6 +27,9 @@ class Security
             case 'deleteStartInstallation':
                 $searchValue = '/start-install:';
                 break;
+            case 'removeRedirection':
+                $searchValue = '$slug[0]';
+                break;
         }
 
         foreach ($contenu as $index => $value) {
@@ -55,6 +58,12 @@ class Security
                     for ($i = -1; $i < 4; $i++){
                         unset($contenu[$line+$i]);
                     }
+                    break;
+                case 'removeRedirection':
+
+                    unset($contenu[$line-1]);
+                    unset($contenu[$line]);
+                    unset($contenu[$line+1]);
                     break;
             }
 
