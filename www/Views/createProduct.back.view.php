@@ -52,7 +52,7 @@
                             <div id="blockAttributes" class="attributes">
                                 <?php  foreach ($attributes as $attribute): ?>
                                 <div class="mb-1">
-                                    <input class="checked" id="attr-<?= $attribute['id'] ?>" type="checkbox" value="<?= $attribute['id'] ?>" name="attribute" onclick="getSelectedAttributes(<?= $attribute['id']?>)">
+                                    <input class="checked" name="attributs" id="attr-<?= $attribute['id'] ?>" type="checkbox" value="<?= $attribute['id'] ?>" onclick="getSelectedAttributes(<?= $attribute['id']?>)">
                                     <label id="lab-<?= $attribute['id'] ?>"><?= $attribute['name'] ?></label>
                                 </div>
                                 <?php endforeach;?>
@@ -82,7 +82,7 @@
     </div>
 
     <div class="container">
-        <button class="button button--blue">Valider</button>
+        <button class="button button--blue" onclick="test()" >Valider</button>
     </div>
 </section>
 

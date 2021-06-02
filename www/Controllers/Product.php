@@ -34,9 +34,6 @@ class Product
 
         }
 
-
-
-
     }
 
 }
