@@ -29,4 +29,3 @@ try {
 }catch (MyException $e){
     echo $e->error();
 }
-

@@ -22,12 +22,12 @@ class Email
             //$mail->SMTPDebug = 0;            // en production (sinon "2")
             $mail->SMTPDebug = 0;            // décommenter en mode débug
             $mail->isSMTP();                                                            // envoi avec le SMTP du serveur
-            $mail->Host = 'smtp.gmail.com';                            // serveur SMTP
-            $mail->SMTPAuth = true;                                            // le serveur SMTP nécessite une authentification ("false" sinon)
-            $mail->Username = 'click.create.collect@gmail.com';     // login SMTP
-            $mail->Password = 'gezukstsbsuveyxy';                                                // Mot de passe SMTP
+            $mail->Host = SMTPHOST;                            // serveur SMTP
+            $mail->SMTPAuth = SMTPAUTH;                                            // le serveur SMTP nécessite une authentification ("false" sinon)
+            $mail->Username = SMTPMAIL;     // login SMTP
+            $mail->Password = SMTPPWD;                                                // Mot de passe SMTP
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;     // encodage des données TLS (ou juste 'tls') > "Aucun chiffrement des données"; sinon PHPMailer::ENCRYPTION_SMTPS (ou juste 'ssl')
-            $mail->Port = 587;                                                               // port TCP (ou 25, ou 465...)
+            $mail->Port = SMTPPORT;                                                               // port TCP (ou 25, ou 465...)
 
             /* DONNEES DESTINATAIRES */
             ##########################

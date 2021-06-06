@@ -53,7 +53,6 @@ if (!$aut->isConnected()){
             <li><a href="#">Theme</a>
             <li><a href="#">Navigation</a>
         </ul>
-
         <li><a href="#">Paramètres du CMS</a></li>
     </ul>
 </nav>
