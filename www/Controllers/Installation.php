@@ -66,7 +66,6 @@ class Installation
 
             if (empty($dataArray[0])
                 ||empty($dataArray[1])
-                ||empty($dataArray[2])
                 ||empty($dataArray[3])
                 ||empty($dataArray[4])
                 ||empty($dataArray[5])

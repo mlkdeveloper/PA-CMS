@@ -32,7 +32,7 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 col">
                         <div class="form_align container-input">
                             <label for="pwd_bdd">Mot de passe:</label>
-                            <input class="input" type="text" id="pwd_bdd" name="pwd_bdd" required value="<?php echo isset($_SESSION["dataInstall"][2])?$_SESSION["dataInstall"][2]:"" ?>">
+                            <input class="input" type="text" id="pwd_bdd" name="pwd_bdd" value="<?php echo isset($_SESSION["dataInstall"][2])?$_SESSION["dataInstall"][2]:"" ?>">
                         </div>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col">
