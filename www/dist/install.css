@@ -14,6 +14,11 @@
     width: 250px;
 }
 
+.form_align textarea{
+    width: 350px;
+    height: 70px;
+}
+
 @media only screen and (max-width: 1230px) {
     .form_align {
         display: block;

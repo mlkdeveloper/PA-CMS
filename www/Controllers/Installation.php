@@ -41,7 +41,7 @@ class Installation
     }
 
     private function checkInformations($data){
-        if(count($data) != 12){
+        if(count($data) != 14){
             $this->errorRedirection('Formulaire non conforme');
         }else{
 
@@ -59,6 +59,8 @@ class Installation
             array_push($dataArray, htmlspecialchars(trim($data['smtp_auth'])));
             array_push($dataArray, htmlspecialchars(trim($data['smtp_port'])));
             array_push($dataArray, htmlspecialchars(trim($data['smtp_encrypt'])));
+            array_push($dataArray, htmlspecialchars(trim($data['public_key'])));
+            array_push($dataArray, htmlspecialchars(trim($data['private_key'])));
 
             $_SESSION['dataInstall'] = $dataArray;
 
@@ -73,7 +75,9 @@ class Installation
                 ||empty($dataArray[8])
                 ||empty($dataArray[9])
                 ||empty($dataArray[10])
-                ||empty($dataArray[11])){
+                ||empty($dataArray[11])
+                ||empty($dataArray[12])
+                ||empty($dataArray[13])){
 
                 $this->errorRedirection('Veuillez remplir tous les champs');
             }

@@ -24,7 +24,7 @@
 
                     <div class="col-lg-12 col-md-12 col-sm-12 col">
                         <div class="form_align container-input">
-                            <label for="user_bdd">Identidiant:</label>
+                            <label for="user_bdd">Identifiant:</label>
                             <input class="input" type="text" id="user_bdd" name="user_bdd" required value="<?php echo isset($_SESSION["dataInstall"][1])?$_SESSION["dataInstall"][1]:"" ?>">
                         </div>
                     </div>
@@ -96,6 +96,21 @@
                                 <option value="tls">TLS</option>
                                 <option value="none">Aucun</option>
                             </select>
+                        </div>
+                    </div>
+
+                    <h4 class="center-margin mb-5 mt-5">Configuration Stripe</h4>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col">
+                        <div class="form_align container-input">
+                            <label for="public_key">Clé publique:</label>
+                            <textarea name="public_key" class="input"><?php echo isset($_SESSION["dataInstall"][12])?$_SESSION["dataInstall"][12]:"" ?></textarea>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col">
+                        <div class="form_align container-input">
+                            <label for="private_key">Clé privée:</label>
+                            <textarea name="private_key" class="input"><?php echo isset($_SESSION["dataInstall"][13])?$_SESSION["dataInstall"][13]:"" ?></textarea>
                         </div>
                     </div>
                     <input type="submit" value="Continuer" class="button button--blue" id="button_install">
