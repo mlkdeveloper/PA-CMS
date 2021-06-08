@@ -82,7 +82,7 @@
     </div>
 
     <div class="container">
-        <button class="button button--blue" onclick="test()" >Valider</button>
+        <button class="button button--blue" onclick="generateComb()" >Valider</button>
     </div>
 </section>
 
