@@ -1,2 +1,2 @@
-INSERT INTO `cc_pages` (`id`, `name`, `createdAt`, `slug`, `publication`, `User_id`) VALUES
-(1, 'Accueil', '2021-05-16 22:23:18', '/', 1, 1);
+INSERT INTO `cc_pages` (`id`, `name`, `slug`, `publication`, `User_id`) VALUES
+(1, 'Accueil', '/', 1, 1);
