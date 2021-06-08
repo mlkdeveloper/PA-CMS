@@ -169,18 +169,20 @@ class User extends Database
     /**
      * @return mixed
      */
-    public function getFirstName()
+    public function getFirstname()
     {
-        return $this->firstName;
+        return $this->firstname;
     }
 
     /**
-     * @param mixed $firstName
+     * @param mixed $firstname
      */
-    public function setFirstName($firstName)
+    public function setFirstname($firstname)
     {
-        $this->firstName = htmlspecialchars(trim($firstName));
+        $this->firstname = $firstname;
     }
+
+
 
 
 	/**

@@ -157,13 +157,13 @@ class User extends Database
                     $pwdHash = password_hash($pwd, PASSWORD_BCRYPT);
 
                     $user->setLastname($lastname);
-                    $user->setFirstname($firstname);
+                    $user->setFirstName($firstname);
                     $user->setEmail($email);
                     $user->setPwd($pwdHash);
                     $user->setStatus(1);
                     $user->setIdRole(2);
                     $user->setToken($token);
-
+                    
                     $user->save();
 
                     Email::sendEmail($email, "Veuillez confirmer votre compte", "http://localhost:8080/confirmation-inscription?tkn=".$token,"Confimer mon compte", "/");
