@@ -20,7 +20,6 @@ class Email
             #####################
             $mail->setLanguage('fr', '../PHPMailer/language/');   // pour avoir les messages d'erreur en FR
             //$mail->SMTPDebug = 0;            // en production (sinon "2")
-            $mail->SMTPDebug = 0;            // décommenter en mode débug
             $mail->isSMTP();                                                            // envoi avec le SMTP du serveur
             $mail->Host = SMTPHOST;                            // serveur SMTP
             $mail->SMTPAuth = SMTPAUTH;                                            // le serveur SMTP nécessite une authentification ("false" sinon)
