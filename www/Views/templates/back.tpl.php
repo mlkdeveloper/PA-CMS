@@ -17,6 +17,7 @@ if (!$aut->isConnected()){
     <script src="../../src/js/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
 
+    <link rel="stylesheet" href="<?= $file_stylesheet??"" ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css">
@@ -24,26 +25,30 @@ if (!$aut->isConnected()){
 
     <link rel="stylesheet" href="../../dist/main.css">
 
+
     <?php  if(isset($stylesheet) && !empty($stylesheet))
         echo "<link rel='stylesheet' href='../../public/css/$stylesheet.css'>";
     ?>
 
+
 </head>
 <body>
 
-<nav class="sidenav">
-    <ul>
-        <li><a href="#">Dashboard</a></li>
-        <li><a href="#">Commandes</a></li>
-        <a class="dropdown-btn">Produit<i class="fa fa-caret-down"></i></a>
-        <ul class="dropdown-container">
-            <li><a href="#">Categories</a>
-            <li><a href="#">Promotions</a>
-            <li><a href="#">Link 3</a>
+
+    <nav class="sidenav">
+        <ul>
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Commandes</a></li>
+            <a class="dropdown-btn">Produit<i class="fa fa-caret-down"></i></a>
+            <ul class="dropdown-container">
+                <li><a href="#">Categories</a>
+                <li><a href="#">Promotions</a>
+                <li><a href="#">Link 3</a>
+            </ul>
+            <li><a href="#">Pages</a></li>
+            <li><a href="/admin/liste-client">Clients</a></li>
+            <li><a href="#">Avis</a></li>
         </ul>
-        <li><a href="#">Pages</a></li>
-        <li><a href="#">Clients</a></li>
-        <li><a href="#">Avis</a></li>
     </ul>
     <ul>
         <hr>

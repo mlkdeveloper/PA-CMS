@@ -114,6 +114,7 @@ class QueryBuilder
             $response = $this->pdo->query($this->request);
         }
 
+
         return $response;
     }
     public function execute(){
@@ -126,7 +127,6 @@ class QueryBuilder
         }
 
         return $query->fetchAll(\PDO::FETCH_ASSOC);
-
     }
 
 }

@@ -146,7 +146,7 @@ class User extends Database
 		parent::__construct();
 	}
 
-	//Parse error: syntax error, unexpected 'return' (T_RETURN) in /var/www/html/Models/User.php on line 41
+
 
 	/**
 	 * @return mixed
@@ -166,34 +166,29 @@ class User extends Database
 
 	}
 
-	/**
-	 * @return mixed
-	 */
-	public function getFirstname()
-	{
-	    return $this->firstname;
-	}
-	/**
-	 * @param mixed $firstname
-	 */
-	public function setFirstname($firstname)
-	{
-	    $this->firstname = $firstname;
-	}
+    /**
+     * @return mixed
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
 
-	/**
-	 * @return mixed
-	 */
-	public function getLastname()
-	{
-	    return $this->lastname;
-	}
+    /**
+     * @param mixed $firstName
+     */
+    public function setFirstName($firstName)
+    {
+        $this->firstName = htmlspecialchars(trim($firstName));
+    }
+
+
 	/**
 	 * @param mixed $lastname
 	 */
 	public function setLastname($lastname)
 	{
-	    $this->lastname = $lastname;
+	    $this->lastname = htmlspecialchars(trim($lastname));
 	}
 	/**
 	 * @return mixed
@@ -207,7 +202,7 @@ class User extends Database
 	 */
 	public function setEmail($email)
 	{
-	    $this->email = $email;
+	    $this->email = htmlspecialchars(trim($email));
 	}
 	/**
 	 * @return mixed
@@ -221,7 +216,7 @@ class User extends Database
 	 */
 	public function setPwd($pwd)
 	{
-	    $this->pwd = $pwd;
+	    $this->pwd = htmlspecialchars($pwd);
 	}
 	/**
 	 * @return mixed
@@ -235,7 +230,7 @@ class User extends Database
 	 */
 	public function setCountry($country)
 	{
-	    $this->country = $country;
+	    $this->country = htmlspecialchars(trim($country));
 	}
 	/**
 	 * @return int
@@ -444,6 +439,220 @@ class User extends Database
         ];
 
     }
+
+    public function formBuilderCreateClient(){
+        return [
+
+            "config"=>[
+                "method"=>"POST",
+                "action"=>"",
+                "class"=>"",
+                "id"=>"form_create_client",
+                "submit"=>"Créer"
+            ],
+            "inputs"=>[
+                "lastName"=>[
+                    "type"=>"text",
+                    "placeholder"=>"Nom",
+                    "label"=>"Nom",
+                    "required"=>true,
+                    "class"=>"form_input",
+                    "minLength"=>2,
+                    "maxLength"=>100,
+                    "error"=>"Le nom doit faire entre 2 et 100 caractères."
+                ],
+                "firstName"=>[
+                    "type"=>"text",
+                    "placeholder"=>"Prénom",
+                    "label"=>"Prénom",
+                    "required"=>true,
+                    "class"=>"form_input",
+                    "minLength"=>2,
+                    "maxLength"=>50,
+                    "error"=>"Le prénom doit faire entre 2 et 50 caractères."
+                ],
+
+                "address"=>[
+                    "type"=>"text",
+                    "label"=>"Adresse",
+                    "placeholder"=>"ex : 29 rue de la liberte",
+                    "required"=>true,
+                    "class"=>"form_input",
+                    "minLength"=>5,
+                    "maxLength"=>255,
+                    "error"=>"L'adresse doit faire entre 5 et 254 caractères."
+                ],
+                "city"=>[
+                    "type"=>"text",
+                    "label"=>"Ville",
+                    "placeholder"=>"ex : Paris",
+                    "required"=>true,
+                    "class"=>"form_input",
+                    "minLength"=>2,
+                    "maxLength"=>20,
+                    "error"=>"La ville doit faire entre 2 et 20 caractères"
+                ],
+                "zipCode"=>[
+                    "type"=>"text",
+                    "label"=>"Code postal",
+                    "placeholder"=>"ex : 75015",
+                    "required"=>true,
+                    "class"=>"form_input",
+                    "regex" => "/^[0-9]{5}/",
+                    "errorRegex" => "Code postal invalide !"
+                ],
+                "country"=>[
+                    "type"=>"text",
+                    "label"=>"Pays",
+                    "placeholder"=>"ex : fr",
+                    "required"=>true,
+                    "class"=>"form_input",
+                    "minLength"=> 2,
+                    "maxLength"=> 2,
+                    "error"=>"Le pays doit faire 2 caractères"
+                ],
+                "email"=>[
+                    "type"=>"email",
+                    "label"=>"Email",
+                    "placeholder"=>"Email",
+                    "required"=>true,
+                    "class"=>"form_input",
+                    "minLength"=>8,
+                    "maxLenght"=>320,
+                    "error"=>"L'email doit contenir entre 8 et 320 caractères"
+                ],
+                "phoneNumber"=>[
+                    "type"=>"text",
+                    "label"=>"N° Telephone",
+                    "placeholder"=>"0122334455",
+                    "required"=>true,
+                    "class"=>"form_input",
+                    "regex" => "/^[0-9]{10}/",
+                    "errorRegex" => "Numéro de téléphone invalide !"
+                ],
+            ]
+
+        ];
+    }
+
+
+
+    public function formUsers(){
+        return [
+
+            "config"=>[
+                "method"=>"POST",
+                "action"=>"",
+            ],
+            "inputs"=>[
+
+                "lastname"=>[
+                    "type"=>"text",
+                    "required"=>true,
+                    "minLength"=>2,
+                    "maxLength"=>100,
+                    "error"=>"Le nom doit faire entre 2 et 100 caractères."
+                ],
+                "firstName"=>[
+                    "type"=>"text",
+                    "required"=>true,
+                    "minLength"=>2,
+                    "maxLength"=>50,
+                    "error"=>"Le prénom doit faire entre 2 et 50 caractères."
+                ],
+
+                "email"=>[
+                    "type"=>"email",
+                    "required"=>true,
+                    "minLength"=>8,
+                    "maxLenght"=>320,
+                    "error"=>"Votre email doit faire entre 8 et 320 caractères"
+                ],
+
+                "pwd"=>[
+                    "type"=>"password",
+                    "required"=>true,
+                    "regex"=>"/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]){8,}/",
+                    "errorRegex"=>"Votre mot de passe doit faire au minimum 8 caractères, contenir une majuscule et un chiffre."
+                ],
+
+                "idRole"=>[
+                    "type"=>"text",
+                    "statusRole" => [1,2],
+                    "required"=>true,
+                    "error"=>"Erreur au niveau du rôle !"
+                ]
+            ]
+
+        ];
+    }
+
+    public function formPwdUsers(){
+
+        return [
+
+            "config"=>[
+                "method"=>"POST",
+                "action"=>"",
+            ],
+            "inputs"=>[
+
+                "pwd"=>[
+                    "type"=>"password",
+                    "required"=>true,
+                    "regex"=>"/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]){8,}/",
+                    "errorRegex"=>"Votre mot de passe doit faire au minimum 8 caractères, contenir une majuscule et un chiffre."
+                ]
+            ]
+        ];
+    }
+
+
+    public function formUpdateUsers(){
+
+        return [
+
+            "config"=>[
+                "method"=>"POST",
+                "action"=>"",
+            ],
+            "inputs"=>[
+
+                "lastname"=>[
+                    "type"=>"text",
+                    "required"=>true,
+                    "minLength"=>2,
+                    "maxLength"=>100,
+                    "error"=>"Le nom doit faire entre 2 et 100 caractères."
+                ],
+                "firstName"=>[
+                    "type"=>"text",
+                    "required"=>true,
+                    "minLength"=>2,
+                    "maxLength"=>50,
+                    "error"=>"Le prénom doit faire entre 2 et 50 caractères."
+                ],
+
+                "email"=>[
+                    "type"=>"email",
+                    "required"=>true,
+                    "minLength"=>8,
+                    "maxLenght"=>320,
+                    "error"=>"Votre email doit faire entre 8 et 320 caractères"
+                ],
+
+                "idRole"=>[
+                    "type"=>"text",
+                    "statusRole" => [1,2],
+                    "required"=>true,
+                    "error"=>"Erreur au niveau du rôle !"
+                ]
+            ]
+
+        ];
+    }
+
+
 
 }
 

@@ -14,7 +14,6 @@
   controller: User
   action: add
 
-
 /connexion:
   controller: User
   action: login
@@ -30,7 +29,6 @@
 /afficher-un-utilisateur:
   controller: User
   action: show
-
 
 /afficher-les-utilisateurs:
   controller: User
@@ -64,6 +62,58 @@
   controller: Reviews
   action: checkReviews
 
+/admin/nouveau-role:
+  controller: Role
+  action: newRole
+
+/admin/role:
+  controller: Role
+  action: showAll
+
+/admin/modification-role:
+  controller: Role
+  action: updateRole
+
+/admin/suppression-role:
+  controller: Role
+  action: deleteRole
+
+/admin/info-reviews:
+  controller: Reviews
+  action: showProducts
+
+/admin/del-review:
+  controller: Reviews
+  action: deleteReviews
+
+/admin/show-reviews-from-products:
+  controller: Reviews
+  action: showReviewsFromProducts
+
+/admin/orders:
+  controller: Orders
+  action: showOrders
+
+/admin/info-order:
+  controller: Orders
+  action: infoOrder
+
+/admin/ajout-client:
+  controller: User
+  action: newClient
+
+/admin/liste-client:
+  controller: User
+  action: displayClient
+
+/admin/modification-client:
+  controller: User
+  action: updateClient
+
+/admin/suppression-client:
+  controller: User
+  action: deleteClient
+
 /admin/detail-magasin:
   controller : Shop
   action : detailShop
@@ -87,3 +137,24 @@
 /confirmation-inscription:
   controller: Security
   action: confirmedRegister
+
+/admin/liste-utilisateurs:
+  controller: User
+  action: displayUsers
+
+/admin/ajout-utilisateur:
+  controller: User
+  action: addUsers
+
+/admin/suppression-utilisateur:
+  controller: User
+  action: deleteUser
+
+/admin/modification-utilisateur:
+  controller: User
+  action: updateUser
+
+/admin/utilisateur-changement-mdp:
+  controller: User
+  action : changeUserPwd
+

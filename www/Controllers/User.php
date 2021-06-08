@@ -3,21 +3,16 @@
 namespace App\Controller;
 
 use App\Core\Email;
+use App\Core\Database;
+use App\Core\Helpers;
 use App\Core\View;
 use App\Core\FormValidator;
 use App\Models\User as UserModel;
 use App\Models\Page;
+use App\Models\Role;
 
-class User
+class User extends Database
 {
-
-	//Method : Action
-	public function defaultAction(){
-        $user = new UserModel();
-	}
-
-
-	//Method : Action
 	public function loginAction(){
 
 		$user = new UserModel();
@@ -77,9 +72,7 @@ class User
         $view = new View("login", "front");
 
         $form = $user->formBuilderLogin();
-        //echo "<pre>";
-        //var_dump($user->select('id')->where("email=:email", "id_role = :role")->setParams([":email" => "samy.saberi@gmail.com", ":role" => 1])->get());
-        //exit();
+
         if(!empty($_POST)){
             $errors = [];
             if(empty($errors)){
@@ -122,34 +115,8 @@ class User
     }
 
 
-	//Method : Action
-	public function addAction(){
-		
-		//Récupérer le formulaire
-		//Récupérer les valeurs de l'internaute si il y a validation du formulaire
-		//Vérification des champs (uncitié de l'email, complexité du pwd, ...)
-		//Affichage du résultat
-
-	}
-
-	//Method : Action
-	public function showAction(){
-		
-		//Affiche la vue user intégrée dans le template du front
-		$view = new View("user"); 
-	}
-
-
-
-	//Method : Action
-	public function showAllAction(){
-		
-		//Affiche la vue users intégrée dans le template du back
-		$view = new View("users", "back"); 
-		
-	}
-
-    public function registerAction(){
+	public function registerAction()
+    {
         $user = new UserModel();
 
         $monUser = new UserModel();
@@ -207,9 +174,300 @@ class User
                     array_push($errors, "Le mot de passe de confirmation ne correspond pas");
                     $view->assign("errors", $errors);
                 }
-            }else{
+            } else {
+                $view->assign("errors", $errors);
+            }
+        }
+	}
+
+
+	// CLIENTS //
+
+    public function displayClientAction(){
+        $clients = new UserModel();
+        $array = $clients->select()->where("status = 1","id_role = 2")->get();
+        $view = new View("clientList.back", "back");
+        $view->assign("title", "Admin - Client");
+        $view->assign("array", $array);
+    }
+
+    public function newClientAction(){
+        $client = new UserModel();
+        $view = new View("createClient.back", "back");
+        $view->assign("title", "Admin - Nouveau client");
+
+        $formCreateClient = $client->formBuilderCreateClient();
+
+        if (!empty($_POST)) {
+            $this->saveForm($view, $client, $formCreateClient, false);
+        }
+    }
+
+    public function saveForm($view, $client, $form, $isCreated, $formStatus = Database::NEW_OBJECT){
+
+            $error = FormValidator::checkClient($form, $_POST, $isCreated);
+
+            if (empty($error)) {
+
+                if ($formStatus == Database::UPDATE_OBJECT) {
+                    $client->setId($_GET['id']);
+                    $pwd = $client->select('pwd')->where("id = :id ")->setParams(["id" => $_GET['id'] ])->get();
+                    $client->setPwd( $pwd[0]['pwd']);
+                }else{
+                    $pwd = Helpers::pwdGenerator();
+                    $client->setPwd(password_hash($pwd, PASSWORD_DEFAULT));
+                }
+
+                $client->populate($_POST);
+                $client->setStatus(1);
+                $client->setIdRole(2);
+
+                $returnValue = $client->save();
+                $message = $this->returnValue($returnValue,$formStatus);
+
+                if ($message != false){
+                    $view->assign("message", $message);
+                }else{
+                    http_response_code(400);
+                }
+            }else {
+                $view->assign("errors", $error);
+            }
+    }
+
+
+    function updateClientAction(){
+        if (isset($_GET['id']) && !empty($_GET['id'])){
+
+            $client = new UserModel();
+            $verifyId = $client->select("id,email")->where("id = :id","id_role = 2","status = 1")->setParams(["id" => $_GET['id']])->get();
+
+            if (empty($verifyId)) {
+                header("Location: /admin/liste-client");
+                exit();
+            }
+
+            $view = new View("updateClient.back", "back");
+
+            $form = $client->formBuilderCreateClient();
+            if (!empty($_POST)) {
+                $this->saveForm($view, $client, $form, trim($_POST['email']) === $verifyId[0]["email"], Database::UPDATE_OBJECT);
+            }
+
+            $values = $client->select()->where("id = :id")->setParams(["id" => $_GET['id']])->get();
+            $view->assign("values", ...$values);
+            $view->assign("title", "Admin - Client");
+        }else{
+            header("Location: /admin/liste-client");
+        }
+    }
+
+    function deleteClientAction()
+    {
+
+        if (isset($_GET['id']) && !empty($_GET['id'])){
+
+            $client = new UserModel();
+            $verifyId = $client->select("id")->where("id = :id", "id_role = 2","status = 1")->setParams(["id" => $_GET['id']])->get();
+
+            if (empty($verifyId)) {
+                header("Location: /admin/liste-client");
+                exit();
+            }
+
+            $client->setId($_GET['id']);
+            $client->setStatus(0);
+
+            $returnValue = $client->deleteObject();
+            $message = $this->returnValue($returnValue,3);
+
+            if ($message != false) {
+                session_start();
+                $_SESSION['deleteClient'] = $message;
+            }
+            header("Location: /admin/liste-client");
+
+        }else{
+
+            header("Location: /admin/liste-client");
+        }
+    }
+
+    public function returnValue($data, $statut){
+
+	    $message = false;
+
+	    if($data){
+            if ($statut == 1 ){
+                $message = "Utilisateur ajouté !";
+            }
+            if ($statut == 2){
+                $message = "Utilisateur modifié !";
+            }
+            if ($statut == 3){
+                $message = "Utilisateur supprimé !";
+            }
+        }
+        return $message;
+    }
+
+
+    public function addUsersAction(){
+
+        $user = new UserModel();
+        $role = new Role();
+        $view = new View("createUser.back", "back");
+        $view->assign("title", "Admin - Utilisateur");
+
+        $getRoles = $role->select("id,name")->where("id > 2")->get();
+        $view->assign("roles", $getRoles);
+
+        $form = $user->formUsers();
+
+        if(!empty($_POST)) {
+
+            $errors = FormValidator::checkClient($form, $_POST, false);
+
+            if (empty($errors)) {
+                $user->populate($_POST);
+                $user->setPwd(password_hash($_POST['pwd'],PASSWORD_DEFAULT));
+                $user->setStatus(1);
+                $user->save();
+
+                $view->assign("success", "L'utilisateur a bien été créé !");
+            } else {
                 $view->assign("errors", $errors);
             }
         }
     }
+
+    public function displayUsersAction(){
+
+        $user = new UserModel();
+        $view = new View("usersList.back", "back");
+        $view->assign("title", "Admin - Utilisateurs");
+
+        $users = $user->select("cc_user.id,cc_user.lastname,cc_user.firstname,cc_user.email,cc_role.name")
+            ->where("cc_user.id_role > 2")
+            ->innerJoin("cc_role","cc_role.id","=","cc_user.id_role")
+            ->get();
+
+        $view->assign("users", $users);
+
+
+    }
+
+    public function deleteUserAction(){
+
+        if (isset($_GET['id']) && !empty($_GET['id'])) {
+
+            $user = new UserModel();
+            $verifyId = $user->select("id")->where("id = :id", "id_role > 2")->setParams(["id" => $_GET['id']])->get();
+
+            if (empty($verifyId)) {
+                header("Location: /admin/liste-utilisateur");
+                exit();
+            }
+
+            $user->setId($_GET['id']);
+            $user->where("id= :id")->setParams(["id" => $_GET['id']])->delete();
+
+            session_start();
+            $_SESSION['deleteUser'] = "Utilisateur supprimé ! ";
+
+            header("Location: /admin/liste-utilisateurs");
+        }
+
+    }
+
+    public function updateUserAction(){
+
+        if (isset($_GET['id']) && !empty($_GET['id'])) {
+
+            $userId = new UserModel();
+            $verifyId = $userId->select("id, email,pwd")->where("id = :id", "id_role > 2")->setParams(["id" => $_GET['id']])->get();
+
+            if (empty($verifyId)) {
+                header("Location: /admin/liste-utilisateurs");
+                exit();
+            }
+
+            $role = new Role();
+            $getRoles = $role->select("id,name")->where("id > 2")->get();
+
+            $view = new View("updateUser.back", "back");
+            $view->assign("roles", $getRoles);
+            $view->assign("title", "Admin - Utilisateur");
+
+            $form = $userId->formUpdateUsers();
+
+            if(!empty($_POST)) {
+
+                $errors = FormValidator::checkClient($form, $_POST, trim($_POST['email']) === $verifyId[0]["email"]);
+
+                if (empty($errors)) {
+                    $userId->populate($_POST);
+                    $userId->setId($_GET['id']);
+                    $userId->setPwd($verifyId[0]["pwd"]);
+                    $userId->setStatus(1);
+                    $userId->save();
+
+                    $view->assign("success", "L'utilisateur a bien été modifié !");
+                } else {
+                    $view->assign("errors", $errors);
+                }
+            }
+
+            $users = $userId->select("cc_user.pwd,cc_user.id,cc_user.lastname,cc_user.firstname,cc_user.email,cc_role.name")
+                ->where("cc_user.id = :id","cc_user.id_role > 2")
+                ->setParams(['id' => $_GET['id']])
+                ->innerJoin("cc_role","cc_role.id","=","cc_user.id_role")
+                ->get();
+
+            $view->assign("users", $users[0]);
+
+        }else{
+            header("Location: /admin/liste-utilisateurs");
+        }
+    }
+
+
+    public function changeUserPwdAction(){
+
+        if (isset($_GET['id']) && !empty($_GET['id'])) {
+
+            $user = new UserModel();
+            $verifyId = $user->select()->where("id = :id", "id_role > 2")->setParams(["id" => $_GET['id']])->get();
+
+            if (empty($verifyId)) {
+                header("Location: /admin/liste-utilisateurs");
+                exit();
+            }
+            $form = $user->formPwdUsers();
+
+            if(!empty($_POST)) {
+
+                $errors = FormValidator::checkClient($form, $_POST, false);
+                session_start();
+                if (empty($errors)) {
+                    $user->populate($verifyId[0]);
+                    $user->setId($_GET['id']);
+                    $user->setIdRole($verifyId[0]['id_role']);
+                    $user->setPwd(password_hash($_POST['pwd'], PASSWORD_DEFAULT));
+                    $user->save();
+
+                    $_SESSION['successChangePwd'] = "Mot de passe modifié !";
+
+                } else {
+                    $_SESSION['errorChangePwd'] = "Votre mot de passe doit faire au minimum 8 caractères, contenir une majuscule et un chiffre.";
+                }
+                header("Location: /admin/modification-utilisateur?id=" . $_GET['id']);
+            }else{
+                header("Location: /admin/liste-utilisateurs");
+            }
+        }else{
+            header("Location: /admin/liste-utilisateurs");
+        }
+    }
+
 }

@@ -3,6 +3,9 @@ namespace App\Core;
 
 use App\Models\Role;
 
+use App\Models\Role;
+use App\Models\User;
+
 class FormValidator
 {
 
@@ -17,10 +20,6 @@ class FormValidator
         }else{
 
             foreach ($config["inputs"] as $name => $configInputs) {
-
-                if (!empty($configInputs["minLength"])){
-
-                }
 
 
                 if(!empty($configInputs["minLength"])
@@ -121,20 +120,4 @@ class FormValidator
         return $errors;
     }
 
-
-    public static function returnValue($data, $statut){
-
-        $message = [];
-
-        if ($data == true && $statut == 1){
-            $message = "Utilisateur ajouté !";
-        } else if ($data == true && $statut == 2){
-            $message = "Utilisateur modifié !";
-        } else {
-            $message = "Utilisateur supprimé !";
-        }
-
-
-        return $message;
-    }
 }
