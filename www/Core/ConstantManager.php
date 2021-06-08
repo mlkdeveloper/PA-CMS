@@ -14,12 +14,12 @@ class ConstantManager {
 		$this->parsingEnv($this->envFile);
 
 		if(!empty($this->data["ENV"])){
-			$newFile = $this->envFile.".".$this->data["ENV"];
+            $config = "config".$this->envFile;
 
-			if(!file_exists($newFile))
-				die("Le fichier ".$newFile." n'existe pas");
+            if(!file_exists($config))
+                die("Le fichier ".$config." n'existe pas");
 
-			$this->parsingEnv($newFile);
+			$this->parsingEnv($config);
 		}
 
 

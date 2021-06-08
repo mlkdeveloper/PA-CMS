@@ -40,7 +40,7 @@
                                     </div>
                                     <div class="align">
                                         <?php  //App\Core\FormBuilder::render($form); ?>
-                                        <i class="fas fa-trash"></i>
+                                        <a href="/admin/delete-shop?id=<?= $value['id']?>"><i class="fas fa-trash"></i></a>
                                     </div>
                                 </div>
                             </td>
