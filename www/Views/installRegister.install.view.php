@@ -3,6 +3,12 @@
         <div class="col-lg-8 col-md-8 col-sm-12 col center-margin">
             <div class="jumbotron">
                 <div class="container">
+                    <?php
+                    if(isset($_SESSION['securityInstall'])){
+                        echo '<div class="alert alert--red errorMessageImage"><h4>'.$_SESSION['securityInstall'].'</h4></div>';
+                        unset($_SESSION['securityInstall']);
+                    }
+                    ?>
                     <h2>Information nécessaires</h2>
                     <hr>
                     <?php if(isset($errors)):?>

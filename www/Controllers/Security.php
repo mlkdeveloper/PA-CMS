@@ -8,6 +8,8 @@ use App\Models\User as UserModel;
 
 class Security
 {
+    private $pdo;
+
 
     //Method : Action
     public function registerInstallAction(){
@@ -57,8 +59,11 @@ class Security
 
                     $user->save();
 
+                    $this->insertInstallation();
+
                     SecurityCore::changeFile('./routes.yml', 'finalChangeRoute');
                     SecurityCore::changeFile('./index.php', 'removeRedirection');
+
 
                     header('Location: /');
                 }else{
@@ -73,4 +78,18 @@ class Security
 
     }
 
+    private function insertInstallation(){
+        try{
+            $this->pdo = new \PDO(DBDRIVER . ":host=" . DBHOST . ";dbname=" . DBNAME . ";port=" . DBPORT, DBUSER, DBPWD);
+
+            $sqlInsert = file_get_contents("insert-clickcreate.sql");
+            $installSqlInsert = str_replace("cc_", DBPREFIXE, $sqlInsert);
+
+            $this->pdo->query($installSqlInsert);
+        }catch(\Exception $e){
+            $_SESSION['securityInstall'] = "Une erreur s'est produite pendant l'installation";
+            header('Location: /');
+            exit();
+        }
+    }
 }

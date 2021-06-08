@@ -148,7 +148,7 @@ class Installation
 
 
         try{
-            $this->pdo = new \PDO( $dbDriver[1].":host=".$dataArray[3].";dbnamehost=".$dataArray[0].";port=".$dataArray[4] , $dataArray[1] , $dataArray[2]);
+            $this->pdo = new \PDO( $dbDriver[1].":host=".$dataArray[3].";dbname=".$dataArray[0].";port=".$dataArray[4] , $dataArray[1] , $dataArray[2]);
         }catch(\Exception $e){
 
             $errorCode = $e->getCode();
@@ -176,7 +176,7 @@ class Installation
         try {
             $this->pdo->query($installSql);
         }catch(\Exception $e){
-            $this->errorRedirection("Une erreur s'est produit pendant la création de la base de données");
+            $this->errorRedirection("Une erreur s'est produite pendant la création de la base de données");
         }
     }
 
