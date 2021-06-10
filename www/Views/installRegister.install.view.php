@@ -9,7 +9,7 @@
                         unset($_SESSION['securityInstall']);
                     }
                     ?>
-                    <h2>Information nécessaires</h2>
+                    <h2>Informations nécessaires de l'administrateur</h2>
                     <hr>
                     <?php if(isset($errors)):?>
                         <div class="alert alert--red errorMessageImage">
