@@ -49,50 +49,11 @@
                                 </select>
                             </div>
                         </div>
-
-                        <div class="jumbotron mt-2">
-                            <div class="align">
-                                <h2>Image *</h2>
-                                <i class="fas fa-plus" onclick="triggerCategoryAdd()"></i>
-                                <input id="categoryUpload" type="file" accept="image/*" name="categoryImage" onchange="displayImageCategory(this)">
-                            </div>
-
-                          <div class="imageBlock">
-                             <img src="<?= "../images/category/" . $category->getPicPath()??'../images/cross-add.svg'?>" id="categoryImage">
-                          </div>
-                        </div>
                     </div>
 
                 </div>
 
             </div>
-        </section>
-
-        <section>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12 col-sm-12">
-                        <div class="jumbotron">
-                            <table id="table" class="row-border hover">
-                                <thead>
-                                <tr>
-                                    <th>N° Produit</th>
-                                    <th>Nom</th>
-                                    <th>Statut</th>
-                                    <th>Actions</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
         </section>
 
         <section>

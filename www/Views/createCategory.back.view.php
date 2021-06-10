@@ -21,7 +21,7 @@ if (isset($errors)){
     </div>
 </section>
 <section>
-    <form method="POST" enctype="multipart/form-data">
+    <form method="POST">
         <section>
             <div class="container">
                 <div class="row">
@@ -51,18 +51,6 @@ if (isset($errors)){
                                 </select>
                             </div>
                         </div>
-
-                        <div class="jumbotron mt-2">
-                            <div class="align">
-                                <h2>Image *</h2>
-                                <i class="fas fa-plus" onclick="triggerCategoryAdd()"></i>
-                                <input id="categoryUpload" type="file" accept="image/*" name="categoryImage" class="input inputFile" onchange="displayImageCategory(this)">
-                            </div>
-
-                          <div class="imageBlock">
-                             <img src="../images/cross-add.svg" id="categoryImage">
-                          </div>
-                        </div>
                     </div>
 
                 </div>
@@ -78,6 +66,6 @@ if (isset($errors)){
     </form>
 </section>
 
-<script src="../public/js/category.js"></script>
+
 <link rel="stylesheet" href="../../dist/category.css">
 

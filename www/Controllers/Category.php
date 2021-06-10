@@ -26,20 +26,13 @@ class Category{
 
         $form = $category->formBuilderRegister();
 
-        if(!empty($_POST) && !empty($_FILES)){
+        if(!empty($_POST)){
 
-            $errors = FormValidator::checkFormCategory($form, $_POST, $_FILES);
+            $errors = FormValidator::checkFormCategory($form, $_POST);
 
             if (empty($errors)){
 
                 $category->populate($_POST);
-
-                if($_FILES["categoryImage"]["error"] === 0 ) {
-                    $imageName = time() . '_' . $_FILES['categoryImage']['name'];
-                    $target = './images/category/' . $imageName;
-                    move_uploaded_file($_FILES['categoryImage']['tmp_name'], $target);
-                    $category->setPicPath($imageName);
-                }
                 $category->save();
 
             }else{
@@ -73,14 +66,14 @@ class Category{
         }
     }
 
-    public function saveForm($view,$category,$form,$newCategory = true){
+    public function saveForm($view,$category,$form,$newCategory){
 
-        if(!empty($_POST) && !empty($_FILES)){
+        if(!empty($_POST) ){
 
             if (isset($_POST["table_length"]))
                 unset($_POST["table_length"]);
 
-            $errors = FormValidator::checkFormCategory($form, $_POST, $_FILES,$newCategory);
+            $errors = FormValidator::checkFormCategory($form, $_POST);
 
             if (empty($errors)){
 
@@ -88,14 +81,7 @@ class Category{
                     $category->setId($_GET['id']);
 
                $category->populate($_POST);
-
-                if($_FILES["categoryImage"]["error"] === 0 ) {
-                    $imageName = time() . '_' . $_FILES['categoryImage']['name'];
-                    $target = './images/category/' . $imageName;
-                    move_uploaded_file($_FILES['categoryImage']['tmp_name'], $target);
-                    $category->setPicPath($imageName);
-                }
-                $category->save();
+               $category->save();
             }else{
                 $view->assign("errors", $errors);
             }

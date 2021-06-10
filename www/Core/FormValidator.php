@@ -32,7 +32,7 @@ class FormValidator
 	}
 
 
-	public static function checkFormCategory($config,$data,$files,$newCategory = true){
+	public static function checkFormCategory($config,$data){
 
         $errors = [];
 
@@ -40,18 +40,6 @@ class FormValidator
             $errors[] = "Tentative de HACK - Faille XSS";
         }else {
 
-            //Si fichier upload
-            if ($newCategory === true){
-                if($files["categoryImage"]["error"] !== 4){
-                    $errors = self::checkImage($files);
-                }else{
-                    $errors[] = "Image obligatoire.";
-                }
-            }else{
-                if($files["categoryImage"]["error"] !== 4){
-                    $errors = self::checkImage($files);
-                }
-            }
 
             foreach ($config["inputs"] as $name => $configInputs) {
 
@@ -91,29 +79,7 @@ class FormValidator
         return $errors;
     }
 
-    public static function checkImage($files){
 
-        $errors = [];
-        $acceptedImage = ["png", "jpeg","jpg"];
-        $fileName = $files['categoryImage']['name'];
-        $fileSize = $files['categoryImage']['size'];
-        $fileExtExploded = explode('.', $fileName);
-        $fileExt = strtolower(end($fileExtExploded));
-        $error = $files['categoryImage']['error'];
-
-        if ($error !== 0){
-            $errors[] = "Erreur lors de l'upload.";
-        }
-
-        if(!in_array($fileExt,$acceptedImage)){
-            $errors[] = "Extensions .png, .jpeg, .jpg seulement autorisées.";
-        }
-
-        if ($fileSize > 15000000) {
-            $errors[] = "Le poids de l'image doit être inférieure à 15 MO.";
-        }
-	    return $errors;
-    }
 
 
 }

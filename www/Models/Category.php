@@ -11,7 +11,6 @@ class Category extends Database
     protected $name;
     protected $description;
     protected $status;
-    protected $picPath;
 
 
 
@@ -83,21 +82,7 @@ class Category extends Database
         $this->status = $status;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getPicPath()
-    {
-        return $this->picPath;
-    }
 
-    /**
-     * @param mixed $picPath
-     */
-    public function setPicPath($picPath)
-    {
-        $this->picPath = $picPath;
-    }
 
     public function formBuilderRegister(){
 
