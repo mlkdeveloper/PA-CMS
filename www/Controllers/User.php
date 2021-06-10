@@ -211,11 +211,18 @@ class User extends Database
 
                 if ($formStatus == Database::UPDATE_OBJECT) {
                     $client->setId($_GET['id']);
-                    $pwd = $client->select('pwd')->where("id = :id ")->setParams(["id" => $_GET['id'] ])->get();
-                    $client->setPwd( $pwd[0]['pwd']);
+                    $getInfo = $client->select('pwd,token,isConfirmed')->where("id = :id ")->setParams(["id" => $_GET['id'] ])->get();
+                    $client->setPwd( $getInfo[0]['pwd']);
+                    $client->setToken($getInfo[0]['token']);
+                    $client->setIsConfirmed($getInfo[0]['isConfirmed']);
+
                 }else{
                     $pwd = Helpers::pwdGenerator();
                     $client->setPwd(password_hash($pwd, PASSWORD_DEFAULT));
+
+                    $token = openssl_random_pseudo_bytes(32);
+                    $token = bin2hex($token);
+                    $client->setToken($token);
                 }
 
                 $client->populate($_POST);
@@ -227,6 +234,10 @@ class User extends Database
 
                 if ($message != false){
                     $view->assign("message", $message);
+
+                    if($formStatus == Database::NEW_OBJECT){
+                        Email::sendEmail($client->getEmail(), "Veuillez confirmer votre compte", "http://localhost:8082/confirmation-inscription?tkn=".$token,"Confirmer mon compte", "/admin/liste-client");
+                    }
                 }else{
                     http_response_code(400);
                 }

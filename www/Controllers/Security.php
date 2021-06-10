@@ -77,7 +77,9 @@ class Security
         $user = new UserModel();
         $users = new UserModel();
         $user = $user->select("*")->where('token= :token')->setParams(["token"=>$_GET['tkn']])->get();
+
         $users->populate($user[0]);
+        $users->setIdRole($user[0]['id_role']);
         $users->setIsConfirmed(1);
         $users->save();
     }
