@@ -61,4 +61,9 @@ function isVariant() {
     }
 }
 
+function buildArray() {
+
+    
+}
+
 
