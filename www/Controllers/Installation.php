@@ -157,6 +157,9 @@ class Installation
                 case 1045:
                     $this->errorRedirection("Les identifiants de connexion à la base de données sont incorrects");
                     die();
+                case 1049:
+                    $this->errorRedirection("Il existe aucune base de données avec ce nom.<br>Créer une base de données avant de commencer l'installation");
+                    die();
                 case 2002:
                     $this->errorRedirection("Vérifier l'adresse de la base de données et le port");
                     die();
