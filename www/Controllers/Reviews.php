@@ -14,10 +14,10 @@ class Reviews
         $view->assign("title", "Avis");
         $review = new Review();
         $datas = $review
-            ->select("cc_products.id as id_products, cc_review.id as id_review, cc_review.commentary as commentary, cc_user.email as email, cc_review.status as rs")
-            ->innerJoin("cc_products", "Products_id", "=", "cc_products.id")
-            ->innerJoin("cc_user", "User_id", "=", "cc_user.id")
-            ->where("cc_review.status <> 1")
+            ->select(DBPREFIXE."products.id as id_products," . DBPREFIXE . "review.id as id_review," . DBPREFIXE . "review.commentary as commentary, ". DBPREFIXE ."user.email as email, ". DBPREFIXE . "review.status as rs")
+            ->innerJoin(DBPREFIXE."products", "Products_id", "=", DBPREFIXE."products.id")
+            ->innerJoin(DBPREFIXE."user", "User_id", "=", DBPREFIXE."user.id")
+            ->where(DBPREFIXE."review.status <> 1")
             ->get();
         $view->assign("datas", $datas);
     }
@@ -64,13 +64,13 @@ class Reviews
         $view->assign("title", "Liste des produits");
         $review = new Review();
         $datas = $review
-            ->select("cc_products.id as id_product, Products_id, commentary, AVG(mark) as mark, COUNT(commentary) as nb_commentary")
-            ->innerJoin("cc_products", "cc_products.id", "=", "Products_id")
+            ->select(DBPREFIXE."products.id as id_product, Products_id, commentary, AVG(mark) as mark, COUNT(commentary) as nb_commentary")
+            ->innerJoin(DBPREFIXE."products", DBPREFIXE."products.id", "=", "Products_id")
             ->groupBy("Products_id")
             ->get();
         $nb_commentary_check = $review
             ->select("count(*) as nb_commentary_check")
-            ->where("cc_review.status = 1")
+            ->where(DBPREFIXE."review.status = 1")
             ->groupBy("Products_id")
             ->get();
 
@@ -88,10 +88,10 @@ class Reviews
             $view->assign("title", "Liste des produits");
             $review = new Review();
             $datas = $review
-                ->select("*, cc_products.id as id_p, cc_review.id as id_r")
-                ->innerJoin("cc_products", "cc_products.id", "=", "Products_id")
-                ->innerJoin("cc_user", "User_id", "=", "cc_user.id")
-                ->where("cc_products.id = :id")
+                ->select("*, ". DBPREFIXE . "products.id as id_p, ". DBPREFIXE . "review.id as id_r")
+                ->innerJoin(DBPREFIXE. "products", DBPREFIXE. "products.id", "=", "Products_id")
+                ->innerJoin(DBPREFIXE. "user", "User_id", "=", DBPREFIXE."user.id")
+                ->where(DBPREFIXE. "products.id = :id")
                 ->setParams(["id" => $_GET["id"]])
                 ->get();
             $view->assign("datas", $datas);
