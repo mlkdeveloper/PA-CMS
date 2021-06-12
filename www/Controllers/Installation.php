@@ -88,7 +88,7 @@ class Installation
             if(!preg_match("/^[a-zA-z]+$/", $dataArray[0])){
                 $this->errorRedirection('Le nom de la base de données ne peut contenir ques des lettres minuscules ou majuscules');
             }
-            
+
             if(!filter_var($dataArray[6], FILTER_VALIDATE_EMAIL)){
                 $this->errorRedirection('L\'email du serveur SMTP n\'est pas valide');
             }
@@ -110,24 +110,27 @@ class Installation
             }
 
             if($dataArray[11] === 'none'){
-              $dataArray[11] = '';
+                $dataArray[11] = '';
             }
 
 
-                return $dataArray;
+            return $dataArray;
         }
         return null;
     }
 
     private function createFile($dataArray){
-        $dbDriver = file_get_contents("config-sample.env", true, null, 0,14);
-        $configFile = file_get_contents("config-sample.env", true, null, 14);
+        $domainName = file_get_contents("config-sample.env", true, null, 0,11);
+        $dbDriver = file_get_contents("config-sample.env", true, null, 12,14);
+        $configFile = file_get_contents("config-sample.env", true, null, 25);
 
         $configFileExploded = explode('=', $configFile);
 
-        $newDB = $dbDriver;
+        $domainName .= $_SERVER['HTTP_HOST'];
+
+        $newConfigFile = $domainName.$dbDriver;
         for ($i = 0; $i < count($dataArray); $i++){
-            $newDB .= $configFileExploded[$i].'='.$dataArray[$i];
+            $newConfigFile .= $configFileExploded[$i].'='.$dataArray[$i];
         }
 
         $this->verificationBDD($dbDriver, $dataArray);
@@ -136,7 +139,7 @@ class Installation
             $this->errorRedirection("Le fichier config-sample.env n'existe pas");
         }
 
-        file_put_contents('config.env', $newDB);
+        file_put_contents('config.env', $newConfigFile);
 
         new ConstantManager();
     }
@@ -145,7 +148,6 @@ class Installation
     private function verificationBDD($dbDriver, $dataArray){
 
         $dbDriver = explode('=', $dbDriver);
-
 
         try{
             $this->pdo = new \PDO( $dbDriver[1].":host=".$dataArray[3].";dbname=".$dataArray[0].";port=".$dataArray[4] , $dataArray[1] , $dataArray[2]);
