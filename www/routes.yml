@@ -53,6 +53,10 @@
   controller: Category
   action: updateCategory
 
+/admin/supression-categorie:
+  controller : Category
+  action: deleteCategory
+
 /admin/nouveau-magasin:
   controller: Shop
   action: newShop

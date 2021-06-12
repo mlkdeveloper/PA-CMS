@@ -88,5 +88,31 @@ class Category{
         }
     }
 
+    public function deleteCategoryAction(){
+
+        if(isset($_GET['id']) && !empty($_GET['id']) ){
+
+            $category = new modelCategory();
+            $checkId = $category->where("id = :id")->setParams(['id' => $_GET['id']])->get();
+
+            if (empty($checkId)){
+                header("Location: /admin/display-category");
+                exit();
+            }
+
+            $product = new Products();
+            $checkProduct = $product->select('id')->where("idCategory = :id")->setParams(["id" => $_GET['id']])->get();
+            session_start();
+            if (empty($checkProduct)){
+                $category->where("id = :id")->setParams(['id' => $_GET['id']])->delete();
+                $_SESSION['successDeleteCategory'] = "Catégorie supprimé !";
+            }else{
+                $_SESSION['errorDeleteCategory'] = "Vous ne pouvez pas supprimé cette catégorie.";
+            }
+        }else{
+            header("Location: /admin/display-category");
+        }
+    }
+
 }
 
