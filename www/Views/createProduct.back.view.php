@@ -82,7 +82,7 @@
     </div>
 
     <div class="container">
-        <button class="button button--blue" onclick="generateComb()" >Valider</button>
+        <button class="button button--blue" onclick="buildArray()" >Valider</button>
     </div>
 </section>
 
