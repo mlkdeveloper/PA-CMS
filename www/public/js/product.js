@@ -30,10 +30,10 @@ function addAttribute(id) {
                    "<h4>"+ name +"</h4>" +
                    "</div>" +
                    "<div class=\"col-md-6\">" +
-                   "<div class='attributes' id='val-"+id+"'>\n";
+                   "<div class='attributes attrValues' id='val-"+id+"'>\n";
 
               array.map((value) => {
-                    html += "<div class='mb-1'><input name='value-"+ id + "' type='checkbox' value='"+ value.id+"'><label>" + value.name + "</label></div>"
+                    html += "<div class='mb-1'><input class='"+name+"' name='"+value.name+"' type='checkbox' value='"+ value.id+"'><label>" + value.name + "</label></div>"
                });
 
               html +=
@@ -62,8 +62,41 @@ function isVariant() {
 }
 
 function buildArray() {
+    var arrayAttributs;
+    arrayAttributs = $('.attrValues input:checked');
 
-    
+    var className = '';
+    var array = [];
+    var count = 0;
+
+    $.each(arrayAttributs, function(i, attrib){
+        if (i === 0){
+            array.push([]);
+            className = $(attrib).attr("class");
+        }
+
+        if ($(attrib).attr("class") === className){
+            array[count].push($(attrib).attr("name"));
+        }else{
+            className = $(attrib).attr("class");
+            array.push([]);
+            count++;
+            array[count].push($(attrib).attr("name"));
+        }
+    });
+
+
+    generation(array);
 }
 
 
+
+function generation(parts){
+        var result = parts.reduce((a, b) => a.reduce((r, v) => r.concat(b.map(w => [].concat(v, w))), []));
+
+    result = result.map(a => a.join(', '));
+    console.log(result);
+    for (let i = 0; i < result.length; i++){
+        $("#selectedAttributes").append(result[i]);
+    }
+}
