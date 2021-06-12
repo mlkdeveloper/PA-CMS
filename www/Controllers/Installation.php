@@ -122,13 +122,12 @@ class Installation
     private function createFile($dataArray){
         $domainName = file_get_contents("config-sample.env", true, null, 0,11);
         $dbDriver = file_get_contents("config-sample.env", true, null, 12,14);
-        $configFile = file_get_contents("config-sample.env", true, null, 25);
+        $configFile = file_get_contents("config-sample.env", true, null, 26);
 
         $configFileExploded = explode('=', $configFile);
-
         $domainName .= $_SERVER['HTTP_HOST'];
 
-        $newConfigFile = $domainName.$dbDriver;
+        $newConfigFile = $domainName.PHP_EOL.$dbDriver;
         for ($i = 0; $i < count($dataArray); $i++){
             $newConfigFile .= $configFileExploded[$i].'='.$dataArray[$i];
         }
