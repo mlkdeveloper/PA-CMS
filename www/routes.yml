@@ -158,3 +158,8 @@
   controller: User
   action : changeUserPwd
 
+/admin/parametres:
+  controller: Settings
+  action : displaySettings
+
+
