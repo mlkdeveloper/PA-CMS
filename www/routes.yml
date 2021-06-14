@@ -162,4 +162,6 @@
   controller: Settings
   action : displaySettings
 
-
+/update-settings:
+  controller: Settings
+  action : update
