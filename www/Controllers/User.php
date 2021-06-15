@@ -32,10 +32,11 @@ class User extends Database
 			    if ($user->select('*')->where('email=:email')->setParams([":email" => $_POST['email']])->get()){
                     $pwdGet = $user->select('pwd')->where('email=:email')->setParams([":email" => $_POST['email']])->get();
 
+                    $isConfirmed = $user->select('isConfirmed')->where('email=:email')->setParams([":email" => $_POST['email']])->get();
 
                     if(password_verify($_POST["pwd"], $pwdGet[0]["pwd"])) {
 
-                        if ($user->select('isConfirmed')->where('email=:email')->setParams([":email" => $_POST['email']])->get() == 1) {
+                        if ($isConfirmed[0]["isConfirmed"] == "1") {
 
 
                             session_start();
