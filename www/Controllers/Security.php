@@ -75,10 +75,20 @@ class Security
         $view = new View("confirmationInscription");
         $view->assign("title", "C&C - Confirmation du compte");
         $user = new UserModel();
+
+
+        if (empty($user->select("*")->where('token= :token')->setParams(["token"=>$_GET['tkn']])->get())){
+            header("location:/");
+        }
+
         $users = new UserModel();
         $user = $user->select("*")->where('token= :token')->setParams(["token"=>$_GET['tkn']])->get();
+
         $users->populate($user[0]);
         $users->setIsConfirmed(1);
+
+        // Création du nv token
+        
         $users->save();
     }
 
@@ -91,8 +101,8 @@ class Security
         $form = $user->formBuildermodifyPwd();
         $view->assign("form", $form);
 
-        $errors = FormValidator::check($form, $_POST);
-
+        //$errors = FormValidator::check($form, $_POST);
+    $errors = [];
 
         if (!empty($_POST)){
 
@@ -107,6 +117,7 @@ class Security
             if (!$user->select('id')->where('token=:token')->setParams(['token' => $token])->get()){
                 array_push($errors, "ALERTE : modification du token dans le GET");
             }
+
 
             if (empty($errors)){
 

@@ -33,12 +33,20 @@ class User extends Database
                     $pwdGet = $user->select('pwd')->where('email=:email')->setParams([":email" => $_POST['email']])->get();
 
 
-                    if(password_verify($_POST["pwd"], $pwdGet[0]["pwd"])){
-                        session_start();
-                        $monUser = $user->select('*')->where('email=:email', 'pwd=:pwd')->setParams([":email" => $_POST['email'],":pwd" => $pwdGet[0]["pwd"],])->get();
-                        $_SESSION['user'] = $monUser;
-                        var_dump($_SESSION["user"]);
-                        header('location:/');
+                    if(password_verify($_POST["pwd"], $pwdGet[0]["pwd"])) {
+
+                        if ($user->select('isConfirmed')->where('email=:email')->setParams([":email" => $_POST['email']])->get() == 1) {
+
+
+                            session_start();
+                            $monUser = $user->select('*')->where('email=:email', 'pwd=:pwd')->setParams([":email" => $_POST['email'], ":pwd" => $pwdGet[0]["pwd"],])->get();
+                            $_SESSION['user'] = $monUser;
+                            var_dump($_SESSION["user"]);
+                            header('location:/');
+                        }else{
+                            array_push($errors,"Vous devez d'abord confimer votre compte");
+                            $view->assign("errors", $errors);
+                        }
                     }else{
                         array_push($errors,"L'email et le mot de passe ne correspondent pas");
                         $view->assign("errors", $errors);
@@ -136,7 +144,6 @@ class User extends Database
             $email = $_POST["email"];
             $pwd = $_POST["pwd"];
             $pwdConfirm = $_POST['pwdConfirm'];
-            $country = $_POST['country'];
 
             $emailVerif = $user->select('email')->where("email=:email")->setParams(["email" => $email])->get();
             $errors = [];
