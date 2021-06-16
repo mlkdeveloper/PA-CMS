@@ -20,14 +20,7 @@ class Settings
         if (!empty($_POST)) {
 
             $dataArray = $this->checkInformations($_POST);
-//            $this->createFile($dataArray);
-//
-//            Security::changeFile($this->fileConstantManager, 'changeConstantManager');
-//
-//            $this->insertBDD($dataArray[5], $dataArray[0]);
-//
-//            Security::changeFile($this->fileRoutes, 'deleteStartInstallation');
-//            Security::changeFile($this->fileRoutes, 'changeRoute');
+            $this->updateFile($dataArray);
 
             header('Location: /admin/parametres');
         } else {
@@ -95,69 +88,47 @@ class Settings
         return null;
     }
 
-//    private function createFile($dataArray){
-//        $dbDriver = file_get_contents("config-sample.env", true, null, 0,14);
-//        $configFile = file_get_contents("config-sample.env", true, null, 14);
-//
-//        $configFileExploded = explode('=', $configFile);
-//
-//        $newDB = $dbDriver;
-//        for ($i = 0; $i < count($dataArray); $i++){
-//            $newDB .= $configFileExploded[$i].'='.$dataArray[$i];
-//        }
-//
-//        $this->verificationBDD($dbDriver, $dataArray);
-//
-//        if(!file_exists('config-sample.env')){
-//            $this->errorRedirection("Le fichier config-sample.env n'existe pas");
-//        }
-//
-//        file_put_contents('config.env', $newDB);
-//
-//        new ConstantManager();
-//    }
-//
-//
-//    private function verificationBDD($dbDriver, $dataArray){
-//
-//        $dbDriver = explode('=', $dbDriver);
-//
-//
-//        try{
-//            $this->pdo = new \PDO( $dbDriver[1].":host=".$dataArray[3].";dbname=".$dataArray[0].";port=".$dataArray[4] , $dataArray[1] , $dataArray[2]);
-//        }catch(\Exception $e){
-//
-//            $errorCode = $e->getCode();
-//
-//            switch ($errorCode){
-//                case 1045:
-//                    $this->errorRedirection("Les identifiants de connexion à la base de données sont incorrects");
-//                    die();
-//                case 1049:
-//                    $this->errorRedirection("Il existe aucune base de données avec ce nom.<br>Créer une base de données avant de commencer l'installation");
-//                    die();
-//                case 2002:
-//                    $this->errorRedirection("Vérifier l'adresse de la base de données et le port");
-//                    die();
-//                default:
-//                    $this->errorRedirection("Une erreur s'est produite pendant la connexion à la base de données");
-//            }
-//        }
-//    }
-//
-//
-//    private function insertBDD($prefix, $database){
-//        $sql = file_get_contents("clickcreate.sql");
-//
-//        $installSql = str_replace("cc_", $prefix, $sql);
-//        $installSql = str_replace("clickCreate", $database, $installSql);
-//
-//        try {
-//            $this->pdo->query($installSql);
-//        }catch(\Exception $e){
-//            $this->errorRedirection("Une erreur s'est produite pendant la création de la base de données");
-//        }
-//    }
+    private function updateFile($dataArray){
+        $file = "config.env";
+
+        $ptr = fopen($file, "r");
+        $contenu = fread($ptr, filesize($file));
+
+        fclose($ptr);
+        $contenu = explode(PHP_EOL, $contenu);
+
+        $contenu = $this->searchDataFile($contenu, 'SMTPMAIL', $dataArray[0]);
+        $contenu = $this->searchDataFile($contenu, 'SMTPPWD', $dataArray[1]);
+        $contenu = $this->searchDataFile($contenu, 'SMTPHOST', $dataArray[2]);
+        $contenu = $this->searchDataFile($contenu, 'SMTPAUTH', $dataArray[3]);
+        $contenu = $this->searchDataFile($contenu, 'SMTPPORT', $dataArray[4]);
+        $contenu = $this->searchDataFile($contenu, 'SMTPENCRYPT', $dataArray[5]);
+        $contenu = $this->searchDataFile($contenu, 'PUBLICKEYSTRIPE', $dataArray[6]);
+        $contenu = $this->searchDataFile($contenu, 'PRIVATEKEYSTRIPE', $dataArray[7]);
+
+        $contenu = array_values($contenu);
+
+        $contenu = implode(PHP_EOL, $contenu);
+
+        $ptr = fopen($file, "w");
+        fwrite($ptr, $contenu);
+        fclose($ptr);
+    }
+
+    private function searchDataFile($newContenu, $superVar, $data){
+
+        $line = false;
+
+        foreach ($newContenu as $index => $value) {
+            if (strpos($value, $superVar) !== false) {
+                $line = $index;
+                break;
+            }
+        }
+        $newContenu[$line] = $superVar."=".$data;
+
+        return $newContenu;
+    }
 
     private function errorRedirection($error){
         $_SESSION['securityInstall'] = $error;
