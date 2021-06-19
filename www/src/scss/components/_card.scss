@@ -1,0 +1,27 @@
+.card{
+  background-color: #ffffff;
+  border: 1px solid rgba(0,0,0,0.125);
+  border-radius: 0.25rem;
+
+  &-body{
+    padding: 1rem 1rem;
+  }
+
+  &-title{
+    margin-bottom: 0.5rem;
+  }
+
+  &-subtitle{
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  &-img{
+    width: 100%;
+
+    &-top{
+      border-top-left-radius: calc(0.25rem - 1px);
+      border-top-right-radius: calc(0.25rem - 1px);
+    }
+  }
+}
