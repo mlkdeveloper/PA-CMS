@@ -33,7 +33,7 @@ function addAttribute(id) {
                    "<div class='attributes attrValues' id='val-"+id+"'>\n";
 
               array.map((value) => {
-                    html += "<div class='mb-1'><input class='"+name+"' name='"+value.name+"' type='checkbox' value='"+ value.id+"'><label>" + value.name + "</label></div>"
+                    html += "<div class='mb-1'><input id='" + value.id + "' class='"+name+"' name='"+value.name+"' type='checkbox' value='"+ value.id+"'><label>" + value.name + "</label></div>"
                });
 
               html +=
@@ -62,8 +62,7 @@ function isVariant() {
 }
 
 function buildArray() {
-    var arrayAttributs;
-    arrayAttributs = $('.attrValues input:checked');
+    var arrayAttributs = $('.attrValues input:checked');
 
     var className = '';
     var array = [];
@@ -72,31 +71,95 @@ function buildArray() {
     $.each(arrayAttributs, function(i, attrib){
         if (i === 0){
             array.push([]);
+            array_id.push([]);
             className = $(attrib).attr("class");
         }
 
         if ($(attrib).attr("class") === className){
             array[count].push($(attrib).attr("name"));
+            array_id[count].push($(attrib).attr("id"));
         }else{
             className = $(attrib).attr("class");
             array.push([]);
+            array_id.push([]);
             count++;
             array[count].push($(attrib).attr("name"));
+            array_id[count].push($(attrib).attr("id"));
         }
     });
 
+    comb = generation(array_id);
 
-    generation(array);
+    comb.map((x, value)=>{
+        generateInputs("#comb", x);
+    })
+
+    $("#comb").append("<input id='sub_comb' type='submit' value='Enregistrer' onclick='createProduct()' class='button button--success' />")
+
+    $("#loader").show();
+    $("div[name='comb']").hide();
+    $("#sub_comb").hide();
+
+    setTimeout(() => {
+        $("#loader").fadeOut();
+        $("div[name='comb']").show();
+        $("#sub_comb").show();
+    }, 500);
+
 }
-
-
 
 function generation(parts){
-        var result = parts.reduce((a, b) => a.reduce((r, v) => r.concat(b.map(w => [].concat(v, w))), []));
+    const result = parts.reduce((a, b) => a.reduce((r, v) => r.concat(b.map(w => [].concat(v, w))), []));
 
-    result = result.map(a => a.join(', '));
-    console.log(result);
-    for (let i = 0; i < result.length; i++){
-        $("#selectedAttributes").append(result[i]);
-    }
+    // result = result.map(a => a.join(', '));
+    return result;
 }
+    
+function generateInputs(selector, id){
+    $(selector).append(
+        "<div name='comb' class='row mb-2'>" +
+            "<label class='col-md-1'>" + id + "</label>" +
+            "<input type='number' class='input col-md-5 mr-1' name='stock' placeholder='Stock' /> " +
+            "<input type='number' class='input col-md-5' name='price' placeholder='Prix' />" +
+        "</div>" 
+    )
+}
+let array_id = [];
+let comb;
+
+function createProduct(){
+    var stock = $("input[name='stock']");
+    var price = $("input[name='price']");
+
+    if(comb.length === 1){
+        comb.push(stock[0].value)
+        comb.push(price[0].value)
+        var comb2 = [comb]
+        comb = comb2
+    }else{
+        comb.forEach((element, y) => {
+            element.push(stock[y].value)
+            element.push(price[y].value)
+        })
+    } 
+
+    comb = Object.assign({}, comb);
+    comb = JSON.stringify(comb)
+
+
+    $.ajax({
+        type: 'POST',
+        url: "/admin/creer-produit-ajax",
+        data: "comb_array=" + comb,
+        success: (data) => {
+            console.log(data)
+        },
+        error: () => {
+
+        }
+
+    })
+
+}
+
+

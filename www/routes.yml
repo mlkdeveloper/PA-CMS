@@ -170,3 +170,7 @@
 /admin/valeurs-attribut-ajax:
   controller : Product
   action : getValuesAttribute
+
+/admin/creer-produit-ajax:
+  controller : Product
+  action : createProduct

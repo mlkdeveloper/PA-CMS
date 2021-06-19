@@ -5,3 +5,11 @@
     border-radius: 5px;
     padding: 1em;
 }
+
+#loader{
+    display: none;
+    transition: all 0.8s;
+    justify-content: center;
+    align-items: center;
+}
+

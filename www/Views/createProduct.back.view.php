@@ -82,8 +82,14 @@
     </div>
 
     <div class="container">
-        <button class="button button--blue" onclick="buildArray()" >Valider</button>
+        <button id="valider" class="button button--blue" onclick="buildArray()" >Valider</button>
     </div>
+     
+
+    <div class="centered"><div class="spinner" id="loader"></div></div>
+    <div id="comb" class="container">
+    </div>
+
 </section>
 
 <script src="../public/js/product.js"></script>
