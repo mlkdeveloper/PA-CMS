@@ -14,15 +14,21 @@
   controller: User
   action: add
 
-
-/s-inscrire:
+/connexion:
   controller: User
-  action: register
+  action: login
+
+/connexion-admin:
+  controller: User
+  action: loginAdmin
+
+/deconnexion:
+  controller: Security
+  action: logout
 
 /afficher-un-utilisateur:
   controller: User
   action: show
-
 
 /afficher-les-utilisateurs:
   controller: User
@@ -75,4 +81,102 @@
 /admin/check-review:
   controller: Reviews
   action: checkReviews
+
+
+/admin/nouveau-role:
+  controller: Role
+  action: newRole
+
+/admin/role:
+  controller: Role
+  action: showAll
+
+/admin/modification-role:
+  controller: Role
+  action: updateRole
+
+/admin/suppression-role:
+  controller: Role
+  action: deleteRole
+
+/admin/info-reviews:
+  controller: Reviews
+  action: showProducts
+
+/admin/del-review:
+  controller: Reviews
+  action: deleteReviews
+
+/admin/show-reviews-from-products:
+  controller: Reviews
+  action: showReviewsFromProducts
+
+/admin/orders:
+  controller: Orders
+  action: showOrders
+
+/admin/info-order:
+  controller: Orders
+  action: infoOrder
+
+/admin/ajout-client:
+  controller: User
+  action: newClient
+
+/admin/liste-client:
+  controller: User
+  action: displayClient
+
+/admin/modification-client:
+  controller: User
+  action: updateClient
+
+/admin/suppression-client:
+  controller: User
+  action: deleteClient
+
+/admin/detail-magasin:
+  controller : Shop
+  action : detailShop
+
+/inscription:
+  controller : User
+  action: register
+
+/mot-de-passe-oublie:
+  controller : Security
+  action : pwdPerdu
+
+/recuperation-mot-de-passe:
+  controller : Security
+  action : recuperationpwd
+
+/admin/delete-shop:
+  controller: Shop
+  action: deleteShop
+
+/confirmation-inscription:
+  controller: Security
+  action: confirmedRegister
+
+/admin/liste-utilisateurs:
+  controller: User
+  action: displayUsers
+
+/admin/ajout-utilisateur:
+  controller: User
+  action: addUsers
+
+/admin/suppression-utilisateur:
+  controller: User
+  action: deleteUser
+
+/admin/modification-utilisateur:
+  controller: User
+  action: updateUser
+
+/admin/utilisateur-changement-mdp:
+  controller: User
+  action : changeUserPwd
+
 

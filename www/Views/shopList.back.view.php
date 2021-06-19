@@ -33,13 +33,14 @@
                                 <div class="align">
                                     <div class="align">
                                         <button class="button button--black">
-                                            <a href="/admin/modifier-magasin?id=<?= $value['id']?>"><i class="fas fa-pencil-alt"></i>
+                                            <a href="/admin/detail-magasin?id=<?= $value['id']?>"><i class="fas fa-pencil-alt"></i>
                                             Modifier
                                             </a>
                                         </button>
                                     </div>
                                     <div class="align">
-                                        <i class="fas fa-trash"></i>
+                                        <?php  //App\Core\FormBuilder::render($form); ?>
+                                        <a href="/admin/delete-shop?id=<?= $value['id']?>"><i class="fas fa-trash"></i></a>
                                     </div>
                                 </div>
                             </td>

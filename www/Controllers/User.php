@@ -2,85 +2,483 @@
 
 namespace App\Controller;
 
+use App\Core\Email;
+use App\Core\Database;
+use App\Core\Helpers;
 use App\Core\View;
 use App\Core\FormValidator;
 use App\Models\User as UserModel;
 use App\Models\Page;
+use App\Models\Role;
 
-class User
+class User extends Database
 {
-
-	//Method : Action
-	public function defaultAction(){
-        $user = new UserModel();
-
-
-
-        //$user->selectAll(2);
-        /*
-        $user->setFirstname("Toto");
-        $user->save();
-        */
-	}
-
-
-	//Method : Action
-	public function registerAction(){
+	public function loginAction(){
 
 		$user = new UserModel();
-		$view = new View("register"); 
 
-		$form = $user->formBuilderRegister();
+		$monUser = new UserModel();
+		$view = new View("login", "front");
+
+		$form = $user->formBuilderLogin();
 
 		if(!empty($_POST)){
 			
-			$errors = FormValidator::check($form, $_POST);
-
+			//$errors = FormValidator::check($form, $_POST);
+            $errors = [];
 			if(empty($errors)){
-				$user->setFirstname($_POST["firstname"]);
-				$user->setLastname($_POST["lastname"]);
-				$user->setEmail($_POST["email"]);
-				$user->setPwd($_POST["pwd"]);
-				$user->setCountry($_POST["country"]);
 
-				$user->save();
+
+			    if ($user->select('*')->where('email=:email')->setParams([":email" => $_POST['email']])->get()){
+                    $pwdGet = $user->select('pwd')->where('email=:email')->setParams([":email" => $_POST['email']])->get();
+
+
+                    if(password_verify($_POST["pwd"], $pwdGet[0]["pwd"])){
+                        session_start();
+                        $monUser = $user->select('*')->where('email=:email', 'pwd=:pwd')->setParams([":email" => $_POST['email'],":pwd" => $pwdGet[0]["pwd"],])->get();
+                        $_SESSION['user'] = $monUser;
+                        var_dump($_SESSION["user"]);
+                        header('location:/');
+                    }else{
+                        array_push($errors,"L'email et le mot de passe ne correspondent pas");
+                        $view->assign("errors", $errors);
+
+                    }
+                }else{
+                    array_push($errors,"L'email inconnu");
+                    $view->assign("errors", $errors);
+                }
+
+
+
+
+				//$user->save();
 			}else{
 				$view->assign("errors", $errors);
 			}
 		}
 
 		$view->assign("form", $form);
+        $view->assign("title", "C&C - Connexion");
 		$view->assign("formLogin", $user->formBuilderLogin());
 	}
 
+    //Method : Action
+    public function loginAdminAction(){
 
-	//Method : Action
-	public function addAction(){
-		
-		//Récupérer le formulaire
-		//Récupérer les valeurs de l'internaute si il y a validation du formulaire
-		//Vérification des champs (uncitié de l'email, complexité du pwd, ...)
-		//Affichage du résultat
+        $user = new UserModel();
 
+        $monUser = new UserModel();
+        $view = new View("login", "front");
+
+        $form = $user->formBuilderLogin();
+
+        if(!empty($_POST)){
+            $errors = [];
+            if(empty($errors)){
+
+                $pwdGet = $user->select('pwd')->where('email=:email')->setParams([":email" => $_POST['email']])->get();
+
+
+
+
+                if ($user->select('*')->where("email=:email", "id_role = 1")->setParams([":email" => $_POST['email']])->get()){
+                    $pwdGet = $user->select('pwd')->where('email=:email')->setParams([":email" => $_POST['email']])->get();
+
+
+                    if(password_verify($_POST["pwd"], $pwdGet[0]["pwd"])){
+                        session_start();
+                        $monUser = $user->select('*')->where('email=:email', 'pwd=:pwd')->setParams([":email" => $_POST['email'],":pwd" => $pwdGet[0]["pwd"],])->get();
+                        $_SESSION['user'] = $monUser;
+                        var_dump($_SESSION["user"]);
+                        header('location:/');
+                    }else{
+                        array_push($errors,"L'email et le mot de passe ne correspondent pas");
+                        $view->assign("errors", $errors);
+
+                    }
+                }else{
+                    array_push($errors,"Cette adresse mail est inconnu ou n'a pas les droits administrateur");
+                    $view->assign("errors", $errors);
+                }
+
+
+                //$user->save();
+            }else{
+                $view->assign("errors", $errors);
+            }
+        }
+
+        $view->assign("form", $form);
+        $view->assign("title", "C&C - Connexion");
+        $view->assign("formLogin", $user->formBuilderLogin());
+    }
+
+
+	public function registerAction()
+    {
+        $user = new UserModel();
+
+        $monUser = new UserModel();
+        $view = new View("register");
+
+        $form = $user->formBuilderRegister();
+        $view->assign("form", $form);
+        $view->assign("title", "C&C - Inscription");
+
+
+        if(!empty($_POST)){
+
+            //$errors = FormValidator::check($form, $_POST);
+
+            $lastname = $_POST["lastname"];
+            $firstname = $_POST["firstname"];
+            $email = $_POST["email"];
+            $pwd = $_POST["pwd"];
+            $pwdConfirm = $_POST['pwdConfirm'];
+            $country = $_POST['country'];
+
+            $emailVerif = $user->select('email')->where("email=:email")->setParams(["email" => $email])->get();
+            $errors = [];
+            if ($emailVerif){
+                array_push($errors, "L'email est deja connu de notre base de données");
+                $view->assign("errors", $errors);
+            }
+
+            if(empty($errors)) {
+
+                if ($pwd == $pwdConfirm) {
+
+                    //Generate a random string.
+                    $token = openssl_random_pseudo_bytes(32);
+                    //Convert the binary data into hexadecimal representation.
+                    $token = bin2hex($token);
+
+                    $pwdHash = password_hash($pwd, PASSWORD_BCRYPT);
+
+                    $user->setLastname($lastname);
+                    $user->setFirstName($firstname);
+                    $user->setEmail($email);
+                    $user->setPwd($pwdHash);
+                    $user->setStatus(1);
+                    $user->setIdRole(2);
+                    $user->setToken($token);
+                    
+                    $user->save();
+
+                    Email::sendEmail($email, "Veuillez confirmer votre compte", "http://localhost:8080/confirmation-inscription?tkn=".$token,"Confimer mon compte", "/");
+
+
+                    header('location:/connexion');
+                }else{
+                    array_push($errors, "Le mot de passe de confirmation ne correspond pas");
+                    $view->assign("errors", $errors);
+                }
+            } else {
+                $view->assign("errors", $errors);
+            }
+        }
 	}
 
-	//Method : Action
-	public function showAction(){
-		
-		//Affiche la vue user intégrée dans le template du front
-		$view = new View("user"); 
-	}
+
+	// CLIENTS //
+
+    public function displayClientAction(){
+        $clients = new UserModel();
+        $array = $clients->select()->where("status = 1","id_role = 2")->get();
+        $view = new View("clientList.back", "back");
+        $view->assign("title", "Admin - Client");
+        $view->assign("array", $array);
+    }
+
+    public function newClientAction(){
+        $client = new UserModel();
+        $view = new View("createClient.back", "back");
+        $view->assign("title", "Admin - Nouveau client");
+
+        $formCreateClient = $client->formBuilderCreateClient();
+
+        if (!empty($_POST)) {
+            $this->saveForm($view, $client, $formCreateClient, false);
+        }
+    }
+
+    public function saveForm($view, $client, $form, $isCreated, $formStatus = Database::NEW_OBJECT){
+
+            $error = FormValidator::checkClient($form, $_POST, $isCreated);
+
+            if (empty($error)) {
+
+                if ($formStatus == Database::UPDATE_OBJECT) {
+                    $client->setId($_GET['id']);
+                    $getInfo = $client->select('pwd,token,isConfirmed')->where("id = :id ")->setParams(["id" => $_GET['id'] ])->get();
+                    $client->setPwd( $getInfo[0]['pwd']);
+                    $client->setToken($getInfo[0]['token']);
+                    $client->setIsConfirmed($getInfo[0]['isConfirmed']);
+
+                }else{
+                    $pwd = Helpers::pwdGenerator();
+                    $client->setPwd(password_hash($pwd, PASSWORD_DEFAULT));
+
+                    $token = openssl_random_pseudo_bytes(32);
+                    $token = bin2hex($token);
+                    $client->setToken($token);
+                }
+
+                $client->populate($_POST);
+                $client->setStatus(1);
+                $client->setIdRole(2);
+
+                $returnValue = $client->save();
+                $message = $this->returnValue($returnValue,$formStatus);
+
+                if ($message != false){
+                    $view->assign("message", $message);
+
+                    if($formStatus == Database::NEW_OBJECT){
+                        Email::sendEmail($client->getEmail(), "Veuillez confirmer votre compte", "http://localhost:8082/confirmation-inscription?tkn=".$token,"Confirmer mon compte", "/admin/liste-client");
+                    }
+                }else{
+                    http_response_code(400);
+                }
+            }else {
+                $view->assign("errors", $error);
+            }
+    }
 
 
+    function updateClientAction(){
+        if (isset($_GET['id']) && !empty($_GET['id'])){
 
-	//Method : Action
-	public function showAllAction(){
-		
-		//Affiche la vue users intégrée dans le template du back
-		$view = new View("users", "back"); 
-		
-	}
+            $client = new UserModel();
+            $verifyId = $client->select("id,email")->where("id = :id","id_role = 2","status = 1")->setParams(["id" => $_GET['id']])->get();
+
+            if (empty($verifyId)) {
+                header("Location: /admin/liste-client");
+                exit();
+            }
+
+            $view = new View("updateClient.back", "back");
+
+            $form = $client->formBuilderCreateClient();
+            if (!empty($_POST)) {
+                $this->saveForm($view, $client, $form, trim($_POST['email']) === $verifyId[0]["email"], Database::UPDATE_OBJECT);
+            }
+
+            $values = $client->select()->where("id = :id")->setParams(["id" => $_GET['id']])->get();
+            $view->assign("values", ...$values);
+            $view->assign("title", "Admin - Client");
+        }else{
+            header("Location: /admin/liste-client");
+        }
+    }
+
+    function deleteClientAction()
+    {
+
+        if (isset($_GET['id']) && !empty($_GET['id'])){
+
+            $client = new UserModel();
+            $verifyId = $client->select("id")->where("id = :id", "id_role = 2","status = 1")->setParams(["id" => $_GET['id']])->get();
+
+            if (empty($verifyId)) {
+                header("Location: /admin/liste-client");
+                exit();
+            }
+
+            $client->setId($_GET['id']);
+            $client->setStatus(0);
+
+            $returnValue = $client->deleteObject();
+            $message = $this->returnValue($returnValue,3);
+
+            if ($message != false) {
+                session_start();
+                $_SESSION['deleteClient'] = $message;
+            }
+            header("Location: /admin/liste-client");
+
+        }else{
+
+            header("Location: /admin/liste-client");
+        }
+    }
+
+    public function returnValue($data, $statut){
+
+	    $message = false;
+
+	    if($data){
+            if ($statut == 1 ){
+                $message = "Utilisateur ajouté !";
+            }
+            if ($statut == 2){
+                $message = "Utilisateur modifié !";
+            }
+            if ($statut == 3){
+                $message = "Utilisateur supprimé !";
+            }
+        }
+        return $message;
+    }
 
 
+    public function addUsersAction(){
+
+        $user = new UserModel();
+        $role = new Role();
+        $view = new View("createUser.back", "back");
+        $view->assign("title", "Admin - Utilisateur");
+
+        $getRoles = $role->select("id,name")->where("id > 2")->get();
+        $view->assign("roles", $getRoles);
+
+        $form = $user->formUsers();
+
+        if(!empty($_POST)) {
+
+            $errors = FormValidator::checkClient($form, $_POST, false);
+
+            if (empty($errors)) {
+                $user->populate($_POST);
+                $user->setPwd(password_hash($_POST['pwd'],PASSWORD_DEFAULT));
+                $user->setStatus(1);
+                $user->save();
+
+                $view->assign("success", "L'utilisateur a bien été créé !");
+            } else {
+                $view->assign("errors", $errors);
+            }
+        }
+    }
+
+    public function displayUsersAction(){
+
+        $user = new UserModel();
+        $view = new View("usersList.back", "back");
+        $view->assign("title", "Admin - Utilisateurs");
+
+        $users = $user->select("cc_user.id,cc_user.lastname,cc_user.firstname,cc_user.email,cc_role.name")
+            ->where("cc_user.id_role > 2")
+            ->innerJoin("cc_role","cc_role.id","=","cc_user.id_role")
+            ->get();
+
+        $view->assign("users", $users);
+
+
+    }
+
+    public function deleteUserAction(){
+
+        if (isset($_GET['id']) && !empty($_GET['id'])) {
+
+            $user = new UserModel();
+            $verifyId = $user->select("id")->where("id = :id", "id_role > 2")->setParams(["id" => $_GET['id']])->get();
+
+            if (empty($verifyId)) {
+                header("Location: /admin/liste-utilisateur");
+                exit();
+            }
+
+            $user->setId($_GET['id']);
+            $user->where("id= :id")->setParams(["id" => $_GET['id']])->delete();
+
+            session_start();
+            $_SESSION['deleteUser'] = "Utilisateur supprimé ! ";
+
+            header("Location: /admin/liste-utilisateurs");
+        }
+
+    }
+
+    public function updateUserAction(){
+
+        if (isset($_GET['id']) && !empty($_GET['id'])) {
+
+            $userId = new UserModel();
+            $verifyId = $userId->select("id, email,pwd")->where("id = :id", "id_role > 2")->setParams(["id" => $_GET['id']])->get();
+
+            if (empty($verifyId)) {
+                header("Location: /admin/liste-utilisateurs");
+                exit();
+            }
+
+            $role = new Role();
+            $getRoles = $role->select("id,name")->where("id > 2")->get();
+
+            $view = new View("updateUser.back", "back");
+            $view->assign("roles", $getRoles);
+            $view->assign("title", "Admin - Utilisateur");
+
+            $form = $userId->formUpdateUsers();
+
+            if(!empty($_POST)) {
+
+                $errors = FormValidator::checkClient($form, $_POST, trim($_POST['email']) === $verifyId[0]["email"]);
+
+                if (empty($errors)) {
+                    $userId->populate($_POST);
+                    $userId->setId($_GET['id']);
+                    $userId->setPwd($verifyId[0]["pwd"]);
+                    $userId->setStatus(1);
+                    $userId->save();
+
+                    $view->assign("success", "L'utilisateur a bien été modifié !");
+                } else {
+                    $view->assign("errors", $errors);
+                }
+            }
+
+            $users = $userId->select("cc_user.pwd,cc_user.id,cc_user.lastname,cc_user.firstname,cc_user.email,cc_role.name")
+                ->where("cc_user.id = :id","cc_user.id_role > 2")
+                ->setParams(['id' => $_GET['id']])
+                ->innerJoin("cc_role","cc_role.id","=","cc_user.id_role")
+                ->get();
+
+            $view->assign("users", $users[0]);
+
+        }else{
+            header("Location: /admin/liste-utilisateurs");
+        }
+    }
+
+
+    public function changeUserPwdAction(){
+
+        if (isset($_GET['id']) && !empty($_GET['id'])) {
+
+            $user = new UserModel();
+            $verifyId = $user->select()->where("id = :id", "id_role > 2")->setParams(["id" => $_GET['id']])->get();
+
+            if (empty($verifyId)) {
+                header("Location: /admin/liste-utilisateurs");
+                exit();
+            }
+            $form = $user->formPwdUsers();
+
+            if(!empty($_POST)) {
+
+                $errors = FormValidator::checkClient($form, $_POST, false);
+                session_start();
+                if (empty($errors)) {
+                    $user->populate($verifyId[0]);
+                    $user->setId($_GET['id']);
+                    $user->setIdRole($verifyId[0]['id_role']);
+                    $user->setPwd(password_hash($_POST['pwd'], PASSWORD_DEFAULT));
+                    $user->save();
+
+                    $_SESSION['successChangePwd'] = "Mot de passe modifié !";
+
+                } else {
+                    $_SESSION['errorChangePwd'] = "Votre mot de passe doit faire au minimum 8 caractères, contenir une majuscule et un chiffre.";
+                }
+                header("Location: /admin/modification-utilisateur?id=" . $_GET['id']);
+            }else{
+                header("Location: /admin/liste-utilisateurs");
+            }
+        }else{
+            header("Location: /admin/liste-utilisateurs");
+        }
+    }
 
 }
