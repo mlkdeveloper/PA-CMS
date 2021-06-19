@@ -89,9 +89,10 @@ function buildArray() {
     });
 
     comb = generation(array_id);
+    let comb_label = generation(array);
 
-    comb.map((x, value)=>{
-        generateInputs("#comb", x);
+    comb.map((x, y)=>{
+        generateInputs("#comb", comb_label[y]);
     })
 
     $("#comb").append("<input id='sub_comb' type='submit' value='Enregistrer' onclick='createProduct()' class='button button--success' />")
@@ -115,10 +116,10 @@ function generation(parts){
     return result;
 }
     
-function generateInputs(selector, id){
+function generateInputs(selector, label){
     $(selector).append(
         "<div name='comb' class='row mb-2'>" +
-            "<label class='col-md-1'>" + id + "</label>" +
+            "<label class='col-md-1'>" + label + "</label>" +
             "<input type='number' class='input col-md-5 mr-1' name='stock' placeholder='Stock' /> " +
             "<input type='number' class='input col-md-5' name='price' placeholder='Prix' />" +
         "</div>" 
@@ -128,6 +129,7 @@ let array_id = [];
 let comb;
 
 function createProduct(){
+    
     var stock = $("input[name='stock']");
     var price = $("input[name='price']");
 

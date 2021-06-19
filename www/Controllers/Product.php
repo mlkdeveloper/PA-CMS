@@ -69,8 +69,6 @@ class Product
 
                 $id = $id[0]["id"];
 
-                print_r($value);
-
                 foreach($value as $k => $v){
                     $pt->setIdTerm($v);
                     $pt->setIdGroup($id);
