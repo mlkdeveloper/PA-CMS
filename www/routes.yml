@@ -59,7 +59,7 @@
   controller: Category
   action: updateCategory
 
-/admin/supression-categorie:
+/admin/suppression-categorie:
   controller : Category
   action: deleteCategory
 

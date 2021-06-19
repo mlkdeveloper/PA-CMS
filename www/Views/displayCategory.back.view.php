@@ -1,4 +1,17 @@
 <div class="container">
+
+
+    <?php if(isset($_SESSION['successDeleteCategory'])):?>
+        <div class="alert alert--green"><?= $_SESSION['successDeleteCategory']?></div>
+        <?php unset($_SESSION['successDeleteCategory']); ?>
+    <?php endif;?>
+
+    <?php if(isset($_SESSION['errorDeleteCategory'])):?>
+        <div class="alert alert--red"><?= $_SESSION['errorDeleteCategory']?></div>
+        <?php unset($_SESSION['errorDeleteCategory']); ?>
+    <?php endif;?>
+
+
     <div class="align">
         <h1>Liste des catégories</h1>
         <button class="button button--blue">
@@ -31,7 +44,7 @@
                                     <i class="fas fa-pencil-alt"></i>
                                     <a href="/admin/modification-categorie?id=<?= $category['id'] ?>">Modifier</a>
                                 </button>
-                                <i class="fas fa-trash"></i>
+                                <a href="/admin/suppression-categorie?id=<?= $category['id'] ?>"><i class="fas fa-trash"></i></a>
                            </div>
                         </td>
                     </tr>

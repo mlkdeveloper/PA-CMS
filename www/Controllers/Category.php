@@ -51,8 +51,11 @@ class Category{
             $category = new modelCategory();
             $columns = $category->select()->where("id = :id")->setParams(["id" => $_GET['id']])->get();
 
-            if (empty($columns))
+            if (empty($columns)) {
                 header("Location: /admin/display-category");
+                exit();
+            }
+
 
             $category->populate($columns[0]);
             $view = new View("updateCategory.back", "back");
@@ -104,6 +107,7 @@ class Category{
             }else{
                 $_SESSION['errorDeleteCategory'] = "Vous ne pouvez pas supprimé cette catégorie.";
             }
+            header("Location: /admin/display-category");
         }else{
             header("Location: /admin/display-category");
         }
