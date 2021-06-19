@@ -134,9 +134,9 @@ function createProduct(){
     var price = $("input[name='price']");
 
     if(comb.length === 1){
-        comb.push(stock[0].value)
-        comb.push(price[0].value)
-        var comb2 = [comb]
+        comb[0].push(stock[0].value)
+        comb[0].push(price[0].value)
+        var comb2 = comb
         comb = comb2
     }else{
         comb.forEach((element, y) => {
