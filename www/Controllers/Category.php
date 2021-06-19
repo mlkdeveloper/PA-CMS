@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Core\FormValidator;
 use App\Core\View;
 use App\Models\Category as modelCategory;
+use App\Models\Products;
 
 class Category{
 
