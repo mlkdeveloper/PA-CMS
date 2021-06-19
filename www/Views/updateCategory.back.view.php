@@ -13,6 +13,16 @@
         echo "</div>";
         echo "</div>";
     }
+
+
+    if (isset($successUpdateCategory)){
+
+        echo "<div class='container'>";
+        echo "<div class='alert alert--green'>";
+        echo $successUpdateCategory;
+        echo "</div>";
+        echo "</div>";
+    }
     ?>
 
 

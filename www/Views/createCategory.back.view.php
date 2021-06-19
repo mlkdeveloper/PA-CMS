@@ -12,6 +12,16 @@ if (isset($errors)){
     echo "</div>";
     echo "</div>";
 }
+
+if (isset($successNewCategory)){
+
+    echo "<div class='container'>";
+    echo "<div class='alert alert--green'>";
+    echo $successNewCategory;
+    echo "</div>";
+    echo "</div>";
+}
+
 ?>
 
 

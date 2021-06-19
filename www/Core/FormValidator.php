@@ -1,6 +1,6 @@
 <?php
 namespace App\Core;
-use App\Models\Category as modelCategory;
+use App\Models\Category;
 
 class FormValidator
 {
@@ -32,7 +32,7 @@ class FormValidator
 	}
 
 
-	public static function checkFormCategory($config,$data){
+	public static function checkFormCategory($config,$data,$isUpdated){
 
         $errors = [];
 
@@ -57,16 +57,14 @@ class FormValidator
                     $errors[] = $configInputs["error"];
                 }
 
-                if (!empty($configInputs["unique"]) &&
-                    $configInputs["unique"] === true
-                ){
-                    $category = new modelCategory();
-                    $name = $category->select("name")->where("name = :name")->setParams([":name"=>htmlspecialchars($data[$name])])->get();
-
-                    if (!empty($name)){
-                        $errors[] = "Cette catégorie existe déjà !";
+                if (!$isUpdated) {
+                    if (!empty($configInputs["uniq"]) &&
+                        $configInputs["uniq"] === true
+                    ) {
+                        $category = new Category();
+                        if ($category->find_duplicates_sql($name, $data[$name]))
+                            $errors[] = $configInputs["errorUniq"];
                     }
-
                 }
 
                 if (!empty($configInputs["status"])

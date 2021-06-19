@@ -28,12 +28,14 @@ class Category{
 
         if(!empty($_POST)){
 
-            $errors = FormValidator::checkFormCategory($form, $_POST);
+            $errors = FormValidator::checkFormCategory($form, $_POST,false);
 
             if (empty($errors)){
 
                 $category->populate($_POST);
                 $category->save();
+
+                $view->assign("successNewCategory", "Catégorie créée !");
 
             }else{
                 $view->assign("errors", $errors);
@@ -58,33 +60,26 @@ class Category{
 
 
             $form = $category->formBuilderRegister();
-            $this->saveForm($view,$category,$form,false);
+
+            if(!empty($_POST) ){
+
+                $errors = FormValidator::checkFormCategory($form, $_POST,trim($_POST['name']) === $category->getName());
+
+                if (empty($errors)){
+
+                    $category->setId($_GET['id']);
+                    $category->populate($_POST);
+                    $category->save();
+
+                    $view->assign("successUpdateCategory", "Catégorie modifiée !");
+                }else{
+                    $view->assign("errors", $errors);
+                }
+            }
 
             $view->assign("category", $category);
         }else{
             header("Location: /admin/display-category");
-        }
-    }
-
-    public function saveForm($view,$category,$form,$newCategory){
-
-        if(!empty($_POST) ){
-
-            if (isset($_POST["table_length"]))
-                unset($_POST["table_length"]);
-
-            $errors = FormValidator::checkFormCategory($form, $_POST);
-
-            if (empty($errors)){
-
-                if ($newCategory === false)
-                    $category->setId($_GET['id']);
-
-               $category->populate($_POST);
-               $category->save();
-            }else{
-                $view->assign("errors", $errors);
-            }
         }
     }
 
