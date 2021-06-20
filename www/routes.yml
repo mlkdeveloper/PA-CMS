@@ -46,21 +46,42 @@
   controller: Dashboard
   action: dashboard
 
+
+/admin/display-category:
+  controller: Category
+  action: show
+
+/admin/nouvelle-categorie:
+  controller: Category
+  action: newCategory
+
+/admin/modification-categorie:
+  controller: Category
+  action: updateCategory
+
+/admin/suppression-categorie:
+  controller : Category
+  action: deleteCategory
+
 /admin/nouveau-magasin:
   controller: Shop
   action: newShop
+
 
 /admin/pages:
   controller: Pages
   action: pages
 
+
 /admin/publisher:
   controller: Publisher
   action: publisher
 
+
 /admin/check-review:
   controller: Reviews
   action: checkReviews
+
 
 /admin/nouveau-role:
   controller: Role
@@ -157,4 +178,5 @@
 /admin/utilisateur-changement-mdp:
   controller: User
   action : changeUserPwd
+
 
