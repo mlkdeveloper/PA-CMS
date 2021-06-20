@@ -174,4 +174,39 @@ class Settings
             header('Location: /admin/parametres');
         }
     }
+
+    public function updateAdminPasswordAction(){
+
+        $admin = new User();
+
+        if(count($_POST) != 3){
+            $this->errorRedirection('Formulaire non conforme');
+        }else {
+
+            $oldPwd = htmlspecialchars(trim($_POST['old_pwd']));
+            $newPwd = htmlspecialchars(trim($_POST['new_pwd']));
+            $newPwdConfirm = htmlspecialchars(trim($_POST['new_pwd_confirm']));
+
+            if (empty($oldPwd) ||
+                empty($newPwd) ||
+                empty($newPwdConfirm)){
+                $this->errorRedirection('Veuillez remplir tous les champs');
+            }
+
+            $checkMail = $admin->select()->where("email = :email")->setParams(["email" => $mailAdmin])->get();
+
+            if($checkMail){
+                $this->errorRedirection('Ce mail est déjà utilisé');
+            }
+
+            $dataAdmin = $admin->select()->where("id = :id")->setParams(["id" => 1])->get();
+
+            $admin->populate($dataAdmin[0]);
+            $admin->setEmail($_POST['admin_mail']);
+            $admin->save();
+
+
+            header('Location: /admin/parametres');
+        }
+    }
 }
