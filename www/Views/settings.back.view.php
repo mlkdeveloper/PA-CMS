@@ -111,7 +111,7 @@
                         <div class="row">
                             <div class="form_align--top center-margin">
                                 <label for="admin_mail">Adresse mail:</label>
-                                <input style="width: 250px; margin-bottom: 40px" class="input" type="email" id="admin_mail" name="admin_mail" required>
+                                <input style="width: 250px; margin-bottom: 40px" class="input" type="email" id="admin_mail" name="admin_mail" required value="<?php echo $email ?>">
                             </div>
                         </div>
 

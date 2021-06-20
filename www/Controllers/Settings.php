@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 use App\Core\View;
+use App\Models\Setting;
 use App\Models\User;
 
 
@@ -15,9 +16,11 @@ class Settings
         $view = new View("settings.back", "back");
         $view->assign("title", "Paramètres");
 
-        $users = new User();
-        $emailAdmin = $users->select("email")->where("id = :id")->setParams(["id" => 1])->get();
-        $view->assign("email", $emailAdmin);
+        $admin = new User();
+        $emailAdmin = $admin->select("email")->where("id = :id")->setParams(["id" => 1])->get();
+        foreach ($emailAdmin[0] as $email):
+            $view->assign("email", $email);
+        endforeach;
     }
 
     public function updateAction()
@@ -143,8 +146,8 @@ class Settings
 
     public function updateAdminAction(){
 
-        $users = new User();
-        $pwdAdmin = $users->select("pwd")->where("id = :id")->setParams(["id" => 1])->get();
+        $admin = new Setting();
+        $pwdAdmin = $admin->select("pwd")->where("id = :id")->setParams(["id" => 1])->get();
 
         print_r($pwdAdmin);
     }
