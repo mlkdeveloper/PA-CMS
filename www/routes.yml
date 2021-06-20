@@ -179,4 +179,8 @@
   controller: User
   action : changeUserPwd
 
+/collections:
+  controller: Product
+  action : displayProductsFront
+
 

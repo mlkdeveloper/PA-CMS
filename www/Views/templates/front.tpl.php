@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="../../dist/main.css">
 </head>
 <body>
-<div class="container-body">
+<div class="container">
     <main>
 
         <!-- afficher la vue -->
