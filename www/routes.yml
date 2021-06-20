@@ -165,3 +165,7 @@
 /update-settings:
   controller: Settings
   action : update
+
+/update-admin:
+  controller: Settings
+  action : updateAdmin

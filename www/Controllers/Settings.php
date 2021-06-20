@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 use App\Core\View;
+use App\Models\User;
 
 
 class Settings
@@ -13,6 +14,10 @@ class Settings
     public function displaySettingsAction(){
         $view = new View("settings.back", "back");
         $view->assign("title", "Paramètres");
+
+        $users = new User();
+        $emailAdmin = $users->select("email")->where("id = :id")->setParams(["id" => 1])->get();
+        $view->assign("email", $emailAdmin);
     }
 
     public function updateAction()
@@ -134,5 +139,13 @@ class Settings
         $_SESSION['securityInstall'] = $error;
         header('Location: /admin/parametres');
         exit();
+    }
+
+    public function updateAdminAction(){
+
+        $users = new User();
+        $pwdAdmin = $users->select("pwd")->where("id = :id")->setParams(["id" => 1])->get();
+
+        print_r($pwdAdmin);
     }
 }
