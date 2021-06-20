@@ -271,7 +271,7 @@ class User extends Database
 								"placeholder"=>"Exemple : nom@gmail.com",
 								"label"=>"Votre Email",
 								"required"=>true,
-								"class"=>"form_input",
+								"class"=>"input",
 								"error"=>"Votre email doit faire entre 8 et 320 caractères"
 							],
 
@@ -281,7 +281,7 @@ class User extends Database
                                 "placeholder"=>"Saisir votre mot de passe",
 								"label"=>"Votre mot de passe",
 								"required"=>true,
-								"class"=>"form_input",
+								"class"=>"input",
 								"error"=>"Votre mot de passe doit faire au minimum 7 caractères"
 							]
 			]
@@ -307,7 +307,7 @@ class User extends Database
                                 "divClass"=> "form_align--top",
 								"label"=>"Votre Prénom",
 								"required"=>true,
-								"class"=>"form_input",
+								"class"=>"input",
 								"minLength"=>2,
 								"maxLength"=>50,
 								"error"=>"Votre prénom doit faire entre 2 et 50 caractères"
@@ -318,7 +318,7 @@ class User extends Database
 								"placeholder"=>"Exemple : Skrzypczyk",
 								"label"=>"Votre Nom",
 								"required"=>true,
-								"class"=>"form_input",
+								"class"=>"input",
 								"minLength"=>2,
 								"maxLength"=>100,
 								"error"=>"Votre nom doit faire entre 2 et 100 caractères"
@@ -330,7 +330,7 @@ class User extends Database
 								"placeholder"=>"Exemple : nom@gmail.com",
 								"label"=>"Votre Email",
 								"required"=>true,
-								"class"=>"form_input",
+								"class"=>"input",
 								"minLength"=>8,
 								"maxLength"=>320,
 								"error"=>"Votre email doit faire entre 8 et 320 caractères"
@@ -341,7 +341,7 @@ class User extends Database
                                 "divClass"=> "form_align--top",
 								"label"=>"Votre mot de passe",
 								"required"=>true,
-								"class"=>"form_input",
+								"class"=>"input",
 								"minLength"=>5,
 								"error"=>"Votre mot de passe doit faire au minimum 7 caractères"
 							],
@@ -351,21 +351,9 @@ class User extends Database
                                 "divClass"=> "form_align--top",
 								"label"=>"Confirmation",
 								"required"=>true,
-								"class"=>"form_input",
+								"class"=>"input",
 								"confirm"=>"pwd",
 								"error"=>"Votre mot de passe de confirmation ne correspond pas"
-							],
-
-				"country"=>[
-								"type"=>"text",
-                                "divClass"=> "form_align--top",
-								"placeholder"=>"Exemple : fr",
-								"label"=>"Votre Pays",
-								"required"=>true,
-								"class"=>"form_input",
-								"minLength"=>2,
-								"maxLength"=>2,
-								"error"=>"Votre pays doit faire 2 caractères"
 							],
 			]
 
@@ -392,7 +380,7 @@ class User extends Database
                     "divClass"=> "form_align--top",
                     "label"=>"Votre email",
                     "required"=>true,
-                    "class"=>"form_input",
+                    "class"=>"input",
                     "minLength"=>2,
                     "maxLength"=>50,
                     "error"=>"Votre prénom doit faire entre 2 et 50 caractères"
@@ -421,7 +409,7 @@ class User extends Database
                     "divClass"=> "form_align--top",
                     "label"=>"Votre mot de passe",
                     "required"=>true,
-                    "class"=>"form_input",
+                    "class"=>"input",
                     "minLength"=>5,
                     "error"=>"Votre mot de passe doit faire au minimum 7 caractères et doit être composé de lettres et de chiffres"
                 ],
@@ -432,7 +420,7 @@ class User extends Database
                     "label"=>"Confirmation",
                     "required"=>true,
                     "data-format"=> "confirmPwd",
-                    "class"=>"form_input",
+                    "class"=>"input",
                     "confirm"=>"pwd",
                     "error"=>"Mot de passe différent"
                 ],
@@ -458,7 +446,7 @@ class User extends Database
                     "placeholder"=>"Nom",
                     "label"=>"Nom",
                     "required"=>true,
-                    "class"=>"form_input",
+                    "class"=>"input",
                     "minLength"=>2,
                     "maxLength"=>100,
                     "error"=>"Le nom doit faire entre 2 et 100 caractères."
@@ -468,7 +456,7 @@ class User extends Database
                     "placeholder"=>"Prénom",
                     "label"=>"Prénom",
                     "required"=>true,
-                    "class"=>"form_input",
+                    "class"=>"input",
                     "minLength"=>2,
                     "maxLength"=>50,
                     "error"=>"Le prénom doit faire entre 2 et 50 caractères."
@@ -479,7 +467,7 @@ class User extends Database
                     "label"=>"Adresse",
                     "placeholder"=>"ex : 29 rue de la liberte",
                     "required"=>true,
-                    "class"=>"form_input",
+                    "class"=>"input",
                     "minLength"=>5,
                     "maxLength"=>255,
                     "error"=>"L'adresse doit faire entre 5 et 254 caractères."
@@ -489,7 +477,7 @@ class User extends Database
                     "label"=>"Ville",
                     "placeholder"=>"ex : Paris",
                     "required"=>true,
-                    "class"=>"form_input",
+                    "class"=>"input",
                     "minLength"=>2,
                     "maxLength"=>20,
                     "error"=>"La ville doit faire entre 2 et 20 caractères"
@@ -499,7 +487,7 @@ class User extends Database
                     "label"=>"Code postal",
                     "placeholder"=>"ex : 75015",
                     "required"=>true,
-                    "class"=>"form_input",
+                    "class"=>"input",
                     "regex" => "/^[0-9]{5}/",
                     "errorRegex" => "Code postal invalide !"
                 ],
@@ -508,7 +496,7 @@ class User extends Database
                     "label"=>"Pays",
                     "placeholder"=>"ex : fr",
                     "required"=>true,
-                    "class"=>"form_input",
+                    "class"=>"input",
                     "minLength"=> 2,
                     "maxLength"=> 2,
                     "error"=>"Le pays doit faire 2 caractères"
@@ -518,7 +506,7 @@ class User extends Database
                     "label"=>"Email",
                     "placeholder"=>"Email",
                     "required"=>true,
-                    "class"=>"form_input",
+                    "class"=>"input",
                     "minLength"=>8,
                     "maxLenght"=>320,
                     "error"=>"L'email doit contenir entre 8 et 320 caractères"
@@ -528,7 +516,7 @@ class User extends Database
                     "label"=>"N° Telephone",
                     "placeholder"=>"0122334455",
                     "required"=>true,
-                    "class"=>"form_input",
+                    "class"=>"input",
                     "regex" => "/^[0-9]{10}/",
                     "errorRegex" => "Numéro de téléphone invalide !"
                 ],
