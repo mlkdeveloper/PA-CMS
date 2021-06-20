@@ -14,11 +14,6 @@ class Products extends Database
     protected $isPublished;
     protected $idCategory;
 
-
-    public function __construct(){
-        parent::__construct();
-    }
-
     /**
      * @return null
      */

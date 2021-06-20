@@ -7,30 +7,31 @@
 
 <section>
     <div class="container">
+        <div class="row" id="status" style="display: none"></div>
         <div class="row jumbotron">
             <div class="col-md-6 col-lg-6 col-sm-6 col">
                 <div class="form_align--top">
                     <label class="label">Nom *</label>
-                    <input class="input" type="text" name="name" placeholder="Chapeau" required="required">
+                    <input class="input" type="text" id="product_name" placeholder="Chapeau" required="required">
                 </div>
 
                 <div class="form_align--top mt-1">
                     <label class="label">Description</label>
-                    <textarea class="input" type="text" name="description" placeholder="..."></textarea>
+                    <textarea class="input" type="text" id="description" placeholder="..."></textarea>
                 </div>
             </div>
 
             <div class="col-md-6 col-lg-6 col-sm-6 col">
                 <div class="form_align--top">
                     <label class="label">Catégorie *</label>
-                    <select class="input" name="category">
-                        <option value="0">Chapeau</option>
+                    <select class="input" id="category">
+                        <option value="71">Chapeau</option>
                         <option value="1">Pantalon</option>
                     </select>
                 </div>
 
                 <div class="mt-3">
-                    <input id="variant" type="checkbox" checked onclick="isVariant()">
+                    <input id="variant" type="checkbox" value="1" checked onclick="isVariant()">
                     <label>Ce produit comporte plusieurs variantes, ex. différentes tailles ou couleurs. *</label>
                 </div>
             </div>
@@ -51,10 +52,10 @@
                         <div class="col-md-6 col-lg-6 col-sm-6 col">
                             <div id="blockAttributes" class="attributes">
                                 <?php  foreach ($attributes as $attribute): ?>
-                                <div class="mb-1">
-                                    <input class="checked" name="attributs" id="attr-<?= $attribute['id'] ?>" type="checkbox" value="<?= $attribute['id'] ?>" onclick="getSelectedAttributes(<?= $attribute['id']?>)">
-                                    <label id="lab-<?= $attribute['id'] ?>"><?= $attribute['name'] ?></label>
-                                </div>
+                                    <div class="mb-1">
+                                        <input class="checked" name="attributs" id="attr-<?= $attribute['id'] ?>" type="checkbox" value="<?= $attribute['id'] ?>" onclick="getSelectedAttributes(<?= $attribute['id']?>)">
+                                        <label id="lab-<?= $attribute['id'] ?>"><?= $attribute['name'] ?></label>
+                                    </div>
                                 <?php endforeach;?>
                             </div>
 
@@ -84,7 +85,7 @@
     <div class="container">
         <button id="valider" class="button button--blue" onclick="buildArray()" >Valider</button>
     </div>
-     
+
 
     <div class="centered"><div class="spinner" id="loader"></div></div>
     <div id="comb" class="container">

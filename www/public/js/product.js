@@ -55,18 +55,20 @@ function isVariant() {
     if($('#variant' ).is(':checked')){
         $('#blockAttributes').show();
         $(".checked").prop('checked', false);
+        $('#variant').val(1)
     }else{
         $('#blockAttributes').hide();
         $('#selectedAttributes').html("")
+        $('#variant').val(0)
     }
 }
 
 function buildArray() {
-    var arrayAttributs = $('.attrValues input:checked');
-
     var className = '';
     var array = [];
     var count = 0;
+    var arrayAttributs = $('.attrValues input:checked');
+
 
     $.each(arrayAttributs, function(i, attrib){
         if (i === 0){
@@ -125,36 +127,52 @@ function generateInputs(selector, label){
         "</div>" 
     )
 }
+
 let array_id = [];
 let comb;
+
 
 function createProduct(){
     
     var stock = $("input[name='stock']");
     var price = $("input[name='price']");
+    var product = {
+        name: $("#product_name").val(), 
+        description: $("#description").val(),
+        type: $("#variant").val(),
+        isPublished: 0,
+        idCategory: $("#category").val()
+    };
 
-    if(comb.length === 1){
-        comb[0].push(stock[0].value)
-        comb[0].push(price[0].value)
-        var comb2 = comb
-        comb = comb2
-    }else{
-        comb.forEach((element, y) => {
+    comb.forEach((element, y) => {
+        if (Array.isArray(element)) {
             element.push(stock[y].value)
             element.push(price[y].value)
-        })
-    } 
+        }else{
+            element = element.split();
+            element.push(stock[y].value)
+            element.push(price[y].value)
+            comb.push(element)
+            comb = comb.filter(type_var => Array.isArray(type_var))
+        }
+    })
 
     comb = Object.assign({}, comb);
     comb = JSON.stringify(comb)
 
+    product = JSON.stringify(product)
 
     $.ajax({
         type: 'POST',
         url: "/admin/creer-produit-ajax",
-        data: "comb_array=" + comb,
+        data: "comb_array=" + comb + "&product=" + product,
         success: (data) => {
-            console.log(data)
+            $('#status').show();
+            $('#status').html(data);
+            $("html").css({
+                'scrollBehavior': 'smooth'
+            })
+            $("html").scrollTop(0)
         },
         error: () => {
 

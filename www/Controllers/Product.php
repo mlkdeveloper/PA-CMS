@@ -9,6 +9,7 @@ use App\Models\Attributes;
 use App\Models\Terms;
 use App\Models\Group_variant;
 use App\Models\Product_term;
+use App\Models\Products;
 
 class Product
 {
@@ -33,59 +34,64 @@ class Product
             $term = new Terms();
             $terms = $term->select("name, id")->where("idAttributes = :idAttributes" )->setParams(["idAttributes" => $_GET['id']])->get();
             echo json_encode($terms);
-
         }
-
     }
 
     public function createProductAction(){
-        //tableau récupéré
-        //Bouclage tableau
-        //Récupération du dernier id de cc_group_variant + 1
-            //stocker dans une variable l'id
-            //Insertion du stock et le prix avec l'id dans cc_group_variant
-        //Insertion dans cc_products_terms id group_variant id_terms
 
-        if(isset($_POST['comb_array'])){
+        if(isset($_POST['comb_array']) && 
+            isset($_POST['product']) &&
+            count($_POST) === 2
+        ){
             $comb = json_decode($_POST['comb_array']);
+            $product = json_decode($_POST['product']);
 
             $gv = new Group_variant;
             $pt = new Product_term;
+            $product_model = new Products;
+            $product_model->populate($product);
+            $product_model->save();
+
+            //Récupération de l'id produit
+            $idProduct = $product_model
+            ->select("MAX(id) as id")
+            ->get();
+
+            $idProduct = $idProduct[0]["id"];
 
             foreach($comb as $key => $value){
                 $s = $value[count($value)-2];
                 $p = $value[count($value)-1];
 
-                //Plus besoin de ces variables de merde
                     unset($value[count($value)-1], $value[count($value)-1]);
 
                 $gv->setPrice($p);
                 $gv->setStock($s);
                 $gv->save();
-                //Récupération de l'id
-                $id = $gv
-                    ->select("MAX(id) as id")
-                    ->get();
 
-                $id = $id[0]["id"];
+                //Récupération de l'id du groupe
+                $idGroup = $gv
+                ->select("MAX(id) as id")
+                ->get();
 
-                foreach($value as $k => $v){
+                $idGroup = $idGroup[0]["id"];
+
+                foreach($value as $v){
+                    $pt->setIdProduct($idProduct);
                     $pt->setIdTerm($v);
-                    $pt->setIdGroup($id);
+                    $pt->setIdGroup($idGroup);
                     $pt->save();
                 }
 
             }
 
-            echo "<div class='alert alert--success'>Produit créé avec succès !</div>";
+            echo "<div class='alert alert--green'>Produit créé avec succès !</div>";
             http_response_code(201);
 
         }else{
             echo "<div class='alert alert--red'>Erreur dans la création du produit !</div>";
             \http_response_code(400);
         }
-
-
     }
 
 }
