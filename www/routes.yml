@@ -166,6 +166,10 @@
   controller: Settings
   action : update
 
-/update-admin:
+/update-admin-email:
   controller: Settings
-  action : updateAdmin
+  action : updateAdminEmail
+
+/update-admin-password:
+  controller: Settings
+  action : updateAdminPassword

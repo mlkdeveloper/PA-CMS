@@ -4,7 +4,6 @@
 namespace App\Controller;
 
 use App\Core\View;
-use App\Models\Setting;
 use App\Models\User;
 
 
@@ -144,11 +143,35 @@ class Settings
         exit();
     }
 
-    public function updateAdminAction(){
+    public function updateAdminEmailAction(){
 
-        $admin = new Setting();
-        $pwdAdmin = $admin->select("pwd")->where("id = :id")->setParams(["id" => 1])->get();
+        $admin = new User();
 
-        print_r($pwdAdmin);
+        if(count($_POST) != 1){
+            $this->errorRedirection('Formulaire non conforme');
+        }else {
+
+            $mailAdmin = htmlspecialchars(trim($_POST['admin_mail']));
+
+            if (empty($mailAdmin) ||
+                !filter_var($mailAdmin, FILTER_VALIDATE_EMAIL)){
+                $this->errorRedirection('Veuillez remplir tous les champs');
+            }
+
+            $checkMail = $admin->select()->where("email = :email")->setParams(["email" => $mailAdmin])->get();
+
+            if($checkMail){
+                $this->errorRedirection('Ce mail est déjà utilisé');
+            }
+
+            $dataAdmin = $admin->select()->where("id = :id")->setParams(["id" => 1])->get();
+
+            $admin->populate($dataAdmin[0]);
+            $admin->setEmail($_POST['admin_mail']);
+            $admin->save();
+
+
+            header('Location: /admin/parametres');
+        }
     }
 }

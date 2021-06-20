@@ -102,11 +102,11 @@
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col">
                 <div class="jumbotron">
-                    <form method="POST" action="/update-admin">
+                    <div class="row">
+                        <h4 class="center-margin mb-5 mt-5">Informations de l'administrateur</h4>
+                    </div>
 
-                        <div class="row">
-                            <h4 class="center-margin mb-5 mt-5">Informations de l'administrateur</h4>
-                        </div>
+                    <form method="POST" action="/update-admin-email">
 
                         <div class="row">
                             <div class="form_align--top center-margin">
@@ -116,23 +116,32 @@
                         </div>
 
                         <div class="row">
+                            <div class="center-margin">
+                                <input style="margin-bottom: 40px" type="submit" value="Mettre à jour" class="button button--blue"
+                                       id="button_install">
+                            </div>
+                        </div>
+                    </form>
+
+                    <form method="POST" action="/update-admin-password">
+                        <div class="row">
                             <div class="form_align--top center-margin">
-                                <label for="admin_mail">Ancien mot de passe:</label>
-                                <input style="width: 250px; margin-bottom: 40px" class="input" type="email" id="admin_mail" name="admin_mail" required>
+                                <label for="old_pwd">Ancien mot de passe:</label>
+                                <input style="width: 250px; margin-bottom: 40px" class="input" type="password" id="old_pwd" name="old_pwd" required>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="form_align--top center-margin">
-                                <label for="admin_mail">Nouveau mot de passe:</label>
-                                <input style="width: 250px; margin-bottom: 40px" class="input" type="email" id="admin_mail" name="admin_mail" required>
+                                <label for="new_pwd">Nouveau mot de passe:</label>
+                                <input style="width: 250px; margin-bottom: 40px" class="input" type="password" id="new_pwd" name="new_pwd" required>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="form_align--top center-margin">
-                                <label for="admin_mail">Confirmation du mot de passe:</label>
-                                <input style="width: 250px; margin-bottom: 40px" class="input" type="email" id="admin_mail" name="admin_mail" required>
+                                <label for="new_pwd_confirm">Confirmation du mot de passe:</label>
+                                <input style="width: 250px; margin-bottom: 40px" class="input" type="password" id="new_pwd_confirm" name="new_pwd_confirm" required>
                             </div>
                         </div>
 
