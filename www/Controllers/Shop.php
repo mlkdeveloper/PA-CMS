@@ -17,14 +17,8 @@ class Shop
         $view->assign("title", "Admin - Magasin");
 
         $shop = new ShopModel();
-        $listShop = $shop->select()->get();
+        $listShop = $shop->select('*')->where('isDeleted=0')->get();
 
-        //$formDeleteShop = $shop->formBuilderDeleteShop();
-        //if (isset($formDeleteShop)){
-          //  $this->deleteShop($_POST['id']);
-        //}
-
-        //$view->assign("form", $formDeleteShop);
         $view->assign("shop", $listShop);
     }
 
@@ -41,7 +35,11 @@ class Shop
 
             $errors = FormValidator::check($formCreateShop, $_POST);
 
+            if (!is_numeric($_POST['zipCode'])){
+                array_push($errors,"Le code postale doit etre composé uniquement de chiffres");
+            }
             if(empty($errors)){
+
                 $shop->setName($_POST['nom']);
                 $shop->setAddress($_POST['address']);
                 $shop->setCity($_POST['ville']);
@@ -64,6 +62,10 @@ class Shop
         $product = new ProductsModel();
         $productModel = new ProductsMModel();
 
+        if (empty($_GET['id'])){
+            header('location:/admin/liste-magasin');
+        }
+
         $idShop = $_GET['id'];
         $shopGet = $shop->select('*')->where('id = :id')->setParams([":id" => $idShop])->get();
         $productsGet = $product->select('*')->where('id = :id')->setParams([":id" => $idShop])->get();
@@ -76,8 +78,12 @@ class Shop
         if(!empty($_POST)){
 
             $errors = FormValidator::check($formUpdateShop, $_POST);
+            if (!is_numeric($_POST['zipCode'])){
+                array_push($errors,"Le code postale doit etre composé uniquement de chiffres");
+            }
 
             if(empty($errors)){
+
                 $shop->setId($_GET['id']);
                 $shop->setName($_POST['nom']);
                 $shop->setAddress($_POST['address']);
@@ -101,13 +107,22 @@ class Shop
 
     }
 
-    function deleteShop($id){
+    function deleteShopAction(){
         $shop = new ShopModel();
+        $shopTemp = new ShopModel();
+        if (empty($_GET['id']) && !is_numeric($_GET['id'])){
+            header('location:/admin/liste-magasin');
+        }
+        $shop =$shopTemp->select('*')->where('id=:id')->setParams(["id" => $_GET['id']])->get();
 
-        var_dump($id);
-        exit();
+        $shopTemp->populate($shop[0]);
+        $shopTemp->setIsDeleted(1);
+        $shopTemp->save();
 
 
+
+
+        header('location:/admin/liste-magasin?deleteShop=done');
 
     }
 }

@@ -2,7 +2,7 @@
 $aut = new \App\Controller\Auth();
 session_start();
 if (!$aut->isConnected()){
-    header('location:/connexion');
+    //header('location:/connexion');
 }
 ?>
 
@@ -58,7 +58,6 @@ if (!$aut->isConnected()){
             <li><a href="#">Theme</a>
             <li><a href="#">Navigation</a>
         </ul>
-
         <li><a href="#">Paramètres du CMS</a></li>
     </ul>
 </nav>
@@ -67,7 +66,7 @@ if (!$aut->isConnected()){
     <header>
         <div class="headerBack">
             <h1>Header</h1>
-            <button class="button button--blue">Déconnexion</button>
+            <button onclick="location.href='/deconnexion';" class="button button--blue">Déconnexion</button>
         </div>
     </header>
 

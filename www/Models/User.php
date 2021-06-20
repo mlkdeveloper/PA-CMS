@@ -7,18 +7,140 @@ use App\Core\Database;
 class User extends Database
 {
 
-    private $id = null;
-    protected $firstName;
-    protected $lastname;
-    protected $email;
-    protected $pwd;
-    protected $country = null;
-    protected $address = null;
-    protected $city = null;
-    protected $zipCode = null;
-    protected $phoneNumber = null;
-    protected $id_role;
-    protected $status;
+	private $id = null;
+	protected $firstname;
+	protected $lastname;
+	protected $email;
+	protected $pwd;
+	protected $country;
+	protected $id_role = 1;
+	protected $status = 1;
+	protected $address;
+	protected $city;
+	protected $zipcode;
+	protected $phoneNumber;
+	protected $token;
+	protected $isConfirmed = 0;
+
+    /**
+     * @return int
+     */
+    public function getIsConfirmed(): int
+    {
+        return $this->isConfirmed;
+    }
+
+    /**
+     * @param int $isConfirmed
+     */
+    public function setIsConfirmed(int $isConfirmed)
+    {
+        $this->isConfirmed = $isConfirmed;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIdRole(): int
+    {
+        return $this->id_role;
+    }
+
+    /**
+     * @param int $id_role
+     */
+    public function setIdRole(int $id_role)
+    {
+        $this->id_role = $id_role;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param mixed $address
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param mixed $city
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getZipcode()
+    {
+        return $this->zipcode;
+    }
+
+    /**
+     * @param mixed $zipcode
+     */
+    public function setZipcode($zipcode)
+    {
+        $this->zipcode = $zipcode;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPhoneNumber()
+    {
+        return $this->phoneNumber;
+    }
+
+    /**
+     * @param mixed $phoneNumber
+     */
+    public function setPhoneNumber($phoneNumber)
+    {
+        $this->phoneNumber = $phoneNumber;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param mixed $token
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+    }
+
+	/*
+		status
+		createdAt
+		updatedAt
+		isDeleted (hard delete du soft delete) attention au RGPD
+	*/
+
 
 	public function __construct(){
 		parent::__construct();
@@ -47,18 +169,20 @@ class User extends Database
     /**
      * @return mixed
      */
-    public function getFirstName()
+    public function getFirstname()
     {
-        return $this->firstName;
+        return $this->firstname;
     }
 
     /**
-     * @param mixed $firstName
+     * @param mixed $firstname
      */
-    public function setFirstName($firstName)
+    public function setFirstname($firstname)
     {
-        $this->firstName = htmlspecialchars(trim($firstName));
+        $this->firstname = $firstname;
     }
+
+
 
 
 	/**
@@ -125,85 +249,7 @@ class User extends Database
 	    $this->status = $status;
 	}
 
-    /**
-     * @return mixed
-     */
-    public function getAddress()
-    {
-        return $this->address;
-    }
 
-    /**
-     * @param mixed $address
-     */
-    public function setAddress($address): void
-    {
-        $this->address = htmlspecialchars(trim($address));
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCity()
-    {
-        return $this->city;
-    }
-
-    /**
-     * @param mixed $city
-     */
-    public function setCity($city): void
-    {
-        $this->city = htmlspecialchars(trim($city));
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getZipCode()
-    {
-        return $this->zipCode;
-    }
-
-    /**
-     * @param mixed $zipCode
-     */
-    public function setZipCode($zipCode): void
-    {
-        $this->zipCode = htmlspecialchars(trim($zipCode));
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPhoneNumber()
-    {
-        return $this->phoneNumber;
-    }
-
-    /**
-     * @param mixed $phoneNumber
-     */
-    public function setPhoneNumber($phoneNumber): void
-    {
-        $this->phoneNumber = htmlspecialchars(trim($phoneNumber));
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getIdRole()
-    {
-        return $this->id_role;
-    }
-
-    /**
-     * @param mixed $id_role
-     */
-    public function setIdRole($id_role): void
-    {
-        $this->id_role = $id_role;
-    }
 
 
 	public function formBuilderLogin(){
@@ -236,7 +282,7 @@ class User extends Database
 								"label"=>"Votre mot de passe",
 								"required"=>true,
 								"class"=>"form_input",
-								"error"=>"Votre mot de passe doit faire au minimum 8 caractères"
+								"error"=>"Votre mot de passe doit faire au minimum 7 caractères"
 							]
 			]
 
@@ -296,8 +342,8 @@ class User extends Database
 								"label"=>"Votre mot de passe",
 								"required"=>true,
 								"class"=>"form_input",
-								"minLength"=>8,
-								"error"=>"Votre mot de passe doit faire au minimum 8 caractères et une maj avec un nbr numérique"
+								"minLength"=>5,
+								"error"=>"Votre mot de passe doit faire au minimum 7 caractères"
 							],
 
 				"pwdConfirm"=>[
@@ -326,6 +372,75 @@ class User extends Database
 		];
 
 	}
+
+    public function formBuilderpwdOublie(){
+
+        return [
+
+            "config"=>[
+                "method"=>"POST",
+                "action"=>"",
+                "class"=>"form_control col col-md-10 container",
+                "id"=>"form_register",
+                "submit"=>"Envoyé",
+                "classButton" => "button button--blue"
+            ],
+            "inputs"=>[
+                "email"=>[
+                    "type"=>"text",
+                    "placeholder"=>"ex : example@gmail.com",
+                    "divClass"=> "form_align--top",
+                    "label"=>"Votre email",
+                    "required"=>true,
+                    "class"=>"form_input",
+                    "minLength"=>2,
+                    "maxLength"=>50,
+                    "error"=>"Votre prénom doit faire entre 2 et 50 caractères"
+                ],
+            ]
+
+        ];
+
+    }
+
+    public function formBuildermodifyPwd(){
+
+        return [
+
+            "config"=>[
+                "method"=>"POST",
+                "action"=>"",
+                "class"=>"form_control col col-md-10 container",
+                "id"=>"form_register",
+                "submit"=>"Envoyé",
+                "classButton" => "button button--blue"
+            ],
+            "inputs"=>[
+                "pwd"=>[
+                    "type"=>"password",
+                    "divClass"=> "form_align--top",
+                    "label"=>"Votre mot de passe",
+                    "required"=>true,
+                    "class"=>"form_input",
+                    "minLength"=>5,
+                    "error"=>"Votre mot de passe doit faire au minimum 7 caractères et doit être composé de lettres et de chiffres"
+                ],
+
+                "pwdConfirm"=>[
+                    "type"=>"password",
+                    "divClass"=> "form_align--top",
+                    "label"=>"Confirmation",
+                    "required"=>true,
+                    "data-format"=> "confirmPwd",
+                    "class"=>"form_input",
+                    "confirm"=>"pwd",
+                    "error"=>"Mot de passe différent"
+                ],
+            ]
+
+        ];
+
+    }
 
     public function formBuilderCreateClient(){
         return [

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Core\Email;
 use App\Core\Database;
 use App\Core\Helpers;
 use App\Core\View;
@@ -24,20 +25,31 @@ class User extends Database
 		if(!empty($_POST)){
 			
 			//$errors = FormValidator::check($form, $_POST);
-
+            $errors = [];
 			if(empty($errors)){
-				$user->setEmail($_POST["email"]);
-				$user->setPwd($_POST["pwd"]);
 
-                if($user->select('email')->where('email=:email', 'pwd=:pwd')->setParams([":email" => $_POST['email'],":pwd" => $_POST['pwd'],])->get()){
-                    session_start();
-                    $monUser = $user->select('*')->where('email=:email', 'pwd=:pwd')->setParams([":email" => $_POST['email'],":pwd" => $_POST['pwd'],])->get();
-                    $_SESSION['user'] = $monUser;
-                    header('location:/');
+
+			    if ($user->select('*')->where('email=:email')->setParams([":email" => $_POST['email']])->get()){
+                    $pwdGet = $user->select('pwd')->where('email=:email')->setParams([":email" => $_POST['email']])->get();
+
+
+                    if(password_verify($_POST["pwd"], $pwdGet[0]["pwd"])){
+                        session_start();
+                        $monUser = $user->select('*')->where('email=:email', 'pwd=:pwd')->setParams([":email" => $_POST['email'],":pwd" => $pwdGet[0]["pwd"],])->get();
+                        $_SESSION['user'] = $monUser;
+                        var_dump($_SESSION["user"]);
+                        header('location:/');
+                    }else{
+                        array_push($errors,"L'email et le mot de passe ne correspondent pas");
+                        $view->assign("errors", $errors);
+
+                    }
                 }else{
-                    array_push($errors,"L'email et le mot de passe ne correspondent pas");
+                    array_push($errors,"L'email inconnu");
                     $view->assign("errors", $errors);
                 }
+
+
 
 
 				//$user->save();
@@ -62,20 +74,31 @@ class User extends Database
         $form = $user->formBuilderLogin();
 
         if(!empty($_POST)){
-
-            $errors = FormValidator::check($form, $_POST);
-
+            $errors = [];
             if(empty($errors)){
-                $user->setEmail($_POST["email"]);
-                $user->setPwd($_POST["pwd"]);
 
-                if($user->select('email')->where('email=:email', 'pwd=:pwd', 'id_role = 1')->setParams([":email" => $_POST['email'],":pwd" => $_POST['pwd'],])->get()){
-                    session_start();
-                    $monUser = $user->select('*')->where('email=:email', 'pwd=:pwd')->setParams([":email" => $_POST['email'],":pwd" => $_POST['pwd'],])->get();
-                    $_SESSION['user'] = $monUser;
-                    header('location:/');
+                $pwdGet = $user->select('pwd')->where('email=:email')->setParams([":email" => $_POST['email']])->get();
+
+
+
+
+                if ($user->select('*')->where("email=:email", "id_role = 1")->setParams([":email" => $_POST['email']])->get()){
+                    $pwdGet = $user->select('pwd')->where('email=:email')->setParams([":email" => $_POST['email']])->get();
+
+
+                    if(password_verify($_POST["pwd"], $pwdGet[0]["pwd"])){
+                        session_start();
+                        $monUser = $user->select('*')->where('email=:email', 'pwd=:pwd')->setParams([":email" => $_POST['email'],":pwd" => $pwdGet[0]["pwd"],])->get();
+                        $_SESSION['user'] = $monUser;
+                        var_dump($_SESSION["user"]);
+                        header('location:/');
+                    }else{
+                        array_push($errors,"L'email et le mot de passe ne correspondent pas");
+                        $view->assign("errors", $errors);
+
+                    }
                 }else{
-                    array_push($errors,"L'email et le mot de passe ne correspondent pas / Vous n'avez pas les droits requis");
+                    array_push($errors,"Cette adresse mail est inconnu ou n'a pas les droits administrateur");
                     $view->assign("errors", $errors);
                 }
 
@@ -103,8 +126,8 @@ class User extends Database
         $view->assign("form", $form);
         $view->assign("title", "C&C - Inscription");
 
-        $errors = [];
-        if (!empty($_POST)) {
+
+        if(!empty($_POST)){
 
             //$errors = FormValidator::check($form, $_POST);
 
@@ -115,23 +138,39 @@ class User extends Database
             $pwdConfirm = $_POST['pwdConfirm'];
             $country = $_POST['country'];
 
-            if (empty($errors)) {
+            $emailVerif = $user->select('email')->where("email=:email")->setParams(["email" => $email])->get();
+            $errors = [];
+            if ($emailVerif){
+                array_push($errors, "L'email est deja connu de notre base de données");
+                $view->assign("errors", $errors);
+            }
+
+            if(empty($errors)) {
 
                 if ($pwd == $pwdConfirm) {
 
-                    $user->setLastname($lastname);
-                    $user->setFirstname($firstname);
-                    $user->setEmail($email);
-                    $user->setPwd($pwd);
-                    $user->setStatus(1);
+                    //Generate a random string.
+                    $token = openssl_random_pseudo_bytes(32);
+                    //Convert the binary data into hexadecimal representation.
+                    $token = bin2hex($token);
 
-                    $user->setIsDeleted(0);
+                    $pwdHash = password_hash($pwd, PASSWORD_BCRYPT);
+
+                    $user->setLastname($lastname);
+                    $user->setFirstName($firstname);
+                    $user->setEmail($email);
+                    $user->setPwd($pwdHash);
+                    $user->setStatus(1);
                     $user->setIdRole(2);
+                    $user->setToken($token);
+                    
                     $user->save();
 
+                    Email::sendEmail($email, "Veuillez confirmer votre compte", "http://localhost:8080/confirmation-inscription?tkn=".$token,"Confimer mon compte", "/");
 
-                    header('location:/');
-                } else {
+
+                    header('location:/connexion');
+                }else{
                     array_push($errors, "Le mot de passe de confirmation ne correspond pas");
                     $view->assign("errors", $errors);
                 }
@@ -172,11 +211,18 @@ class User extends Database
 
                 if ($formStatus == Database::UPDATE_OBJECT) {
                     $client->setId($_GET['id']);
-                    $pwd = $client->select('pwd')->where("id = :id ")->setParams(["id" => $_GET['id'] ])->get();
-                    $client->setPwd( $pwd[0]['pwd']);
+                    $getInfo = $client->select('pwd,token,isConfirmed')->where("id = :id ")->setParams(["id" => $_GET['id'] ])->get();
+                    $client->setPwd( $getInfo[0]['pwd']);
+                    $client->setToken($getInfo[0]['token']);
+                    $client->setIsConfirmed($getInfo[0]['isConfirmed']);
+
                 }else{
                     $pwd = Helpers::pwdGenerator();
                     $client->setPwd(password_hash($pwd, PASSWORD_DEFAULT));
+
+                    $token = openssl_random_pseudo_bytes(32);
+                    $token = bin2hex($token);
+                    $client->setToken($token);
                 }
 
                 $client->populate($_POST);
@@ -188,6 +234,10 @@ class User extends Database
 
                 if ($message != false){
                     $view->assign("message", $message);
+
+                    if($formStatus == Database::NEW_OBJECT){
+                        Email::sendEmail($client->getEmail(), "Veuillez confirmer votre compte", "http://localhost:8082/confirmation-inscription?tkn=".$token,"Confirmer mon compte", "/admin/liste-client");
+                    }
                 }else{
                     http_response_code(400);
                 }

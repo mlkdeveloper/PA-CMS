@@ -23,7 +23,7 @@ class Router
         $this->slug = $slug;
         $this->loadYaml();
 
-        if (empty($this->listOfRoutes[$this->slug])) $this->exception404();
+        if (empty($this->listOfRoutes[$this->slug])) $this->exception404(" Slug invalide");
 
         /*
             $this->listOfRoutes
@@ -123,9 +123,9 @@ class Router
         return $this->action;
     }
 
-    public function exception404()
+    public function exception404($motif = "")
     {
-        throw new MyException("Erreur 404 !",404);
+        throw new MyException("Erreur 404 ! ". $motif,404);
     }
 
 }

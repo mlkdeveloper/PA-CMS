@@ -23,7 +23,7 @@
   action: loginAdmin
 
 /deconnexion:
-  controller: Auth
+  controller: Security
   action: logout
 
 /afficher-un-utilisateur:
@@ -46,21 +46,42 @@
   controller: Dashboard
   action: dashboard
 
+
+/admin/display-category:
+  controller: Category
+  action: show
+
+/admin/nouvelle-categorie:
+  controller: Category
+  action: newCategory
+
+/admin/modification-categorie:
+  controller: Category
+  action: updateCategory
+
+/admin/suppression-categorie:
+  controller : Category
+  action: deleteCategory
+
 /admin/nouveau-magasin:
   controller: Shop
   action: newShop
+
 
 /admin/pages:
   controller: Pages
   action: pages
 
+
 /admin/publisher:
   controller: Publisher
   action: publisher
 
+
 /admin/check-review:
   controller: Reviews
   action: checkReviews
+
 
 /admin/nouveau-role:
   controller: Role
@@ -122,6 +143,22 @@
   controller : User
   action: register
 
+/mot-de-passe-oublie:
+  controller : Security
+  action : pwdPerdu
+
+/recuperation-mot-de-passe:
+  controller : Security
+  action : recuperationpwd
+
+/admin/delete-shop:
+  controller: Shop
+  action: deleteShop
+
+/confirmation-inscription:
+  controller: Security
+  action: confirmedRegister
+
 /admin/liste-utilisateurs:
   controller: User
   action: displayUsers
@@ -141,7 +178,6 @@
 /admin/utilisateur-changement-mdp:
   controller: User
   action : changeUserPwd
-
 
 /admin/attribut:
   controller : Attribute

@@ -6,6 +6,9 @@ use App\Core\MyException;
 use App\Core\Router;
 use App\Core\ConstantManager;
 
+require "PHPMailer/src/SMTP.php";
+require "PHPMailer/src/PHPMailer.php";
+require "PHPMailer/src/Exception.php";
 require "Autoload.php";
 require "Controllers/Auth.php";
 Autoload::register();
@@ -26,4 +29,3 @@ try {
 }catch (MyException $e){
     echo $e->error();
 }
-
