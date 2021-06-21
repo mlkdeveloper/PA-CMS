@@ -15,39 +15,39 @@ function deleteAttributes(id) {
 
 function addAttribute(id) {
 
-        let name = $("#lab-" + id).text();
+    let name = $("#lab-" + id).text();
 
-        $.ajax({
-            url: "/admin/valeurs-attribut-ajax?id=" + id,
-            type: 'GET',
-            success: (data) => {
+    $.ajax({
+        url: "/admin/valeurs-attribut-ajax?id=" + id,
+        type: 'GET',
+        success: (data) => {
 
-               let array = JSON.parse(data);
+           let array = JSON.parse(data);
 
-               let html =
-                   "<div id='selectedAttributes-"+id+"' class='row'>" +
-                   "<div class=\"col-md-6\">" +
-                   "<h4>"+ name +"</h4>" +
-                   "</div>" +
-                   "<div class=\"col-md-6\">" +
-                   "<div class='attributes attrValues' id='val-"+id+"'>\n";
+           let html =
+               "<div id='selectedAttributes-"+id+"' class='row'>" +
+               "<div class=\"col-md-6\">" +
+               "<h4>"+ name +"</h4>" +
+               "</div>" +
+               "<div class=\"col-md-6\">" +
+               "<div class='attributes attrValues' id='val-"+id+"'>\n";
 
-              array.map((value) => {
-                    html += "<div class='mb-1'><input id='" + value.id + "' class='"+name+"' name='"+value.name+"' type='checkbox' value='"+ value.id+"'><label>" + value.name + "</label></div>"
-               });
+          array.map((value) => {
+                html += "<div class='mb-1'><input id='" + value.id + "' class='"+name+"' name='"+value.name+"' type='checkbox' value='"+ value.id+"'><label>" + value.name + "</label></div>"
+           });
 
-              html +=
-                  "</div>\n" +
-                  "</div>\n" +
-                  "</div>";
+          html +=
+              "</div>\n" +
+              "</div>\n" +
+              "</div>";
 
-              $("#selectedAttributes").append(html);
+          $("#selectedAttributes").append(html);
 
-            },
-            error: () => {
-                //error
-            }
-        })
+        },
+        error: () => {
+            //error
+        }
+    })
 }
 
 
@@ -68,7 +68,7 @@ function buildArray() {
     var array = [];
     var count = 0;
     var arrayAttributs = $('.attrValues input:checked');
-
+    array_id = []
 
     $.each(arrayAttributs, function(i, attrib){
         if (i === 0){
@@ -97,6 +97,7 @@ function buildArray() {
         generateInputs("#comb", comb_label[y]);
     })
 
+    $("#comb").append("<input id='back' type='submit' value='Réinitialiser' onclick='reset()' class='button button--warning mr-1' />")
     $("#comb").append("<input id='sub_comb' type='submit' value='Enregistrer' onclick='createProduct()' class='button button--success' />")
 
     $("#loader").show();
@@ -106,8 +107,10 @@ function buildArray() {
     setTimeout(() => {
         $("#loader").fadeOut();
         $("div[name='comb']").show();
-        $("#sub_comb").show();
+        $("#sub_comb").show();  
     }, 500);
+
+    clearInterface()
 
 }
 
@@ -174,12 +177,16 @@ function createProduct(){
             })
             $("html").scrollTop(0)
         },
-        error: () => {
-
-        }
-
+        error: () => {}
     })
 
 }
 
+function clearInterface(){
+    $('#valider').parent().hide()
+}
 
+function reset(){
+    $('#valider').parent().show()
+    $("#comb").empty()
+}

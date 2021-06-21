@@ -10,6 +10,7 @@ use App\Models\Terms;
 use App\Models\Group_variant;
 use App\Models\Product_term;
 use App\Models\Products;
+use App\Models\Category;
 
 class Product
 {
@@ -22,7 +23,11 @@ class Product
         $attribute = new Attributes();
         $attributes = $attribute->select("id, name")->get();
 
+        $category = new Category;
+        $categories = $category->select("id, name")->get();
+
         $view->assign("attributes", $attributes);
+        $view->assign("categories", $categories);
         $view->assign("file_stylesheet","../../dist/product.css");
     }
 

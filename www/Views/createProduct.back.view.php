@@ -25,8 +25,9 @@
                 <div class="form_align--top">
                     <label class="label">Catégorie *</label>
                     <select class="input" id="category">
-                        <option value="71">Chapeau</option>
-                        <option value="1">Pantalon</option>
+                        <?php foreach ($categories as $category):?>
+                            <option value="<?= $category["id"]?>"><?= $category["name"] ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
 
