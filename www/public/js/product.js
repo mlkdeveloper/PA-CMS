@@ -147,6 +147,7 @@ function createProduct(){
         idCategory: $("#category").val()
     };
 
+
     comb.forEach((element, y) => {
         if (Array.isArray(element)) {
             element.push(stock[y].value)
@@ -160,15 +161,18 @@ function createProduct(){
         }
     })
 
-    comb = Object.assign({}, comb);
-    comb = JSON.stringify(comb)
+    var comb_object = Object.assign({}, comb);
+    comb_object = JSON.stringify(comb_object)
 
     product = JSON.stringify(product)
+
+    console.log(comb_object)    
+
 
     $.ajax({
         type: 'POST',
         url: "/admin/creer-produit-ajax",
-        data: "comb_array=" + comb + "&product=" + product,
+        data: "comb_array=" + comb_object + "&product=" + product,
         success: (data) => {
             $('#status').show();
             $('#status').html(data);
@@ -176,6 +180,7 @@ function createProduct(){
                 'scrollBehavior': 'smooth'
             })
             $("html").scrollTop(0)
+            reset()
         },
         error: () => {}
     })
