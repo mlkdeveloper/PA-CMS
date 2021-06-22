@@ -20,7 +20,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h3 class="card-title"> <?= $product['name'] ?></h3>
-                        <button class="button button--blue">ACHETER</button>
+                        <a href="/produit?id=<?= $product['id']?>"><button class="button button--blue">En savoir plus</button></a>
                     </div>
                 </div>
             </div>

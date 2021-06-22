@@ -183,4 +183,8 @@
   controller: Product
   action : displayProductsFront
 
+/produit:
+  controller: Product
+  action: infoProductFront
+
 
