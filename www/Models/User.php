@@ -298,7 +298,8 @@ class User extends Database
 				"action"=>"",
                 "class"=>"form_control col col-md-10 container",
 				"id"=>"form_register",
-				"submit"=>"S'inscrire"
+				"submit"=>"S'inscrire",
+                "classButton" => "button button--blue"
 			],
 			"inputs"=>[
 				"firstname"=>[
