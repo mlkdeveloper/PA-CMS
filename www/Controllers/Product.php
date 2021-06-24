@@ -63,31 +63,6 @@ class Product
 
             $getVariant = [];
 
-            $array = [
-                [ "name" => "couleur", "valeur"=>"XS", "id"=>"30"],
-                [ "name" => "couleur", "valeur"=>"S","id"=>"31"],
-                [ "name" => "Taille", "valeur"=>"18", "id"=>"37"],
-                [ "name" => "Taille", "valeur"=>"19","id"=>"38"],
-
-            ];
-
-           foreach ($array as $key => $value){
-
-                if (empty($getVariant[$value["name"]])){
-
-                    $getVariant[$value["name"]] = [ $value["id"] => $value["valeur"]];
-                }else{
-                   array_push( $getVariant[$value["name"]],$value["valeur"]);
-                }
-           }
-
-
-
-
-
-
-
-
             $product = new Products();
             $verify = $product->select('id')->where("id = :id")->setParams(['id' => $_GET['id']])->get();
 
@@ -98,7 +73,18 @@ class Product
 
             $getProduct = $product->select()->where("id = :id")->setParams(['id' => $_GET['id']])->get();
 
-          //SELECT DISTINCT cc_attributes.name, cc_terms.name, cc_terms.id FROM `cc_product_term` INNER JOIN cc_terms ON cc_product_term.idTerm = cc_terms.id INNER JOIN cc_attributes ON cc_terms.idAttributes = cc_attributes.id WHERE cc_product_term.idProduct = 1
+            $sqlVariant = $product->select("DISTINCT cc_attributes.name AS variant, cc_product_term.idTerm, cc_terms.name")
+                ->innerJoin("cc_product_term","cc_products.id ","=","cc_product_term.idProduct")
+                ->innerJoin("cc_terms","cc_product_term.idTerm","=","cc_terms.id")
+                ->innerJoin("cc_attributes","cc_terms.idAttributes","=","cc_attributes.id")
+                ->where("cc_products.id = :id")->setParams(['id' => $_GET['id']])->get();
+
+            foreach ($sqlVariant as $key => $value){
+                empty($getVariant[$value["variant"]]) ?
+                    $getVariant[$value["variant"]] = [ $value["idTerm"] => $value["name"]]
+                    : array_push( $getVariant[$value["variant"]],$value["name"]);
+            }
+
 
 
             $view = new View('infoProduct.front');

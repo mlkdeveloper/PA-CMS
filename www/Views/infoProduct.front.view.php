@@ -8,7 +8,7 @@
             </div>
             <div class="col-md-6 col col-sm-6 col-lg-4">
                 <h1><?= $product['name'] ?></h1>
-                <h2>€ 11</h2>
+                <h2 id="price"></h2>
                 <p>Taxes incluses.</p>
 
 
@@ -17,8 +17,9 @@
                     <div class="form_align--top">
                     <label class="label"> <?= $key ?></label>
                     <select class="input">
+                        <option value="" selected disabled hidden>Choisissez</option>
                         <?php foreach ($variant as $key => $value): ?>
-                        <option><?= $value?></option>
+                        <option value="<?= $key ?>"><?= $value?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
