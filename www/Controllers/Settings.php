@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Core\View;
 use App\Models\User;
 
+session_start();
 
 class Settings
 {
@@ -138,7 +139,7 @@ class Settings
     }
 
     private function errorRedirection($error){
-        $_SESSION['securityInstall'] = $error;
+        $_SESSION['errorSettings'] = $error;
         header('Location: /admin/parametres');
         exit();
     }
@@ -167,7 +168,7 @@ class Settings
             $dataAdmin = $admin->select()->where("id = :id")->setParams(["id" => 1])->get();
 
             $admin->populate($dataAdmin[0]);
-            $admin->setEmail($_POST['admin_mail']);
+            $admin->setEmail($mailAdmin);
             $admin->save();
 
 
@@ -183,9 +184,9 @@ class Settings
             $this->errorRedirection('Formulaire non conforme');
         }else {
 
-            $oldPwd = htmlspecialchars(trim($_POST['old_pwd']));
-            $newPwd = htmlspecialchars(trim($_POST['new_pwd']));
-            $newPwdConfirm = htmlspecialchars(trim($_POST['new_pwd_confirm']));
+            $oldPwd = htmlspecialchars($_POST['old_pwd']);
+            $newPwd = htmlspecialchars($_POST['new_pwd']);
+            $newPwdConfirm = htmlspecialchars($_POST['new_pwd_confirm']);
 
             if (empty($oldPwd) ||
                 empty($newPwd) ||
@@ -193,16 +194,20 @@ class Settings
                 $this->errorRedirection('Veuillez remplir tous les champs');
             }
 
-            $checkMail = $admin->select()->where("email = :email")->setParams(["email" => $mailAdmin])->get();
-
-            if($checkMail){
-                $this->errorRedirection('Ce mail est déjà utilisé');
-            }
-
             $dataAdmin = $admin->select()->where("id = :id")->setParams(["id" => 1])->get();
 
+            if (!password_verify($oldPwd, $dataAdmin[0]['pwd'])){
+                $this->errorRedirection('Le mot de passe est incorrect');
+            }
+
+            if ($newPwd !== $newPwdConfirm){
+                $this->errorRedirection('Les deux mots de passe sont différents');
+            }
+
+            $pwdHash = password_hash($newPwd, PASSWORD_BCRYPT);
+
             $admin->populate($dataAdmin[0]);
-            $admin->setEmail($_POST['admin_mail']);
+            $admin->setPwd($pwdHash);
             $admin->save();
 
 

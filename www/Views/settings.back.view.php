@@ -3,6 +3,12 @@
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col">
                 <div class="jumbotron">
+                    <?php
+                    if(isset($_SESSION['errorSettings'])){
+                        echo '<div class="alert alert--red errorMessageImage"><h4>'.$_SESSION['errorSettings'].'</h4></div>';
+                        unset($_SESSION['errorSettings']);
+                    }
+                    ?>
                     <form method="POST" action="/update-settings">
 
                         <div class="row">
