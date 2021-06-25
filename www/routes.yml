@@ -179,4 +179,6 @@
   controller: User
   action : changeUserPwd
 
-
+/admin/liste-commande:
+  controller: Commande
+  action: listeCommande

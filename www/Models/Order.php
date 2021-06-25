@@ -10,8 +10,9 @@ class Order extends Database
 {
     private $id;
     protected $status;
-    protected $Products_id;
+    //protected $Products_id;
     protected $User_id;
+    protected $createdAt;
 
     /**
      * @return mixed
@@ -24,7 +25,7 @@ class Order extends Database
     /**
      * @param mixed $id
      */
-    public function setId($id): void
+    public function setId($id)
     {
         $this->id = $id;
     }
@@ -40,25 +41,9 @@ class Order extends Database
     /**
      * @param mixed $status
      */
-    public function setStatus($status): void
+    public function setStatus($status)
     {
         $this->status = $status;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getProductsId()
-    {
-        return $this->Products_id;
-    }
-
-    /**
-     * @param mixed $Products_id
-     */
-    public function setProductsId($Products_id): void
-    {
-        $this->Products_id = $Products_id;
     }
 
     /**
@@ -72,9 +57,24 @@ class Order extends Database
     /**
      * @param mixed $User_id
      */
-    public function setUserId($User_id): void
+    public function setUserId($User_id)
     {
         $this->User_id = $User_id;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param mixed $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
 }
