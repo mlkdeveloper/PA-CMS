@@ -8,6 +8,11 @@
                         echo '<div class="alert alert--red errorMessageImage"><h4>'.$_SESSION['errorSettings'].'</h4></div>';
                         unset($_SESSION['errorSettings']);
                     }
+
+                    if(isset($_SESSION['successSettings'])){
+                        echo '<div class="alert alert--green errorMessageImage"><h4>'.$_SESSION['successSettings'].'</h4></div>';
+                        unset($_SESSION['successSettings']);
+                    }
                     ?>
                     <form method="POST" action="/update-settings">
 
@@ -19,7 +24,7 @@
                             <div class="form_align--top center-margin">
                                 <label for="smtp_mail">Adresse mail:</label>
                                 <input style="width: 250px; margin-bottom: 40px" class="input" type="email" id="smtp_mail" name="smtp_mail" required
-                                       value="<?php echo isset($_SESSION["dataInstall"][6]) ? $_SESSION["dataInstall"][6] : SMTPMAIL ?>">
+                                       value="<?php echo isset($_SESSION["dataSettings"][0]) ? $_SESSION["dataSettings"][0] : SMTPMAIL ?>">
                             </div>
                         </div>
 
@@ -27,7 +32,7 @@
                             <div class="form_align--top center-margin">
                                 <label for="smtp_password">Mot de passe du mail:</label>
                                 <input style="width: 250px; margin-bottom: 40px" class="input" type="text" id="smtp_password" name="smtp_password" required
-                                       value="<?php echo isset($_SESSION["dataInstall"][7]) ? $_SESSION["dataInstall"][7] : SMTPPWD ?>">
+                                       value="<?php echo isset($_SESSION["dataSettings"][1]) ? $_SESSION["dataSettings"][1] : SMTPPWD ?>">
                             </div>
                         </div>
 
@@ -36,7 +41,7 @@
                                 <label for="smtp_host">Host:</label>
                                 <input style="width: 250px; margin-bottom: 40px" class="input" type="text" id="smtp_host" name="smtp_host" required
                                        placeholder="smtp.gmail.com"
-                                       value="<?php echo isset($_SESSION["dataInstall"][8]) ? $_SESSION["dataInstall"][8] : SMTPHOST ?>">
+                                       value="<?php echo isset($_SESSION["dataSettings"][2]) ? $_SESSION["dataSettings"][2] : SMTPHOST ?>">
                             </div>
                         </div>
 
@@ -55,7 +60,7 @@
                                 <label for="smtp_port">Port SMTP:</label>
                                 <input style="width: 250px; margin-bottom: 40px" class="input" type="text" id="smtp_port" name="smtp_port" required
                                        placeholder="587"
-                                       value="<?php echo isset($_SESSION["dataInstall"][10]) ? $_SESSION["dataInstall"][10] : SMTPPORT ?>">
+                                       value="<?php echo isset($_SESSION["dataSettings"][4]) ? $_SESSION["dataSettings"][4] : SMTPPORT ?>">
                             </div>
                         </div>
 
@@ -77,7 +82,7 @@
                             <div class="form_align--top center-margin">
                                 <label for="public_key">Clé publique:</label>
                                 <textarea style="width: 250px; margin-bottom: 40px" name="public_key" class="input"
-                                          required><?php echo isset($_SESSION["dataInstall"][12]) ? $_SESSION["dataInstall"][12] : PUBLICKEYSTRIPE ?></textarea>
+                                          required><?php echo isset($_SESSION["dataSettings"][6]) ? $_SESSION["dataSettings"][6] : PUBLICKEYSTRIPE ?></textarea>
                             </div>
                         </div>
 
@@ -85,7 +90,7 @@
                             <div class="form_align--top center-margin">
                                 <label for="private_key">Clé privée:</label>
                                 <textarea style="width: 250px; margin-bottom: 40px" name="private_key" class="input"
-                                          required><?php echo isset($_SESSION["dataInstall"][13]) ? $_SESSION["dataInstall"][13] : PRIVATEKEYSTRIPE ?></textarea>
+                                          required><?php echo isset($_SESSION["dataSettings"][7]) ? $_SESSION["dataSettings"][7] : PRIVATEKEYSTRIPE ?></textarea>
                             </div>
                         </div>
 
@@ -163,3 +168,6 @@
         </div>
     </div>
 </section>
+<?php
+unset($_SESSION['dataSettings']);
+?>

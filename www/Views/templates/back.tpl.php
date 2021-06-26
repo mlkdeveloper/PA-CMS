@@ -1,6 +1,5 @@
 <?php
 $aut = new \App\Controller\Auth();
-session_start();
 if (!$aut->isConnected()){
     //header('location:/connexion');
 }
