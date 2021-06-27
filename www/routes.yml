@@ -187,4 +187,9 @@
   controller: Product
   action: infoProductFront
 
+/produit/prix:
+  controller: Product
+  action: getPrice
+
+
 

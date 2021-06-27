@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 use App\Core\View;
+use App\Models\Group_variant;
 use App\Models\Products;
 use App\Models\Products as productModel;
 use App\Models\Category;
@@ -85,12 +86,56 @@ class Product
                     : array_push( $getVariant[$value["variant"]],$value["name"]);
             }
 
-
-
             $view = new View('infoProduct.front');
             $view->assign("product",$getProduct[0]);
             $view->assign("title","produit");
             $view->assign("getVariant",$getVariant);
+        }
+    }
+
+    public function getPriceAction(){
+
+        if (isset($_GET['id']) && !empty($_GET['id']) && isset($_GET['values']) && !empty($_GET['values'])){
+
+            $values = $_GET['values'];
+            $column['id'] = $_GET['id'];
+            $product = new Products();
+
+            $getIdGroup = $product->select()
+                ->innerJoin("cc_product_term","cc_products.id ","=","cc_product_term.idProduct");
+
+
+            if (count($values ) != 1){
+
+                foreach ($values as $key => $value) {
+                    $param = ":p".$key;
+                    $getIdGroup = $getIdGroup->whereOr("cc_product_term.idTerm = $param");
+                    $column[$param] = $value;
+                }
+
+                $count = count($values) - 1;
+                $getIdGroup = $getIdGroup->where("cc_products.id = :id")->groupBy("cc_product_term.idGroup")->having("COUNT(*) > $count");
+
+            }else{
+                $column['idTerm'] = $values[0];
+                $getIdGroup = $getIdGroup->where("cc_products.id = :id","cc_product_term.idTerm = :idTerm");
+            }
+
+            $getIdGroup = $getIdGroup->setParams($column)->get();
+
+            if (!empty($getIdGroup)){
+
+                $groupVariant = new Group_variant();
+                $getPrice = $groupVariant->select('price,stock')->where("id = :id")->setParams(['id' => $getIdGroup[0]['idGroup'] ])->get();
+
+                echo json_encode($getPrice[0]);
+                http_response_code(200);
+            }else{
+                http_response_code(404);
+            }
+
+        }else{
+            http_response_code(404);
         }
     }
 

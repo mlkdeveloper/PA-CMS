@@ -16,7 +16,7 @@
 
                     <div class="form_align--top">
                     <label class="label"> <?= $key ?></label>
-                    <select class="input">
+                    <select class="input variant" onchange="getPrice(<?= $product['id'] ?>)">
                         <option value="" selected disabled hidden>Choisissez</option>
                         <?php foreach ($variant as $key => $value): ?>
                         <option value="<?= $key ?>"><?= $value?></option>
@@ -28,15 +28,17 @@
 
                 <div class="form_align--top">
                     <label class="label">Quantité : </label>
-                    <input type="number" class="input" value="1" min="1">
+                    <input id="quantity" type="number" class="input" value="1" min="1">
                 </div>
 
+                <div id="msg"></div>
+                <button id="add" class="button button--blue mt-1">AJOUTER AU PANIER</button>
 
-
-                <button class="button button--blue mt-1">AJOUTER AU PANIER</button>
 
                 <p class="mt-2"><?= $product['description'] ?></p>
             </div>
         </div>
     </div>
 </section>
+
+<script src="../public/js/productFront.js"></script>
