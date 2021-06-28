@@ -33,11 +33,15 @@
 
                 <div id="msg"></div>
                 <button id="add" class="button button--blue mt-1">AJOUTER AU PANIER</button>
-
-
                 <p class="mt-2"><?= $product['description'] ?></p>
             </div>
         </div>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <p>Avis sur le produit...</p>
     </div>
 </section>
 

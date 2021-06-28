@@ -191,5 +191,9 @@
   controller: Product
   action: getPrice
 
+/panier:
+  controller: ShoppingCart
+  action : displayShoppingCart
+
 
 

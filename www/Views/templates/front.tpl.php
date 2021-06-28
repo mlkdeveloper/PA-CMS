@@ -13,9 +13,9 @@
 <body>
     <main>
 
-        <div class="" style="display: flex; justify-content: space-between;background-color: #2D9CDB; padding: 1rem; align-items: center">
-            <img src="" alt="Logo">
-            <a href="#"><p>Panier <i class="fa fa-shopping-cart"></i></p></a>
+        <div class="" style="background-color:#ffffff;display: flex; justify-content: space-between;border-bottom: 1px solid #2D9CDB; padding: 1rem; align-items: center">
+            <img src="../../images/logo/logo.png" alt="Logo" width="50">
+            <a href="/panier"><p>Panier <i class="fa fa-shopping-cart"></i></p></a>
         </div>
 
         <!-- afficher la vue -->
