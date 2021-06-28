@@ -182,3 +182,11 @@
 /admin/liste-commande:
   controller: Commande
   action: listeCommande
+
+/admin/detail-commande:
+  controller: Commande
+  action: displayCommande
+
+/admin/annuler-commande:
+  controller: Commande
+  action: cancelCommande

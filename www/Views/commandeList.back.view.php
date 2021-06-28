@@ -9,26 +9,26 @@
                     <thead>
                     <tr>
                         <th>Id</th>
+                        <th>Utilisateur</th>
                         <th>Nb Article</th>
                         <th>Montant Total</th>
-                        <th>Utilisateur</th>
                         <th style="width: 150px">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <?php  foreach ($array as $client): ?>
+                    <?php  foreach ($array as $order): ?>
                         <tr>
-                            <td><?= $client['firstname'] ?></td>
-                            <td><?= $client['lastname'] ?></td>
-                            <td><?= $client['email'] ?></td>
-                            <td><?= $client['phoneNumber'] ?></td>
+                            <td><?= $order['id'] ?></td>
+                            <td><?= $order['User_id'] ?></td>
+                            <td>*Count Nb article*</td>
+                            <td>*Sum montant*</td>
+
                             <td>
-                                <div class="align">
+                                <div>
                                     <button class="button button--black">
-                                        <i class="fas fa-pencil-alt"></i>
-                                        <a href="/admin/modification-client?id=<?= $client['id'] ?>">Modifier</a>
+                                        <i class="fas fa-search" ></i>
+                                        <a href="/admin/detail-commande?id=<?= $order['id'] ?>">Voir plus</a>
                                     </button>
-                                    <i class="fas fa-trash" onclick="showModalDeleteClient(<?= $client['id'] ?>)"></i>
                                 </div>
                             </td>
                         </tr>
@@ -39,16 +39,6 @@
             </div>
         </div>
     </div>
-
-    <div class="modal" id="modalDeleteClient">
-        <div class="modal-content">
-            <h3>Voulez-vous vraiment supprimer ce client ?</h3>
-            <a id="buttonDeleteClient"><button class="button button--success">Oui</button></a>
-            <button class="button button--alert" onclick="hideModalDeleteClient()">Non</button>
-        </div>
-    </div>
-
-
 
 </div>
 

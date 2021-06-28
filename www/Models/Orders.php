@@ -6,13 +6,13 @@ namespace App\Models;
 
 use App\Core\Database;
 
-class Order extends Database
+class Orders extends Database
 {
-    private $id;
+    private $id = null;
     protected $status;
-    //protected $Products_id;
     protected $User_id;
-    protected $createdAt;
+    protected $CreatedAt;
+    protected $asupprimer;
 
     /**
      * @return mixed
@@ -67,14 +67,33 @@ class Order extends Database
      */
     public function getCreatedAt()
     {
-        return $this->createdAt;
+        return $this->CreatedAt;
     }
 
     /**
-     * @param mixed $createdAt
+     * @param mixed $CreatedAt
      */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt($CreatedAt)
     {
-        $this->createdAt = $createdAt;
+        $this->CreatedAt = $CreatedAt;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getAsupprimer()
+    {
+        return $this->asupprimer;
+    }
+
+    /**
+     * @param mixed $asupprimer
+     */
+    public function setAsupprimer($asupprimer)
+    {
+        $this->asupprimer = $asupprimer;
+    }
+
+
+
 }

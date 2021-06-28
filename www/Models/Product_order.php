@@ -8,9 +8,10 @@ use App\Core\Database;
 
 class Product_order extends Database
 {
-    protected $id;
-    protected $product_id;
-    protected $op_date;
+    protected $id = null;
+    protected $id_product_term;
+    protected $id_order;
+    protected $createdAt;
 
     /**
      * @return mixed
@@ -31,33 +32,49 @@ class Product_order extends Database
     /**
      * @return mixed
      */
-    public function getProductId()
+    public function getIdProductTerm()
     {
-        return $this->product_id;
+        return $this->id_product_term;
     }
 
     /**
-     * @param mixed $product_id
+     * @param mixed $id_product_term
      */
-    public function setProductId($product_id)
+    public function setIdProductTerm($id_product_term)
     {
-        $this->product_id = $product_id;
+        $this->id_product_term = $id_product_term;
     }
 
     /**
      * @return mixed
      */
-    public function getOpDate()
+    public function getIdOrder()
     {
-        return $this->op_date;
+        return $this->id_order;
     }
 
     /**
-     * @param mixed $op_date
+     * @param mixed $id_order
      */
-    public function setOpDate($op_date)
+    public function setIdOrder($id_order)
     {
-        $this->op_date = $op_date;
+        $this->id_order = $id_order;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param mixed $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
     }
 
 
