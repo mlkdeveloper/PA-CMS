@@ -179,4 +179,18 @@
   controller: User
   action : changeUserPwd
 
+/admin/parametres:
+  controller: Settings
+  action : displaySettings
 
+/update-settings:
+  controller: Settings
+  action : update
+
+/update-admin-email:
+  controller: Settings
+  action : updateAdminEmail
+
+/update-admin-password:
+  controller: Settings
+  action : updateAdminPassword
