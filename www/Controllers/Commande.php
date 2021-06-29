@@ -40,6 +40,34 @@ class Commande extends Database
             ->where("id_order = :id")->setParams(["id" => $_GET['id']])
             ->get();
 
+ /*       $listProduct = $product->select('*')
+            ->innerJoin("cc_product_term", "cc_product_order.id_product_term", "=", "cc_product_term.id")
+            ->innerJoin("cc_products", "cc_product_term.idProduct", "=", "cc_products.id")
+            ->where("id_order = :id")->setParams(["id" => $_GET['id']])
+            ->get();*/
+/*
+        $listProduct = $product->select('*')
+            ->innerJoin("cc_product_term", "cc_product_order.id_product_term", "=", "cc_product_term.id")
+            ->innerJoin("cc_terms", "cc_product_term.idTerm", "=", "cc_terms.id")
+            ->where("id_order = :id")->setParams(["id" => $_GET['id']])
+            ->get();*/
+
+        //Stock + prix
+/*        $listProduct = $product->select('*')
+            ->innerJoin("cc_product_term", "cc_product_order.id_product_term", "=", "cc_product_term.id")
+            ->innerJoin("cc_group_variant", "cc_product_term.idGroup", "=", "cc_group_variant.id")
+            ->where("id_order = :id")->setParams(["id" => $_GET['id']])
+            ->get();*/
+
+/*        $listProduct = $product->select('*')
+            ->innerJoin("cc_product_term", "cc_product_order.id_product_term", "=", "cc_product_term.id")
+            ->innerJoin("cc_attributes", "cc_terms.idAttributes", "=", "cc_attributes.id")
+            ->where("id_order = :id")->setParams(["id" => $_GET['id']])
+            ->get();*/
+
+        echo '<pre>';
+        var_dump($listProduct);
+        exit();
         /*
          *
          *             ->innerJoin(DBPREFIXE."products", "Products_id", "=", DBPREFIXE."products.id")
@@ -54,6 +82,17 @@ class Commande extends Database
            INNER JOIN cc_group_variant ON cc_product_term.idGroup = cc_group_variant.id
            INNER JOIN cc_attributes ON cc_terms.idAttributes = cc_attributes.id
            WHERE `id_order` = 1
+
+        $listProduct = $product->select('*')
+            ->innerJoin("cc_product_term", "cc_product_order.id_product_term", "=", "cc_product_term.id")
+            ->innerJoin("cc_products", "cc_product_term.idProduct", "=", "cc_products.id")
+            ->innerJoin("cc_terms", "cc_product_term.idTerm", "=", "cc_terms.id")
+            ->innerJoin("cc_group_variant", "cc_product_term.idGroup", "=", "cc_group_variant.id")
+            ->innerJoin("cc_attributes", "cc_terms.idAttributes", "=", "cc_attributes.id")
+            ->where("id_order = :id")->setParams(["id" => $_GET['id']])
+            ->get();
+
+
          */
 
 
