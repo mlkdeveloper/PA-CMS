@@ -18,16 +18,16 @@
                     <tbody>
                     <?php  foreach ($array as $order): ?>
                         <tr>
-                            <td><?= $order['id'] ?></td>
-                            <td><?= $order['User_id'] ?></td>
-                            <td>*Count Nb article*</td>
-                            <td>*Sum montant*</td>
+                            <td><?= $order['id_order'] ?></td>
+                            <td><?= $order['firstname'] ?> <?= $order['lastname'] ?></td>
+                            <td><?= $order['nbArticle'] ?></td>
+                            <td><?= $order['montant'] ?> €</td>
 
                             <td>
                                 <div>
                                     <button class="button button--black">
                                         <i class="fas fa-search" ></i>
-                                        <a href="/admin/detail-commande?id=<?= $order['id'] ?>">Voir plus</a>
+                                        <a href="/admin/detail-commande?id=<?= $order['id_order'] ?>">Voir plus</a>
                                     </button>
                                 </div>
                             </td>

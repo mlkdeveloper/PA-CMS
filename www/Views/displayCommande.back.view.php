@@ -17,25 +17,17 @@
                     <tr>
                         <th>#</th>
                         <th>Nom</th>
+                        <th>Carateristique</th>
                         <th>Prix</th>
-                        <th style="width: 150px">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
                     <?php  foreach ($array as $product): ?>
                         <tr>
-                            <td><?= $product['id'] ?></td>
-                            <td><?= $product['User_id'] ?></td>
-                            <td>*Sum montant*</td>
-
-                            <td>
-                                <div>
-                                    <button class="button button--black">
-                                        <i class="fas fa-search"></i>
-                                        <a href="/admin/detail-commande?id=<?= $product['id'] ?>">Voir plus</a>
-                                    </button>
-                                </div>
-                            </td>
+                            <td><?= $product['idProductOrder'] ?></td>
+                            <td><?= $product['productName'] ?></td>
+                            <td><?= $product['termName'] ?></td>
+                            <td><?= $product['variantPrice'] ?> €</td>
                         </tr>
                     <?php endforeach;?>
 
