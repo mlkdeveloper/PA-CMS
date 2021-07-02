@@ -55,16 +55,14 @@ function addShoppingCart(id,idGroup){
             values.push($(this).val());
         }
     });
-
+    let quantity = $('#quantity').val();
 
     if (isEmpty === 0){
         $.ajax({
             url: "/ajout-panier",
-            data: {id:id, idGroup:idGroup, values : values},
+            data: {id:id, idGroup:idGroup, values : values,quantity:quantity},
             success: (data) => {
                console.log(data);
-
-
             },
         });
 

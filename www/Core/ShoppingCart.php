@@ -18,12 +18,12 @@ class ShoppingCart
     }
 
 
-    public function add($id){
+    public function add($id,$quantity){
 
         if(isset($_SESSION['panier'][$id])){
-            $_SESSION['panier'][$id]++;
+            $_SESSION['panier'][$id] += $quantity;
         }else{
-            $_SESSION['panier'][$id] = 1;
+            $_SESSION['panier'][$id] = $quantity;
         }
 
     }

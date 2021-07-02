@@ -36,7 +36,8 @@ class ShoppingCart {
 
         if(isset($_GET['idGroup']) && !empty($_GET['idGroup'])
             && isset($_GET['id']) && !empty($_GET['id'])
-            && isset($_GET['values']) && !empty($_GET['values'])  )
+            && isset($_GET['values']) && !empty($_GET['values'])
+            && isset($_GET['quantity']) && $_GET['quantity'] > 0 )
         {
 
             $productTerm = new Product_term();
@@ -46,7 +47,7 @@ class ShoppingCart {
             if(empty(array_diff($_GET['values'], $array))){
 
                 $shoppingCart = new Panier();
-                $shoppingCart->add($_GET['idGroup']);
+                $shoppingCart->add($_GET['idGroup'],$_GET['quantity']);
             }else{
                 http_response_code(400);
             }
