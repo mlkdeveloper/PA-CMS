@@ -195,5 +195,13 @@
   controller: ShoppingCart
   action : displayShoppingCart
 
+/ajout-panier:
+  controller : ShoppingCart
+  action : addShoppingCart
+
+/supprimer-panier:
+  controller: ShoppingCart
+  action: deleteShoppingCart
+
 
 

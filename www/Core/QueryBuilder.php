@@ -115,7 +115,6 @@ class QueryBuilder
             $this->request.= " LIMIT " . $this->limit;
         }
 
-
         return $this->execute();
 
     }

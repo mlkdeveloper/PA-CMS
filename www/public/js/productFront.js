@@ -28,6 +28,7 @@ function getPrice(id){
                 }else{
                     $("#quantity").removeAttr('disabled');
                     $("#quantity").attr('max',json.stock);
+                    $("#add").attr('onclick','addShoppingCart('+id+','+json.id+')');
                     $("#add").css("display","block");
                     $("#msg").empty().append("<p>Stock : " + json.stock + "</p>");
 
@@ -37,5 +38,36 @@ function getPrice(id){
 
     }
 
+
+}
+
+function addShoppingCart(id,idGroup){
+
+
+    let values = [];
+    let isEmpty = 0;
+
+    $(".variant option:selected").each(function( index ) {
+
+        if ($(this).val() === ""){
+            isEmpty = 1;
+        }else{
+            values.push($(this).val());
+        }
+    });
+
+
+    if (isEmpty === 0){
+        $.ajax({
+            url: "/ajout-panier",
+            data: {id:id, idGroup:idGroup, values : values},
+            success: (data) => {
+               console.log(data);
+
+
+            },
+        });
+
+    }
 
 }

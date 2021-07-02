@@ -126,7 +126,7 @@ class Product
             if (!empty($getIdGroup)){
 
                 $groupVariant = new Group_variant();
-                $getPrice = $groupVariant->select('price,stock')->where("id = :id")->setParams(['id' => $getIdGroup[0]['idGroup'] ])->get();
+                $getPrice = $groupVariant->select('id,price,stock')->where("id = :id")->setParams(['id' => $getIdGroup[0]['idGroup'] ])->get();
 
                 echo json_encode($getPrice[0]);
                 http_response_code(200);
