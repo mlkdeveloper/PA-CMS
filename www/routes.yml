@@ -183,14 +183,14 @@
   controller: Settings
   action : displaySettings
 
-/update-settings:
+/admin/update-settings:
   controller: Settings
   action : update
 
-/update-admin-email:
+/admin/update-admin-email:
   controller: Settings
   action : updateAdminEmail
 
-/update-admin-password:
+/admin/update-admin-password:
   controller: Settings
   action : updateAdminPassword
