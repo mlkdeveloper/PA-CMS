@@ -36,8 +36,8 @@ class Reviews
             $review->populate($review_datas[0]);
             $review->setStatus(1);
             $review->save();
-            header("Location: /admin/reviews");
         }
+        header("Location: /admin/reviews");
     }
 
     public function deleteReviewsAction()

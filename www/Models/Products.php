@@ -110,11 +110,4 @@ class Products extends Database
         $this->idCategory = $idCategory;
     }
 
-
-
-
-    
-
-
-
 }

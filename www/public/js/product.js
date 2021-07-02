@@ -56,10 +56,16 @@ function isVariant() {
         $('#blockAttributes').show();
         $(".checked").prop('checked', false);
         $('#variant').val(1)
+        $('#attr_container').show()
+        $('#var_container').show()
+        $('#without_attr').hide()
     }else{
         $('#blockAttributes').hide();
         $('#selectedAttributes').html("")
         $('#variant').val(0)
+        $('#attr_container').hide()
+        $('#var_container').hide()    
+        $('#without_attr').show()
     }
 }
 
@@ -108,7 +114,7 @@ function buildArray() {
         $("#loader").fadeOut();
         $("div[name='comb']").show();
         $("#sub_comb").show();  
-    }, 500);
+    }, 10);
 
     clearInterface()
 
@@ -147,6 +153,7 @@ function createProduct(){
         idCategory: $("#category").val()
     };
 
+    var err = checkProduct($("#product_name").val())
 
     comb.forEach((element, y) => {
         if (Array.isArray(element)) {
@@ -166,24 +173,20 @@ function createProduct(){
 
     product = JSON.stringify(product)
 
-    console.log(comb_object)    
-
-
-    $.ajax({
-        type: 'POST',
-        url: "/admin/creer-produit-ajax",
-        data: "comb_array=" + comb_object + "&product=" + product,
-        success: (data) => {
-            $('#status').show();
-            $('#status').html(data);
-            $("html").css({
-                'scrollBehavior': 'smooth'
-            })
-            $("html").scrollTop(0)
-            reset()
-        },
-        error: () => {}
-    })
+    if(err.length === 0){
+        $.ajax({
+            type: 'POST',
+            url: "/admin/creer-produit-ajax",
+            data: "comb_array=" + comb_object + "&product=" + product,
+            success: (data) => {
+                showStatus(data)
+                reset()
+            },
+            error: () => {}
+        })
+    }else{
+        err.map(x => showStatus(x))
+    }
 
 }
 
@@ -194,4 +197,21 @@ function clearInterface(){
 function reset(){
     $('#valider').parent().show()
     $("#comb").empty()
+}
+
+function checkProduct(pn){
+    var err = []
+    if(!pn){
+        err.push("<div class='alert alert--red'>Le produit doit avoir un nom</div>")
+    }
+    return err;
+}
+
+function showStatus(data){
+    $('#status').show();
+    $('#status').html(data);
+    $("html").css({
+        'scrollBehavior': 'smooth'
+    })
+    $("html").scrollTop(0)
 }

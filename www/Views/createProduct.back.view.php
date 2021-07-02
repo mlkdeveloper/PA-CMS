@@ -38,7 +38,7 @@
             </div>
         </div>
     </div>
-    <div class="container">
+    <div class="container" id='attr_container'>
         <div class="row">
             <div class="col col-md-12 col-sm-12 col-lg-12">
                 <div class="jumbotron">
@@ -67,7 +67,7 @@
         </div>
     </div>
 
-    <div class="container">
+    <div class="container" id='var_container'>
         <div class="row">
             <div class="col col-md-12 col-sm-12 col-lg-12">
                 <div class="jumbotron">
@@ -77,6 +77,30 @@
                         <hr>
                     </div>
                     <div id="selectedAttributes"></div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id='without_attr' style="display: none">
+        <div class="row">
+            <div class="col col-md-12 col-sm-12 col-lg-12">
+                <div class="jumbotron">
+
+                    <div class="">
+                        <h3>Stock et Prix</h3>
+                        <hr>
+                    </div>
+
+                    <div>
+                        <label for="stock">Stock</label>
+                        <input class="input" type="number" id="stock" min="1">
+                    </div>
+                    <div>
+                        <label for="price">Prix</label>
+                        <input class="input" type="number" id="price" min="0.01">
+                    </div>
 
                 </div>
             </div>

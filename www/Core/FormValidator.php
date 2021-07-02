@@ -3,6 +3,7 @@ namespace App\Core;
 use App\Models\Category;
 
 use App\Models\Attributes;
+use App\Models\Products;
 use App\Models\Role;
 use App\Models\User;
 
@@ -275,6 +276,59 @@ class FormValidator
             }
         }
         return $errors;
+    }
+
+
+    public static function checkProduct($products, $categories, $variants, $class)
+    {
+        $errors = [];
+
+        if ($class->find_duplicates_sql("name", $products->name)) {
+            $errors[] = "Le produit existe déjà"; 
+        }
+
+        if (
+            strlen($products->name) < 2 ||
+            strlen($products->name) > 50
+        ) {
+            $errors[] = "Le produit doit avoir un nom entre 2 et 50 caractères, sans caractères spéciaux ni numérique";
+        }
+
+        if(!in_array($products->type, [0,1])) {
+            $errors[] = "Le produit doit avoir un type connu";
+        }
+
+        if(!in_array($products->idCategory, $categories)){
+            $errors[] = "La catégorie n'existe pas";
+        }
+
+        foreach($variants as $key => $value){
+
+            $prix = $value[count($value)-1];
+            $stock = $value[count($value)-2];
+            
+            if ( $prix <= 0 
+                && empty($prix)
+                && !is_numeric($prix)
+            ){
+                $errors[] = "Le prix des variantes doit être saisi : " 
+                            . "Supérieur à 0" 
+                            . "Doit être un nombre flottant";
+            }
+            
+            if($stock <= 0 
+                && empty($stock)
+                && !is_int($stock)
+            ){
+                $errors[] = "Le stock des variantes doit être saisi : " 
+                            . "Supérieur à 0" 
+                            . "Doit être un nombre entier";
+            }        
+
+        }
+        
+
+        return $errors; //[] vide si ok
     }
 
 }

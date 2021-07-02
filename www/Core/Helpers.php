@@ -22,4 +22,9 @@ class Helpers{
         }
         return $mdp;
     }
+
+    public static function vd(...$array){
+        echo "<pre>";
+        var_dump($array);
+    }
 }
