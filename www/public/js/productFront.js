@@ -62,7 +62,12 @@ function addShoppingCart(id,idGroup){
             url: "/ajout-panier",
             data: {id:id, idGroup:idGroup, values : values,quantity:quantity},
             success: (data) => {
-               console.log(data);
+                $('#msgShoppingCart').empty().append(data);
+            },
+            error:(data) => {
+
+                console.log(data);
+                $('#msgShoppingCart').empty().append(data.responseText);
             },
         });
 

@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Core\View;
 use App\Core\ShoppingCart as Panier;
+use App\Models\Group_variant;
 use App\Models\Product_term;
 
 class ShoppingCart {
@@ -47,13 +48,21 @@ class ShoppingCart {
             if(empty(array_diff($_GET['values'], $array))){
 
                 $shoppingCart = new Panier();
-                $shoppingCart->add($_GET['idGroup'],$_GET['quantity']);
+
+                if ($shoppingCart->add($_GET['idGroup'],$_GET['quantity'])){
+                    echo "<div class='alert--green alert'>Produit ajouté au panier !</div>";
+                    http_response_code(200);
+
+                }else{
+
+                    echo "<div class='alert--red alert'>Stock insuffisant !</div>";
+                    http_response_code(400);
+                }
+
             }else{
                 http_response_code(400);
             }
-
         } else {
-
             http_response_code(400);
         }
 

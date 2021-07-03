@@ -1,5 +1,12 @@
 <section>
     <div class="container">
+
+        <div class="row">
+            <div class="col-md-12 col">
+                <div id="msgShoppingCart"></div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-6 col col-sm-6 col-lg-6">
                 <div style="">

@@ -53,13 +53,18 @@
                         </tbody>
                     </table>
                 </div>
+
+                <div style="display: flex; justify-content: flex-end">
+                    <h3> Total : <?= $_SESSION['panierTotal']?></h3>
+                </div>
             </div>
 
             <?php endif; ?>
 
-
     </div>
 </section>
+
+
 
 
 
