@@ -49,7 +49,39 @@
 <section>
     <div class="container">
         <p>Avis sur le produit...</p>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="jumbotron">
+                    <table id="table" class="row-border hover">
+                        <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Commentaires</th>
+                            <th>Note</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($reviews as $review)  :?>
+                            <tr>
+                                <td><?= $review['lastname'] ?></td>
+                                <td><?= $review['commentary'] ?></td>
+                                <td>
+                                    <?php for ($i = 0 ; $i < $review['mark']; $i++): ?>
+                                    <i class="fa fa-star"></i>
+                                    <?php endfor; ?>
+                                </td>
+                            </tr>
+
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
+
 </section>
 
 <script src="../public/js/productFront.js"></script>
+<script src="../public/js/datatable.js"></script>

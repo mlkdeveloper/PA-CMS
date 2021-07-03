@@ -65,8 +65,6 @@ function addShoppingCart(id,idGroup){
                 $('#msgShoppingCart').empty().append(data);
             },
             error:(data) => {
-
-                console.log(data);
                 $('#msgShoppingCart').empty().append(data.responseText);
             },
         });

@@ -203,5 +203,3 @@
   controller: ShoppingCart
   action: deleteShoppingCart
 
-
-

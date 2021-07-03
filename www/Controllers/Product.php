@@ -9,6 +9,7 @@ use App\Models\Group_variant;
 use App\Models\Products;
 use App\Models\Products as productModel;
 use App\Models\Category;
+use App\Models\Review;
 
 class Product
 {
@@ -86,10 +87,17 @@ class Product
                     : array_push( $getVariant[$value["variant"]],$value["name"]);
             }
 
+
+            $review = new Review();
+            $reviews = $review->select("cc_user.lastname, cc_review.commentary, cc_review.mark")
+                ->innerJoin("cc_user","cc_review.User_id","=","cc_user.id")
+                ->where("Products_id = :id")->setParams(["id" => $_GET['id']])->get();
+
             $view = new View('infoProduct.front');
             $view->assign("product",$getProduct[0]);
             $view->assign("title","produit");
             $view->assign("getVariant",$getVariant);
+            $view->assign("reviews",$reviews);
         }
     }
 
