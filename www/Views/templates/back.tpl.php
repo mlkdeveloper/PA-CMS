@@ -31,9 +31,10 @@ if (!$aut->isConnected()){
     </head>
 
     <body>
+
         <nav class="sidenav">
             <ul>
-                <a href="/admin/dashboard"><li>Dashboard</a></li>
+                <a href="/admin/dashboard"><li>Dashboard</li></a>
                 <a href="#"><li>Commandes</li></a>
                 <li id="dropdownProducts" class="dropdownMenu">Produits<i class="fa fa-caret-down"></i></li>
                 <ul class="dropdown-container">
@@ -60,6 +61,9 @@ if (!$aut->isConnected()){
         <div class="container-body">
             <header>
                 <div class="headerBack">
+                    <span id="hamburger">
+                        <i class="fas fa-bars"></i>
+                    </span>
                     <h1>Header</h1>
                     <button onclick="location.href='/deconnexion';" class="button button--blue">Déconnexion</button>
                 </div>

@@ -533,6 +533,32 @@ p {
   padding-right: 8px;
 }
 
+#hamburger {
+  display: none;
+  font-size: 2em;
+  position: absolute;
+  top: 25%;
+  left: 25px;
+}
+
+#hamburger:hover {
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 1000px) {
+  .sidenav {
+    display: none;
+  }
+
+  .container-body {
+    width: 100%;
+  }
+
+  #hamburger {
+    display: block;
+  }
+}
+
 .headerBack {
   position: relative;
   padding: 10px;
