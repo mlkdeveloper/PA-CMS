@@ -12,7 +12,23 @@ class Orders extends Database
     protected $status;
     protected $User_id;
     protected $CreatedAt;
-    protected $asupprimer;
+    protected $montant;
+
+    /**
+     * @return mixed
+     */
+    public function getMontant()
+    {
+        return $this->montant;
+    }
+
+    /**
+     * @param mixed $montant
+     */
+    public function setMontant($montant)
+    {
+        $this->montant = $montant;
+    }
 
     /**
      * @return mixed

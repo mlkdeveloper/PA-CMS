@@ -12,6 +12,7 @@
                         <th>Utilisateur</th>
                         <th>Nb Article</th>
                         <th>Montant Total</th>
+                        <th>Statut</th>
                         <th style="width: 150px">Actions</th>
                     </tr>
                     </thead>
@@ -22,7 +23,15 @@
                             <td><?= $order['firstname'] ?> <?= $order['lastname'] ?></td>
                             <td><?= $order['nbArticle'] ?></td>
                             <td><?= $order['montant'] ?> €</td>
-
+                            <td><?php
+                                if ($order['idStatus'] == -1){
+                                    echo "Annulé";
+                                }else if($order['idStatus'] == 0){
+                                    echo "En attente";
+                                }else if($order['idStatus'] == 1){
+                                     echo "Validé";
+                                }?>
+                            </td>
                             <td>
                                 <div>
                                     <button class="button button--black">

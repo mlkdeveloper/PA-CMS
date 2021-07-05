@@ -18,7 +18,7 @@ class Commande extends Database
         $view = new View("commandeList.back", "back");
         $view->assign("title", "Liste des commandes");
         $commande = new Product_order();
-        $listOrders = $commande->select('*, COUNT(cc_product_order.id) as nbArticle ')
+        $listOrders = $commande->select('*, COUNT(cc_product_order.id) as nbArticle, cc_orders.status as idStatus ')
             ->innerJoin("cc_orders", "cc_product_order.id_order", "=", "cc_orders.id")
             ->innerJoin("cc_user", "cc_orders.User_id", "=", "cc_user.id")
             ->groupBy("id_order")->get();
@@ -94,12 +94,44 @@ class Commande extends Database
         }
         $order = new Orders();
         $user = new \App\Models\User();
+        $orderTosave = new Orders();
 
-        $commande = $order->select('*')->where("User_id = :id")->setParams(["id" => $_GET['id']])->get();
+        $commande = $order->select('*')->where("id = :id")->setParams(["id" => $_GET['id']])->get();
+        $utilisateur = $user->select('*')->where("id = :id")->setParams(["id" => $commande[0]["User_id"]])->get();
+
+        $orderTosave->populate($commande[0]);
+        $orderTosave->setId($commande[0]['id']);
+        $orderTosave->setUserId($commande[0]['User_id']);
+        $orderTosave->setStatus(-1);
+        $orderTosave->save();
+
+
+        Email::sendEmail($utilisateur[0]["email"], "Annulation de votre commande", "http://localhost:8082/connexion","Mon compte", "/admin/liste-commande");
+
+    }
+
+    public function ValidCommandeAction(){
+        $view = new View("displayCommande.back", "back");
+
+        if (!isset($_GET['id']) && empty($_GET['id'])){
+            $view->assign("errors", "Parametre manquant dans le GET");
+        }
+
+        $order = new Orders();
+        $user = new \App\Models\User();
+        $orderTosave = new Orders();
+
+        $commande = $order->select('*')->where("id = :id")->setParams(["id" => $_GET['id']])->get();
         $utilisateur = $user->select('*')->where("id = :id")->setParams(["id" => $commande[0]["User_id"]])->get();
 
 
-        Email::sendEmail($utilisateur[0]["email"], "Annulation de votre commande", "http://localhost:8082/connexion","Mon compte", "/connexion");
+        $orderTosave->populate($commande[0]);
+        $orderTosave->setId($commande[0]['id']);
+        $orderTosave->setUserId($commande[0]['User_id']);
+        $orderTosave->setStatus(1);
+        $orderTosave->save();
+
+        Email::sendEmail($utilisateur[0]["email"], "Validation de votre commande", "http://localhost:8082/connexion","Mon compte", "/admin/liste-commande");
 
     }
 }

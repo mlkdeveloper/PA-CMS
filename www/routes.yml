@@ -190,3 +190,7 @@
 /admin/annuler-commande:
   controller: Commande
   action: cancelCommande
+
+/admin/valider-commande:
+  controller: Commande
+  action: ValidCommande
