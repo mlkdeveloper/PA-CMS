@@ -22,4 +22,12 @@ class Helpers{
         }
         return $mdp;
     }
+
+    public static function dateFr($data){
+
+	    $timestamp = strtotime($data);
+	    $newDate = date("d/m/Y H:i",$timestamp);
+
+	    return $newDate;
+    }
 }

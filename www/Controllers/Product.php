@@ -89,9 +89,9 @@ class Product
 
 
             $review = new Review();
-            $reviews = $review->select("cc_user.lastname, cc_review.commentary, cc_review.mark")
+            $reviews = $review->select("cc_user.lastname, cc_review.commentary, cc_review.mark, cc_review.createdAt")
                 ->innerJoin("cc_user","cc_review.User_id","=","cc_user.id")
-                ->where("Products_id = :id")->setParams(["id" => $_GET['id']])->get();
+                ->where("Products_id = :id","cc_review.status = 1")->setParams(["id" => $_GET['id']])->get();
 
             $view = new View('infoProduct.front');
             $view->assign("product",$getProduct[0]);

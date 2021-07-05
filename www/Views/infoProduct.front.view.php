@@ -56,6 +56,7 @@
                     <table id="table" class="row-border hover">
                         <thead>
                         <tr>
+                            <th>Date de publication</th>
                             <th>Nom</th>
                             <th>Commentaires</th>
                             <th>Note</th>
@@ -64,6 +65,7 @@
                         <tbody>
                         <?php foreach ($reviews as $review)  :?>
                             <tr>
+                                <td><?= \App\Core\Helpers::dateFr($review['createdAt'])?></td>
                                 <td><?= $review['lastname'] ?></td>
                                 <td><?= $review['commentary'] ?></td>
                                 <td>
