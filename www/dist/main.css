@@ -575,6 +575,12 @@ a {
   }
 }
 
+@media only screen and (min-width: 1200px) {
+  .sidenav {
+    left: 0 !important;
+  }
+}
+
 .headerBack {
   position: relative;
   padding: 10px;
