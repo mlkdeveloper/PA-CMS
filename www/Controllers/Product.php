@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 
+use App\Core\FormValidator;
 use App\Core\View;
 use App\Models\Group_variant;
 use App\Models\Products;
@@ -87,13 +88,35 @@ class Product
                     : array_push( $getVariant[$value["variant"]],$value["name"]);
             }
 
-
+            $view = new View('infoProduct.front');
             $review = new Review();
+
+            $form = $review->formBuilderRegister();
+            if (!empty($_POST)){
+
+                $errors = FormValidator::checkFormReview($form, $_POST);
+
+                if (empty($errors)){
+                    session_start();
+                    $review->populate($_POST);
+                    $review->setStatus(0);
+                    $review->setProductsId($_GET['id']);
+                    $review->setUserId($_SESSION['user']['id']);
+                    $review->save();
+
+                    $view->assign("success", "Commentaire envoyé !");
+
+                }else{
+                    $view->assign("errors", $errors);
+                }
+
+            }
+
             $reviews = $review->select("cc_user.lastname, cc_review.commentary, cc_review.mark, cc_review.createdAt")
                 ->innerJoin("cc_user","cc_review.User_id","=","cc_user.id")
                 ->where("Products_id = :id","cc_review.status = 1")->setParams(["id" => $_GET['id']])->get();
 
-            $view = new View('infoProduct.front');
+
             $view->assign("product",$getProduct[0]);
             $view->assign("title","produit");
             $view->assign("getVariant",$getVariant);

@@ -13,7 +13,10 @@ class ShoppingCart {
 
     public function displayShoppingCartAction(){
 
-        session_start();
+
+        //à fixer
+        $panier = new \App\Core\ShoppingCart();
+
 
         $array = [];
 

@@ -1,6 +1,18 @@
 <section>
     <div class="container">
 
+        <?php if(isset($errors)):?>
+            <div class="alert alert--red">
+                <?php foreach ($errors as $error):?>
+                    <li><?=$error?></li>
+                <?php endforeach;?>
+            </div>
+        <?php endif;?>
+
+        <?php if(isset($success)):?>
+            <div class="alert alert--green"><?= $success?></div>
+        <?php endif;?>
+
         <div class="row">
             <div class="col-md-12 col">
                 <div id="msgShoppingCart"></div>
@@ -81,6 +93,38 @@
                 </div>
             </div>
         </div>
+       <?php //if (isset($_SESSION['user'])) : ?>
+        <form method="POST">
+        <div class="row">
+
+            <div class="col-md-7 col-sm-12 col">
+                <div class="form_align--top">
+                    <label class="label">Laissez un commentaire ... </label>
+                    <textarea class="input input--textarea" type="text" name="commentary" placeholder="Votre avis..." required></textarea>
+                </div>
+            </div>
+            <div class="col-md-5 col-sm-2 col">
+                <div class="form_align--top">
+                    <label class="label">Note *</label>
+                    <select class="input" name="mark" required>
+                        <option value="1">1 étoile</option>
+                        <option value="2">2 étoiles</option>
+                        <option value="3">3 étoiles</option>
+                        <option value="4">4 étoiles</option>
+                        <option value="5">5 étoiles</option>
+
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-sm-12 col">
+                <input class="button--blue button" type="submit" value="Enregistrer">
+            </div>
+
+        </div>
+        </form>
+        <?php //endif; ?>
+
     </div>
 
 </section>
