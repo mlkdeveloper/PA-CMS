@@ -5,6 +5,7 @@ namespace App\Core;
 
 
 use App\Models\Group_variant;
+use App\Models\Product_term;
 
 class ShoppingCart
 {
@@ -58,6 +59,23 @@ class ShoppingCart
             $_SESSION['panierTotal'] += $getQuantity[0]['price'] * $product;
 
         }
+    }
+
+    public function display(){
+
+        $array = [];
+
+        foreach ($_SESSION['panier'] as $key => $product){
+
+            $productTerm = new Product_term();
+            array_push($array,$productTerm->select("cc_terms.name AS nameTerm,cc_group_variant.id,cc_products.name, cc_group_variant.price ")
+                ->innerJoin("cc_group_variant","cc_product_term.idGroup ","=","cc_group_variant.id")
+                ->innerJoin("cc_products","cc_product_term.idProduct ","=","cc_products.id")
+                ->innerJoin("cc_terms","cc_product_term.idTerm ","=","cc_terms.id")
+                ->where("cc_product_term.idGroup = :idGroup")->setParams(["idGroup" => $key])->get());
+        }
+
+        return $array;
     }
 
 
