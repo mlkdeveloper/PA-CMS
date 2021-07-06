@@ -10,6 +10,10 @@ $(document).ready(function() {
     $("#hamburger").on("click", function () {
         navbar();
     });
+
+    setTimeout(function (){
+        $("#containerLoader").fadeOut(700);
+    }, 500);
 });
 
 

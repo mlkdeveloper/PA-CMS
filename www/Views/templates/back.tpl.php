@@ -23,6 +23,7 @@ if (!$aut->isConnected()){
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
         <link rel="stylesheet" href="../../dist/main.css">
+        <link rel="stylesheet" href="../../public/css/back.css">
 
 
         <?php  if(isset($stylesheet) && !empty($stylesheet))
@@ -31,6 +32,12 @@ if (!$aut->isConnected()){
     </head>
 
     <body>
+
+    <div id="containerLoader">
+        <div id="loadingPage">
+            <div class="spinner"></div>
+        </div>
+    </div>
 
         <nav class="sidenav" id="sidenav">
             <ul>
@@ -75,6 +82,6 @@ if (!$aut->isConnected()){
 
             </main>
         </div>
-        <script src="../../public/js/dropdowns.js"></script>
+        <script src="../../public/js/back.js"></script>
     </body>
 </html>
