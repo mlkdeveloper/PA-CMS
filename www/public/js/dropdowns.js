@@ -1,10 +1,10 @@
 $(document).ready(function() {
     $("#dropdownProducts").on("click", function () {
-        startDropdown(this);
+        dropdown(this);
     });
 
     $("#dropdownSettings").on("click", function () {
-        startDropdown(this);
+        dropdown(this);
     });
 
     $("#hamburger").on("click", function () {
@@ -13,7 +13,7 @@ $(document).ready(function() {
 });
 
 
-function startDropdown(dropDown){
+function dropdown(dropDown){
     dropDown.classList.toggle("active");
     var dropdownContent = dropDown.nextElementSibling;
     if (dropdownContent.style.display === "flex") {

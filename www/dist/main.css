@@ -328,6 +328,10 @@ p {
   margin: auto;
 }
 
+a {
+  text-decoration: none;
+}
+
 .button {
   display: inline-block;
   width: auto;
