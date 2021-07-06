@@ -6,6 +6,10 @@ $(document).ready(function() {
     $("#dropdownSettings").on("click", function () {
         startDropdown(this);
     });
+
+    $("#hamburger").on("click", function () {
+        navbar();
+    });
 });
 
 
@@ -16,5 +20,13 @@ function startDropdown(dropDown){
         dropdownContent.style.display = "none";
     } else {
         dropdownContent.style.display = "flex";
+    }
+}
+
+function navbar(){
+    if ($("#sidenav").css("left") !== "0px"){
+        $("#sidenav").css("left", 0);
+    }else{
+        $("#sidenav").css("left", "-100%");
     }
 }

@@ -61,6 +61,7 @@
   position: absolute;
   top: 25%;
   left: 25px;
+  z-index: 10;
 }
 
 #hamburger:hover {
@@ -69,9 +70,20 @@
 
 
 
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 1200px) {
   .sidenav {
-    display: none;
+    left: 100%;
+    width: 100%;
+  }
+
+  .sidenav ul {
+    text-align: center;
+  }
+
+  .sidenav i {
+    float: none;
+    padding-right: 0;
+    padding-left: 10px;
   }
 
   .container-body {

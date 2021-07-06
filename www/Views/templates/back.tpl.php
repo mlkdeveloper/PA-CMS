@@ -32,7 +32,7 @@ if (!$aut->isConnected()){
 
     <body>
 
-        <nav class="sidenav">
+        <nav class="sidenav" id="sidenav">
             <ul>
                 <a href="/admin/dashboard"><li>Dashboard</li></a>
                 <a href="#"><li>Commandes</li></a>
