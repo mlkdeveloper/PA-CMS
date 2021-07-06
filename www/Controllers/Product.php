@@ -112,9 +112,9 @@ class Product
 
             }
 
-            $reviews = $review->select("cc_user.lastname, cc_review.commentary, cc_review.mark, cc_review.createdAt")
-                ->innerJoin("cc_user","cc_review.User_id","=","cc_user.id")
-                ->where("Products_id = :id","cc_review.status = 1")->setParams(["id" => $_GET['id']])->get();
+            $reviews = $review->select(DBPREFIXE."user.lastname, ".DBPREFIXE."review.commentary, ".DBPREFIXE."review.mark, ".DBPREFIXE."review.createdAt")
+                ->innerJoin(DBPREFIXE."user",DBPREFIXE."review.User_id","=",DBPREFIXE."user.id")
+                ->where("Products_id = :id",DBPREFIXE."review.status = 1")->setParams(["id" => $_GET['id']])->get();
 
 
             $view->assign("product",$getProduct[0]);
