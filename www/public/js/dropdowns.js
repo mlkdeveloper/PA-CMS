@@ -25,8 +25,12 @@ function startDropdown(dropDown){
 
 function navbar(){
     if ($("#sidenav").css("left") !== "0px"){
-        $("#sidenav").css("left", 0);
+        $('#sidenav').animate({
+            left: 0
+        });
     }else{
-        $("#sidenav").css("left", "-100%");
+        $('#sidenav').animate({
+            left: "-100%"
+        });
     }
 }
