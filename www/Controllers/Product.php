@@ -76,11 +76,11 @@ class Product
 
             $getProduct = $product->select()->where("id = :id")->setParams(['id' => $_GET['id']])->get();
 
-            $sqlVariant = $product->select("DISTINCT cc_attributes.name AS variant, cc_product_term.idTerm, cc_terms.name")
-                ->innerJoin("cc_product_term","cc_products.id ","=","cc_product_term.idProduct")
-                ->innerJoin("cc_terms","cc_product_term.idTerm","=","cc_terms.id")
-                ->innerJoin("cc_attributes","cc_terms.idAttributes","=","cc_attributes.id")
-                ->where("cc_products.id = :id")->setParams(['id' => $_GET['id']])->get();
+            $sqlVariant = $product->select("DISTINCT ".DBPREFIXE."attributes.name AS variant, ".DBPREFIXE."product_term.idTerm, ".DBPREFIXE."terms.name")
+                ->innerJoin(DBPREFIXE."product_term",DBPREFIXE."products.id ","=",DBPREFIXE."product_term.idProduct")
+                ->innerJoin(DBPREFIXE."terms",DBPREFIXE."product_term.idTerm","=",DBPREFIXE."terms.id")
+                ->innerJoin(DBPREFIXE."attributes",DBPREFIXE."terms.idAttributes","=",DBPREFIXE."attributes.id")
+                ->where(DBPREFIXE."products.id = :id")->setParams(['id' => $_GET['id']])->get();
 
             foreach ($sqlVariant as $key => $value){
                 empty($getVariant[$value["variant"]]) ?
@@ -133,23 +133,23 @@ class Product
             $product = new Products();
 
             $getIdGroup = $product->select()
-                ->innerJoin("cc_product_term","cc_products.id ","=","cc_product_term.idProduct");
+                ->innerJoin(DBPREFIXE."product_term",DBPREFIXE."products.id ","=",DBPREFIXE."product_term.idProduct");
 
 
             if (count($values ) != 1){
 
                 foreach ($values as $key => $value) {
                     $param = ":p".$key;
-                    $getIdGroup = $getIdGroup->whereOr("cc_product_term.idTerm = $param");
+                    $getIdGroup = $getIdGroup->whereOr(DBPREFIXE."product_term.idTerm = $param");
                     $column[$param] = $value;
                 }
 
                 $count = count($values) - 1;
-                $getIdGroup = $getIdGroup->where("cc_products.id = :id")->groupBy("cc_product_term.idGroup")->having("COUNT(*) > $count");
+                $getIdGroup = $getIdGroup->where(DBPREFIXE."products.id = :id")->groupBy(DBPREFIXE."product_term.idGroup")->having("COUNT(*) > $count");
 
             }else{
                 $column['idTerm'] = $values[0];
-                $getIdGroup = $getIdGroup->where("cc_products.id = :id","cc_product_term.idTerm = :idTerm");
+                $getIdGroup = $getIdGroup->where(DBPREFIXE."products.id = :id",DBPREFIXE."product_term.idTerm = :idTerm");
             }
 
             $getIdGroup = $getIdGroup->setParams($column)->get();

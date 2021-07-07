@@ -68,11 +68,11 @@ class ShoppingCart
         foreach ($_SESSION['panier'] as $key => $product){
 
             $productTerm = new Product_term();
-            array_push($array,$productTerm->select("cc_terms.name AS nameTerm,cc_group_variant.id,cc_products.name, cc_group_variant.price ")
-                ->innerJoin("cc_group_variant","cc_product_term.idGroup ","=","cc_group_variant.id")
-                ->innerJoin("cc_products","cc_product_term.idProduct ","=","cc_products.id")
-                ->innerJoin("cc_terms","cc_product_term.idTerm ","=","cc_terms.id")
-                ->where("cc_product_term.idGroup = :idGroup")->setParams(["idGroup" => $key])->get());
+            array_push($array,$productTerm->select(DBPREFIXE."terms.name AS nameTerm, ".DBPREFIXE."group_variant.id, ".DBPREFIXE."products.name, ".DBPREFIXE."group_variant.price ")
+                ->innerJoin(DBPREFIXE."group_variant",DBPREFIXE."product_term.idGroup ","=",DBPREFIXE."group_variant.id")
+                ->innerJoin(DBPREFIXE."products",DBPREFIXE."product_term.idProduct ","=",DBPREFIXE."products.id")
+                ->innerJoin(DBPREFIXE."terms",DBPREFIXE."product_term.idTerm ","=",DBPREFIXE."terms.id")
+                ->where(DBPREFIXE."product_term.idGroup = :idGroup")->setParams(["idGroup" => $key])->get());
         }
 
         return $array;
