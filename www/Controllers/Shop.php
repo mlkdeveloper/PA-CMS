@@ -17,7 +17,7 @@ class Shop
         $view->assign("title", "Admin - Magasin");
 
         $shop = new ShopModel();
-        $listShop = $shop->select('*')->where('isDeleted=0')->get();
+        $listShop = $shop->select('*')->get();
 
         $view->assign("shop", $listShop);
     }
@@ -46,7 +46,6 @@ class Shop
                 $shop->setZipCode($_POST['zipCode']);
                 $shop->setDescription($_POST['description']);
                 $shop->setPhoneNumber($_POST['telephone']);
-                $shop->setIsDeleted(0);
                 $shop->save();
 
                 header('location:/admin/liste-magasin');
@@ -91,7 +90,6 @@ class Shop
                 $shop->setZipCode($_POST['zipCode']);
                 $shop->setDescription($_POST['description']);
                 $shop->setPhoneNumber($_POST['telephone']);
-                $shop->setIsDeleted(0);
                 $shop->save();
 
                 header('location:/admin/liste-magasin');
@@ -116,8 +114,8 @@ class Shop
         $shop =$shopTemp->select('*')->where('id=:id')->setParams(["id" => $_GET['id']])->get();
 
         $shopTemp->populate($shop[0]);
-        $shopTemp->setIsDeleted(1);
-        $shopTemp->save();
+
+        $shopTemp->delete();
 
 
 
