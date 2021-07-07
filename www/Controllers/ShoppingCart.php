@@ -31,7 +31,7 @@ class ShoppingCart {
         {
 
             $productTerm = new Product_term();
-            $getTerms = $productTerm->select('idTerm')->where("idGroup = :idGroup","idProduct = :idProduct")->setParams(["idGroup" => $_GET['idGroup'], "idProduct" => $_GET['id']])->get();
+            $getTerms = $productTerm->select('idTerm')->innerJoin(DBPREFIXE."products",DBPREFIXE."product_term.idProduct","=",DBPREFIXE."products.id")->where("idGroup = :idGroup","idProduct = :idProduct", DBPREFIXE."products.status = 1")->setParams(["idGroup" => $_GET['idGroup'], "idProduct" => $_GET['id']])->get();
             $array = array_map("current", $getTerms);
 
             if(empty(array_diff($_GET['values'], $array))){
@@ -71,7 +71,5 @@ class ShoppingCart {
             header("Location: /panier");
         }
     }
-
-
 
 }

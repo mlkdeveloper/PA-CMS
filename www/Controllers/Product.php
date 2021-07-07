@@ -34,7 +34,7 @@ class Product
             }
 
             $product = new productModel();
-            $nbProduct = $product->select("count(*) as nbProduct")->where("idCategory = :id")->setParams(["id" =>$idCategory[0]['id']])->get();
+            $nbProduct = $product->select("count(*) as nbProduct")->where("idCategory = :id","status = 1")->setParams(["id" =>$idCategory[0]['id']])->get();
             $nbProduct = $nbProduct[0]['nbProduct'];
 
             $perPage = 8;
@@ -42,7 +42,7 @@ class Product
             $first = ($page * $perPage) - $perPage;
 
             $products = new productModel();
-            $result = $products->select()->where("idCategory = :id")->setParams(['id' => $idCategory[0]['id']])->limit("$first,$perPage")->get();
+            $result = $products->select()->where("idCategory = :id","status = 1")->setParams(['id' => $idCategory[0]['id']])->limit("$first,$perPage")->get();
 
             $view = new View("products.front");
             $view->assign("title","produits");
@@ -67,14 +67,12 @@ class Product
             $getVariant = [];
 
             $product = new Products();
-            $verify = $product->select('id')->where("id = :id")->setParams(['id' => $_GET['id']])->get();
+            $getProduct = $product->select()->where("id = :id","status = 1")->setParams(['id' => $_GET['id']])->get();
 
-            if (empty($verify)){
+            if (empty($getProduct)){
                 header("Location: /");
                 exit();
             }
-
-            $getProduct = $product->select()->where("id = :id")->setParams(['id' => $_GET['id']])->get();
 
             $sqlVariant = $product->select("DISTINCT ".DBPREFIXE."attributes.name AS variant, ".DBPREFIXE."product_term.idTerm, ".DBPREFIXE."terms.name")
                 ->innerJoin(DBPREFIXE."product_term",DBPREFIXE."products.id ","=",DBPREFIXE."product_term.idProduct")
