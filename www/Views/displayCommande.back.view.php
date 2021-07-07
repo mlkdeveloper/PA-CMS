@@ -5,16 +5,36 @@
     <?php endif;?>
     <div class="align">
         <h1>Récapitulatif de la commande #<?= $_GET['id']?></h1>
-        <button class="button button--alert">
-            <a onclick="showModalCancelCommand(<?= $_GET['id'] ?>)">Annuler la commande</a>
-        </button>
-        <button class="button button--blue">
-            <a onclick="showModalValidCommand(<?= $_GET['id'] ?>)">Valider la commande</a>
-        </button>
+        <p>Statut : <?php
+            if ($commande[0]['idStatus'] == -1){
+                echo "Annulé";
+            }else if($commande[0]['idStatus'] == 0){
+                echo "En attente";
+            }else if($commande[0]['idStatus'] == 1){
+                echo "Validé";
+            }?></p>
+        <div>
+            <button class="button button--alert">
+                <a onclick="showModalCancelCommand(<?= $_GET['id'] ?>)">Annuler la commande</a>
+            </button>
+            <button class="button button--blue">
+                <a onclick="showModalValidCommand(<?= $_GET['id'] ?>)">Valider la commande</a>
+            </button>
+        </div>
+
     </div>
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="jumbotron">
+                <div class="col-md-6 ">
+                    <div class="jumbotron ">
+                        <p>Montant total du panier : <?= $commande[0]['montant'] ?> €</p>
+                        <p>Commande passé le : <?= $commande[0]['CreatedAt']?></p>
+                        <p>Par : <?= $commande[0]['firstname'].' '.$commande[0]['lastname']. ' ('.  $commande[0]['email']. ')'?></p>
+                    </div>
+                </div>
+
+                <br>
                 <table id="table" class="row-border hover">
                     <thead>
                     <tr>

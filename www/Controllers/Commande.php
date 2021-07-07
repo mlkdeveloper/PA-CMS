@@ -32,6 +32,7 @@ class Commande extends Database
         if (!isset($_GET['id']) && empty($_GET['id'])){
             $view->assign("errors", "Parametre manquant dans le GET");
         }
+
         $product = new Product_order();
         $listProduct = $product->select('cc_terms.name as termName,cc_product_order.id as idProductOrder, cc_product_order.id_group_variant, cc_products.name as productName, cc_group_variant.price as variantPrice, cc_group_variant.stock as variantStock ')
             ->innerJoin("cc_product_term", "cc_product_order.id_group_variant", "=", "cc_product_term.idGroup")
@@ -44,10 +45,17 @@ class Commande extends Database
             ->get();
 
         /*
-         * $variant = Helpers::filter_by_value($listProduct, 'idProductOrder', 8);
-         * print_r(array_map("current", $variant));
-        */
+         * Récupération des informations de la commande dans la table Orders
+         */
 
+        $order = new Orders();
+        $commande = new Orders();
+
+        $commande = $order->select('*, cc_orders.status as idStatus')
+            ->innerJoin('cc_user', 'cc_user.id', '=', 'cc_orders.User_id')
+            ->where("cc_orders.id= :id")->setParams(["id" => $_GET['id']])->get();
+
+        $view->assign("commande", $commande);
         /*
          * 1. faire un for()
          * Je créer un nv array j'insere array[0] dans nv tableau

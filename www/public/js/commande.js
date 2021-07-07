@@ -6,7 +6,6 @@ function showModalValidCommand(id){
     $("#buttonValidCommand").attr("href", "/admin/valider-commande?id="+id);
     $("#modalValidCommand").show();
 }
-
 function hideModalValidCommand(){
     $("#modalValidCommand").hide();
 }
