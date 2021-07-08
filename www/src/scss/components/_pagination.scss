@@ -1,0 +1,20 @@
+
+.page-link{
+
+  display: block;
+  padding: .5rem .75rem;
+  color: #007bff;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+}
+
+.pagination{
+  display: flex;
+  padding-left: 0;
+  list-style: none;
+  border-radius: .25rem;
+}
+
+.disabled{
+  display: none;
+}

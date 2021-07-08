@@ -150,6 +150,30 @@
   controller: User
   action : changeUserPwd
 
+/collections:
+  controller: Product
+  action : displayProductsFront
+
+/produit:
+  controller: Product
+  action: infoProductFront
+
+/produit/prix:
+  controller: Product
+  action: getPrice
+
+/panier:
+  controller: ShoppingCart
+  action : displayShoppingCart
+
+/ajout-panier:
+  controller : ShoppingCart
+  action : addShoppingCart
+
+/supprimer-panier:
+  controller: ShoppingCart
+  action: deleteShoppingCart
+
 /admin/parametres:
   controller: Settings
   action : displaySettings
