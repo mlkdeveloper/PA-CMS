@@ -12,7 +12,7 @@ class Database extends QueryBuilder
     const UPDATE_OBJECT = 2;
     const DELETE_OBJECT = 3;
 
-    const USER_TABLE = 'cc_user';
+    const USER_TABLE = DBPREFIXE.'user';
 
 
     public function __construct()
