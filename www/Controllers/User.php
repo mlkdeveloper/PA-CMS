@@ -357,6 +357,8 @@ class User extends Database
                 $user->setToken($token);
                 $user->save();
 
+                Email::sendEmail($user->getEmail(), "Veuillez confirmer votre compte", "http://localhost:8082/confirmation-inscription?tkn=".$token,"Confirmer mon compte", "/admin/dashboard");
+
                 $view->assign("success", "L'utilisateur a bien été créé !");
             } else {
                 $view->assign("errors", $errors);

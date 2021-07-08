@@ -15,7 +15,7 @@ class Role
     public function showAllAction(){
 
         $role = new modelRole();
-        $listRoles = $role->select()->where("id > 1")->get();
+        $listRoles = $role->select()->where("id > 2")->get();
 
         $view = new View("displayRole.back", "back");
         $view->assign("title", "Admin - Liste des rôles");
