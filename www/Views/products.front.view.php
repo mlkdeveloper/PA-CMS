@@ -42,7 +42,7 @@
             <?php for($nbpage = 1; $nbpage <= $pages; $nbpage++): ?>
 
                 <li class="page-item <?= ($page == $nbpage) ? "active" : "" ?>">
-                    <a href="./?page=<?= $nbpage ?>" class="page-link"><?= $nbpage ?></a>
+                    <a href="/collections?name=<?= $name ?>&page=<?= $nbpage ?>" class="page-link"><?= $nbpage ?></a>
                 </li>
             <?php endfor ?>
 
