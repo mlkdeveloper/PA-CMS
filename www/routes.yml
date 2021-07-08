@@ -189,3 +189,7 @@
 /admin/update-admin-password:
   controller: Settings
   action : updateAdminPassword
+
+/admin/barre-de-navigation:
+  controller: Navbar
+  action: displayNavbar
