@@ -1,8 +1,4 @@
 <?php
-$aut = new \App\Controller\Auth();
-if (!$aut->isConnected()){
-    //header('location:/connexion');
-}
 ?>
 
 <!DOCTYPE html>

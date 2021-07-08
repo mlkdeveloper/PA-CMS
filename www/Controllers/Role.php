@@ -14,6 +14,8 @@ class Role
 
     public function showAllAction(){
 
+        \App\Core\Security::auth("roles");
+
         $role = new modelRole();
         $listRoles = $role->select()->where("id > 2")->get();
 
