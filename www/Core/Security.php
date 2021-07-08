@@ -83,10 +83,10 @@ class Security
 
     public static function isAllowed($page){
 
-        //$idRole = $_SESSION['user']['id_role'];
+        $idRole = $_SESSION['user']['id_role'];
 
         $role = new Role();
-        $isAllowed = $role->select("$page")->where("id = :id")->setParams(["id" => 3])->get();
+        $isAllowed = $role->select("$page")->where("id = :id")->setParams(["id" => $idRole])->get();
 
         if (empty($isAllowed)){
             throw new MyException("Erreur SQL");
