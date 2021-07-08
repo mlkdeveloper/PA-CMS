@@ -6,7 +6,7 @@
                 <?php if(isset($errors)):?>
                 <ul class="alert alert--red">
                     <?php foreach ($errors as $error):?>
-                        <li><?=$error?></li>
+                        <?=$error?>
                     <?php endforeach;?>
                 </ul>
                 <?php endif;?>
