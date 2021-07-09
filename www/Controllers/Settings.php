@@ -221,4 +221,24 @@ class Settings
             header('Location: /admin/parametres');
         }
     }
+
+    public function displaySettingsSiteAction(){
+
+        $view = new View("settingsSite.back", "back");
+        $view->assign("title","Paramètres du site");
+
+
+
+    }
+
+
+    public function updateLogoAction(){
+
+        if (isset($_FILES['logo']) && !empty($_FILES['logo'])){
+
+
+        }else{
+
+        }
+    }
 }

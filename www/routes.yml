@@ -154,6 +154,14 @@
   controller: Settings
   action : displaySettings
 
+/admin/parametres-site:
+  controller: Settings
+  action : displaySettingsSite
+
+/admin/update-logo:
+  controller: Settings
+  action: updateLogo
+
 /admin/update-settings:
   controller: Settings
   action : update
