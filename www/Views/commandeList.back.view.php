@@ -30,7 +30,10 @@
                                     echo "En attente";
                                 }else if($order['idStatus'] == 1){
                                      echo "Validé";
-                                }?>
+                                }else if($order['idStatus'] == 2){
+                                    echo "Terminé";
+                                }
+                                ?>
                             </td>
                             <td>
                                 <div>

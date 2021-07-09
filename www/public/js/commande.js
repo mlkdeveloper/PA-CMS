@@ -14,3 +14,10 @@ function hideModalCancelCommand(){
 }
 
 
+function showModalDoneCommand(id){
+    $("#buttonDoneCommand").attr("href", "/admin/terminer-commande?id="+id);
+    $("#modalDoneCommand").show();
+}
+function hideModalDoneCommand(){
+    $("#modalDoneCommand").hide();
+}

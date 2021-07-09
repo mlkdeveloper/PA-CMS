@@ -194,3 +194,7 @@
 /admin/valider-commande:
   controller: Commande
   action: ValidCommande
+
+/admin/terminer-commande:
+  controller: Commande
+  action: DoneCommande

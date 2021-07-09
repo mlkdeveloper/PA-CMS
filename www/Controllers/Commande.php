@@ -114,7 +114,7 @@ class Commande extends Database
         $orderTosave->save();
 
 
-        Email::sendEmail($utilisateur[0]["email"], "Annulation de votre commande", "http://localhost:8082/connexion","Mon compte", "/admin/liste-commande");
+        Email::sendEmail($utilisateur[0]["email"], "Votre commande viens d'etre annulé ", "http://localhost:8082/connexion","Mon compte", "/admin/liste-commande");
 
     }
 
@@ -139,7 +139,32 @@ class Commande extends Database
         $orderTosave->setStatus(1);
         $orderTosave->save();
 
-        Email::sendEmail($utilisateur[0]["email"], "Validation de votre commande", "http://localhost:8082/connexion","Mon compte", "/admin/liste-commande");
+        Email::sendEmail($utilisateur[0]["email"], "Votre commande est prete ! <br> Vous pouvez venir la chercher en magasin", "http://localhost:8082/connexion","Mon compte", "/admin/liste-commande");
+
+    }
+
+    public function DoneCommandeAction(){
+        $view = new View("displayCommande.back", "back");
+
+        if (!isset($_GET['id']) && empty($_GET['id'])){
+            $view->assign("errors", "Parametre manquant dans le GET");
+        }
+
+        $order = new Orders();
+        $user = new \App\Models\User();
+        $orderTosave = new Orders();
+
+        $commande = $order->select('*')->where("id = :id")->setParams(["id" => $_GET['id']])->get();
+        $utilisateur = $user->select('*')->where("id = :id")->setParams(["id" => $commande[0]["User_id"]])->get();
+
+
+        $orderTosave->populate($commande[0]);
+        $orderTosave->setId($commande[0]['id']);
+        $orderTosave->setUserId($commande[0]['User_id']);
+        $orderTosave->setStatus(2);
+        $orderTosave->save();
+
+        Email::sendEmail($utilisateur[0]["email"], "Votre commande viens d'etre cloturer <br> Merci et a bientot !", "http://localhost:8082/connexion","Mon compte", "/admin/liste-commande");
 
     }
 }

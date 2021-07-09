@@ -12,6 +12,8 @@
                 echo "En attente";
             }else if($commande[0]['idStatus'] == 1){
                 echo "Validé";
+            }else if($commande[0]['idStatus'] == 2){
+                echo "Terminé";
             }?></p>
         <div>
             <button class="button button--alert">
@@ -19,6 +21,9 @@
             </button>
             <button class="button button--blue">
                 <a onclick="showModalValidCommand(<?= $_GET['id'] ?>)">Valider la commande</a>
+            </button>
+            <button class="button button--blue">
+                <a onclick="showModalDoneCommand(<?= $_GET['id'] ?>)">Terminer la commande</a>
             </button>
         </div>
 
@@ -73,6 +78,13 @@
             <h3>Voulez-vous Valider la commande ?</h3>
             <a id="buttonValidCommand"><button class="button button--success">Oui</button></a>
             <button class="button button--alert" onclick="hideModalValidCommand()">Non</button>
+        </div>
+    </div>
+    <div class="modal" id="modalDoneCommand">
+        <div class="modal-content">
+            <h3>Voulez-vous terminer la commande ?</h3>
+            <a id="buttonDoneCommand"><button class="button button--success">Oui</button></a>
+            <button class="button button--alert" onclick="hideModalDoneCommand()">Non</button>
         </div>
     </div>
 
