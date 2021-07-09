@@ -30,7 +30,7 @@ class Commande extends Database
         $view->assign("title", "Détail de la commande");
 
         if (!isset($_GET['id']) && empty($_GET['id'])){
-            $view->assign("errors", "Parametre manquant dans le GET");
+            header('location:/admin/liste-commande');
         }
 
         $product = new Product_order();
@@ -43,6 +43,10 @@ class Commande extends Database
             ->where("id_order = :id")->setParams(["id" => $_GET['id']])
             ->orderBy('cc_product_order.id', 'ASC')
             ->get();
+
+        if (empty($listProduct)){
+            header('location:/admin/liste-commande');
+        }
 
         /*
          * Récupération des informations de la commande dans la table Orders
