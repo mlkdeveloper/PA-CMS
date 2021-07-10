@@ -16,7 +16,7 @@ class Navbar
 
     public function displayNavbarAction(){
         $navbar = new modelNavbar();
-        $dataNavbar = $navbar->select()->get();
+        $dataNavbar = $navbar->select('name, status')->get();
 
         $view = new View("navbar.back", "back");
         $view->assign("title", "Barre de navigation");
