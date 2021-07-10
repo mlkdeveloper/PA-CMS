@@ -19,13 +19,8 @@
                                     <option value="category">Category</option>
                                 </select>
 
-                                <div id="containerSelectTypeNavbar">
-                                    <label class="label pt-3" for="selectType"></label>
-                                    <select class="input" id="selectType" name="selectType">
-                                        <option>Page</option>
-                                        <option>Category</option>
-                                    </select>
-                                </div>
+                                <label class="label pt-3" for="selectType" id="labelSelectType"></label>
+                                <select class="input" id="selectType" name="selectType"></select>
 
                                 <label class="label pt-3" for="name">Mode liste déroulante: </label>
                                 <input type="checkbox">

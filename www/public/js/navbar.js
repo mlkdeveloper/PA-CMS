@@ -11,11 +11,26 @@ $(document).ready(function() {
            },
            success: function(data) {
                data = JSON.parse(data);
-               console.log(data);
-               if (data === 'erreur'){
-                   $(".centered").first().before("<div class=\"alert alert--red errorMessageImage\"><h4>Une erreur s'est produite</h4></div>");
+
+               switch (valueType){
+                   case 'page':
+                       $("#labelSelectType").html('Sélectionner une page :');
+                   break;
+                   case 'category':
+                       $("#labelSelectType").html('Sélectionner une catégorie :');
+                       break;
+                   default:
+                       error();
+               }
+
+               if (data === 'error'){
+                   error();
                }else {
-                   console.log(data);
+                   $("#selectType").html('');
+
+                   data.forEach(function(obj) {
+                       $("#selectType").append('<option value="'+obj.id+'">'+obj.name+'</option>')
+                   });
                }
            },
            error: function (xhr, ajaxOptions, thrownError){
@@ -26,6 +41,12 @@ $(document).ready(function() {
            }
        });
 
-       $("#containerSelectTypeNavbar").show();
+       $("#labelSelectType").show();
+       $("#selectType").show();
    });
 });
+
+
+function error(){
+    $(".centered").first().before('<div class="alert alert--red errorMessageImage"><h4>Une erreur s\'est produite</h4></div>');
+}

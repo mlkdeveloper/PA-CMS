@@ -6,7 +6,7 @@ namespace App\Controller;
 use App\Core\View;
 use App\Models\Navbar as modelNavbar;
 use App\Models\Category as modelCategory;
-use App\Models\Page as modelPage;
+use App\Models\Pages as modelPages;
 
 
 class Navbar
@@ -30,21 +30,19 @@ class Navbar
     public function getDataNavbarAction(){
         $type = $_POST['type'];
 
-        file_put_contents('test.txt2', print_r($type, true));
-
         switch ($type){
             case 'page':
-                $page = new modelPage();
-                $dataPage = $page->select('name')->get();
+                $page = new modelPages();
+                $dataPage = $page->select('name, id')->get();
                 echo json_encode($dataPage);
             break;
             case 'category':
                 $category = new modelCategory();
-                $dataCategory = $category->select('name')->get();
+                $dataCategory = $category->select('name, id')->get();
                 echo json_encode($dataCategory);
             break;
             default:
-                echo json_encode('erreur');
+                echo json_encode('error');
         }
     }
 }
