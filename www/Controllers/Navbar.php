@@ -33,7 +33,12 @@ class Navbar
 
         if (!empty($_POST)){
 
-            $errors = FormValidator::checkFormNavbar($form, $_POST);
+            if (isset($_POST['dropdown']) && $_POST['dropdown'] === 'dropdown'){
+                $this->dropdownNavbar($_POST);
+
+            }else{
+                $errors = FormValidator::checkFormNavbar($form, $_POST);
+            }
 
             if (empty($errors)){
                 $navbar->setName($_POST['name']);
@@ -43,19 +48,20 @@ class Navbar
                     $navbar->setStatus(1);
                 }else{
                     $navbar->setStatus(0);
+
+                    switch ($_POST['typeNavbar']){
+                        case 'page':
+                            $navbar->setPage($_POST['selectType']);
+                            break;
+                        case 'category':
+                            $navbar->setCategory($_POST['selectType']);
+                            break;
+                        default:
+                            $view->assign("errorType", 'Le type n\'est pas correct');
+                            exit();
+                    }
                 }
 
-                switch ($_POST['typeNavbar']){
-                    case 'page':
-                        $navbar->setPage($_POST['selectType']);
-                        break;
-                    case 'category':
-                        $navbar->setCategory($_POST['selectType']);
-                        break;
-                    default:
-                        $view->assign("errorType", 'Le type n\'est pas correct');
-                        exit();
-                }
 
                 $navbar->save();
 
@@ -84,5 +90,30 @@ class Navbar
             default:
                 echo json_encode('error');
         }
+    }
+
+    private function dropdownNavbar($data){
+        $countTab = 1;
+        $arraySelectTypeDropdown = [];
+        $arrayTypeDropdown = [];
+        $arrayNameDropdown = [];
+
+        do {
+            $tab = $_POST['selectTypeDropdown'.strval($countTab)];
+            $tabType = $_POST['typeDropdown'.strval($countTab)];
+            $tabName = $_POST['nameDropdown'.strval($countTab)];
+
+            if (!empty($tab) && !empty($tabType) && !empty($tabName)) {
+                array_push($arraySelectTypeDropdown, $tab);
+                array_push($arrayTypeDropdown, $tabType);
+                array_push($arrayNameDropdown, $tabName);
+            }else {
+                $_SESSION['errorDropDown'] = 'Veuillez remplir tous les champs';
+                header('Loacation: /admin/barre-de-navigation?error=feffe');
+                exit();
+            }
+
+            $countTab++;
+        }while(!empty($tab));
     }
 }

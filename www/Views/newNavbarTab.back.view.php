@@ -29,6 +29,17 @@
                         echo "</div>";
                         echo "</div>";
                     }
+
+                    if (isset($_SESSION['errorDropDown'])){
+
+                        echo "<div class='container'>";
+                        echo "<div class='alert alert--red'>";
+                        echo $_SESSION['errorDropDown'];
+                        echo "</div>";
+                        echo "</div>";
+
+                        unset($_SESSION['errorDropDown']);
+                    }
                     ?>
                     <div class="centered p-3">
                         <div>
