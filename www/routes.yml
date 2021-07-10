@@ -158,10 +158,6 @@
   controller: Settings
   action : displaySettingsSite
 
-/admin/update-logo:
-  controller: Settings
-  action: updateLogo
-
 /admin/update-settings:
   controller: Settings
   action : update

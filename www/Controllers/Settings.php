@@ -3,6 +3,7 @@
 
 namespace App\Controller;
 
+use App\Core\Uploader;
 use App\Core\View;
 use App\Models\User;
 
@@ -227,18 +228,17 @@ class Settings
         $view = new View("settingsSite.back", "back");
         $view->assign("title","Paramètres du site");
 
-
-
-    }
-
-
-    public function updateLogoAction(){
-
         if (isset($_FILES['logo']) && !empty($_FILES['logo'])){
 
+            $upload = new Uploader($_FILES['logo'],true);
+            $res = $upload->setName("logo")->setSize(10)->setDirectory("./images/logo")->upload();
 
-        }else{
-
+            ($res) ? $view->assign("success","Logo modifié !") : $view->assign("errors",$upload->errorsFile());
         }
+
+        $file = shell_exec("ls ./images/logo/");
+        $view->assign("logo",$file);
+
     }
+
 }
