@@ -2,7 +2,9 @@
 namespace App\Core;
 use App\Models\Category;
 
+use App\Models\Category as modelCategory;
 use App\Models\Navbar;
+use App\Models\Pages as modelPages;
 use App\Models\Role;
 use App\Models\User;
 
@@ -309,6 +311,25 @@ class FormValidator
 
             if(	empty($data['typeNavbar'])) {
                 $errors[] = 'Veuillez remplir tous les champs';
+            }else{
+                if (empty($data['selectType'])){
+                    $errors[] = 'Veuillez remplir tous les champs';
+                }else{
+                    switch ($data['typeNavbar']){
+                        case 'page':
+                            $page = new modelPages();
+                            $verifSelect = $page->select()->where("id = :id")->setParams(["id" => $data['selectType']])->get();
+                        break;
+                        case 'category':
+                            $category = new modelCategory();
+                            $verifSelect = $category->select()->where("id = :id")->setParams(["id" => $data['selectType']])->get();
+                        break;
+                    }
+
+                    if (!isset($verifSelect) || empty($verifSelect)){
+                        $errors[] = 'Tentative de hack';
+                    }
+                }
             }
         }
         return $errors;
