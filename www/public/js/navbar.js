@@ -48,5 +48,7 @@ $(document).ready(function() {
 
 
 function error(){
-    $(".centered").first().before('<div class="alert alert--red errorMessageImage"><h4>Une erreur s\'est produite</h4></div>');
+    if ($("#errorType").length === 0){
+        $(".centered").first().before('<div class="alert alert--red errorMessageImage" id="errorType"><h4>Le type n\'est pas correct</h4></div>');
+    }
 }

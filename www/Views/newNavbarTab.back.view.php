@@ -1,18 +1,3 @@
-<?php
-
-if (isset($errors)){
-
-    echo "<div class='container'>";
-    echo "<div class='alert alert--red'>";
-
-    foreach($errors as $error){
-        echo $error . "<br>";
-    }
-
-    echo "</div>";
-    echo "</div>";
-}
-?>
 <section>
     <div class="container">
         <div class="row">
@@ -21,6 +6,30 @@ if (isset($errors)){
                     <a href="/admin/barre-de-navigation">
                         <button class="button button--blue">Retour</button>
                     </a>
+                    <?php
+
+                    if (isset($errors)){
+
+                        echo "<div class='container'>";
+                        echo "<div class='alert alert--red'>";
+
+                        foreach($errors as $error){
+                            echo $error . "<br>";
+                        }
+
+                        echo "</div>";
+                        echo "</div>";
+                    }
+
+                    if (isset($errorType)){
+
+                        echo "<div class='container'>";
+                        echo "<div class='alert alert--red'>";
+                        echo $errorType;
+                        echo "</div>";
+                        echo "</div>";
+                    }
+                    ?>
                     <div class="centered p-3">
                         <div>
                             <form method="POST" action="" class="form_align form_align--top">
@@ -28,7 +37,7 @@ if (isset($errors)){
                                 <input type="text" class="input" name="name" id="name">
 
                                 <label class="label pt-3" for="type">Type: </label>
-                                <select class="input" id="typeNavbar" name="type">
+                                <select class="input" id="typeNavbar" name="typeNavbar">
                                     <option value="" disabled selected>Sélectionner le type de la page</option>
                                     <option value="page">Page statique</option>
                                     <option value="category">Category</option>
@@ -37,8 +46,8 @@ if (isset($errors)){
                                 <label class="label pt-3" for="selectType" id="labelSelectType"></label>
                                 <select class="input" id="selectType" name="selectType"></select>
 
-                                <label class="label pt-3" for="name">Mode liste déroulante: </label>
-                                <input type="checkbox">
+                                <label class="label pt-3" for="dropdown">Mode liste déroulante: </label>
+                                <input type="checkbox" name="dropdown" id="dropdown" value="dropdown">
 
                                 <button type="submit" class="button button--blue">Enregistrer</button>
                             </form>

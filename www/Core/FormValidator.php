@@ -2,6 +2,7 @@
 namespace App\Core;
 use App\Models\Category;
 
+use App\Models\Navbar;
 use App\Models\Role;
 use App\Models\User;
 
@@ -285,7 +286,7 @@ class FormValidator
             foreach ($config["inputs"] as $name => $configInputs) {
 
                 if (!empty($configInputs["uniq"]) && $configInputs["uniq"] === true){
-                    $page = new Pages();
+                    $page = new Navbar();
                     if ($page->find_duplicates_sql($name, $data[$name])){
                         $errors[] = $configInputs["errorBdd"];
                     }
@@ -304,11 +305,10 @@ class FormValidator
 
                     $errors[] = $configInputs["errorLength"];
                 }
+            }
 
-                if (!empty($configInputs["regex"])
-                    && !preg_match($configInputs["regex"], $data[$name])){
-                    $errors[] = $configInputs["errorRegex"];
-                }
+            if(	empty($data['typeNavbar'])) {
+                $errors[] = 'Veuillez remplir tous les champs';
             }
         }
         return $errors;

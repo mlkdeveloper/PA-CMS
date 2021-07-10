@@ -3,6 +3,7 @@
 
 namespace App\Controller;
 
+use App\Core\FormValidator;
 use App\Core\View;
 use App\Models\Navbar as modelNavbar;
 use App\Models\Category as modelCategory;
@@ -32,13 +33,30 @@ class Navbar
 
         if (!empty($_POST)){
 
-//            $errors = FormValidator::checkFormNavbar($form, $_POST);
+            $errors = FormValidator::checkFormNavbar($form, $_POST);
 
             if (empty($errors)){
                 $navbar->setName($_POST['name']);
                 $navbar->setSort(1);
-                $navbar->setStatus(0);
-                $navbar->setPage($_POST['selectType']);
+
+                if (isset($_POST['dropdown']) && $_POST['dropdown'] === 'dropdown'){
+                    $navbar->setStatus(1);
+                }else{
+                    $navbar->setStatus(0);
+                }
+
+                switch ($_POST['typeNavbar']){
+                    case 'page':
+                        $navbar->setPage($_POST['selectType']);
+                        break;
+                    case 'category':
+                        $navbar->setCategory($_POST['selectType']);
+                        break;
+                    default:
+                        $view->assign("errorType", 'Le type n\'est pas correct');
+                        exit();
+                }
+
                 $navbar->save();
 
                 header('Location: /admin/barre-de-navigation');
