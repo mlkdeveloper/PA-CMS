@@ -1,3 +1,5 @@
+var count = 2;
+
 $(document).ready(function() {
    $("#typeNavbar").on("change", function (){
 
@@ -20,24 +22,7 @@ $(document).ready(function() {
     });
 
     $("#addTabDropdown").on("click", function (){
-       var html = '<div class="pt-2">' +
-           '            <label class="label pt-3" for="dropdown">Nom de l\'onglet: </label>\n' +
-           '            <input class="input" type="text" name="dropdown" id="dropdown" value="dropdown" maxlength="50" minlength="2">\n' +
-           '            <label class="label pt-3" for="type">Type: </label>\n' +
-           '            <select class="input" id="typeNavbar" name="typeNavbar">\n' +
-           '                <option value="" disabled selected>Sélectionner le type de la page</option>\n' +
-           '                <option value="page">Page statique</option>\n' +
-           '                <option value="category">Category</option>\n' +
-           '            </select>\n' +
-           '            <select class="input" id="typeNavbar" name="typeNavbar">\n' +
-           '                <option value="" disabled selected>Sélectionner le type de la page</option>\n' +
-           '                <option value="page">Page statique</option>\n' +
-           '                <option value="category">Category</option>\n' +
-           '            </select>\n' +
-           '            <span><i class="fas fa-minus-circle"></i></span>' +
-           '      </div>';
-
-       $("#addTabDropdown").before(html);
+       addTabDropdown();
     });
     
     $("#containerDropdownNavbar").on('click', '.fa-minus-circle', function (){
@@ -89,4 +74,26 @@ function error(){
     if ($("#errorType").length === 0){
         $(".centered").first().before('<div class="alert alert--red errorMessageImage" id="errorType"><h4>Le type n\'est pas correct</h4></div>');
     }
+}
+
+function addTabDropdown(){
+    var html = '<div class="pt-2">' +
+        '            <label class="label pt-3" for="nameDropdown'+count+'">Nom de l\'onglet: </label>\n' +
+        '            <input class="input" type="text" name="nameDropdown'+count+'" maxlength="50" minlength="2">\n' +
+        '            <label class="label pt-3" for="typeDropdown'+count+'">Type: </label>\n' +
+        '            <select class="input" name="typeDropdown'+count+'">\n' +
+        '                <option value="" disabled selected>Sélectionner le type de la page</option>\n' +
+        '                <option value="page">Page statique</option>\n' +
+        '                <option value="category">Category</option>\n' +
+        '            </select>\n' +
+        '            <select class="input" name="selectTypeDropdown'+count+'">\n' +
+        '                <option value="" disabled selected>Sélectionner le type de la page</option>\n' +
+        '                <option value="page">Page statique</option>\n' +
+        '                <option value="category">Category</option>\n' +
+        '            </select>\n' +
+        '            <span><i class="fas fa-minus-circle"></i></span>' +
+        '      </div>';
+
+    count++;
+    $("#addTabDropdown").before(html);
 }
