@@ -1,3 +1,18 @@
+<?php
+
+if (isset($errors)){
+
+    echo "<div class='container'>";
+    echo "<div class='alert alert--red'>";
+
+    foreach($errors as $error){
+        echo $error . "<br>";
+    }
+
+    echo "</div>";
+    echo "</div>";
+}
+?>
 <section>
     <div class="container">
         <div class="row">
@@ -8,7 +23,7 @@
                     </a>
                     <div class="centered p-3">
                         <div>
-                            <form method="POST" class="form_align form_align--top">
+                            <form method="POST" action="" class="form_align form_align--top">
                                 <label class="label" for="name">Titre: </label>
                                 <input type="text" class="input" name="name" id="name">
 
