@@ -24,6 +24,7 @@ if (!$aut->isConnected()){
 
         <link rel="stylesheet" href="../../dist/main.css">
         <link rel="stylesheet" href="../../public/css/back.css">
+        <link rel="stylesheet" href="../../public/css/navbarFront.css">
 
 
         <?php  if(isset($stylesheet) && !empty($stylesheet))

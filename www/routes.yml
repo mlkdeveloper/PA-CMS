@@ -193,3 +193,11 @@
 /admin/barre-de-navigation:
   controller: Navbar
   action: displayNavbar
+
+/admin/nouveau-onglet-navigation:
+  controller: Navbar
+  action: newNavbarTab
+
+/admin/get-data-navbar:
+  controller: Navbar
+  action: getDataNavbar
