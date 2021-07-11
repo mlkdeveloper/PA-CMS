@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Core\FormValidator;
 use App\Core\View;
 use App\Models\Navbar as modelNavbar;
+use App\Models\Tab_navbar as modelTab_navbar;
 use App\Models\Category as modelCategory;
 use App\Models\Pages as modelPages;
 
@@ -25,6 +26,7 @@ class Navbar
 
     public function newNavbarTabAction(){
         $navbar = new modelNavbar();
+        $tabNavbar = new modelTab_navbar();
         $sortMax = $navbar->select('MAX(sort)')->get();
 
         $newSort = 0;
@@ -38,19 +40,20 @@ class Navbar
         $view = new View("newNavbarTab.back", "back");
         $view->assign("title", "Barre de navigation");
 
-        $form = $navbar->formBuilderRegister();
+        $form = $tabNavbar->formBuilderRegister();
 
         if (!empty($_POST)){
 
             if (isset($_POST['dropdown']) && $_POST['dropdown'] === 'dropdown'){
-                $this->dropdownNavbar($_POST);
-
+                $form = $tabNavbar->formBuilderRegister();
+                $errors = $this->dropdownNavbar($_POST, $form);
             }else{
+                $form = $navbar->formBuilderRegister();
                 $errors = FormValidator::checkFormNavbar($form, $_POST);
             }
 
             if (empty($errors)){
-                $navbar->setName($_POST['name']);
+                $navbar->setName(htmlspecialchars($_POST['name']));
                 $navbar->setSort($newSort);
 
                 if (isset($_POST['dropdown']) && $_POST['dropdown'] === 'dropdown'){
@@ -101,12 +104,12 @@ class Navbar
         }
     }
 
-    private function dropdownNavbar($data){
+    private function dropdownNavbar($data, $form){
         $countSelectTypeDropdown = 0;
         $countTypeDropdown = 0;
         $countNameDropdown = 0;
 
-        foreach ($_POST as $key => $value){
+        foreach ($data as $key => $value){
             if (preg_match('/^nameDropdown.*$/', $key) && !empty($value)){
                 $countNameDropdown++;
             }
@@ -125,6 +128,8 @@ class Navbar
             header('Location: /admin/nouveau-onglet-navigation');
             exit();
         }
+
+        return (FormValidator::checkFormTabNavbar($form, $data, $countSelectTypeDropdown));
     }
 
     public function upNavbarAction(){
