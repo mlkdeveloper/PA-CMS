@@ -5,7 +5,7 @@ $(document).ready(function() {
 
        const valueType = $("#typeNavbar").val();
 
-       getType(valueType);
+       getType(valueType, false, '');
 
        $("#labelSelectType").show();
        $("#selectType").show();
@@ -28,9 +28,14 @@ $(document).ready(function() {
     $("#containerDropdownNavbar").on('click', '.fa-minus-circle', function (){
         $(this).parent().parent().remove();
     });
+    $("#containerDropdownNavbar").on("change", '.typeDropdown', function (){
+        let valueType = $(this).val();
+        let nameType = $(this).attr('name');
+        getType(valueType, true, nameType);
+    });
 });
 
-function getType(valueType){
+function getType(valueType, dropdown, nameType){
     $.ajax({
         type: 'POST',
         url: '/admin/get-data-navbar',
@@ -40,24 +45,34 @@ function getType(valueType){
         success: function(data) {
             data = JSON.parse(data);
 
-            switch (valueType){
-                case 'page':
-                    $("#labelSelectType").html('Sélectionner une page: ');
-                    break;
-                case 'category':
-                    $("#labelSelectType").html('Sélectionner une catégorie: ');
-                    break;
-                default:
-                    error();
-            }
 
-            if (data === 'error'){
-                error();
+            if (dropdown === false){
+                switch (valueType){
+                    case 'page':
+                        $("#labelSelectType").html('Sélectionner une page: ');
+                        break;
+                    case 'category':
+                        $("#labelSelectType").html('Sélectionner une catégorie: ');
+                        break;
+                    default:
+                        error();
+                }
+
+                if (data === 'error'){
+                    error();
+                }else {
+                    $("#selectType").html('');
+
+                    data.forEach(function(obj) {
+                        $("#selectType").append('<option value="'+obj.id+'">'+obj.name+'</option>')
+                    });
+                }
             }else {
-                $("#selectType").html('');
+                let numberType = nameType.split('typeDropdown')[1];
+                $("#selectTypeDropdown"+numberType).html('');
 
                 data.forEach(function(obj) {
-                    $("#selectType").append('<option value="'+obj.id+'">'+obj.name+'</option>')
+                    $("#selectTypeDropdown"+numberType).append('<option value="'+obj.id+'">'+obj.name+'</option>')
                 });
             }
         },
@@ -78,19 +93,15 @@ function error(){
 
 function addTabDropdown(){
     var html = '<div class="pt-2">' +
-        '            <label class="label pt-3" for="nameDropdown'+count+'">Nom de l\'onglet: </label>\n' +
-        '            <input class="input" type="text" name="nameDropdown'+count+'" maxlength="50" minlength="2">\n' +
-        '            <label class="label pt-3" for="typeDropdown'+count+'">Type: </label>\n' +
-        '            <select class="input" name="typeDropdown'+count+'">\n' +
-        '                <option value="" disabled selected>Sélectionner le type de la page</option>\n' +
-        '                <option value="page">Page statique</option>\n' +
-        '                <option value="category">Category</option>\n' +
-        '            </select>\n' +
-        '            <select class="input" name="selectTypeDropdown'+count+'">\n' +
-        '                <option value="" disabled selected>Sélectionner le type de la page</option>\n' +
-        '                <option value="page">Page statique</option>\n' +
-        '                <option value="category">Category</option>\n' +
-        '            </select>\n' +
+        '            <label class="label pt-3" for="nameDropdown'+count+'">Nom de l\'onglet: </label>' +
+        '            <input class="input" type="text" name="nameDropdown'+count+'" maxlength="50" minlength="2">' +
+        '            <label class="label pt-3" for="typeDropdown'+count+'">Type: </label>' +
+        '            <select class="input typeDropdown" name="typeDropdown'+count+'">' +
+        '                <option value="" disabled selected>Sélectionner le type de la page</option>' +
+        '                <option value="page">Page statique</option>' +
+        '                <option value="category">Category</option>' +
+        '            </select>' +
+        '            <select class="input" name="selectTypeDropdown'+count+'" id="selectTypeDropdown'+count+'"></select>' +
         '            <span><i class="fas fa-minus-circle"></i></span>' +
         '      </div>';
 

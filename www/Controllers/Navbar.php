@@ -102,28 +102,29 @@ class Navbar
     }
 
     private function dropdownNavbar($data){
-        $countTab = 1;
-        $arraySelectTypeDropdown = [];
-        $arrayTypeDropdown = [];
-        $arrayNameDropdown = [];
+        $countSelectTypeDropdown = 0;
+        $countTypeDropdown = 0;
+        $countNameDropdown = 0;
 
-        do {
-            $tab = $_POST['selectTypeDropdown'.strval($countTab)];
-            $tabType = $_POST['typeDropdown'.strval($countTab)];
-            $tabName = $_POST['nameDropdown'.strval($countTab)];
-
-            if (!empty($tab) && !empty($tabType) && !empty($tabName)) {
-                array_push($arraySelectTypeDropdown, $tab);
-                array_push($arrayTypeDropdown, $tabType);
-                array_push($arrayNameDropdown, $tabName);
-            }else {
-                $_SESSION['errorDropDown'] = 'Veuillez remplir tous les champs';
-                header('Loacation: /admin/barre-de-navigation?error=feffe');
-                exit();
+        foreach ($_POST as $key => $value){
+            if (preg_match('/^nameDropdown.*$/', $key) && !empty($value)){
+                $countNameDropdown++;
             }
 
-            $countTab++;
-        }while(!empty($tab));
+            if (preg_match('/^typeDropdown.*$/', $key)){
+                $countTypeDropdown++;
+            }
+
+            if (preg_match('/^selectTypeDropdown.*$/', $key)){
+                $countSelectTypeDropdown++;
+            }
+        }
+
+        if ($countNameDropdown !== $countTypeDropdown || $countNameDropdown !== $countSelectTypeDropdown){
+            $_SESSION['errorDropDown'] = 'Veuillez remplir tous les champs des onglets de la liste déroulante';
+            header('Location: /admin/nouveau-onglet-navigation');
+            exit();
+        }
     }
 
     public function upNavbarAction(){

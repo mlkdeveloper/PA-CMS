@@ -67,17 +67,13 @@
                                         <input class="input" type="text" name="nameDropdown1" maxlength="50" minlength="2">
 
                                         <label class="label" for="typeDropdown1">Type: </label>
-                                        <select class="input" name="typeDropdown1">
+                                        <select class="input typeDropdown" name="typeDropdown1">
                                             <option value="" disabled selected>Sélectionner le type de la page</option>
                                             <option value="page">Page statique</option>
                                             <option value="category">Category</option>
                                         </select>
 
-                                        <select class="input" name="selectTypeDropdown1">
-                                            <option value="" disabled selected>Sélectionner le type de la page</option>
-                                            <option value="page">Page statique</option>
-                                            <option value="category">Category</option>
-                                        </select>
+                                        <select class="input" name="selectTypeDropdown1" id="selectTypeDropdown1"></select>
                                     </div>
 
                                     <span class="pt-3" id="addTabDropdown"><i class="fas fa-plus-circle"></i></span>
