@@ -23,3 +23,7 @@
 #addTabDropdown:hover {
     cursor: pointer;
 }
+
+.containerArrowNavbar:hover {
+    cursor: pointer;
+}

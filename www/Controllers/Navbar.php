@@ -25,11 +25,13 @@ class Navbar
 
     public function newNavbarTabAction(){
         $navbar = new modelNavbar();
+        $dataNavbar = $navbar->select('MAX(sort)')->get();
 
         $view = new View("newNavbarTab.back", "back");
         $view->assign("title", "Barre de navigation");
 
         $form = $navbar->formBuilderRegister();
+
 
         if (!empty($_POST)){
 
