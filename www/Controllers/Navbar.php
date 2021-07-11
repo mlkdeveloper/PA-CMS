@@ -25,13 +25,20 @@ class Navbar
 
     public function newNavbarTabAction(){
         $navbar = new modelNavbar();
-        $dataNavbar = $navbar->select('MAX(sort)')->get();
+        $sortMax = $navbar->select('MAX(sort)')->get();
+
+        $newSort = 0;
+
+        foreach ($sortMax[0] as $value):
+            $newSort = $value;
+        endforeach;
+
+        $newSort++;
 
         $view = new View("newNavbarTab.back", "back");
         $view->assign("title", "Barre de navigation");
 
         $form = $navbar->formBuilderRegister();
-
 
         if (!empty($_POST)){
 
@@ -44,7 +51,7 @@ class Navbar
 
             if (empty($errors)){
                 $navbar->setName($_POST['name']);
-                $navbar->setSort(1);
+                $navbar->setSort($newSort);
 
                 if (isset($_POST['dropdown']) && $_POST['dropdown'] === 'dropdown'){
                     $navbar->setStatus(1);
