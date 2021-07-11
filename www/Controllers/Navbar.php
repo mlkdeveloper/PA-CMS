@@ -25,11 +25,13 @@ class Navbar
     }
 
     public function newNavbarTabAction(){
+        session_start();
         $navbar = new modelNavbar();
         $tabNavbar = new modelTab_navbar();
         $sortMax = $navbar->select('MAX(sort)')->get();
 
         $newSort = 0;
+        $newId = 0;
 
         foreach ($sortMax[0] as $value):
             $newSort = $value;
@@ -40,13 +42,12 @@ class Navbar
         $view = new View("newNavbarTab.back", "back");
         $view->assign("title", "Barre de navigation");
 
-        $form = $tabNavbar->formBuilderRegister();
-
         if (!empty($_POST)){
 
             if (isset($_POST['dropdown']) && $_POST['dropdown'] === 'dropdown'){
                 $form = $tabNavbar->formBuilderRegister();
-                $errors = $this->dropdownNavbar($_POST, $form);
+                $countInputs = $this->dropdownNavbar($_POST);
+                $errors = FormValidator::checkFormTabNavbar($form, $_POST, $countInputs);
             }else{
                 $form = $navbar->formBuilderRegister();
                 $errors = FormValidator::checkFormNavbar($form, $_POST);
@@ -58,6 +59,31 @@ class Navbar
 
                 if (isset($_POST['dropdown']) && $_POST['dropdown'] === 'dropdown'){
                     $navbar->setStatus(1);
+                    $navbar->save();
+
+                    $idMax = $navbar->select('MAX(id)')->get();
+
+                    foreach ($idMax[0] as $value):
+                        $newId = $value;
+                    endforeach;
+
+                    for ($i = 1; $i <= $countInputs; $i++){
+                        $tabNavbar = new modelTab_navbar();
+
+                        $tabNavbar->setName(htmlspecialchars($_POST['nameDropdown'.$i]));
+                        $tabNavbar->setSort(1);
+                        $tabNavbar->setNavbar($newId);
+
+                        switch ($_POST['typeDropdown'.$i]){
+                            case 'page':
+                                $tabNavbar->setPage($_POST['selectTypeDropdown'.$i]);
+                                break;
+                            case 'category':
+                                $tabNavbar->setCategory($_POST['selectTypeDropdown'.$i]);
+                                break;
+                        }
+                        $tabNavbar->save();
+                    }
                 }else{
                     $navbar->setStatus(0);
 
@@ -68,14 +94,10 @@ class Navbar
                         case 'category':
                             $navbar->setCategory($_POST['selectType']);
                             break;
-                        default:
-                            $view->assign("errorType", 'Le type n\'est pas correct');
-                            exit();
                     }
+                    $navbar->save();
                 }
 
-
-                $navbar->save();
 
                 header('Location: /admin/barre-de-navigation');
             }else{
@@ -104,14 +126,20 @@ class Navbar
         }
     }
 
-    private function dropdownNavbar($data, $form){
+    private function dropdownNavbar($data){
         $countSelectTypeDropdown = 0;
         $countTypeDropdown = 0;
         $countNameDropdown = 0;
 
         foreach ($data as $key => $value){
-            if (preg_match('/^nameDropdown.*$/', $key) && !empty($value)){
+            if (preg_match('/^nameDropdown.*$/', $key)){
                 $countNameDropdown++;
+            }
+
+            if (empty($value)){
+                $_SESSION['errorDropDown'] = 'Veuillez remplir tous les champs des onglets de la liste déroulante';
+                header('Location: /admin/nouveau-onglet-navigation');
+                exit();
             }
 
             if (preg_match('/^typeDropdown.*$/', $key)){
@@ -128,8 +156,7 @@ class Navbar
             header('Location: /admin/nouveau-onglet-navigation');
             exit();
         }
-
-        return (FormValidator::checkFormTabNavbar($form, $data, $countSelectTypeDropdown));
+        return $countTypeDropdown;
     }
 
     public function upNavbarAction(){
@@ -156,6 +183,9 @@ class Navbar
                     $nextTab->populate($getNextTab[0]);
                     $nextTab->setSort($sort);
                     $nextTab->save();
+                    http_response_code(201);
+                }else{
+                    http_response_code(200);
                 }
 
             }else{

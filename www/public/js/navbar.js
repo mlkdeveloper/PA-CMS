@@ -117,8 +117,10 @@ function up(id,btnUp){
         data: {
             id: id
         },
-        success: function(data) {
-            upContainer(btnUp)
+        success: function(data, res, code) {
+            if (code.status === 201){
+                upContainer(btnUp)
+            }
         },
         error: function (xhr, ajaxOptions, thrownError){
         }
