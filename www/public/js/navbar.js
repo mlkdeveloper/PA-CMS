@@ -97,3 +97,65 @@ function addTabDropdown(){
     count++;
     $("#addTabDropdown").before(html);
 }
+
+function up(id,btnUp){
+
+    $.ajax({
+        type: 'POST',
+        url: '/admin/up-navbar',
+        data: {
+            id: id
+        },
+        success: function(data) {
+            upContainer(btnUp)
+        },
+        error: function (xhr, ajaxOptions, thrownError){
+        }
+    });
+
+
+}
+
+function down(id,btnDown){
+
+    $.ajax({
+        type: 'POST',
+        url: '/admin/down-navbar',
+        data: {
+            id: id
+        },
+        success: function(data,res,code) {
+
+           if (code.status === 200){
+               downContainer(btnDown)
+           }
+
+            console.log(code);
+
+        },
+        error: function (xhr, ajaxOptions, thrownError){
+        }
+    });
+
+
+}
+function downContainer(btnDown){
+
+    var div = $(btnDown).parent().parent().parent().parent().parent().parent().parent().parent();
+
+    var h = div.css("height");
+    var next = div.next();
+    next.animate({ "top": "-="+h }, "slow" );
+    div.animate({ "top": "+="+h }, "slow", function(){
+        div.insertAfter( next );
+    } );
+}
+function upContainer(btnUp) {
+    var div = $(btnUp).parent().parent().parent().parent().parent().parent().parent().parent();
+    var h = div.css("height");
+    var prev = div.prev();
+    prev.animate({ "top": "+="+h }, "slow" );
+    div.animate({ "top": "-="+h }, "slow", function(){
+        div.insertBefore( prev );
+    } );
+}

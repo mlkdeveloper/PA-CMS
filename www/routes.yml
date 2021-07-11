@@ -201,3 +201,11 @@
 /admin/get-data-navbar:
   controller: Navbar
   action: getDataNavbar
+
+/admin/up-navbar:
+  controller : Navbar
+  action : upNavbar
+
+/admin/down-navbar:
+  controller : Navbar
+  action : downNavbar

@@ -16,7 +16,7 @@ class Navbar
 
     public function displayNavbarAction(){
         $navbar = new modelNavbar();
-        $dataNavbar = $navbar->select('name, status')->orderBy('sort', 'ASC')->get();
+        $dataNavbar = $navbar->select('id,name, status')->orderBy('sort', 'ASC')->get();
 
         $view = new View("navbar.back", "back");
         $view->assign("title", "Barre de navigation");
@@ -115,5 +115,77 @@ class Navbar
 
             $countTab++;
         }while(!empty($tab));
+    }
+
+    public function upNavbarAction(){
+
+        if (isset($_POST['id']) && !empty($_POST['id'])){
+
+            $tab = new modelNavbar();
+            $getTab = $tab->select()->where("id = :id")->setParams(['id' => $_POST['id']])->get();
+
+            if (!empty($getTab)){
+
+                $sort = $getTab[0]['sort'];
+
+                if ($sort != 1){
+                    $nextTab =  new modelNavbar();
+                    $getNextTab = $nextTab->select()->where("sort < $sort")->orderBy('sort', 'DESC')->get();
+
+                    $nextSort = $getNextTab[0]['sort'];
+
+                    $tab->populate($getTab[0]);
+                    $tab->setSort($nextSort);
+                    $tab->save();
+
+                    $nextTab->populate($getNextTab[0]);
+                    $nextTab->setSort($sort);
+                    $nextTab->save();
+                }
+
+            }else{
+                http_response_code(400);
+            }
+        }else{
+            http_response_code(400);
+        }
+    }
+
+    public function downNavbarAction(){
+
+        if (isset($_POST['id']) && !empty($_POST['id'])){
+
+            $tab = new modelNavbar();
+            $getTab = $tab->select()->where("id = :id")->setParams(['id' => $_POST['id']])->get();
+
+            if (!empty($getTab)){
+
+                $sort = $getTab[0]['sort'];
+
+                $tabs = new modelNavbar();
+                $getTabs = $tabs->select("max(sort) as max_sort")->get();
+                if ($sort != $getTabs[0]['max_sort']){
+
+                    $nextTab =  new modelNavbar();
+                    $getNextTab = $nextTab->select()->where("sort > $sort")->orderBy('sort', 'ASC')->get();
+
+                    $nextSort = $getNextTab[0]['sort'];
+
+                    $tab->populate($getTab[0]);
+                    $tab->setSort($nextSort);
+                    $tab->save();
+
+                    $nextTab->populate($getNextTab[0]);
+                    $nextTab->setSort($sort);
+                    $nextTab->save();
+                    http_response_code(200);
+                }
+
+            }else{
+                http_response_code(400);
+            }
+        }else{
+            http_response_code(400);
+        }
     }
 }
