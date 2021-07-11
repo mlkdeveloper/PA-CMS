@@ -189,3 +189,19 @@
 /admin/update-admin-password:
   controller: Settings
   action : updateAdminPassword
+
+/create-checkout-session:
+  controller: Stripe
+  action: paymentStripe
+
+/paiement-stripe:
+  controller: Stripe
+  action: pagePaiementStripe
+
+/success:
+  controller: Stripe
+  action: success
+
+/cancel:
+  controller: Stripe
+  action: cancel
