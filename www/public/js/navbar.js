@@ -145,8 +145,8 @@ function downContainer(btnDown){
 
     var h = div.css("height");
     var next = div.next();
-    next.animate({ "top": "-="+h }, "slow" );
-    div.animate({ "top": "+="+h }, "slow", function(){
+    next.animate({ "top": "-="+h }, "fast" );
+    div.animate({ "top": "+="+h }, "fast", function(){
         div.insertAfter( next );
     } );
 }
@@ -154,8 +154,8 @@ function upContainer(btnUp) {
     var div = $(btnUp).parent().parent().parent().parent().parent().parent().parent().parent();
     var h = div.css("height");
     var prev = div.prev();
-    prev.animate({ "top": "+="+h }, "slow" );
-    div.animate({ "top": "-="+h }, "slow", function(){
+    prev.animate({ "top": "+="+h }, "fast" );
+    div.animate({ "top": "-="+h }, "fast", function(){
         div.insertBefore( prev );
     } );
 }
