@@ -41,7 +41,7 @@ class User extends Database
 
                             session_start();
                             $monUser = $user->select('*')->where('email=:email', 'pwd=:pwd')->setParams([":email" => $_POST['email'], ":pwd" => $pwdGet[0]["pwd"],])->get();
-                            $_SESSION['user'] = $monUser;
+                            $_SESSION['user'] = $monUser[0];
                             var_dump($_SESSION["user"]);
                             header('location:/');
                         }else{
@@ -496,6 +496,95 @@ class User extends Database
         }else{
             header("Location: /admin/liste-utilisateurs");
         }
+    }
+
+
+    public function displayProfileAction(){
+        session_start();
+        $view = new View("myProfile.front");
+        $view->assign("title", "Mon profil");
+        $user = new UserModel();
+
+        $form = $user->formBuilderCreateClient();
+
+        if(!empty($_POST)) {
+
+            $error = FormValidator::checkClient($form, $_POST, trim($_POST['email']) === $_SESSION['user']["email"]);
+
+            if (empty($error)) {
+
+                $user->setId($_SESSION['user']['id']);
+                $getInfo = $user->select('pwd,token,isConfirmed')->where("id = :id ")->setParams(["id" => $_SESSION['user']['id']])->get();
+                $user->setPwd($getInfo[0]['pwd']);
+                $user->setToken($getInfo[0]['token']);
+                $user->setIsConfirmed($getInfo[0]['isConfirmed']);
+                $user->populate($_POST);
+                $user->setStatus(1);
+                $user->setIdRole(2);
+                $user->save();
+
+                $view->assign("message", "Votre profil a bien été modifié !");
+            }else{
+
+                $view->assign("errors", $error);
+            }
+        }
+        $getInfos = $user->select()->where("id = :id")->setParams(['id' => $_SESSION['user']['id']])->get();
+        $view->assign("user", $getInfos[0]);
+    }
+
+    public function updateUserPasswordAction(){
+        session_start();
+        if (!empty($_POST)) {
+            $user = new UserModel();
+
+            if (count($_POST) != 3) {
+                $this->errorRedirection('Formulaire non conforme', 'error');
+            } else {
+
+                $oldPwd = htmlspecialchars($_POST['old_pwd']);
+                $newPwd = htmlspecialchars($_POST['new_pwd']);
+                $newPwdConfirm = htmlspecialchars($_POST['new_pwd_confirm']);
+
+                if (empty($oldPwd) ||
+                    empty($newPwd) ||
+                    empty($newPwdConfirm)) {
+                    $this->errorRedirection('Veuillez remplir tous les champs', 'error');
+                }
+
+
+                $dataUser = $user->select()->where("id = :id")->setParams(["id" => $_SESSION['user']['id']])->get();
+
+                if (!password_verify($oldPwd, $dataUser[0]['pwd'])) {
+                    $this->errorRedirection('Le mot de passe est incorrect', 'error');
+                }
+
+                if ($newPwd !== $newPwdConfirm) {
+                    $this->errorRedirection('Les deux mots de passe sont différents', 'error');
+                }
+
+                $pwdHash = password_hash($newPwd, PASSWORD_BCRYPT);
+
+                $user->populate($dataUser[0]);
+                $user->setPwd($pwdHash);
+                $user->save();
+                $this->errorRedirection('Modification réussie', 'success');
+            }
+        }else{
+            header('Location: /mon-profil');
+        }
+    }
+
+    private function errorRedirection($msg, $type){
+
+	    session_start();
+        if ($type === 'error'){
+            $_SESSION['errors'] = $msg;
+        }else{
+            $_SESSION['success'] = $msg;
+        }
+        header('Location: /mon-profil');
+        exit();
     }
 
 }

@@ -193,3 +193,11 @@
 /admin/update-admin-password:
   controller: Settings
   action : updateAdminPassword
+
+/mon-profil:
+  controller: User
+  action: displayProfile
+
+/modification-mdp-profil:
+  controller: User
+  action: updateUserPassword
