@@ -8,11 +8,11 @@ use App\Core\View;
 
 class Stripe
 {
-
     function paymentStripeAction(){
-
         require 'vendor/autoload.php';
+        session_start();
         \Stripe\Stripe::setApiKey('sk_test_51JC0puGueu1Z1r2SmxqKTcVKd7GHDBvZV0fPSbBI8GczQXd4y4bPAv5HgfMLJSy38vW6uyHwmN7bMrKUrIEw9sF400YiBrLMKe');
+
 
         header('Content-Type: application/json');
 
@@ -22,8 +22,8 @@ class Stripe
             'payment_method_types' => ['card'],
             'line_items' => [[
                 'price_data' => [
-                    'currency' => 'usd',
-                    'unit_amount' => 4000,
+                    'currency' => 'eur',
+                    'unit_amount' => $_SESSION['panierTotal']*100,
                     'product_data' => [
                         'name' => 'Stubborn Attachments',
                         'images' => ["https://i.imgur.com/EHyR2nP.png"],
@@ -50,4 +50,5 @@ class Stripe
         $view = new View("checkoutStripe");
         $view->assign("title", "C&C - Page de paiement");
     }
+
 }
