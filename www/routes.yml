@@ -189,3 +189,7 @@
 /admin/update-admin-password:
   controller: Settings
   action : updateAdminPassword
+
+/test:
+  controller: Test
+  action : test
