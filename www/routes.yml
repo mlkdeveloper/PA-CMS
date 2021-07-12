@@ -150,6 +150,13 @@
   controller: User
   action : changeUserPwd
 
+/admin/liste-commande:
+  controller: Commande
+  action: listeCommande
+
+/admin/detail-commande:
+  controller: Commande
+  action: displayCommande
 /collections:
   controller: Product
   action : displayProductsFront
@@ -182,6 +189,9 @@
   controller: Settings
   action : update
 
+/admin/annuler-commande:
+  controller: Commande
+  action: cancelCommande
 /admin/update-admin-email:
   controller: Settings
   action : updateAdminEmail
@@ -189,3 +199,11 @@
 /admin/update-admin-password:
   controller: Settings
   action : updateAdminPassword
+
+/admin/valider-commande:
+  controller: Commande
+  action: ValidCommande
+
+/admin/terminer-commande:
+  controller: Commande
+  action: DoneCommande
