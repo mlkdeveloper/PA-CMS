@@ -43,7 +43,7 @@ class Pages
             if(empty($errors)){
 
                     $pages->populate($_POST);
-                    $pages->setUserid(3);
+                    $pages->setUserid(1);
                     $pages->setPublication(0);
                     $pages->save();
 
