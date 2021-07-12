@@ -6,27 +6,17 @@
   controller: Main
   action: page404
 
-/utilisateur:
-  controller: User
-  action: default
-
-/ajout-d-un-utilisateur:
-  controller: User
-  action: add
-
-
 /connexion:
   controller: User
   action: login
 
-/afficher-un-utilisateur:
+/connexion-admin:
   controller: User
-  action: show
+  action: loginAdmin
 
-
-/afficher-les-utilisateurs:
-  controller: User
-  action: showAll
+/deconnexion:
+  controller: Security
+  action: logout
 
 /admin/liste-magasin:
   controller: Shop
@@ -39,6 +29,22 @@
 /admin/dashboard:
   controller: Dashboard
   action: dashboard
+
+/admin/display-category:
+  controller: Category
+  action: show
+
+/admin/nouvelle-categorie:
+  controller: Category
+  action: newCategory
+
+/admin/modification-categorie:
+  controller: Category
+  action: updateCategory
+
+/admin/suppression-categorie:
+  controller : Category
+  action: deleteCategory
 
 /admin/nouveau-magasin:
   controller: Shop
@@ -71,3 +77,155 @@
 /admin/update-publication:
   controller: Pages
   action: updatePublication
+
+/admin/nouveau-role:
+  controller: Role
+  action: newRole
+
+/admin/role:
+  controller: Role
+  action: showAll
+
+/admin/modification-role:
+  controller: Role
+  action: updateRole
+
+/admin/suppression-role:
+  controller: Role
+  action: deleteRole
+
+/admin/info-reviews:
+  controller: Reviews
+  action: showProducts
+
+/admin/del-review:
+  controller: Reviews
+  action: deleteReviews
+
+/admin/show-reviews-from-products:
+  controller: Reviews
+  action: showReviewsFromProducts
+
+/admin/ajout-client:
+  controller: User
+  action: newClient
+
+/admin/liste-client:
+  controller: User
+  action: displayClient
+
+/admin/modification-client:
+  controller: User
+  action: updateClient
+
+/admin/suppression-client:
+  controller: User
+  action: deleteClient
+
+/admin/detail-magasin:
+  controller : Shop
+  action : detailShop
+
+/inscription:
+  controller : User
+  action: register
+
+/mot-de-passe-oublie:
+  controller : Security
+  action : pwdPerdu
+
+/recuperation-mot-de-passe:
+  controller : Security
+  action : recuperationpwd
+
+/admin/delete-shop:
+  controller: Shop
+  action: deleteShop
+
+/confirmation-inscription:
+  controller: Security
+  action: confirmedRegister
+
+/admin/liste-utilisateurs:
+  controller: User
+  action: displayUsers
+
+/admin/ajout-utilisateur:
+  controller: User
+  action: addUsers
+
+/admin/suppression-utilisateur:
+  controller: User
+  action: deleteUser
+
+/admin/modification-utilisateur:
+  controller: User
+  action: updateUser
+
+/admin/utilisateur-changement-mdp:
+  controller: User
+  action : changeUserPwd
+
+/collections:
+  controller: Product
+  action : displayProductsFront
+
+/produit:
+  controller: Product
+  action: infoProductFront
+
+/produit/prix:
+  controller: Product
+  action: getPrice
+
+/panier:
+  controller: ShoppingCart
+  action : displayShoppingCart
+
+/ajout-panier:
+  controller : ShoppingCart
+  action : addShoppingCart
+
+/supprimer-panier:
+  controller: ShoppingCart
+  action: deleteShoppingCart
+
+/admin/parametres:
+  controller: Settings
+  action : displaySettings
+
+/admin/update-settings:
+  controller: Settings
+  action : update
+
+/admin/update-admin-email:
+  controller: Settings
+  action : updateAdminEmail
+
+/admin/update-admin-password:
+  controller: Settings
+  action : updateAdminPassword
+
+/admin/barre-de-navigation:
+  controller: Navbar
+  action: displayNavbar
+
+/admin/nouveau-onglet-navigation:
+  controller: Navbar
+  action: newNavbarTab
+
+/admin/get-data-navbar:
+  controller: Navbar
+  action: getDataNavbar
+
+/admin/up-navbar:
+  controller : Navbar
+  action : upNavbar
+
+/admin/down-navbar:
+  controller : Navbar
+  action : downNavbar
+
+/admin/onglet-barre-navigation:
+  controller : Navbar
+  action : deleteTab

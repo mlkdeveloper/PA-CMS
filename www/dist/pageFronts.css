@@ -23,3 +23,31 @@ body{
 img{
     object-fit: cover;
 }
+
+#navbarFront > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: #1a1a1a 1px solid;
+}
+
+#navbarFront ul {
+    margin: 0px;
+    padding: 0px;
+    background: white;
+    list-style:none;
+    display: flex;
+    flex-direction: row;
+}
+
+#navbarFront a {
+    padding: 1em;
+    display: block;
+    text-align:center;
+    text-decoration: none;
+    color: black;
+}
+
+#navbarFront a:hover {
+    background-color: #c7d7eb;
+}

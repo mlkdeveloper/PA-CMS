@@ -11,6 +11,40 @@ class Review extends Database
     protected $commentary;
     protected $mark;
     protected $status;
+    protected $Products_id;
+    protected $User_id;
+
+    /**
+     * @return mixed
+     */
+    public function getProductsId()
+    {
+        return $this->Products_id;
+    }
+
+    /**
+     * @param mixed $Products_id
+     */
+    public function setProductsId($Products_id)
+    {
+        $this->Products_id = $Products_id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserId()
+    {
+        return $this->User_id;
+    }
+
+    /**
+     * @param mixed $User_id
+     */
+    public function setUserId($User_id)
+    {
+        $this->User_id = $User_id;
+    }
 
     /**
      * @return mixed
@@ -25,7 +59,7 @@ class Review extends Database
      */
     public function setId($id): void
     {
-        $this->id = $id;
+        $this->id = intval($id);
     }
 
     /**
@@ -41,7 +75,7 @@ class Review extends Database
      */
     public function setCommentary($commentary): void
     {
-        $this->commentary = $commentary;
+        $this->commentary = htmlspecialchars(trim($commentary));
     }
 
     /**
@@ -57,7 +91,7 @@ class Review extends Database
      */
     public function setMark($mark): void
     {
-        $this->mark = $mark;
+        $this->mark = floatval($mark);
     }
 
     /**
@@ -73,7 +107,30 @@ class Review extends Database
      */
     public function setStatus($status): void
     {
-        $this->status = $status;
+        $this->status = intval($status);
+    }
+
+
+    public function formBuilderRegister(){
+
+        return [
+
+            "inputs"=>[
+
+                "commentary"=>[
+                    "maxLength"=>500,
+                    "minLength"=>2,
+                    "error"=>"Votre commentaire doit être compris entre 2 et 500 caractères !"
+                ],
+
+                "mark"=>[
+                    "status"=> [1,2,3,4,5],
+                    "error"=>"Erreur sur la note."
+                ]
+            ]
+
+        ];
+
     }
 
 
