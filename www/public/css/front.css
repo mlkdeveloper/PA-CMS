@@ -1,0 +1,22 @@
+#navbarFront ul {
+    margin: 0px;
+    padding: 0px;
+    background: white;
+    list-style:none;
+    display: flex;
+    flex-direction : row;
+    justify-content: center;
+    border-bottom: #1a1a1a 1px solid;
+}
+
+#navbarFront a {
+    padding: 1em;
+    display: block;
+    text-align:center;
+    text-decoration: none;
+    color: black;
+}
+
+#navbarFront a:hover {
+    background-color: #c7d7eb;
+}

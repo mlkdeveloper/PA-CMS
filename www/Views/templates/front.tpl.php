@@ -13,11 +13,21 @@
 
     <link rel="stylesheet" href="<?= $file_stylesheet??"" ?>">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="../../public/css/front.css">
 
 
 
 </head>
 <body>
+    <nav id="navbarFront">
+        <ul>
+            <li><a href="#">Accueil</a></li>
+            <li><a href="#">Catégories</a></li>
+            <li><a href="#">À Propos de Moi</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+
     <main>
 
         <div class="" style="background-color:#ffffff;display: flex; justify-content: space-between;border-bottom: 1px solid #2D9CDB; padding: 1rem; align-items: center">
