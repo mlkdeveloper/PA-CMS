@@ -232,12 +232,11 @@ class Settings
 
             $upload = new Uploader($_FILES['logo'],true);
             $res = $upload->setName("logo")->setSize(10)->setDirectory("./images/logo")->upload();
-
             ($res) ? $view->assign("success","Logo modifié !") : $view->assign("errors",$upload->errorsFile());
         }
 
-        $file = shell_exec("ls ./images/logo/");
-        $view->assign("logo",$file);
+        $file = scandir("./images/logo/",1);
+        $view->assign("logo",$file[0]);
 
     }
 

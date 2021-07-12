@@ -78,7 +78,13 @@ class Uploader{
         if (empty($this->error)){
 
             if ($this->isLogo){
-                shell_exec("rm  ./images/logo/logo.*");
+
+                if (is_uploaded_file($this->file['tmp_name'])){
+                    $file = scandir("./images/logo/",1);
+                    unlink("./images/logo/". $file[0]);
+                }else{
+                    $this->error[] = "Un problème est survenue lors de l'upload de l'image !";
+                }
             }
             return move_uploaded_file($this->file['tmp_name'], $this->destination());
         }else{
