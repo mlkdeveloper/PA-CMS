@@ -178,6 +178,10 @@
   controller: Settings
   action : displaySettings
 
+/admin/parametres-site:
+  controller: Settings
+  action : displaySettingsSite
+
 /admin/update-settings:
   controller: Settings
   action : update

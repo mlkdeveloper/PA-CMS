@@ -14,8 +14,10 @@ class Role
 
     public function showAllAction(){
 
+        \App\Core\Security::auth("roles");
+
         $role = new modelRole();
-        $listRoles = $role->select()->where("id > 1")->get();
+        $listRoles = $role->select()->where("id > 2")->get();
 
         $view = new View("displayRole.back", "back");
         $view->assign("title", "Admin - Liste des rôles");
@@ -48,7 +50,7 @@ class Role
 
     public function updateRoleAction(){
 
-        if (isset($_GET['id']) && !empty($_GET['id']) && $_GET['id'] != 1){
+        if (isset($_GET['id']) && !empty($_GET['id']) && $_GET['id'] > 2){
 
             $role = new modelRole();
             $verifyId = $role->select("id,name")->where("id = :id")->setParams(["id" => $_GET['id']])->get();
@@ -84,10 +86,15 @@ class Role
 
     public function deleteRoleAction(){
 
-        if (isset($_GET['id']) && !empty($_GET['id']) && $_GET['id'] != 1){
+        if (isset($_GET['id']) && !empty($_GET['id']) && $_GET['id'] > 2){
 
             $user = new User();
             $role = new modelRole();
+
+            $verifyId = $role->select("id")->where("id = :id")->setParams(["id" => $_GET['id']])->get();
+            if (empty($verifyId))
+                header("Location: /admin/role");
+
             $isAssign = $user->select("id")->where("id_role = :id")->setParams(["id" => $_GET['id']])->get();
             session_start();
             if (empty($isAssign)){
@@ -99,6 +106,8 @@ class Role
                 $_SESSION['errorDeleteRole'] = "Le rôle n'a pas pu être supprimé car il est assigné à un utilisateur !";
             }
 
+        }else{
+            header("Location: /admin/role");
         }
 
     }
