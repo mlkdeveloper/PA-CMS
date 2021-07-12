@@ -152,6 +152,7 @@ function down(id,btnDown){
 
 
 }
+
 function downContainer(btnDown){
 
     var div = $(btnDown).parent().parent().parent().parent().parent().parent().parent().parent();
@@ -163,6 +164,7 @@ function downContainer(btnDown){
         div.insertAfter( next );
     } );
 }
+
 function upContainer(btnUp) {
     var div = $(btnUp).parent().parent().parent().parent().parent().parent().parent().parent();
     var h = div.css("height");
@@ -171,4 +173,13 @@ function upContainer(btnUp) {
     div.animate({ "top": "-="+h }, "fast", function(){
         div.insertBefore( prev );
     } );
+}
+
+function showModalDeleteTab(id, status){
+    $("#buttonDeleteTab").attr("href", "/admin/onglet-barre-navigation?id="+id+"&status="+status);
+    $("#modalDeleteTab").show();
+}
+
+function hideModalDeleteTab(){
+    $("#modalDeleteTab").hide();
 }

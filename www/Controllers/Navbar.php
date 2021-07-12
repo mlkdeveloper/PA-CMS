@@ -10,6 +10,8 @@ use App\Models\Tab_navbar as modelTab_navbar;
 use App\Models\Category as modelCategory;
 use App\Models\Pages as modelPages;
 
+session_start();
+
 
 class Navbar
 {
@@ -25,7 +27,6 @@ class Navbar
     }
 
     public function newNavbarTabAction(){
-        session_start();
         $navbar = new modelNavbar();
         $tabNavbar = new modelTab_navbar();
         $sortMax = $navbar->select('MAX(sort)')->get();
@@ -231,6 +232,38 @@ class Navbar
             }
         }else{
             http_response_code(400);
+        }
+    }
+
+    public function deleteTabAction(){
+        if (isset($_GET['id']) && isset($_GET['status'])){
+            $idTab = htmlspecialchars($_GET['id']);
+            $statusTab = htmlspecialchars($_GET['status']);
+
+            $trueStatus = 2;
+
+            $navbar = new modelNavbar();
+            $result = $navbar->select('status')->where('id = :id')->setParams(['id' => $idTab])->get();
+
+            foreach ($result[0] as $value):
+                $trueStatus = $value;
+            endforeach;
+
+            if (!empty($result) && $trueStatus < 2 && $trueStatus === $statusTab){
+                if ($trueStatus == 1){
+                    $tabNavbar = new modelTab_navbar();
+                    $tabNavbar->where('navbar = :navbar')->setParams(['navbar' => $idTab])->delete();
+                }
+
+                $navbar->where('id = :id')->setParams(['id' => $idTab])->delete();
+                header('Location: /admin/barre-de-navigation');
+            }else{
+                $_SESSION['errorDeleteTab'] = 'Des informations sont manquantes';
+                header('Location: /admin/barre-de-navigation');
+            }
+        }else {
+            $_SESSION['errorDeleteTab'] = 'Des informations sont manquantes';
+            header('Location: /admin/barre-de-navigation');
         }
     }
 }

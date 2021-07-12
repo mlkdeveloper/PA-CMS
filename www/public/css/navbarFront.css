@@ -27,3 +27,7 @@
 .containerArrowNavbar:hover {
     cursor: pointer;
 }
+
+.displayTabNavbar span:hover{
+    cursor: pointer;
+}

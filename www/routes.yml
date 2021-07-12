@@ -209,3 +209,7 @@
 /admin/down-navbar:
   controller : Navbar
   action : downNavbar
+
+/admin/onglet-barre-navigation:
+  controller : Navbar
+  action : deleteTab
