@@ -211,3 +211,19 @@
 /admin/terminer-commande:
   controller: Commande
   action: DoneCommande
+
+/create-checkout-session:
+  controller: Stripe
+  action: paymentStripe
+
+/paiement-stripe:
+  controller: Stripe
+  action: pagePaiementStripe
+
+/success:
+  controller: Stripe
+  action: success
+
+/cancel:
+  controller: Stripe
+  action: cancel

@@ -4,10 +4,14 @@
         <div class="align">
             <h1>Panier</h1>
             <?php if(!empty($_SESSION['panier'])): ?>
-            <button class="button button--blue">Procéder au paiement</button>
+                <?php if(empty($_SESSION['user'])): ?>
+                    <button class="button button--blue"><a onclick="showModalConnexionStripe()">Procéder au paiement</a></button>
+                <?php endif; ?>
+                <?php if(!empty($_SESSION['user'])): ?>
+                    <button class="button button--blue" id="paiement-stripe">Procéder au paiement</button>
+                <?php endif; ?>
             <?php endif; ?>
         </div>
-
         <?php if(empty($_SESSION['panier'])): ?>
         <div>
             <p>Votre panier est vide.</p>
@@ -62,10 +66,46 @@
             <?php endif; ?>
 
     </div>
-</section>
 
+        <div class="modal" id="modalConnexionStripe">
+            <div class="modal-content">
+                <h3>Vous devez être connecter pour pouvoir passer au paiement de votre commande</h3>
+                <a id="buttonConnexionStripe"><button class="button button--success">Connexion</button></a>
+                <button class="button button--alert" onclick="hideModalConnexionStripe()">Annuler</button>
+            </div>
+        </div>
+</section>
+<script type="text/javascript">
+    // Create an instance of the Stripe object with your publishable API key
+    var stripe = Stripe("pk_test_51JC0puGueu1Z1r2S3oq9aEovJmlKpYwQ8isyViEyKtwQrLXIEZBdOVeXiihXPpi4EtJHkTd53Whc5F6J7TNxLEQz00XaTk67k0");
+    var checkoutButton = document.getElementById("paiement-stripe");
+
+    checkoutButton.addEventListener("click", function () {
+        fetch("/create-checkout-session", {
+            method: "POST",
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (session) {
+                return stripe.redirectToCheckout({ sessionId: session.id });
+            })
+            .then(function (result) {
+                // If redirectToCheckout fails due to a browser or network
+                // error, you should display the localized error message to your
+                // customer using error.message.
+                if (result.error) {
+                    alert(result.error.message);
+                }
+            })
+            .catch(function (error) {
+                console.error("Error:", error);
+            });
+    });
+</script>
 
 
 
 
 <script src="../public/js/datatable.js"></script>
+<script src="../public/js/stripe.js"></script>
