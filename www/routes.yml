@@ -211,3 +211,11 @@
 /admin/terminer-commande:
   controller: Commande
   action: DoneCommande
+
+/mes-commandes:
+  controller : Commande
+  action: displayOrdersFront
+
+/ma-commande:
+  controller : Commande
+  action: informationsOrder
