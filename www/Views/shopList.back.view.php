@@ -4,7 +4,7 @@
             <h1 style="text-align: center;font-size: 40px">Gestion des magasins </h1>
             <div class="jumbotron">
                 <div class="flex-end mb-1">
-                    <button class="button button--blue"><a href="/admin/nouveau-magasin">Nouveau magasin</a></button>
+                    <a href="/admin/nouveau-magasin"><button class="button button--blue">Nouveau magasin</button></a>
                 </div>
                 <table id="table" class="row-border hover" style="width:100%">
                     <thead>
