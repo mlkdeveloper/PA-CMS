@@ -5,57 +5,75 @@
     <?php endif;?>
     <div class="align">
         <h1>Récapitulatif de la commande #<?= $_GET['id']?></h1>
-        <p>Statut : <?php
-            if ($commande[0]['idStatus'] == -1){
-                echo "Annulé";
-            }else if($commande[0]['idStatus'] == 0){
-                echo "En attente";
-            }else if($commande[0]['idStatus'] == 1){
-                echo "Validé";
-            }else if($commande[0]['idStatus'] == 2){
-                echo "Terminé";
-            }?></p>
         <div>
-            <button class="button button--alert">
-                <a onclick="showModalCancelCommand(<?= $_GET['id'] ?>)">Annuler la commande</a>
-            </button>
-            <button class="button button--blue">
-                <a onclick="showModalValidCommand(<?= $_GET['id'] ?>)">Valider la commande</a>
-            </button>
-            <button class="button button--blue">
-                <a onclick="showModalDoneCommand(<?= $_GET['id'] ?>)">Terminer la commande</a>
-            </button>
-        </div>
 
+            <?php if($order[0]['status'] == 0):?>
+                <button class="button button--alert">
+                    <a onclick="showModalCancelCommand(<?= $_GET['id'] ?>)">Annuler la commande</a>
+                </button>
+                <button class="button button--blue">
+                    <a onclick="showModalValidCommand(<?= $_GET['id'] ?>)">Valider la commande</a>
+                </button>
+
+            <?php endif;?>
+
+            <?php if($order[0]['status'] == 1):?>
+                <button class="button button--blue">
+                    <a onclick="showModalDoneCommand(<?= $_GET['id'] ?>)">Terminer la commande</a>
+                </button>
+            <?php endif;?>
+
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="jumbotron ">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <h3>Statut : <?php
+                            if ($order[0]['status'] == -1){
+                                echo "Annulé";
+                            }if($order[0]['status'] == 0){
+                                echo "En attente";
+                            }if($order[0]['status'] == 1){
+                                echo "Validé";
+                            }if($order[0]['status'] == 2){
+                                echo "Terminé";
+                            }?></h3>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6">
+                        <p>Montant total du panier : <?= $order[0]['montant'] ?> €</p>
+                        <p>Commande passé le : <?= \App\Core\Helpers::dateFr($order[0]['CreatedAt'])?></p>
+                        <p>Par : <?= $order[0]['firstname'].' '.$order[0]['lastname']. ' ('.  $order[0]['email']. ')'?></p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="jumbotron">
-                <div class="col-md-6 ">
-                    <div class="jumbotron ">
-                        <p>Montant total du panier : <?= $commande[0]['montant'] ?> €</p>
-                        <p>Commande passé le : <?= $commande[0]['CreatedAt']?></p>
-                        <p>Par : <?= $commande[0]['firstname'].' '.$commande[0]['lastname']. ' ('.  $commande[0]['email']. ')'?></p>
-                    </div>
-                </div>
-
-                <br>
                 <table id="table" class="row-border hover">
                     <thead>
                     <tr>
                         <th>#</th>
                         <th>Nom</th>
-                        <th>Carateristique</th>
                         <th>Prix</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <?php  foreach ($array as $product): ?>
+                    <?php  foreach ($products as $product): ?>
                         <tr>
-                            <td><?= $product['idProductOrder'] ?></td>
-                            <td><?= $product['productName'] ?></td>
-                            <td><?= $product['termName'] ?></td>
-                            <td><?= $product['variantPrice'] ?> €</td>
+                            <td>#<?= $product[0]['id'] ?></td>
+                            <td>
+                                <?= $product[0]['name'] . "<br>" ?>
+                                <?php foreach (array_map("current", $product) as $value)  :?>
+                                    <?= $value . " "  ?>
+                                <?php endforeach; ?>
+                            </td>
+                            <td>€ <?= $product[0]['price'] ?></td>
                         </tr>
                     <?php endforeach;?>
 
@@ -75,7 +93,7 @@
 
     <div class="modal" id="modalValidCommand">
         <div class="modal-content">
-            <h3>Voulez-vous Valider la commande ?</h3>
+            <h3>Voulez-vous valider la commande ?</h3>
             <a id="buttonValidCommand"><button class="button button--success">Oui</button></a>
             <button class="button button--alert" onclick="hideModalValidCommand()">Non</button>
         </div>
