@@ -54,16 +54,16 @@ if (!$aut->isConnected()){
                     <a href="#"><li>Avis</li></a>
                 </ul>
             </ul>
-        <ul>
-            <hr>
-            <li class="dropdownMenu" id="dropdownSettings">Paramètres du site<i class="fa fa-caret-down"></i></li>
-            <ul class="dropdown-container">
-                <a href="/admin/liste-magasin"><li>Magasins</li></a>
-                <a href="#"><li>Navigation</li></a>
-                <a href="#"><li>Paramètres</li></a>
+            <ul>
+                <hr>
+                <li class="dropdownMenu" id="dropdownSettings">Paramètres du site<i class="fa fa-caret-down"></i></li>
+                <ul class="dropdown-container">
+                    <a href="/admin/liste-magasin"><li>Magasins</li></a>
+                    <a href="#"><li>Navigation</li></a>
+                    <a href="#"><li>Paramètres</li></a>
+                </ul>
+                <a href="#"><li>Paramètres du CMS</li></a>
             </ul>
-            <a href="#"><li>Paramètres du CMS</li></a>
-        </ul>
         </nav>
 
         <div class="container-body">

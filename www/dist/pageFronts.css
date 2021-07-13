@@ -24,30 +24,65 @@ img{
     object-fit: cover;
 }
 
-#navbarFront > div {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    border-bottom: #1a1a1a 1px solid;
-}
-
-#navbarFront ul {
-    margin: 0px;
-    padding: 0px;
+#main-nav {
     background: white;
-    list-style:none;
-    display: flex;
-    flex-direction: row;
+    border-bottom: solid 1px gray;
 }
-
-#navbarFront a {
-    padding: 1em;
-    display: block;
-    text-align:center;
-    text-decoration: none;
+#main-nav a {
     color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: background 0.4s;
+    padding: 15px;
+}
+#main-nav a:hover {
+    background: #9ecad0;
 }
 
-#navbarFront a:hover {
-    background-color: #c7d7eb;
+#main-nav {
+}
+
+#main-nav ul {
+    list-style: none;
+    display: flex;
+    box-sizing: border-box;
+}
+
+#main-nav li {
+    width: 100%;
+    text-align: center;
+    position: relative;
+}
+
+#main-nav li:hover .submenu > li {
+    display: block;
+    flex-direction: column;
+    top: 0;
+}
+
+.submenu li {
+    display: none;
+    position: relative;
+    top: 0;
+}
+
+.submenu {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+#main-nav div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.dropdownMenuFront:hover {
+    cursor: pointer;
 }

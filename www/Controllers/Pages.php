@@ -5,6 +5,8 @@ use App\Core\FormValidator;
 use App\Core\Routes;
 use App\Core\View;
 use App\Models\Pages as modelPages;
+use App\Models\Navbar as modelNavbar;
+use App\Models\Tab_navbar as modelTab_navbar;
 
 $myPage = new Pages();
 
@@ -149,12 +151,23 @@ class Pages
     public function displayFrontAction(){
         $uri = $_SERVER['REQUEST_URI'];
         $pages = new modelPages();
+        $pagesNavbar = new modelPages();
+        $navbar = new modelNavbar();
+        $tabNavbar = new modelTab_navbar();
+
         $arrayPage = $pages->select("name", "publication")->where("slug = :slug")->setParams(["slug" => $uri])->get();
         foreach ($arrayPage as $value);
+
+        $arrayNavbar = $navbar->select()->orderBy('sort', 'ASC')->get();
+        $arrayTabNavbar = $tabNavbar->select()->orderBy('sort', 'ASC')->get();
+        $arrayPages = $pagesNavbar->select()->get();
 
         if ($value["publication"] == 1) {
             $view = new View("displayPagesFront", "front");
             $view->assign("title", $value['name']);
+            $view->assign("navbar", $arrayNavbar);
+            $view->assign("tabNavbar", $arrayTabNavbar);
+            $view->assign("pages", $arrayPages);
         }else{
             header("Location: /");
             exit();
@@ -189,7 +202,7 @@ class Pages
             }
 
             $pages->setPublication($_POST['valuePublication']);
-            $pages->setUserid(3);
+            $pages->setUserid(1);
             $pages->setId($_POST['idPage']);
             $pages->save();
         }else{

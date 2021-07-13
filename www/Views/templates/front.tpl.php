@@ -17,17 +17,47 @@
 <body>
 
     <header>
-        <nav id="navbarFront">
+        <nav id="main-nav">
             <div>
+            <ul>
+                <?php
+                foreach ($navbar as $value):
+                    if ($value['status'] == 0){
+                        echo '<li><a href="';
+                            if (isset($value['page'])){
+                                foreach ($pages as $valuePage):
+                                    if ($value["page"] == $valuePage['id']){
+                                        echo $valuePage['slug'];
+                                    }
+                                endforeach;
+                            }else{
+                                echo $value["category"];
+                            }
+                        echo '">'.$value["name"].'</a></li>';
+                    }else {
+                        echo '<li class="dropdownMenuFront"><a>'.$value["name"].'&nbsp<i class="fa fa-caret-down"></i></a>';
+                        echo '<ul class="submenu">';
+                        foreach ($tabNavbar as $valueTab):
+                            if ($valueTab['navbar'] == $value['id']){
+                                echo '<li><a href="';
+                                if (isset($valueTab['page'])){
+                                    foreach ($pages as $valuePage):
+                                        if ($valueTab["page"] == $valuePage['id']){
+                                            echo $valuePage['slug'];
+                                        }
+                                    endforeach;
+                                }else{
+                                    echo $valueTab["category"];
+                                }
+                                echo '">'.$valueTab["name"].'</a></li>';
+                            }
+                        endforeach;
+                        echo '</ul></li>';
+                    }
+                endforeach; ?>
+            </ul>
                 <ul>
-                    <li><img src="../../images/logo/logo.png" alt="Logo" width="50"></li>
-                    <li><a href="#">Accueil</a></li>
-                    <li><a href="#">Catégories</a></li>
-                    <li><a href="#">À Propos de Moi</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-                <ul>
-                    <li><a href="/panier">Panier <i class="fa fa-shopping-cart"></i></a></li>
+                   <li><a href="/panier">Panier <i class="fa fa-shopping-cart"></i></a></li>
                 </ul>
             </div>
         </nav>
