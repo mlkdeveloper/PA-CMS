@@ -1,8 +1,5 @@
 <div class="container">
 
-    <?php if(isset($errors)):?>
-        <div class="alert alert--red"><?= $errors?></div>
-    <?php endif;?>
     <div class="align">
         <h1>Récapitulatif de la commande #<?= $_GET['id']?></h1>
         <div>
