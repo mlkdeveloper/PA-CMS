@@ -77,7 +77,7 @@ class FormValidator
         return $errors; //[] vide si ok
     }
 
-    public static function checkPage($config, $data){
+    public static function checkPage($config, $data, $isUpdated){
 
         $errors = [];
 
@@ -88,12 +88,12 @@ class FormValidator
 
             foreach ($config["inputs"] as $name => $configInputs) {
 
-                if (!empty($configInputs["uniq"]) && $configInputs["uniq"] === true){
-                    $page = new Pages();
-                    if ($page->find_duplicates_sql($name, $data[$name])){
-                        $errors[] = $configInputs["errorBdd"];
-                    }
-                }
+//                if (!empty($configInputs["uniq"]) && $configInputs["uniq"] === true){
+//                    $page = new Pages();
+//                    if ($page->find_duplicates_sql($name, $data[$name])){
+//                        $errors[] = $configInputs["errorBdd"];
+//                    }
+//                }
 
                 if(	!empty($configInputs["minLength"])
                     && is_numeric($configInputs["minLength"])
@@ -112,6 +112,16 @@ class FormValidator
                 if (!empty($configInputs["regex"])
                     && !preg_match($configInputs["regex"], $data[$name])){
                     $errors[] = $configInputs["errorRegex"];
+                }
+
+                if (!$isUpdated) {
+                    if (!empty($configInputs["uniq"]) &&
+                        $configInputs["uniq"] === true
+                    ) {
+                        $category = new Pages();
+                        if ($category->find_duplicates_sql($name, $data[$name]))
+                            $errors[] = $configInputs["errorBdd"];
+                    }
                 }
             }
         }

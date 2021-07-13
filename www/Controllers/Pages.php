@@ -43,7 +43,7 @@ class Pages
 
         if(!empty($_POST)){
 
-            $errors = FormValidator::checkPage($form, $_POST);
+            $errors = FormValidator::checkPage($form, $_POST, false);
 
             if(empty($errors)){
 
@@ -87,12 +87,11 @@ class Pages
             $form = $pages->formBuilderRegister();
 
             if(!empty($_POST)){
-
-                $errors = FormValidator::checkPage($form, $_POST);
+                $errors = FormValidator::checkPage($form, $_POST, trim($_POST['name']) === $pages->getName() || trim($_POST['slug']) == $pages->getSlug());
 
                 if(empty($errors)){
                     $pages->populate($_POST);
-                    $pages->setUserid(3);
+                    $pages->setUserid(1);
                     $pages->setId($_GET['id']);
                     $pages->save();
 
