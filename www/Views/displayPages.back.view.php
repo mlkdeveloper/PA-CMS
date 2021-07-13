@@ -57,7 +57,7 @@
                                             echo '</a>';
                                         }
                                     ?>
-                                    <a href="/admin/publisher?name=<?= $value['name'] ?>" class="button button--blue">
+                                    <a href="/admin/editeur?name=<?= $value['name'] ?>" class="button button--blue">
                                         <i class="fas fa-eye"></i>Voir la page
                                     </a>
                                     <?php

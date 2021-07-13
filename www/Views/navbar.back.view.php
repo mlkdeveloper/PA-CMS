@@ -31,13 +31,8 @@
                                 <div class="mb-1 containerArrowNavbar">
                                     <span><i style="color: #2D9CDB" onclick="up(<?= $value['id'] ?>, this)" class="fa-2x fas fa-arrow-circle-up"></i></span>
                                     <span><i style="color: #2D9CDB" onclick="down(<?= $value['id'] ?>, this)" class="fa-2x fas fa-arrow-circle-down"></i></span>
-
+                                    <span><i class="fas fa-trash" onclick="showModalDeleteTab(<?=$value["id"]?>, <?=$value["status"]?>)"></i></span>
                                 </div>
-                                <button class="button button--black">
-                                    <i class="fas fa-pencil-alt"></i>
-                                    Modifier
-                                </button>
-                                <span><i class="fas fa-trash" onclick="showModalDeleteTab(<?=$value["id"]?>, <?=$value["status"]?>)"></i></span>
                             </div>
                         </div>
                     </div>

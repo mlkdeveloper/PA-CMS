@@ -74,7 +74,7 @@
             <div class="container-body" id="bodyContainer">
                 <header>
                     <div class="headerNavbar">
-                        <h1>La navbar</h1>
+                        <h3>Barre de navigation</h3>
                     </div>
                 </header>
 

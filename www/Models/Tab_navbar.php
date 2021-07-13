@@ -10,7 +10,6 @@ class Tab_navbar extends Database
 
     private $id;
     protected $name;
-    protected $sort;
     protected $page;
     protected $category;
     protected $navbar;
@@ -45,22 +44,6 @@ class Tab_navbar extends Database
     public function setName($name): void
     {
         $this->name = $name;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSort()
-    {
-        return $this->sort;
-    }
-
-    /**
-     * @param mixed $sort
-     */
-    public function setSort($sort): void
-    {
-        $this->sort = $sort;
     }
 
     /**

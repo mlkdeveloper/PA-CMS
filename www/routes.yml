@@ -50,11 +50,11 @@
   controller: Shop
   action: newShop
 
-/admin/display-pages:
+/admin/pages:
   controller: Pages
   action: show
 
-/admin/publisher:
+/admin/editeur:
   controller: Publisher
   action: publisher
 

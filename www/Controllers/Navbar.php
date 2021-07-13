@@ -72,7 +72,6 @@ class Navbar
                         $tabNavbar = new modelTab_navbar();
 
                         $tabNavbar->setName(htmlspecialchars($_POST['nameDropdown'.$i]));
-                        $tabNavbar->setSort(1);
                         $tabNavbar->setNavbar($newId);
 
                         switch ($_POST['typeDropdown'.$i]){

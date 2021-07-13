@@ -62,7 +62,7 @@ class Pages
                         echo $e->error();
                     }
 
-                    header('location:/admin/display-pages');
+                    header('location:/admin/pages');
 
             }else{
                 $view->assign("errors", $errors);
@@ -77,7 +77,7 @@ class Pages
             $pages = new modelPages();
             $verifyId = $pages->select()->where("id = :id", "slug = :slug")->setParams(["id" => $_GET['id'], "slug" => $_GET['slug']])->get();
             if (empty($verifyId)){
-                header("Location: /admin/display-pages");
+                header("Location: /admin/pages");
                 exit();
             }
             $pages->populate($verifyId[0]);
@@ -106,7 +106,7 @@ class Pages
                         echo $e->error();
                     }
 
-                    header('location:/admin/display-pages');
+                    header('location:/admin/pages');
 
                 }else{
                     $view->assign("errors", $errors);
@@ -140,7 +140,7 @@ class Pages
 
             if (!empty($arrayNavbar) || !empty($arrayTabNavbar)){
                 $_SESSION['errorNavbar'] = 'Un onglet dans la barre de navigation comprend cette page, impossible de la supprimer';
-                header("Location: /admin/display-pages");
+                header("Location: /admin/pages");
                 exit();
             }
 
@@ -155,10 +155,10 @@ class Pages
                 echo $e->error();
             }
 
-            header("Location: /admin/display-pages");
+            header("Location: /admin/pages");
             exit();
         }else{
-            header("Location: /admin/display-pages");
+            header("Location: /admin/pages");
             exit();
         }
     }
@@ -175,7 +175,7 @@ class Pages
         foreach ($arrayPage as $value);
 
         $arrayNavbar = $navbar->select()->orderBy('sort', 'ASC')->get();
-        $arrayTabNavbar = $tabNavbar->select()->orderBy('sort', 'ASC')->get();
+        $arrayTabNavbar = $tabNavbar->select()->get();
         $arrayPages = $pagesNavbar->select()->get();
         $arrayCategory = $category->select()->get();
 
@@ -215,7 +215,7 @@ class Pages
 
 
             if (empty($verifyId)){
-                header("Location: /admin/display-pages");
+                header("Location: /admin/pages");
                 exit();
             }
 
@@ -224,7 +224,7 @@ class Pages
             $pages->setId($_POST['idPage']);
             $pages->save();
         }else{
-            header("Location: /admin/display-pages");
+            header("Location: /admin/pages");
             exit();
         }
     }
