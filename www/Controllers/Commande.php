@@ -11,6 +11,7 @@ use App\Core\FormValidator;
 use App\Models\Orders;
 use App\Models\Product_order;
 use App\Models\Product_term;
+use App\Models\User;
 
 class Commande extends Database
 {
@@ -31,19 +32,15 @@ class Commande extends Database
 
     public function displayCommandeAction(){
 
-
         if (isset($_GET['id']) && !empty($_GET['id'])) {
 
-
-            session_start();
             $order = new Orders();
-            $checkId = $order->select('id')->where("id = :id","User_id = :idUser")->setParams(['id' => $_GET['id'], 'idUser' => $_SESSION['user']['id']])->get();
+            $checkId = $order->select('id')->where("id = :id")->setParams(['id' => $_GET['id']])->get();
 
             if (empty($checkId)){
                 header("Location: /admin/liste-commande");
                 exit();
             }
-
 
             $view = new View("displayCommande.back", "back");
             $view->assign("title", "Détail de la commande");
@@ -66,56 +63,8 @@ class Commande extends Database
                     ->where(DBPREFIXE."product_term.idGroup = :idGroup")->setParams(["idGroup" => $value['id_group_variant']])->get());
             }
 
-
             $view->assign("products",$array);
             $view->assign("order",$orders);
-
-
-
-            //$product = new Product_order();
-
-           /* $listProduct = $product->select('cc_terms.name as termName,cc_product_order.id as idProductOrder, cc_product_order.id_group_variant, cc_products.name as productName, cc_group_variant.price as variantPrice, cc_group_variant.stock as variantStock ')
-                ->innerJoin("cc_product_term", "cc_product_order.id_group_variant", "=", "cc_product_term.idGroup")
-                ->innerJoin("cc_products", "cc_product_term.idProduct", "=", "cc_products.id")
-                ->innerJoin("cc_terms", "cc_product_term.idTerm", "=", "cc_terms.id")
-                ->innerJoin("cc_group_variant", "cc_product_term.idGroup", "=", "cc_group_variant.id")
-                ->innerJoin("cc_attributes", "cc_terms.idAttributes", "=", "cc_attributes.id")
-                ->where("id_order = :id")->setParams(["id" => $_GET['id']])
-                ->orderBy('cc_product_order.id', 'ASC')
-                ->get();
-
-            if (empty($listProduct)) {
-                header('location:/admin/liste-commande');
-            }
-
-
-
-            $order = new Orders();
-            $commande = new Orders();
-
-            $commande = $order->select('*, cc_orders.status as idStatus')
-                ->innerJoin('cc_user', 'cc_user.id', '=', 'cc_orders.User_id')
-                ->where("cc_orders.id= :id")->setParams(["id" => $_GET['id']])->get();
-
-            $view->assign("commande", $commande);
-
-            $newArrayProducts = [];
-            array_push($newArrayProducts, $listProduct[0]);
-            unset($listProduct[0]);
-
-
-            for ($i = 1; $i < sizeof($listProduct); $i++) {
-                if (Helpers::filter_by_value($newArrayProducts, 'idProductOrder', $listProduct[$i]['idProductOrder']) != null) {
-                    $array = Helpers::filter_by_value($newArrayProducts, 'idProductOrder', $listProduct[$i]['idProductOrder']);
-
-                } else {
-                    array_push($newArrayProducts, $listProduct[$i]);
-
-                }
-            }
-
-
-            $view->assign("array", $newArrayProducts);*/
 
         }else{
             header("Location: /admin/liste-commande");
@@ -125,79 +74,95 @@ class Commande extends Database
 
     public function cancelCommandeAction(){
 
-        if (!isset($_GET['id']) && empty($_GET['id'])){
-            $view->assign("errors", "Parametre manquant dans le GET");
+        if (isset($_GET['id']) && !empty($_GET['id'])){
+
+            $order = new Orders();
+            $checkId = $order->select('id')->where("id = :id")->setParams(['id' => $_GET['id']])->get();
+
+            if (empty($checkId)){
+                header("Location: /admin/liste-commande");
+                exit();
+            }
+
+            $user = new User();
+
+            $commande = $order->select('*')->where("id = :id")->setParams(["id" => $_GET['id']])->get();
+            $getUser = $user->select('*')->where("id = :id")->setParams(["id" => $commande[0]["User_id"]])->get();
+
+            $order->populate($commande[0]);
+            $order->setUserId($commande[0]['User_id']);
+            $order->setStatus(-1);
+            $order->save();
+
+            Email::sendEmail($getUser[0]["email"], "Votre commande vient d'être annulée ", "http://localhost:8082/connexion","Mon compte", "/admin/liste-commande");
+
+        }else{
+            header("Location: /admin/liste-commande");
         }
-        $order = new Orders();
-        $user = new \App\Models\User();
-        $orderTosave = new Orders();
-
-        $commande = $order->select('*')->where("id = :id")->setParams(["id" => $_GET['id']])->get();
-        $utilisateur = $user->select('*')->where("id = :id")->setParams(["id" => $commande[0]["User_id"]])->get();
-
-        $orderTosave->populate($commande[0]);
-        $orderTosave->setId($commande[0]['id']);
-        $orderTosave->setUserId($commande[0]['User_id']);
-        $orderTosave->setStatus(-1);
-        $orderTosave->save();
-
-
-        Email::sendEmail($utilisateur[0]["email"], "Votre commande viens d'etre annulé ", "http://localhost:8082/connexion","Mon compte", "/admin/liste-commande");
 
     }
 
     public function ValidCommandeAction(){
-        $view = new View("displayCommande.back", "back");
 
-        if (!isset($_GET['id']) && empty($_GET['id'])){
-            $view->assign("errors", "Parametre manquant dans le GET");
+        if (isset($_GET['id']) && !empty($_GET['id'])){
+
+            $order = new Orders();
+            $checkId = $order->select('id')->where("id = :id")->setParams(['id' => $_GET['id']])->get();
+
+            if (empty($checkId)){
+                header("Location: /admin/liste-commande");
+                exit();
+            }
+
+            $user = new User();
+
+            $commande = $order->select('*')->where("id = :id")->setParams(["id" => $_GET['id']])->get();
+            $getUser = $user->select('*')->where("id = :id")->setParams(["id" => $commande[0]["User_id"]])->get();
+
+            $order->populate($commande[0]);
+            $order->setUserId($commande[0]['User_id']);
+            $order->setStatus(1);
+            $order->save();
+
+            Email::sendEmail($getUser[0]["email"], "Votre commande est prête ! <br> Vous pouvez venir la chercher en magasin", "http://localhost:8082/connexion","Mon compte", "/admin/liste-commande");
+
+        }else{
+            header("Location: /admin/liste-commande");
         }
-
-        $order = new Orders();
-        $user = new \App\Models\User();
-        $orderTosave = new Orders();
-
-        $commande = $order->select('*')->where("id = :id")->setParams(["id" => $_GET['id']])->get();
-        $utilisateur = $user->select('*')->where("id = :id")->setParams(["id" => $commande[0]["User_id"]])->get();
-
-
-        $orderTosave->populate($commande[0]);
-        $orderTosave->setId($commande[0]['id']);
-        $orderTosave->setUserId($commande[0]['User_id']);
-        $orderTosave->setStatus(1);
-        $orderTosave->save();
-
-        Email::sendEmail($utilisateur[0]["email"], "Votre commande est prete ! <br> Vous pouvez venir la chercher en magasin", "http://localhost:8082/connexion","Mon compte", "/admin/liste-commande");
 
     }
 
     public function DoneCommandeAction(){
-        $view = new View("displayCommande.back", "back");
 
-        if (!isset($_GET['id']) && empty($_GET['id'])){
-            $view->assign("errors", "Parametre manquant dans le GET");
+        if (isset($_GET['id']) && !empty($_GET['id'])){
+
+            $order = new Orders();
+            $checkId = $order->select('id')->where("id = :id")->setParams(['id' => $_GET['id']])->get();
+
+            if (empty($checkId)){
+                header("Location: /admin/liste-commande");
+                exit();
+            }
+
+            $user = new User();
+
+            $commande = $order->select('*')->where("id = :id")->setParams(["id" => $_GET['id']])->get();
+            $getUser = $user->select('*')->where("id = :id")->setParams(["id" => $commande[0]["User_id"]])->get();
+
+            $order->populate($commande[0]);
+            $order->setUserId($commande[0]['User_id']);
+            $order->setStatus(2);
+            $order->save();
+
+            Email::sendEmail($getUser[0]["email"], "Votre commande vient d'être cloturer <br> Merci et à bientôt !", "http://localhost:8082/connexion","Mon compte", "/admin/liste-commande");
+
+        }else{
+            header("Location: /admin/liste-commande");
         }
-
-        $order = new Orders();
-        $user = new \App\Models\User();
-        $orderTosave = new Orders();
-
-        $commande = $order->select('*')->where("id = :id")->setParams(["id" => $_GET['id']])->get();
-        $utilisateur = $user->select('*')->where("id = :id")->setParams(["id" => $commande[0]["User_id"]])->get();
-
-
-        $orderTosave->populate($commande[0]);
-        $orderTosave->setId($commande[0]['id']);
-        $orderTosave->setUserId($commande[0]['User_id']);
-        $orderTosave->setStatus(2);
-        $orderTosave->save();
-
-        Email::sendEmail($utilisateur[0]["email"], "Votre commande viens d'etre cloturer <br> Merci et a bientot !", "http://localhost:8082/connexion","Mon compte", "/admin/liste-commande");
 
     }
 
-
-
+// FRONT
     public function displayOrdersFrontAction(){
 
         session_start();
@@ -223,8 +188,6 @@ class Commande extends Database
                 header("Location: /mes-commandes");
                 exit();
             }
-
-
 
             $view = new View("infosOrder.front");
             $view->assign("title","Ma commande");
