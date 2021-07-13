@@ -6,6 +6,12 @@
     <div class="row">
         <div class="col-md-12 col-sm-12 col">
             <div class="jumbotron">
+                <?php
+                if (isset($_SESSION['errorNavbar'])){
+                    echo '<div class="alert alert--red errorMessageImage"><h4>'.$_SESSION['errorNavbar'].'</h4></div>';
+                    unset($_SESSION['errorNavbar']);
+                }
+                ?>
                 <table id="table" class="row-border hover">
                     <thead>
                     <tr>

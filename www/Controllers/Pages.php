@@ -8,6 +8,8 @@ use App\Models\Pages as modelPages;
 use App\Models\Navbar as modelNavbar;
 use App\Models\Tab_navbar as modelTab_navbar;
 
+session_start();
+
 $myPage = new Pages();
 
 if (isset($_POST['jsonPage'])){
@@ -129,6 +131,18 @@ class Pages
             $slug = explode("/", $_GET["slug"])[1];
 
             $pages = new modelPages();
+            $navbar = new modelNavbar();
+            $tabNavbar = new modelTab_navbar();
+
+            $arrayNavbar = $navbar->select()->where("page =:page")->setParams(["page" => $idPage])->get();
+            $arrayTabNavbar = $tabNavbar->select()->where("page =:page")->setParams(["page" => $idPage])->get();
+
+            if (!empty($arrayNavbar) || !empty($arrayTabNavbar)){
+                $_SESSION['errorNavbar'] = 'Un onglet dans la barre de navigation comprend cette page, impossible de la supprimer';
+                header("Location: /admin/display-pages");
+                exit();
+            }
+
             $pages->where("id =:id")->setParams(["id" => $idPage])->delete();
             unlink("./publisher/templatesPublisher/" . $name . ".json");
 
