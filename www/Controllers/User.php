@@ -543,7 +543,7 @@ class User extends Database
             } else {
 
                 $oldPwd = htmlspecialchars($_POST['old_pwd']);
-                $newPwd = htmlspecialchars($_POST['new_pwd']);
+                $newPwd = htmlspecialchars($_POST['pwd']);
                 $newPwdConfirm = htmlspecialchars($_POST['new_pwd_confirm']);
 
                 if (empty($oldPwd) ||
@@ -557,6 +557,10 @@ class User extends Database
 
                 if (!password_verify($oldPwd, $dataUser[0]['pwd'])) {
                     $this->errorRedirection('Le mot de passe est incorrect', 'error');
+                }
+
+                if( !preg_match("/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]){8,}/",$newPwd)){
+                    $this->errorRedirection('Votre mot de passe doit faire au minimum 8 caractères, contenir une majuscule et un chiffre.', 'error');
                 }
 
                 if ($newPwd !== $newPwdConfirm) {

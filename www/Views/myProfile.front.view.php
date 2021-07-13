@@ -115,7 +115,7 @@
                         <div class="row">
                             <div class="form_align--top center-margin">
                                 <label for="new_pwd">Nouveau mot de passe:</label>
-                                <input style="width: 250px; margin-bottom: 40px" class="input" type="password" id="new_pwd" name="new_pwd" required>
+                                <input style="width: 250px; margin-bottom: 40px" class="input" type="password" id="new_pwd" name="pwd" required>
                             </div>
                         </div>
 
