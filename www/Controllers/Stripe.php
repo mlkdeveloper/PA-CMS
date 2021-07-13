@@ -40,6 +40,14 @@ class Stripe
     }
     function successAction(){
         $view = new View("successStripe");
+        session_start();
+        var_dump($_SESSION['panier']);
+        var_dump($_SESSION['panierTotal']);
+
+        /*
+         * Insertion des produits dans la base de données
+         */
+        
         $view->assign("title", "C&C - Succes du paiement");
     }
     function cancelAction(){
