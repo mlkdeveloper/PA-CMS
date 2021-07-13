@@ -23,6 +23,7 @@
         <nav id="main-nav">
             <div>
                 <ul>
+                    <li><img src="../../images/logo/logo.png" alt="Logo" width="50"></li>
                     <?php
                     foreach ($navbar as $value):
                         if ($value['status'] == 0){
