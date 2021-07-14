@@ -210,3 +210,31 @@
 /admin/creer-produit-ajax:
   controller : Product
   action : createProduct
+
+/admin/liste-produits:
+  controller: Product
+  action: showProducts
+
+/admin/information-produit:
+  controller: Product
+  action: infoProducts
+
+/admin/del-produit-term:
+  controller: Product
+  action: deleteProduct
+
+/admin/modification-produit:
+  controller: Product
+  action: updateProductForm
+
+/admin/update-product-ajax:
+  controller : Product
+  action : updateProductAjax
+
+/admin/update-var:
+  controller: Product
+  action: updateVar
+
+/admin/update-p:
+  controller: Product
+  action: update

@@ -1,7 +1,8 @@
 <section>
     <div class="container">
-        <h1>Ajouter un produit</h1>
-    </div>
+        <h1>Modification du produit : <?= $produits[0]["productName"]?? $p[0]["productName"]?></span></h1>
+<!--         <img src="<?=$produits[0]['picPath']?>" />
+ -->    </div>
 </section>
 
 
@@ -12,12 +13,12 @@
             <div class="col-md-6 col-lg-6 col-sm-6 col">
                 <div class="form_align--top">
                     <label class="label">Nom *</label>
-                    <input class="input" type="text" id="product_name" placeholder="Chapeau" required="required">
+                    <input class="input" value="<?= $produits[0]["productName"]?? $p[0]["productName"]?>" type="text" id="product_name" placeholder="Chapeau" required="required">
                 </div>
 
                 <div class="form_align--top mt-1">
                     <label class="label">Description</label>
-                    <textarea class="input" type="text" id="description" placeholder="..."></textarea>
+                    <textarea class="input" type="text" id="description" placeholder="..."><?= $produits[0]["description"]?? $p[0]["description"] ?></textarea>
                 </div>
             </div>
 
@@ -38,7 +39,8 @@
             </div>
         </div>
     </div>
-    <div class="container" id='attr_container'>
+
+    <div class="container" id='attr_container' style="display: none;">
         <div class="row">
             <div class="col col-md-12 col-sm-12 col-lg-12">
                 <div class="jumbotron">
@@ -67,7 +69,7 @@
         </div>
     </div>
 
-    <div class="container" id='var_container'>
+    <div class="container" id='var_container' style="display: none;">
         <div class="row">
             <div class="col col-md-12 col-sm-12 col-lg-12">
                 <div class="jumbotron">
@@ -83,39 +85,51 @@
         </div>
     </div>
 
-    <div class="container" id='without_attr' style="display: none">
-        <div class="row">
-            <div class="col col-md-12 col-sm-12 col-lg-12">
-                <div class="jumbotron">
-
-                    <div class="">
-                        <h3>Stock et Prix</h3>
-                        <hr>
-                    </div>
-
-                    <div>
-                        <label for="stock">Stock</label>
-                        <input class="input" type="number" id="stock" min="1">
-                    </div>
-                    <div>
-                        <label for="price">Prix</label>
-                        <input class="input" type="number" id="price" min="0.01">
-                    </div>
-
-                </div>
-            </div>
+    <div class="container">
+        <div class="row mt-1" id="btns">
+            <button id="addVar" class="button button--blue" onclick="updateP(<?= $p[0]["id"] ?>)">Enregistrer</button>
+            <button id="addVar" class="button button--blue" onclick="add_variante()">Recréer les variantes</button>
         </div>
+    </div>
+    <div class="container">
+        <?php foreach($datas_inputs as $input):?>
+            <div name="comb" class="row jumbotron mt-2">
+                <label class='col col-sm-3 col-md-2 col-lg-4'>
+                    <?php foreach($input as $value): ?>
+                        <?= $value["nameAttr"]; ?>
+                    <?php endforeach;?>
+                </label>
+                <input type='number' value="<?= $input[0]['stock']?>" class='input col-sm-3 col-md-3 col-lg-3 mr-1' id='stock-<?= $input[0]['idGroup']  ?>' placeholder='Stock' /> 
+                <input type='number' value="<?= $input[0]['price']?>" class='input col-sm-3 col-md-3 col-lg-3' id='price-<?= $input[0]['idGroup']  ?>' placeholder='Prix' />
+                <button class="col col-sm-3 col-md-4 col-lg-1 button button--success" onclick="update_var(<?= $input[0]['idGroup']?>)">Modifier</button>
+            </div>
+        <?php endforeach;?>
     </div>
 
     <div class="container">
-        <button id="valider" class="button button--blue" onclick="buildArray('createProduct', '')" >Valider</button>
+        <div id="comb">
+        </div>
     </div>
-
-
-    <div class="centered"><div class="spinner" id="loader"></div></div>
-    <div id="comb" class="container">
-    </div>
-
 </section>
 
 <script src="../public/js/product.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

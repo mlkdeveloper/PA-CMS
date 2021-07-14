@@ -69,7 +69,7 @@ function isVariant() {
     }
 }
 
-function buildArray() {
+function buildArray(callback, id) {
     var className = '';
     var array = [];
     var count = 0;
@@ -103,8 +103,7 @@ function buildArray() {
         generateInputs("#comb", comb_label[y]);
     })
 
-    $("#comb").append("<input id='back' type='submit' value='Réinitialiser' onclick='reset()' class='button button--warning mr-1' />")
-    $("#comb").append("<input id='sub_comb' type='submit' value='Enregistrer' onclick='createProduct()' class='button button--success' />")
+    display_buttons(callback, id)
 
     $("#loader").show();
     $("div[name='comb']").hide();
@@ -214,4 +213,104 @@ function showStatus(data){
         'scrollBehavior': 'smooth'
     })
     $("html").scrollTop(0)
+}
+
+
+
+// Modification du produit
+
+function updateProduct(id){
+    
+    var stock = $("input[name='stock']");
+    var price = $("input[name='price']");
+    var product = {
+        name: $("#product_name").val(), 
+        description: $("#description").val(),
+        type: $("#variant").val(),
+        isPublished: 0,
+        idCategory: $("#category").val()
+    };
+
+    var err = checkProduct($("#product_name").val())
+
+    comb.forEach((element, y) => {
+        if (Array.isArray(element)) {
+            element.push(stock[y].value)
+            element.push(price[y].value)
+        }else{
+            element = element.split();
+            element.push(stock[y].value)
+            element.push(price[y].value)
+            comb.push(element)
+            comb = comb.filter(type_var => Array.isArray(type_var))
+        }
+    })
+
+    var comb_object = Object.assign({}, comb);
+    comb_object = JSON.stringify(comb_object)
+
+    product = JSON.stringify(product)
+
+    if(err.length === 0){
+        $.ajax({
+            type: 'POST',
+            url: "/admin/update-product-ajax?id=" + id,
+            data: "comb_array=" + comb_object + "&product=" + product,
+            success: (data) => {
+                showStatus(data)
+                reset()
+            },
+            error: () => {}
+        })
+    }else{
+        err.map(x => showStatus(x))
+    }
+
+}
+
+
+function add_variante() {
+    var url = new URL(location);
+    var search_params = url.searchParams; 
+    $("div[name='comb']").parent().remove();    
+    $("#attr_container").show()
+    $("#var_container").show()
+    $("#addVar").hide()
+    $("#btns").html("<button id='valider' class='button button--blue' onclick=\"buildArray('updateProduct', '"+search_params.get('id')+"')\">Valider</button>")
+}
+
+function update_var(idGroup){
+    $.ajax({
+        type: 'POST',
+        url: "/admin/update-var?id="+idGroup,
+        data: "stock=" + $("#stock-"+idGroup).val() + "&price=" + $("#price-"+idGroup).val(),
+        success: (data) => {
+            showStatus(data)
+        },
+        error: (data, res) => {
+            console.log(data)
+        }
+    })
+}
+
+
+function display_buttons(callback, id){
+    $("#comb").append("<input id='back' type='submit' value='Réinitialiser' onclick='reset()' class='button button--warning mr-1' />")
+    $("#comb").append("<input id='sub_comb' type='submit' value='Enregistrer' onclick='"+callback+"("+id+")' class='button button--success' />")
+
+}
+
+
+function updateP(id){
+    $.ajax({
+        type: 'POST',
+        url: "/admin/update-p?id="+id,
+        data: "name=" + $("#product_name").val() + "&idCategory=" + $("#category").val() + "&description=" + $("#description").val() + "&type=" + $("#variant").val(),
+        success: (data) => {
+            showStatus(data)
+        },
+        error: (data, res) => {
+            console.log(data)
+        }
+    })  
 }

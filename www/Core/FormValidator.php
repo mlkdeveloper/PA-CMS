@@ -278,57 +278,135 @@ class FormValidator
         return $errors;
     }
 
-
-    public static function checkProduct($products, $categories, $variants, $class)
-    {
+    static function checkProduct1($class, $name, $category, $categories, $type ){
         $errors = [];
 
-        if ($class->find_duplicates_sql("name", $products->name)) {
+        if ($class->find_duplicates_sql("name", $name)) {
             $errors[] = "Le produit existe déjà"; 
         }
 
         if (
-            strlen($products->name) < 2 ||
-            strlen($products->name) > 50
+            strlen($name) < 2 ||
+            strlen($name) > 50
         ) {
             $errors[] = "Le produit doit avoir un nom entre 2 et 50 caractères, sans caractères spéciaux ni numérique";
         }
 
-        if(!in_array($products->type, [0,1])) {
+        if(!in_array($type, [0,1])) {
             $errors[] = "Le produit doit avoir un type connu";
         }
 
-        if(!in_array($products->idCategory, $categories)){
+        if(!in_array($category, $categories)){
             $errors[] = "La catégorie n'existe pas";
         }
 
-        foreach($variants as $key => $value){
+        return $errors;
+    }
 
+
+    public static function checkProduct2($products, $categories, $variants, $class, $terms)
+    {
+        $errors = self::checkProduct1($class, $products["name"], $products["idCategory"], $categories, $products["type"] );
+
+        foreach($variants as $key => $value){
             $prix = $value[count($value)-1];
             $stock = $value[count($value)-2];
             
             if ( $prix <= 0 
                 && empty($prix)
-                && !is_numeric($prix)
+                && !is_float($prix)
             ){
-                $errors[] = "Le prix des variantes doit être saisi : " 
+                $errors[] = "Le prix de la variante #$key doit être saisi : " 
                             . "Supérieur à 0" 
                             . "Doit être un nombre flottant";
             }
             
             if($stock <= 0 
                 && empty($stock)
-                && !is_int($stock)
+                && !is_int($stock) && is_numeric($stock)
             ){
-                $errors[] = "Le stock des variantes doit être saisi : " 
+                $errors[] = "Le stock de la variante #$key doit être saisi : " 
                             . "Supérieur à 0" 
                             . "Doit être un nombre entier";
-            }        
+            }   
 
+            unset($value[count($value)-1], $value[count($value)-1]);
+
+            foreach($value as $k => $v)
+                if(!in_array($v, $terms)){
+                        $errors[] = "Un problème est apparu dans la variante #$key du produit !";
+                }
         }
         
 
         return $errors; //[] vide si ok
+    }
+
+
+    public static function checkProductUpdate($products, $categories, $variants, $class, $terms)
+    {
+        $errors = self::checkProduct1($class, $products["name"], $products["idCategory"], $products["type"] );
+
+        foreach($variants as $key => $value){
+            $prix = $value[count($value)-1];
+            $stock = $value[count($value)-2];
+            
+            if ( $prix <= 0 
+                || empty($prix)
+                && !is_numeric($prix)
+            ){
+                $errors[] = "Le prix de la variante #$key doit être saisi : " 
+                            . "Supérieur à 0" 
+                            . "Doit être un nombre flottant";
+            }
+            
+            if($stock <= 0 
+                || empty($stock)
+                && !is_numeric($stock)
+            ){
+                $errors[] = "Le stock de la variante #$key doit être saisi : " 
+                            . "Supérieur à 0" 
+                            . "Doit être un nombre entier";
+            }   
+
+            unset($value[count($value)-1], $value[count($value)-1]);
+
+            foreach($value as $k => $v)
+                if(!in_array($v, $terms)){
+                        $errors[] = "Un problème est apparu dans la variante #$key du produit !";
+                }
+        }
+        
+
+        return $errors; //[] vide si ok
+    }
+
+    static function checkGroup($stock, $prix){
+        $errors = [];
+        if($stock < 0 
+            || empty($stock)
+            && !is_numeric($stock)
+        ){
+            $errors[] = "Le stock de la variante n'est pas correct";
+        }
+
+        if ( $prix <= 0 
+                || empty($prix)
+                && !is_numeric($prix)
+            ){
+            $errors[] = "Le prix de la variante n'est pas correct";
+        }   
+        return $errors;
+    }
+
+    static function checkId($id, $class){
+        $check = $class
+            ->select("id")
+            ->where("id = :id")->setParams(["id" => $id])
+            ->get();
+
+        if (empty($check)) return false;
+        else return true;
     }
 
 }

@@ -9,7 +9,8 @@ class Product_term extends Database
 	private $id;
 	protected $idProduct;
 	protected $idTerm;
-	protected $idGroup;
+    protected $idGroup;
+    protected $status;
 
     /**
      * @return mixed
@@ -87,6 +88,26 @@ class Product_term extends Database
     public function setIdGroup($idGroup)
     {
         $this->idGroup = $idGroup;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param mixed $status
+     *
+     * @return self
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
 
         return $this;
     }

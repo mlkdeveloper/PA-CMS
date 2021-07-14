@@ -126,6 +126,7 @@ class QueryBuilder
             $query = $this->pdo->query($this->request);
         }
 
+
         return $query->fetchAll(\PDO::FETCH_ASSOC);
     }
 

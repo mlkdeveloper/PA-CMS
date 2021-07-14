@@ -9,7 +9,8 @@ class Group_variant extends Database
 
 	private $id;
 	protected $price;
-	protected $stock;
+    protected $stock;
+    protected $picture;
 
 
     /**

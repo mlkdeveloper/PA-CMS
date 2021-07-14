@@ -11,6 +11,7 @@ class Products extends Database
     protected $name ;
     protected $description;
     protected $type;
+    protected $status;
     protected $isPublished;
     protected $idCategory;
 
@@ -110,4 +111,24 @@ class Products extends Database
         $this->idCategory = $idCategory;
     }
 
+
+    /**
+     * @return mixed
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param mixed $status
+     *
+     * @return self
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
 }
