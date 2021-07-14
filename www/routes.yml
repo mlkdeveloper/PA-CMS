@@ -1,6 +1,6 @@
 /:
-  controller: Pages
-  action: displayFront
+  controller: Installation
+  action: install
 
 /404:
   controller: Main
@@ -261,3 +261,6 @@
   controller : Commande
   action: informationsOrder
 
+/start-install:
+  controller: Installation
+  action: startInstall

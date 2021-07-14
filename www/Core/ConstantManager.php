@@ -4,27 +4,18 @@ namespace App\Core;
 
 class ConstantManager {
 
-	private $envFile = ".env";
+    private $envFile = "config-sample.env";
 	private $data = [];
 
 	public function __construct(){
-		if(!file_exists($this->envFile))
+
+        if(!file_exists($this->envFile))
 			die("Le fichier ".$this->envFile." n'existe pas");
 
-		$this->parsingEnv($this->envFile);
-
-		if(!empty($this->data["ENV"])){
-            $config = "config".$this->envFile;
-
-            if(!file_exists($config))
-                die("Le fichier ".$config." n'existe pas");
-
-			$this->parsingEnv($config);
-		}
-
-
-		$this->defineConstants();
-
+        if ($this->envFile === "config.env"){
+            $this->parsingEnv($this->envFile);
+            $this->defineConstants();
+        }
 	}
 
 	private function defineConstants(){
@@ -50,7 +41,7 @@ class ConstantManager {
 
 		if(!empty($handle)){
 			while (!feof($handle)) {
-				
+
 				$line = fgets($handle);
 				preg_match($regex, $line, $results);
 				if(!empty($results[1]) && !empty($results[2]))
@@ -61,4 +52,11 @@ class ConstantManager {
 
 	}
 
+    /**
+     * @param string $envFile
+     */
+    public function setEnvFile(string $envFile): void
+    {
+        $this->envFile = $envFile;
+    }
 }
