@@ -5,28 +5,41 @@
     <title><?= $title ?></title>
 	<meta name="description" content="description de la page de front">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../../dist/main.css">
+
     <script src="../../src/js/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
 
-    <link rel="stylesheet" href="<?= $file_stylesheet??"" ?>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
-
-
-
+    <link rel="stylesheet" href="../../dist/main.css">
+    <link rel="stylesheet" href="../../dist/pageFronts.css">
 </head>
 <body>
+
+    <header>
+        <span id="hamburger">
+                <i class="fas fa-bars"></i>
+        </span>
+        <nav id="main-nav">
+            <div>
+                <ul>
+                    <li><img src="../../images/logo/logo.png" alt="Logo" width="50"></li>
+                    <?= \App\Core\NavbarBuilder::navbar() ?>
+                </ul>
+                <ul>
+                   <li><a href="/panier">Panier &nbsp<i class="fa fa-shopping-cart"></i></a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+
     <main>
 
-        <div class="" style="background-color:#ffffff;display: flex; justify-content: space-between;border-bottom: 1px solid #2D9CDB; padding: 1rem; align-items: center">
-            <img src="../../images/logo/logo.png" alt="Logo" width="50">
-            <a href="/panier"><p>Panier <i class="fa fa-shopping-cart"></i></p></a>
-        </div>
 
-        <!-- afficher la vue -->
-        <?php include $this->view ?>
+
+	<!-- afficher la vue -->
+	<?php include $this->view ?>
 
     </main>
 

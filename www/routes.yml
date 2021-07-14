@@ -1,6 +1,6 @@
 /:
-  controller: Security
-  action: install
+  controller: Pages
+  action: displayFront
 
 /404:
   controller: Main
@@ -52,15 +52,31 @@
 
 /admin/pages:
   controller: Pages
-  action: pages
+  action: show
 
-/admin/publisher:
+/admin/editeur:
   controller: Publisher
   action: publisher
 
 /admin/check-review:
   controller: Reviews
   action: checkReviews
+
+/admin/nouvelle-page:
+  controller: Pages
+  action: newPage
+
+/admin/modification-page:
+  controller: Pages
+  action: updatePage
+
+/admin/delete-page:
+  controller: Pages
+  action: deletePage
+
+/admin/update-publication:
+  controller: Pages
+  action: updatePublication
 
 /admin/nouveau-role:
   controller: Role
@@ -204,6 +220,31 @@
   controller: Settings
   action : updateAdminPassword
 
+
+/admin/barre-de-navigation:
+  controller: Navbar
+  action: displayNavbar
+
+/admin/nouveau-onglet-navigation:
+  controller: Navbar
+  action: newNavbarTab
+
+/admin/get-data-navbar:
+  controller: Navbar
+  action: getDataNavbar
+
+/admin/up-navbar:
+  controller : Navbar
+  action : upNavbar
+
+/admin/down-navbar:
+  controller : Navbar
+  action : downNavbar
+
+/admin/onglet-barre-navigation:
+  controller : Navbar
+  action : deleteTab
+
 /admin/valider-commande:
   controller: Commande
   action: ValidCommande
@@ -219,3 +260,4 @@
 /ma-commande:
   controller : Commande
   action: informationsOrder
+
