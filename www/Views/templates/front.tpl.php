@@ -24,49 +24,7 @@
             <div>
                 <ul>
                     <li><img src="../../images/logo/logo.png" alt="Logo" width="50"></li>
-                    <?php
-                    foreach ($navbar as $value):
-                        if ($value['status'] == 0){
-                            echo '<li><a href="';
-                                if (isset($value['page'])){
-                                    foreach ($pages as $valuePage):
-                                        if ($value["page"] == $valuePage['id']){
-                                            echo $valuePage['slug'];
-                                        }
-                                    endforeach;
-                                }else{
-                                    foreach ($category as $valueCategory):
-                                        if ($value["category"] == $valueCategory['id']){
-                                            echo '/collections?name='.$valueCategory['name'];
-                                        }
-                                    endforeach;
-                                }
-                            echo '">'.$value["name"].'</a></li>';
-                        }else {
-                            echo '<li class="dropdownMenuFront"><a>'.$value["name"].'&nbsp<i class="fa fa-caret-down"></i></a>';
-                            echo '<ul class="submenu">';
-                            foreach ($tabNavbar as $valueTab):
-                                if ($valueTab['navbar'] == $value['id']){
-                                    echo '<li><a href="';
-                                    if (isset($valueTab['page'])){
-                                        foreach ($pages as $valuePage):
-                                            if ($valueTab["page"] == $valuePage['id']){
-                                                echo $valuePage['slug'];
-                                            }
-                                        endforeach;
-                                    }else{
-                                        foreach ($category as $valueCategory):
-                                            if ($valueTab["category"] == $valueCategory['id']){
-                                                echo '/collections?name='.$valueCategory['name'];
-                                            }
-                                        endforeach;
-                                    }
-                                    echo '">'.$valueTab["name"].'</a></li>';
-                                }
-                            endforeach;
-                            echo '</ul></li>';
-                        }
-                    endforeach; ?>
+                    <?= \App\Core\NavbarBuilder::navbar() ?>
                 </ul>
                 <ul>
                    <li><a href="/panier">Panier &nbsp<i class="fa fa-shopping-cart"></i></a></li>

@@ -7,7 +7,6 @@ use App\Core\View;
 use App\Models\Pages as modelPages;
 use App\Models\Navbar as modelNavbar;
 use App\Models\Tab_navbar as modelTab_navbar;
-use App\Models\Category as modelCategory;
 
 session_start();
 
@@ -165,26 +164,14 @@ class Pages
     public function displayFrontAction(){
         $uri = $_SERVER['REQUEST_URI'];
         $pages = new modelPages();
-        $category = new modelCategory();
-        $pagesNavbar = new modelPages();
-        $navbar = new modelNavbar();
-        $tabNavbar = new modelTab_navbar();
 
         $arrayPage = $pages->select("name", "publication")->where("slug = :slug")->setParams(["slug" => $uri])->get();
         foreach ($arrayPage as $value);
 
-        $arrayNavbar = $navbar->select()->orderBy('sort', 'ASC')->get();
-        $arrayTabNavbar = $tabNavbar->select()->get();
-        $arrayPages = $pagesNavbar->select()->get();
-        $arrayCategory = $category->select()->get();
 
         if ($value["publication"] == 1) {
             $view = new View("displayPagesFront", "front");
             $view->assign("title", $value['name']);
-            $view->assign("navbar", $arrayNavbar);
-            $view->assign("tabNavbar", $arrayTabNavbar);
-            $view->assign("pages", $arrayPages);
-            $view->assign("category", $arrayCategory);
         }else{
             header("Location: /");
             exit();
