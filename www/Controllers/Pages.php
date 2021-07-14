@@ -5,6 +5,10 @@ use App\Core\FormValidator;
 use App\Core\Routes;
 use App\Core\View;
 use App\Models\Pages as modelPages;
+use App\Models\Navbar as modelNavbar;
+use App\Models\Tab_navbar as modelTab_navbar;
+
+session_start();
 
 $myPage = new Pages();
 
@@ -38,12 +42,12 @@ class Pages
 
         if(!empty($_POST)){
 
-            $errors = FormValidator::checkPage($form, $_POST);
+            $errors = FormValidator::checkPage($form, $_POST, false);
 
             if(empty($errors)){
 
                     $pages->populate($_POST);
-                    $pages->setUserid(3);
+                    $pages->setUserid(1);
                     $pages->setPublication(0);
                     $pages->save();
 
@@ -57,7 +61,7 @@ class Pages
                         echo $e->error();
                     }
 
-                    header('location:/admin/display-pages');
+                    header('location:/admin/pages');
 
             }else{
                 $view->assign("errors", $errors);
@@ -72,7 +76,7 @@ class Pages
             $pages = new modelPages();
             $verifyId = $pages->select()->where("id = :id", "slug = :slug")->setParams(["id" => $_GET['id'], "slug" => $_GET['slug']])->get();
             if (empty($verifyId)){
-                header("Location: /admin/display-pages");
+                header("Location: /admin/pages");
                 exit();
             }
             $pages->populate($verifyId[0]);
@@ -82,12 +86,11 @@ class Pages
             $form = $pages->formBuilderRegister();
 
             if(!empty($_POST)){
-
-                $errors = FormValidator::checkPage($form, $_POST);
+                $errors = FormValidator::checkPage($form, $_POST, trim($_POST['name']) === $pages->getName() || trim($_POST['slug']) == $pages->getSlug());
 
                 if(empty($errors)){
                     $pages->populate($_POST);
-                    $pages->setUserid(3);
+                    $pages->setUserid(1);
                     $pages->setId($_GET['id']);
                     $pages->save();
 
@@ -101,7 +104,7 @@ class Pages
                         echo $e->error();
                     }
 
-                    header('location:/admin/display-pages');
+                    header('location:/admin/pages');
 
                 }else{
                     $view->assign("errors", $errors);
@@ -127,6 +130,18 @@ class Pages
             $slug = explode("/", $_GET["slug"])[1];
 
             $pages = new modelPages();
+            $navbar = new modelNavbar();
+            $tabNavbar = new modelTab_navbar();
+
+            $arrayNavbar = $navbar->select()->where("page =:page")->setParams(["page" => $idPage])->get();
+            $arrayTabNavbar = $tabNavbar->select()->where("page =:page")->setParams(["page" => $idPage])->get();
+
+            if (!empty($arrayNavbar) || !empty($arrayTabNavbar)){
+                $_SESSION['errorNavbar'] = 'Un onglet dans la barre de navigation comprend cette page, impossible de la supprimer';
+                header("Location: /admin/pages");
+                exit();
+            }
+
             $pages->where("id =:id")->setParams(["id" => $idPage])->delete();
             unlink("./publisher/templatesPublisher/" . $name . ".json");
 
@@ -138,10 +153,10 @@ class Pages
                 echo $e->error();
             }
 
-            header("Location: /admin/display-pages");
+            header("Location: /admin/pages");
             exit();
         }else{
-            header("Location: /admin/display-pages");
+            header("Location: /admin/pages");
             exit();
         }
     }
@@ -149,8 +164,10 @@ class Pages
     public function displayFrontAction(){
         $uri = $_SERVER['REQUEST_URI'];
         $pages = new modelPages();
+
         $arrayPage = $pages->select("name", "publication")->where("slug = :slug")->setParams(["slug" => $uri])->get();
         foreach ($arrayPage as $value);
+
 
         if ($value["publication"] == 1) {
             $view = new View("displayPagesFront", "front");
@@ -184,16 +201,16 @@ class Pages
 
 
             if (empty($verifyId)){
-                header("Location: /admin/display-pages");
+                header("Location: /admin/pages");
                 exit();
             }
 
             $pages->setPublication($_POST['valuePublication']);
-            $pages->setUserid(3);
+            $pages->setUserid(1);
             $pages->setId($_POST['idPage']);
             $pages->save();
         }else{
-            header("Location: /admin/display-pages");
+            header("Location: /admin/pages");
             exit();
         }
     }

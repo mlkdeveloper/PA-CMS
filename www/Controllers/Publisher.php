@@ -34,7 +34,7 @@ class Publisher
 {
     public function publisherAction(){
         if (!file_exists("./publisher/templatesPublisher/".$_GET["name"].".json")){
-            header("Location: /admin/display-pages");
+            header("Location: /admin/pages");
             exit();
         }
         $view = new View("publisher.back", "publisher");

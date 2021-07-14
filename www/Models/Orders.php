@@ -3,8 +3,8 @@
 
 namespace App\Models;
 
-use App\Core\Database;
 
+use App\Core\Database;
 
 class Orders extends Database
 {
@@ -109,6 +109,7 @@ class Orders extends Database
     {
         $this->asupprimer = $asupprimer;
     }
+
 
 
 }

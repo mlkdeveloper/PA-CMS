@@ -1,0 +1,33 @@
+#selectType, #labelSelectType {
+    display: none;
+}
+
+#containerSimpleTab {
+    display: contents;
+}
+
+.displayTabNavbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#containerDropdownNavbar {
+    display: none;
+}
+
+#addTabDropdown {
+    font-size: 2.5em;
+}
+
+#addTabDropdown:hover {
+    cursor: pointer;
+}
+
+.containerArrowNavbar:hover {
+    cursor: pointer;
+}
+
+.displayTabNavbar span:hover{
+    cursor: pointer;
+}

@@ -329,7 +329,7 @@ function savePage(){
 //Retour aux pages
 function backPages(){
     $("#modalTiny").hide();
-    document.location.replace("/admin/display-pages");
+    document.location.replace("/admin/pages");
 }
 
 //Suppresion de la section

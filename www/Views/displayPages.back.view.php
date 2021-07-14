@@ -6,6 +6,12 @@
     <div class="row">
         <div class="col-md-12 col-sm-12 col">
             <div class="jumbotron">
+                <?php
+                if (isset($_SESSION['errorNavbar'])){
+                    echo '<div class="alert alert--red errorMessageImage"><h4>'.$_SESSION['errorNavbar'].'</h4></div>';
+                    unset($_SESSION['errorNavbar']);
+                }
+                ?>
                 <table id="table" class="row-border hover">
                     <thead>
                     <tr>
@@ -51,7 +57,7 @@
                                             echo '</a>';
                                         }
                                     ?>
-                                    <a href="/admin/publisher?name=<?= $value['name'] ?>" class="button button--blue">
+                                    <a href="/admin/editeur?name=<?= $value['name'] ?>" class="button button--blue">
                                         <i class="fas fa-eye"></i>Voir la page
                                     </a>
                                     <?php
