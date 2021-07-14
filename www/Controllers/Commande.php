@@ -13,7 +13,7 @@ use App\Models\Product_order;
 use App\Models\Product_term;
 use App\Models\User;
 
-class Commande extends Database
+class Commande
 {
 
     public function listeCommandeAction(){
