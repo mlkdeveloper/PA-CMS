@@ -260,3 +260,7 @@
 /ma-commande:
   controller : Commande
   action: informationsOrder
+
+/admin/get-data-charts:
+  controller: Dashboard
+  action: getData

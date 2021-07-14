@@ -1,35 +1,39 @@
 var ctx = document.getElementById('turnover').getContext('2d');
-var myChart = new Chart(ctx, {
+const chartTurnover = new Chart(ctx, {
     type: 'line',
     data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: '',
         datasets: [{
-            label: 'Chiffre d\'affaire',
-            data: [12, 19, 3, 5, 2, 3],
+            label: 'Chiffre d\'affaires',
+            data: '',
             backgroundColor: 'rgba(111,207,151,0.3)',
             borderColor: '#27AE60',
             pointBackgroundColor: '#27AE60',
-            borderWidth: 1
+            borderWidth: 1,
+            pointRadius: 5,
+            pointHoverRadius: 10
         }]
     },
     options: {
         scales: {
             xAxes: [{
                 ticks: {
-                    fontSize: 18
+                    fontSize: 18,
+                    padding: 20
                 }
             }],
             yAxes: [{
                 ticks: {
                     beginAtZero: true,
-                    max: 50,
                     responsive: true,
                     maintainAspectRatio: false,
-                    fontSize: 18
+                    fontSize: 18,
+                    suggestedMax: 10
                 }
             }]
         },
         legend: {
+            display: false,
             labels: {
                 fontSize: 25
             }
@@ -39,38 +43,43 @@ var myChart = new Chart(ctx, {
     maintainAspectRatio: false,
 });
 
-var ctx = document.getElementById('sales').getContext('2d');
-var myChart = new Chart(ctx, {
+
+var ctx = document.getElementById('chartSales').getContext('2d');
+const chartSales = new Chart(ctx, {
     type: 'line',
     data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: '',
         datasets: [{
             label: 'Ventes',
-            data: [12, 19, 3, 5, 2, 3],
+            data: '',
             backgroundColor: 'rgba(111,207,151,0.3)',
             borderColor: '#27AE60',
             pointBackgroundColor: '#27AE60',
-            borderWidth: 1
+            borderWidth: 1,
+            pointRadius: 5,
+            pointHoverRadius: 10
         }]
     },
     options: {
         scales: {
             xAxes: [{
                 ticks: {
-                    fontSize: 18
+                    fontSize: 18,
+                    padding: 20
                 }
             }],
             yAxes: [{
                 ticks: {
                     beginAtZero: true,
-                    max: 50,
                     responsive: true,
                     maintainAspectRatio: false,
-                    fontSize: 18
+                    fontSize: 18,
+                    suggestedMax: 10
                 }
             }]
         },
         legend: {
+            display: false,
             labels: {
                 fontSize: 25
             }
@@ -79,44 +88,48 @@ var myChart = new Chart(ctx, {
 });
 
 
-var ctx = document.getElementById('visitors').getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: 'Visiteurs',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: 'rgba(111,207,151,0.3)',
-            borderColor: '#27AE60',
-            pointBackgroundColor: '#27AE60',
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            xAxes: [{
-                ticks: {
-                    fontSize: 18
-                }
-            }],
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true,
-                    max: 50,
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    fontSize: 18
-                }
-            }]
-        },
-        legend: {
-            labels: {
-                fontSize: 25
-            }
-        }
-    },
-    responsive: true,
-    maintainAspectRatio: false,
-});
+getData('month', 'turnover');
+getData('month', 'sales');
 
+function getData(type, chart){
+
+    $.ajax({
+        type: 'POST',
+        url: '/admin/get-data-charts',
+        data: {
+            type: type,
+            chart: chart
+        },
+        success: function(data) {
+            if (data === 'error'){
+                alert('ERROR')
+            }else{
+                if (chart === 'sales'){
+                    refreshChartSales(JSON.parse(data));
+                }else if (chart === 'turnover'){
+                    refreshChartTurnover(JSON.parse(data));
+                }
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError){
+            alert(xhr.responseText);
+            alert(ajaxOptions);
+            alert(thrownError);
+            alert(xhr.status);
+        }
+    });
+}
+
+function refreshChartSales(data) {
+    chartSales.data.labels = data.map(o => o.name);
+    chartSales.data.datasets[0].data = data.map(o => o.value);
+
+    chartSales.update();
+}
+
+function refreshChartTurnover(data) {
+    chartTurnover.data.labels = data.map(o => o.name);
+    chartTurnover.data.datasets[0].data = data.map(o => o.value);
+
+    chartTurnover.update();
+}
