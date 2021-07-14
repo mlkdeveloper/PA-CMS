@@ -43,14 +43,6 @@ const chartTurnover = new Chart(ctx, {
     maintainAspectRatio: false,
 });
 
-var arraySales = [
-    { name: 'Janvier', orders_by_user: '12' },
-    { name: 'Février', orders_by_user: '19' },
-    { name: 'Mars', orders_by_user: '3' },
-    { name: 'Avril', orders_by_user: '5' },
-    { name: 'Mai', orders_by_user: '2' },
-    { name: 'Juin', orders_by_user: '3' }
-];
 
 var ctx = document.getElementById('chartSales').getContext('2d');
 const chartSales = new Chart(ctx, {
@@ -96,7 +88,7 @@ const chartSales = new Chart(ctx, {
 });
 
 
-// getData('month', 'turnover');
+getData('month', 'turnover');
 getData('month', 'sales');
 
 function getData(type, chart){

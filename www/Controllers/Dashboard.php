@@ -4,7 +4,7 @@
 namespace App\Controller;
 
 use App\Core\View;
-use App\Models\Pages as modelPages;
+use App\Models\Orders as modelOrders;
 
 
 class Dashboard
@@ -53,16 +53,16 @@ class Dashboard
         switch ($_POST['chart']){
             case 'sales':
                 foreach ($data as $value){
-                    $tmpSale = explode("-", $value["createdAt"])[2];
-                    $tmpSale = explode(" ", $tmpSale)[0];//LIGNE A SUPPRIMER
+                    $tmpSale = explode("-", $value["CreatedAt"])[2];
+                    $tmpSale = explode(" ", $tmpSale)[0];
                     $arrayData[$tmpSale-1]['value'] = $arrayData[$tmpSale-1]['value']+1;
                 }
                 break;
             case 'turnover':
                 foreach ($data as $value){
-                    $tmpSale = explode("-", $value["createdAt"])[2];
-                    $tmpSale = explode(" ", $tmpSale)[0];//LIGNE A SUPPRIMER
-                    $arrayData[$tmpSale-1]['value'] = $arrayData[$tmpSale-1]['value']+$value["price"];
+                    $tmpSale = explode("-", $value["CreatedAt"])[2];
+                    $tmpSale = explode(" ", $tmpSale)[0];
+                    $arrayData[$tmpSale-1]['value'] = $arrayData[$tmpSale-1]['value']+$value["montant"];
                 }
                 break;
             default:
@@ -115,8 +115,8 @@ class Dashboard
         switch ($_POST['chart']){
             case 'sales':
                 foreach ($data as $value){
-                    $tmpSale = explode("-", $value["createdAt"])[1];
-                    $tmpSale = explode(" ", $tmpSale)[0];//LIGNE A SUPPRIMER
+                    $tmpSale = explode("-", $value["CreatedAt"])[1];
+                    $tmpSale = explode(" ", $tmpSale)[0];
                     if ((int)$tmpSale < 10){
                         $tmpSale = substr($tmpSale, -1);
                     }
@@ -130,15 +130,15 @@ class Dashboard
                 break;
             case 'turnover':
                 foreach ($data as $value){
-                    $tmpSale = explode("-", $value["createdAt"])[1];
-                    $tmpSale = explode(" ", $tmpSale)[0];//LIGNE A SUPPRIMER
+                    $tmpSale = explode("-", $value["CreatedAt"])[1];
+                    $tmpSale = explode(" ", $tmpSale)[0];
                     if ((int)$tmpSale < 10){
                         $tmpSale = substr($tmpSale, -1);
                     }
 
                     for ($i = 0; $i < count($newMonths); $i++){
                         if (explode(" ",$newMonths[$i]['name'])[0] === $this->monthsFR($tmpSale)){
-                            $newMonths[$i]['value'] = $newMonths[$i]['value']+$value["price"];
+                            $newMonths[$i]['value'] = $newMonths[$i]['value']+$value["montant"];
                         }
                     }
                 }
@@ -165,8 +165,8 @@ class Dashboard
         switch ($_POST['chart']){
             case 'sales':
                 foreach ($data as $value){
-                    $tmpSale = explode("-", $value["createdAt"])[1];
-                    $tmpSale = explode(" ", $tmpSale)[0];//LIGNE A SUPPRIMER
+                    $tmpSale = explode("-", $value["CreatedAt"])[1];
+                    $tmpSale = explode(" ", $tmpSale)[0];
                     if ((int)$tmpSale < 10){
                         $tmpSale = substr($tmpSale, -1);
                     }
@@ -180,15 +180,15 @@ class Dashboard
                 break;
             case 'turnover':
                 foreach ($data as $value){
-                    $tmpSale = explode("-", $value["createdAt"])[1];
-                    $tmpSale = explode(" ", $tmpSale)[0];//LIGNE A SUPPRIMER
+                    $tmpSale = explode("-", $value["CreatedAt"])[1];
+                    $tmpSale = explode(" ", $tmpSale)[0];
                     if ((int)$tmpSale < 10){
                         $tmpSale = substr($tmpSale, -1);
                     }
 
                     for ($i = 0; $i < count($arrayData); $i++){
                         if (explode(" ",$arrayData[$i]['name'])[0] === $this->monthsFR($tmpSale)){
-                            $arrayData[$i]['value'] = $arrayData[$i]['value']+$value["price"];
+                            $arrayData[$i]['value'] = $arrayData[$i]['value']+$value["montant"];
                         }
                     }
                 }
@@ -205,8 +205,7 @@ class Dashboard
         $countAll = 0;
 
         $data = $this->getSql("","",false);
-
-        $firstDate = explode("-", $data[0]["createdAt"])[0];
+        $firstDate = explode("-", $data[0]["CreatedAt"])[0];
 
         for ($p = $firstDate; $p <= date("Y"); $p++){
             $arrayData[$countAll] = [
@@ -215,11 +214,10 @@ class Dashboard
             ];
             $countAll++;
         }
-
         switch ($_POST['chart']){
             case 'sales':
                 foreach ($data as $value){
-                    $tmpAll = explode("-", $value["createdAt"])[0];
+                    $tmpAll = explode("-", $value["CreatedAt"])[0];
 
                     for ($i = 0; $i < count($arrayData); $i++){
                         if ($arrayData[$i]['name'] === $tmpAll){
@@ -230,11 +228,11 @@ class Dashboard
                 break;
             case 'turnover':
                 foreach ($data as $value){
-                    $tmpAll = explode("-", $value["createdAt"])[0];
+                    $tmpAll = explode("-", $value["CreatedAt"])[0];
 
                     for ($i = 0; $i < count($arrayData); $i++){
                         if ($arrayData[$i]['name'] === $tmpAll){
-                            $arrayData[$i]['value'] = $arrayData[$i]['value']+$value["price"];
+                            $arrayData[$i]['value'] = $arrayData[$i]['value']+$value["montant"];
                         }
                     }
                 }
@@ -278,11 +276,11 @@ class Dashboard
     }
 
     public function getSql($dateStart, $dateEnd, $withDate){
-        $pages = new modelPages();
+        $orders = new modelOrders();
         if ($withDate === true){
-            $dataSQL = $pages->select("createdAt")->where("createdAt BETWEEN STR_TO_DATE(:dateStart, '%d-%m-%Y') AND STR_TO_DATE(:dateEnd, '%d-%m-%Y')")->setParams(["dateStart" => $dateStart, "dateEnd" => $dateEnd])->get();
+            $dataSQL = $orders->select("CreatedAt, montant")->where("CreatedAt BETWEEN STR_TO_DATE(:dateStart, '%d-%m-%Y') AND STR_TO_DATE(:dateEnd, '%d-%m-%Y') AND status >= 1")->setParams(["dateStart" => $dateStart, "dateEnd" => $dateEnd])->get();
         }else{
-            $dataSQL = $pages->select("createdAt")->orderBy("id", "ASC")->get();
+            $dataSQL = $orders->select("CreatedAt, montant")->orderBy("CreatedAt", "ASC")->where("status >=1")->get();
         }
 
         return $dataSQL;
