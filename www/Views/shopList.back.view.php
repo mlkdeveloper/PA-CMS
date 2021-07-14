@@ -4,7 +4,9 @@
             <h1 style="text-align: center;font-size: 40px">Gestion des magasins </h1>
             <div class="jumbotron">
                 <div class="flex-end mb-1">
-                    <button class="button button--blue"><a href="/admin/nouveau-magasin">Nouveau magasin</a></button>
+
+                    <a href="/admin/nouveau-magasin"><button class="button button--blue">Nouveau magasin</button></a>
+
                 </div>
                 <table id="table" class="row-border hover" style="width:100%">
                     <thead>
@@ -32,15 +34,16 @@
                             <td>
                                 <div class="align">
                                     <div class="align">
-                                        <button class="button button--black">
-                                            <a href="/admin/detail-magasin?id=<?= $value['id']?>"><i class="fas fa-pencil-alt"></i>
-                                            Modifier
-                                            </a>
-                                        </button>
+                                        <a href="/admin/detail-magasin?id=<?= $value['id']?>">
+                                            <button class="button button--black">
+                                                <i class="fas fa-pencil-alt"></i>
+                                                Modifier
+                                            </button>
+                                        </a>
                                     </div>
                                     <div class="align">
                                         <?php  //App\Core\FormBuilder::render($form); ?>
-                                        <i class="fas fa-trash"></i>
+                                        <a href="/admin/delete-shop?id=<?= $value['id']?>"><i class="fas fa-trash"></i></a>
                                     </div>
                                 </div>
                             </td>

@@ -4,6 +4,8 @@
 namespace App\Core;
 
 
+use App\Models\Role;
+
 class Security
 {
     public static function changeFile($file, $type){
@@ -76,5 +78,56 @@ class Security
             fwrite($ptr, $contenu);
             fclose($ptr);
         }
+    }
+
+
+    public static function isAllowed($page){
+
+        $idRole = $_SESSION['user']['id_role'];
+
+        $role = new Role();
+        $isAllowed = $role->select("$page")->where("id = :id")->setParams(["id" => $idRole])->get();
+
+        if (empty($isAllowed)){
+            throw new MyException("Erreur SQL");
+        }
+        if (!$isAllowed[0][$page]){
+            throw new MyException("Vous n'avez pas les droits !");
+        }
+
+    }
+
+    public static function isConnected(){
+        if (isset($_SESSION['user']) && !empty($_SESSION['user'])) {
+            $connected = true;
+        }else {
+            $connected = false;
+        }
+        return $connected;
+    }
+
+    public static function auth($page){
+
+        if(self::isConnected()){
+            try {
+                self::isAllowed($page);
+            } catch (MyException $e) {
+                $e->error();
+            }
+        }else{
+           header("Location: /connexion-admin");
+           exit();
+        }
+    }
+
+    public static function isAdmin(){
+
+        return $_SESSION['user']['id_role'] == 1 ? true : false;
+    }
+
+    public static function isClient(){
+
+        return $_SESSION['user']['id_role'] == 2 ? true : false;
+
     }
 }

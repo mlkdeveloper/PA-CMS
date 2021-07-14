@@ -12,13 +12,15 @@ class Database extends QueryBuilder
     const UPDATE_OBJECT = 2;
     const DELETE_OBJECT = 3;
 
-    const USER_TABLE = 'cc_user';
+    const USER_TABLE = DBPREFIXE.'user';
 
 
     public function __construct()
     {
 
+
         parent::__construct();
+
 
         //  jclm_   App\Models\User -> jclm_User
         $classExploded = explode("\\", get_called_class());
@@ -48,6 +50,7 @@ class Database extends QueryBuilder
         }
 
 
+
         $value = $query->execute($column);
         return $value;
     }
@@ -63,7 +66,9 @@ class Database extends QueryBuilder
         return $value;
       
 
+
     }
+
 
     public function populate($data){
 
@@ -78,6 +83,7 @@ class Database extends QueryBuilder
         return $this;
     }
 
+
     public function find_duplicates_sql($col, $value): bool
     {
         $datas = $this
@@ -89,4 +95,5 @@ class Database extends QueryBuilder
         if (empty($datas)) return false;
         else return true;
     }
+
 }

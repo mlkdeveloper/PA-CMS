@@ -29,6 +29,7 @@ class FormBuilder
 						type='".($configInput["type"]??"text")."'
 						name='".$name."'
 						placeholder='".($configInput["placeholder"]??"")."'
+						data-format='".($configInput["data-format"]??"")."'
 						class='".($configInput["class"]??"")."'
 						id='".($configInput["id"]??$name)."'
 						value='".($configInput["value"]??"")."'
