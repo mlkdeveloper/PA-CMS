@@ -3,13 +3,6 @@
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col">
         <div class="jumbotron" id="jumbotronTurnover">
-
-            <div id="containerLoaderTurnover" class="containerLoader">
-                <div id="loadingPageTurnover" class="loadingPage">
-                    <div class="spinner"></div>
-                </div>
-            </div>
-
             <select class="input" onchange="getData(this.value, 'turnover')">
                 <option value="month">1 Mois</option>
                 <option value="months">6 Mois</option>
@@ -25,13 +18,6 @@
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col">
             <div class="jumbotron" id="jumbotronSales">
-
-                <div id="containerLoaderSales" class="containerLoader">
-                    <div id="loadingPageSales" class="loadingPage">
-                        <div class="spinner"></div>
-                    </div>
-                </div>
-
                 <select class="input" onchange="getData(this.value, 'sales')">
                     <option value="month">1 Mois</option>
                     <option value="months">6 Mois</option>

@@ -205,7 +205,11 @@ class Dashboard
         $countAll = 0;
 
         $data = $this->getSql("","",false);
-        $firstDate = explode("-", $data[0]["CreatedAt"])[0];
+        if (!empty($data)){
+            $firstDate = explode("-", $data[0]["CreatedAt"])[0];
+        }else {
+            $firstDate = date("Y");
+        }
 
         for ($p = $firstDate; $p <= date("Y"); $p++){
             $arrayData[$countAll] = [
@@ -282,7 +286,6 @@ class Dashboard
         }else{
             $dataSQL = $orders->select("CreatedAt, montant")->orderBy("CreatedAt", "ASC")->where("status >=1")->get();
         }
-
         return $dataSQL;
     }
 }
