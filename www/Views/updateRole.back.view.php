@@ -2,15 +2,18 @@
     <div class="container">
 
         <?php if(isset($errors)):?>
-            <?php foreach ($errors as $error):?>
-                <li><?=$error?></li>
-            <?php endforeach;?>
-
+            <div class="alert alert--red">
+                <?php foreach ($errors as $error):?>
+                    <li><?=$error?></li>
+                <?php endforeach;?>
+            </div>
         <?php endif;?>
 
         <?php if(isset($success)):?>
-                <li><?=$success?></li>
+            <div class="alert alert--green"><?= $success?></div>
         <?php endif;?>
+
+
 
         <h1><?= $values["name"] ?></h1>
 

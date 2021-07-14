@@ -2,11 +2,17 @@
     <div class="container">
 
         <?php if(isset($errors)):?>
-            <?php foreach ($errors as $error):?>
-                <li><?=$error?></li>
-            <?php endforeach;?>
-
+            <div class="alert alert--red">
+                <?php foreach ($errors as $error):?>
+                    <li><?=$error?></li>
+                <?php endforeach;?>
+            </div>
         <?php endif;?>
+
+        <?php if(isset($success)):?>
+            <div class="alert alert--green"><?= $success?></div>
+        <?php endif;?>
+
         <h1>Créer un rôle</h1>
     </div>
 </section>

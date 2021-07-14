@@ -192,6 +192,7 @@ class User extends Database
 	// CLIENTS //
 
     public function displayClientAction(){
+        session_start();
         $clients = new UserModel();
         $array = $clients->select()->where("status = 1","id_role = 2")->get();
         $view = new View("clientList.back", "back");
@@ -200,6 +201,7 @@ class User extends Database
     }
 
     public function newClientAction(){
+
         $client = new UserModel();
         $view = new View("createClient.back", "back");
         $view->assign("title", "Admin - Nouveau client");
@@ -301,7 +303,6 @@ class User extends Database
             $message = $this->returnValue($returnValue,3);
 
             if ($message != false) {
-                session_start();
                 $_SESSION['deleteClient'] = $message;
             }
             header("Location: /admin/liste-client");
@@ -351,7 +352,12 @@ class User extends Database
                 $user->populate($_POST);
                 $user->setPwd(password_hash($_POST['pwd'],PASSWORD_DEFAULT));
                 $user->setStatus(1);
+                $token = openssl_random_pseudo_bytes(32);
+                $token = bin2hex($token);
+                $user->setToken($token);
                 $user->save();
+
+                Email::sendEmail($user->getEmail(), "Veuillez confirmer votre compte", "http://localhost:8082/confirmation-inscription?tkn=".$token,"Confirmer mon compte", "/admin/dashboard");
 
                 $view->assign("success", "L'utilisateur a bien été créé !");
             } else {
@@ -361,14 +367,14 @@ class User extends Database
     }
 
     public function displayUsersAction(){
-
+        session_start();
         $user = new UserModel();
         $view = new View("usersList.back", "back");
         $view->assign("title", "Admin - Utilisateurs");
 
-        $users = $user->select("cc_user.id,cc_user.lastname,cc_user.firstname,cc_user.email,cc_role.name")
-            ->where("cc_user.id_role > 2")
-            ->innerJoin("cc_role","cc_role.id","=","cc_user.id_role")
+        $users = $user->select(DBPREFIXE."user.id, ".DBPREFIXE."user.lastname, ".DBPREFIXE."user.firstname, ".DBPREFIXE."user.email, ".DBPREFIXE."role.name")
+            ->where(DBPREFIXE."user.id_role > 2")
+            ->innerJoin(DBPREFIXE."role",DBPREFIXE."role.id","=",DBPREFIXE."user.id_role")
             ->get();
 
         $view->assign("users", $users);
@@ -391,7 +397,6 @@ class User extends Database
             $user->setId($_GET['id']);
             $user->where("id= :id")->setParams(["id" => $_GET['id']])->delete();
 
-            session_start();
             $_SESSION['deleteUser'] = "Utilisateur supprimé ! ";
 
             header("Location: /admin/liste-utilisateurs");
@@ -404,7 +409,7 @@ class User extends Database
         if (isset($_GET['id']) && !empty($_GET['id'])) {
 
             $userId = new UserModel();
-            $verifyId = $userId->select("id, email,pwd")->where("id = :id", "id_role > 2")->setParams(["id" => $_GET['id']])->get();
+            $verifyId = $userId->select("id, email,pwd,token,isConfirmed")->where("id = :id", "id_role > 2")->setParams(["id" => $_GET['id']])->get();
 
             if (empty($verifyId)) {
                 header("Location: /admin/liste-utilisateurs");
@@ -428,6 +433,8 @@ class User extends Database
                     $userId->populate($_POST);
                     $userId->setId($_GET['id']);
                     $userId->setPwd($verifyId[0]["pwd"]);
+                    $userId->setToken($verifyId[0]["token"]);
+                    $userId->setIsConfirmed($verifyId[0]["isConfirmed"]);
                     $userId->setStatus(1);
                     $userId->save();
 
@@ -437,10 +444,10 @@ class User extends Database
                 }
             }
 
-            $users = $userId->select("cc_user.pwd,cc_user.id,cc_user.lastname,cc_user.firstname,cc_user.email,cc_role.name")
-                ->where("cc_user.id = :id","cc_user.id_role > 2")
+            $users = $userId->select(DBPREFIXE."user.pwd, ".DBPREFIXE."user.id, ".DBPREFIXE."user.lastname, ".DBPREFIXE."user.firstname, ".DBPREFIXE."user.email, ".DBPREFIXE."role.name")
+                ->where(DBPREFIXE."user.id = :id",DBPREFIXE."user.id_role > 2")
                 ->setParams(['id' => $_GET['id']])
-                ->innerJoin("cc_role","cc_role.id","=","cc_user.id_role")
+                ->innerJoin(DBPREFIXE."role",DBPREFIXE."role.id","=",DBPREFIXE."user.id_role")
                 ->get();
 
             $view->assign("users", $users[0]);
@@ -472,6 +479,8 @@ class User extends Database
                     $user->populate($verifyId[0]);
                     $user->setId($_GET['id']);
                     $user->setIdRole($verifyId[0]['id_role']);
+                    $user->setToken($verifyId[0]["token"]);
+                    $user->setIsConfirmed($verifyId[0]["isConfirmed"]);
                     $user->setPwd(password_hash($_POST['pwd'], PASSWORD_DEFAULT));
                     $user->save();
 

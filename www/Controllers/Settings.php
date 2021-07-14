@@ -3,6 +3,7 @@
 
 namespace App\Controller;
 
+use App\Core\Uploader;
 use App\Core\View;
 use App\Models\User;
 
@@ -221,4 +222,22 @@ class Settings
             header('Location: /admin/parametres');
         }
     }
+
+    public function displaySettingsSiteAction(){
+
+        $view = new View("settingsSite.back", "back");
+        $view->assign("title","Paramètres du site");
+
+        if (isset($_FILES['logo']) && !empty($_FILES['logo'])){
+
+            $upload = new Uploader($_FILES['logo'],true);
+            $res = $upload->setName("logo")->setSize(10)->setDirectory("./images/logo")->upload();
+            ($res) ? $view->assign("success","Logo modifié !") : $view->assign("errors",$upload->errorsFile());
+        }
+
+        $file = scandir("./images/logo/",1);
+        $view->assign("logo",$file[0]);
+
+    }
+
 }

@@ -1,5 +1,6 @@
 <?php
 $aut = new \App\Controller\Auth();
+session_start();
 if (!$aut->isConnected()){
     //header('location:/connexion');
 }
@@ -40,6 +41,7 @@ if (!$aut->isConnected()){
         </div>
     </div>
 
+
         <nav class="sidenav" id="sidenav">
             <ul>
                 <a href="/admin/dashboard"><li>Dashboard</li></a>
@@ -65,6 +67,7 @@ if (!$aut->isConnected()){
                 <a href="#"><li>Paramètres du CMS</li></a>
             </ul>
         </nav>
+
 
         <div class="container-body">
             <header>

@@ -104,6 +104,9 @@ class Security
 
         //$errors = FormValidator::check($form, $_POST);
     $errors = [];
+    if (empty($_GET['tkn'])){
+        header('location:/connexion');
+    }
 
         if (!empty($_POST)){
 
