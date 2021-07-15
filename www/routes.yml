@@ -173,6 +173,7 @@
 /admin/detail-commande:
   controller: Commande
   action: displayCommande
+
 /collections:
   controller: Product
   action : displayProductsFront
