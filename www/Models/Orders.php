@@ -6,12 +6,13 @@ namespace App\Models;
 
 use App\Core\Database;
 
-class Order extends Database
+class Orders extends Database
 {
     private $id;
     protected $status;
     protected $Products_id;
     protected $User_id;
+    protected $CreatedAt;
 
     /**
      * @return mixed
@@ -76,5 +77,23 @@ class Order extends Database
     {
         $this->User_id = $User_id;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->CreatedAt;
+    }
+
+    /**
+     * @param mixed $CreatedAt
+     */
+    public function setCreatedAt($CreatedAt): void
+    {
+        $this->CreatedAt = $CreatedAt;
+    }
+
+
 
 }
