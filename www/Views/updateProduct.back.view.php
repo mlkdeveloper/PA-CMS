@@ -1,8 +1,7 @@
 <section>
     <div class="container">
         <h1>Modification du produit : <?= $produits[0]["productName"]?? $p[0]["productName"]?></span></h1>
-<!--         <img src="<?=$produits[0]['picPath']?>" />
- -->    </div>
+     </div>
 </section>
 
 
@@ -102,6 +101,9 @@
                 <input type='number' value="<?= $input[0]['stock']?>" class='input col-sm-3 col-md-3 col-lg-3 mr-1' id='stock-<?= $input[0]['idGroup']  ?>' placeholder='Stock' /> 
                 <input type='number' value="<?= $input[0]['price']?>" class='input col-sm-3 col-md-3 col-lg-3' id='price-<?= $input[0]['idGroup']  ?>' placeholder='Prix' />
                 <button class="col col-sm-3 col-md-4 col-lg-1 button button--success" onclick="update_var(<?= $input[0]['idGroup']?>)">Modifier</button>
+            </div>
+            <div class="centered mt-1">
+                <img style="width: 200px;" src="../images/products/<?=$input[0]['picture']?>" />
             </div>
         <?php endforeach;?>
     </div>

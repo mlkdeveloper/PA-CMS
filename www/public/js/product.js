@@ -129,9 +129,10 @@ function generation(parts){
 function generateInputs(selector, label){
     $(selector).append(
         "<div name='comb' class='row mb-2'>" +
-            "<label class='col-md-1'>" + label + "</label>" +
-            "<input type='number' class='input col-md-5 mr-1' name='stock' placeholder='Stock' /> " +
-            "<input type='number' class='input col-md-5' name='price' placeholder='Prix' />" +
+            "<label class='col-md-2'>" + label + "</label>" +
+            "<input type='number' class='input col-md-3 mr-1' name='stock' placeholder='Stock' /> " +
+            "<input type='number' class='input col-md-3' name='price' placeholder='Prix' />" +
+            "<input accept='image/png, image/jpg, image/jpeg, image/svg' class='input' type='file' name='files_groups' required='required'>" +
         "</div>" 
     )
 }
@@ -141,9 +142,15 @@ let comb;
 
 
 function createProduct(){
-    
     var stock = $("input[name='stock']");
     var price = $("input[name='price']");
+    var files = $("input[name='files_groups']");
+    var form_data = new FormData();
+
+    for(var i = 0; i < files.length; i++){
+        if(files[i].files[0] !== undefined) form_data.append("file_"+i, files[i].files[0])
+    }
+
     var product = {
         name: $("#product_name").val(), 
         description: $("#description").val(),
@@ -172,11 +179,17 @@ function createProduct(){
 
     product = JSON.stringify(product)
 
+    form_data.append("comb_array", comb_object);
+    form_data.append("product", product);
+
     if(err.length === 0){
         $.ajax({
             type: 'POST',
             url: "/admin/creer-produit-ajax",
-            data: "comb_array=" + comb_object + "&product=" + product,
+            data: form_data,
+            processData: false,
+            contentType: false,
+            enctype: 'multipart/form-data',
             success: (data) => {
                 showStatus(data)
                 reset()
@@ -188,6 +201,7 @@ function createProduct(){
     }
 
 }
+
 
 function clearInterface(){
     $('#valider').parent().hide()
@@ -223,6 +237,13 @@ function updateProduct(id){
     
     var stock = $("input[name='stock']");
     var price = $("input[name='price']");
+    var files = $("input[name='files_groups']");
+    var form_data = new FormData();
+
+    for(var i = 0; i < files.length; i++){
+        if(files[i].files[0] !== undefined) form_data.append("file_"+i, files[i].files[0])
+    }
+
     var product = {
         name: $("#product_name").val(), 
         description: $("#description").val(),
@@ -251,11 +272,18 @@ function updateProduct(id){
 
     product = JSON.stringify(product)
 
+    form_data.append("comb_array", comb_object);
+    form_data.append("product", product);
+
+
     if(err.length === 0){
         $.ajax({
             type: 'POST',
             url: "/admin/update-product-ajax?id=" + id,
-            data: "comb_array=" + comb_object + "&product=" + product,
+            data: form_data,
+            processData: false,
+            contentType: false,
+            enctype: 'multipart/form-data',
             success: (data) => {
                 showStatus(data)
                 reset()

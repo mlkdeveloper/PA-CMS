@@ -287,7 +287,7 @@ class FormValidator
 
         if (
             strlen($name) < 2 ||
-            strlen($name) > 50
+            strlen($name) > 50 
         ) {
             $errors[] = "Le produit doit avoir un nom entre 2 et 50 caractères, sans caractères spéciaux ni numérique";
         }
@@ -316,18 +316,14 @@ class FormValidator
                 && empty($prix)
                 && !is_float($prix)
             ){
-                $errors[] = "Le prix de la variante #$key doit être saisi : " 
-                            . "Supérieur à 0" 
-                            . "Doit être un nombre flottant";
+                $errors[] = "Le prix de la variante #$key doit être saisi correctement"; 
             }
             
             if($stock <= 0 
                 && empty($stock)
                 && !is_int($stock) && is_numeric($stock)
             ){
-                $errors[] = "Le stock de la variante #$key doit être saisi : " 
-                            . "Supérieur à 0" 
-                            . "Doit être un nombre entier";
+                $errors[] = "Le stock de la variante #$key doit être saisi correctement";
             }   
 
             unset($value[count($value)-1], $value[count($value)-1]);
@@ -344,8 +340,10 @@ class FormValidator
 
 
     public static function checkProductUpdate($products, $categories, $variants, $class, $terms)
-    {
-        $errors = self::checkProduct1($class, $products["name"], $products["idCategory"], $products["type"] );
+    {    
+
+
+        $errors = self::checkProduct1($class, $products["name"], $products["idCategory"], $categories, $products["type"] );
 
         foreach($variants as $key => $value){
             $prix = $value[count($value)-1];
@@ -355,18 +353,14 @@ class FormValidator
                 || empty($prix)
                 && !is_numeric($prix)
             ){
-                $errors[] = "Le prix de la variante #$key doit être saisi : " 
-                            . "Supérieur à 0" 
-                            . "Doit être un nombre flottant";
+                $errors[] = "Le prix de la variante #$key+1 doit être saisi correctement.";
             }
             
             if($stock <= 0 
                 || empty($stock)
                 && !is_numeric($stock)
             ){
-                $errors[] = "Le stock de la variante #$key doit être saisi : " 
-                            . "Supérieur à 0" 
-                            . "Doit être un nombre entier";
+                $errors[] = "Le stock de la variante #$key+1 doit être saisi.";
             }   
 
             unset($value[count($value)-1], $value[count($value)-1]);

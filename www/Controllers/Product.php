@@ -14,6 +14,7 @@ use App\Models\Product_term;
 use App\Models\Products;
 use App\Models\Category;
 use App\Core\MyException;
+use App\Core\Uploader;
 
 
 class Product
@@ -48,11 +49,11 @@ class Product
 
     public function createProductAction(){
 
-        if( isset($_POST['comb_array']) && 
+        if(
+            isset($_POST['comb_array']) && 
             isset($_POST['product']) &&
             count($_POST) === 2
         ){
-
             //Instanciation des classes
             $gv = new Group_variant;
             $pt = new Product_term;
@@ -99,15 +100,42 @@ class Product
 
                 $idProduct = $idProduct[0]["id"];
 
+
+
                 foreach($comb as $key => $value){
-                    $s = $value[count($value)-2];
-                    $p = $value[count($value)-1];
+                    //Id group pour l'image
+                    $idG = new Group_variant;
 
-                        unset($value[count($value)-1], $value[count($value)-1]);
+                    $idG = $idG->select("MAX(id) as id")->get();
+                    $idG = $idG[0]["id"] + 1;
+                    if(isset($_FILES['file_'.$key])){    
+                        $f = $_FILES['file_'.$key];                   
+                        $upload = new Uploader($f,false);
+                        $res = $upload
+                            ->setName("file_".$idG)
+                            ->setSize(10)
+                            ->setDirectory("./images/products")
+                            ->upload();
+                        $s = $value[count($value)-2];
+                        $p = $value[count($value)-1];
 
-                    $gv->setPrice($p);
-                    $gv->setStock($s);
-                    $gv->save();
+                            unset($value[count($value)-1], $value[count($value)-1]);
+
+                        $gv->setPrice($p);
+                        $gv->setStock($s);
+                        ($res) ? $gv->setPicture($upload->getName().".".$upload->getExtension()) : $gv->setPicture("");
+                        $gv->save();
+                    }else{
+                        $s = $value[count($value)-2];
+                        $p = $value[count($value)-1];
+
+                            unset($value[count($value)-1], $value[count($value)-1]);
+
+                        $gv->setPrice($p);
+                        $gv->setStock($s);
+                        $gv->setPicture("");
+                        $gv->save();
+                    }
 
                     //Récupération de l'id du groupe
                     $idGroup = $gv
@@ -170,11 +198,11 @@ class Product
             $view->assign("stylesheet", "products");
             
             $datas = $pt
-                ->select("*, cc_product_term.id as idPt, cc_products.id as idProduit")
-                ->innerJoin("cc_products", "idProduct", "=", "cc_products.id")
-                ->innerJoin("cc_group_variant", "idGroup", "=", "cc_group_variant.id")
-                ->innerJoin("cc_terms", "idTerm", "=", "cc_terms.id")
-                ->where("cc_products.id = :id", "cc_product_term.status = 1")->setParams(["id" => $_GET["id"]])
+                ->select("*, ". DBPREFIXE."product_term.id as idPt, ".DBPREFIXE."products.id as idProduit")
+                ->innerJoin(DBPREFIXE."products", "idProduct", "=", DBPREFIXE."products.id")
+                ->innerJoin(DBPREFIXE."group_variant", "idGroup", "=", DBPREFIXE."group_variant.id")
+                ->innerJoin(DBPREFIXE."terms", "idTerm", "=", DBPREFIXE."terms.id")
+                ->where(DBPREFIXE."products.id = :id", DBPREFIXE."product_term.status = 1")->setParams(["id" => $_GET["id"]])
                 ->get();
 
             $view->assign("produits", $datas);
@@ -223,22 +251,23 @@ class Product
                 $view->assign("stylesheet", "products");
                 
                 $datas = $product_model
-                    ->select("*, ". DBPREFIXE ."products.name as productName, cc_products.id as idP, cc_product_term.id as idpt, cc_group_variant.id as idgv, cc_terms.id as idt")
-                    ->innerJoin("cc_category", "cc_category.id", "=", "cc_products.idCategory")
-                    ->innerJoin("cc_product_term", "cc_product_term.idProduct", "=", "cc_products.id")
-                    ->innerJoin("cc_terms", "cc_terms.id", "=", "cc_product_term.idTerm")
-                    ->innerJoin("cc_group_variant", "cc_group_variant.id", "=", "cc_product_term.idGroup")
-                    ->where("cc_products.id = :id", "cc_product_term.status <> 0")->setParams(["id" => $_GET["id"]])
+                    ->select("*, ". DBPREFIXE ."products.name as productName, ". DBPREFIXE ."products.id as idP, ". DBPREFIXE ."product_term.id as idpt, ". DBPREFIXE ."group_variant.id as idgv, ". DBPREFIXE ."terms.id as idt")
+                    ->innerJoin(DBPREFIXE."category", DBPREFIXE."category.id", "=", DBPREFIXE."products.idCategory")
+                    ->innerJoin(DBPREFIXE."product_term", DBPREFIXE."product_term.idProduct", "=", DBPREFIXE."products.id")
+                    ->innerJoin(DBPREFIXE."terms", DBPREFIXE."terms.id", "=", DBPREFIXE."product_term.idTerm")
+                    ->innerJoin(DBPREFIXE."group_variant", DBPREFIXE."group_variant.id", "=", DBPREFIXE."product_term.idGroup")
+                    ->where(DBPREFIXE."products.id = :id", DBPREFIXE."product_term.status <> 0")->setParams(["id" => $_GET["id"]])
                     ->get();
 
                 $datas_inputs = [];
 
-                $keys = ["nameAttr", "stock", "price", "idGroup", "idAttr", "idTerm", "idProductTerm", "idProduct"];
+                $keys = ["picture","nameAttr", "stock", "price", "idGroup", "idAttr", "idTerm", "idProductTerm", "idProduct"];
 
                 $comb = [];
 
                 foreach($datas as $key => $data){
                     $datas_inputs[$key] = [];
+                    array_push($datas_inputs[$key], $data["picture"]);
                     array_push($datas_inputs[$key], $data["name"]);
                     array_push($datas_inputs[$key], $data["stock"]);
                     array_push($datas_inputs[$key], $data["price"]);
@@ -346,15 +375,41 @@ class Product
                 $idProduct = $_GET["id"];
 
                 foreach($comb as $key => $value){
-                    $s = $value[count($value)-2];
-                    $p = $value[count($value)-1];
 
-                    //Destruction des variables prix - stock
-                    unset($value[count($value)-1], $value[count($value)-1]);
+                    //Id group pour l'image
+                    $idG = new Group_variant;
 
-                    $gv->setPrice($p);
-                    $gv->setStock($s);
-                    $gv->save();
+                    $idG = $idG->select("MAX(id) as id")->get();
+                    $idG = $idG[0]["id"] + 1;
+                    if(isset($_FILES['file_'.$key])){    
+                        $f = $_FILES['file_'.$key];                   
+                        $upload = new Uploader($f,false);
+                        $res = $upload
+                            ->setName("file_".$idG)
+                            ->setSize(10)
+                            ->setDirectory("./images/products")
+                            ->upload();
+                        $s = $value[count($value)-2];
+                        $p = $value[count($value)-1];
+
+                        //Destruction des variables prix - stock
+                        unset($value[count($value)-1], $value[count($value)-1]);
+                        $gv->setPrice($p);
+                        $gv->setStock($s);
+                        ($res) ? $gv->setPicture($upload->getName().".".$upload->getExtension()) : $gv->setPicture("");
+                        $gv->save();
+                    }else{
+                        $s = $value[count($value)-2];
+                        $p = $value[count($value)-1];
+
+                        //Destruction des variables prix - stock
+                        unset($value[count($value)-1], $value[count($value)-1]);
+
+                        $gv->setPrice($p);
+                        $gv->setStock($s);
+                        $gv->setPicture("");
+                        $gv->save();
+                    }
 
                     //Récupération de l'id du groupe
                     $idGroup = $gv
@@ -363,6 +418,7 @@ class Product
 
                     $idGroup = $idGroup[0]["id"];
 
+                    print_r($value);
                     foreach($value as $v){
                         $pt1->setIdProduct($idProduct);
                         $pt1->setIdTerm($v);
