@@ -41,7 +41,7 @@ class User extends Database
 
                             session_start();
                             $monUser = $user->select('*')->where('email=:email', 'pwd=:pwd')->setParams([":email" => $_POST['email'], ":pwd" => $pwdGet[0]["pwd"],])->get();
-                            $_SESSION['user'] = $monUser;
+                            $_SESSION['user'] = $monUser[0];
                             var_dump($_SESSION["user"]);
                             header('location:/');
                         }else{

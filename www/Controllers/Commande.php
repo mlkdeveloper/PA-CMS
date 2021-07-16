@@ -72,6 +72,38 @@ class Commande
 
     }
 
+    public function cancelOrderFrontAction(){
+
+        if (isset($_GET['id']) && !empty($_GET['id'])){
+
+            session_start();
+            $order = new Orders();
+            $checkId = $order->select('id')->where("id = :id","User_id = :idUser")->setParams(['id' => $_GET['id'], 'idUser' => $_SESSION['user']['id']])->get();
+
+
+            if (empty($checkId)){
+                header("Location: /admin/liste-commande");
+                exit();
+            }
+
+            $user = new User();
+
+            $commande = $order->select('*')->where("id = :id")->setParams(["id" => $_GET['id']])->get();
+            $getUser = $user->select('*')->where("id = :id")->setParams(["id" => $commande[0]["User_id"]])->get();
+
+            $order->populate($commande[0]);
+            $order->setUserId($commande[0]['User_id']);
+            $order->setStatus(-1);
+            $order->save();
+
+            //Email::sendEmail($getUser[0]["email"], "Votre commande vient d'être annulée ", "http://localhost:8082/connexion","Mon compte", "/admin/liste-commande");
+            // Rajouter header location
+        }else{
+            header("Location: /mes-commandes");
+        }
+
+    }
+
     public function cancelCommandeAction(){
 
         if (isset($_GET['id']) && !empty($_GET['id'])){

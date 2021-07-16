@@ -1,7 +1,7 @@
 <div class="container">
 
     <div class="align">
-        <h1>Récapitulatif de la commande #<?= $_GET['id']?></h1>
+        <h1>Récapitulatif de la commande #<?= $order[0]['id']?></h1>
         <div>
 
             <?php if($order[0]['status'] == 0):?>

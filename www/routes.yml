@@ -212,6 +212,10 @@
   controller: Commande
   action: DoneCommande
 
+/annuler-commande:
+  controller: Commande
+  action: cancelOrderFront
+
 /mes-commandes:
   controller : Commande
   action: displayOrdersFront
