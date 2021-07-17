@@ -73,6 +73,7 @@ class Product
 
             $lc = $category
                 ->select("id")
+                ->where("status = 0")
                 ->get();
 
             $list_categories = [];
@@ -346,6 +347,7 @@ class Product
 
             $lc = $category
                 ->select("id")
+                ->where("status = 0")
                 ->get();
 
             $list_categories = [];
