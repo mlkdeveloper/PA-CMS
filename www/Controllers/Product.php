@@ -314,6 +314,8 @@ class Product
             }else{
                 throw new MyException("Produit introuvable !", 404);
             }
+        }else{
+            header("location:javascript://history.go(-1)");
         }
     }
 
