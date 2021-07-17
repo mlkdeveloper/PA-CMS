@@ -227,3 +227,7 @@
 /cancel:
   controller: Stripe
   action: cancel
+
+/verification-stock-panier:
+  controller: Stripe
+  action: checkStockProducts

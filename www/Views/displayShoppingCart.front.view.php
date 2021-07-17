@@ -8,7 +8,7 @@
                     <button class="button button--blue"><a onclick="showModalConnexionStripe()">Procéder au paiement</a></button>
                 <?php endif; ?>
                 <?php if(!empty($_SESSION['user'])): ?>
-                    <button class="button button--blue" id="paiement-stripe">Procéder au paiement</button>
+                    <button class="button button--blue" id="checkStock"><a onclick="showModalCheckStockStripe()">Procéder au paiement</a></button>
                 <?php endif; ?>
             <?php endif; ?>
         </div>
@@ -64,7 +64,6 @@
             </div>
 
             <?php endif; ?>
-
     </div>
 
         <div class="modal" id="modalConnexionStripe">
@@ -74,12 +73,43 @@
                 <button class="button button--alert" onclick="hideModalConnexionStripe()">Annuler</button>
             </div>
         </div>
+
+        <div class="modal" id="modalCheckStockStripe">
+            <div class="modal-content">
+                <h3 id="titre-paiement"></h3>
+                <p id="passage-paiement"></p>
+                <p id="btnPaiementStripe">
+                    <button class="button button--success" id="paiement-stripee">Paiement</button>
+                    <button class="button button--alert" onclick="hideModalCheckStockStripe()">Fermer</button>
+
+                </p>
+            </div>
+        </div>
+
 </section>
 <script type="text/javascript">
+    var checkoutButton = document.getElementById("checkStock");
+
+    checkoutButton.addEventListener("click", function () {
+
+        $.ajax({
+            url: '/verification-stock-panier',
+            error: function() {
+                $('#titre-paiement').append('Erreur sur votre panier')
+                $('#passage-paiement').append("Certains produits de votre panier n'est plus en stock dans notre boutique. <br> Nous vous invitons à le supprimer de votre panier")
+                $('#paiement-stripee').remove()
+            },
+            success: function(data) {
+                $('#titre-paiement').append('Procéder au paiement')
+                $('#btnPaiementStripe button:first-child').attr('id', 'paiement-stripee')
+            },
+            type: 'GET'
+        });
+    });
+
     // Create an instance of the Stripe object with your publishable API key
     var stripe = Stripe("pk_test_51JC0puGueu1Z1r2S3oq9aEovJmlKpYwQ8isyViEyKtwQrLXIEZBdOVeXiihXPpi4EtJHkTd53Whc5F6J7TNxLEQz00XaTk67k0");
-    var checkoutButton = document.getElementById("paiement-stripe");
-
+    var checkoutButton = document.getElementById("paiement-stripee");
     checkoutButton.addEventListener("click", function () {
         fetch("/create-checkout-session", {
             method: "POST",

@@ -5,3 +5,10 @@ function showModalConnexionStripe(){
 function hideModalConnexionStripe(){
     $("#modalConnexionStripe").hide();
 }
+
+function showModalCheckStockStripe(){
+    $("#modalCheckStockStripe").show();
+}
+function hideModalCheckStockStripe(){
+    $("#modalCheckStockStripe").hide();
+}

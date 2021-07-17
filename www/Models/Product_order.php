@@ -9,12 +9,11 @@ use App\Core\Database;
 class Product_order extends Database
 {
     protected $id = null;
-    protected $id_product_term;
+    protected $id_group_variant;
     protected $id_order;
-    protected $createdAt;
 
     /**
-     * @return mixed
+     * @return null
      */
     public function getId()
     {
@@ -22,7 +21,7 @@ class Product_order extends Database
     }
 
     /**
-     * @param mixed $id
+     * @param null $id
      */
     public function setId($id)
     {
@@ -32,17 +31,17 @@ class Product_order extends Database
     /**
      * @return mixed
      */
-    public function getIdProductTerm()
+    public function getIdGroupVariant()
     {
-        return $this->id_product_term;
+        return $this->id_group_variant;
     }
 
     /**
-     * @param mixed $id_product_term
+     * @param mixed $id_group_variant
      */
-    public function setIdProductTerm($id_product_term)
+    public function setIdGroupVariant($id_group_variant)
     {
-        $this->id_product_term = $id_product_term;
+        $this->id_group_variant = $id_group_variant;
     }
 
     /**
@@ -61,21 +60,6 @@ class Product_order extends Database
         $this->id_order = $id_order;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param mixed $createdAt
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-    }
 
 
 }
