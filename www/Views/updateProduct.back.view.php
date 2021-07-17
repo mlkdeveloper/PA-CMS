@@ -103,7 +103,11 @@
                 <button class="col col-sm-3 col-md-4 col-lg-1 button button--success" onclick="update_var(<?= $input[0]['idGroup']?>)">Modifier</button>
             </div>
             <div class="centered mt-1">
-                <img style="width: 200px;" src="../images/products/<?=$input[0]['picture']?>" />
+                <?php if(!empty($input[0]['picture'])): ?> 
+                    <img style="width: 200px;" src="../images/products/<?=$input[0]['picture']?>" />
+                <?php else: ?>
+                    <div class="row"><p>Pas d'image pour cette variante <button class="button button--success">+</button></p></div>
+                <?php endif; ?>
             </div>
         <?php endforeach;?>
     </div>

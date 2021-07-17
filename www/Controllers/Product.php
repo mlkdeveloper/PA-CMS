@@ -29,7 +29,10 @@ class Product
         $attributes = $attribute->select("id, name")->get();
 
         $category = new Category;
-        $categories = $category->select("id, name")->get();
+        $categories = $category
+        ->select("id, name")
+        ->where("status = 0")
+        ->get();
 
         $view->assign("attributes", $attributes);
         $view->assign("categories", $categories);
@@ -286,7 +289,10 @@ class Product
                 }
 
 
-                $categories = $categories->select()->get();
+                $categories = $categories
+                    ->select()
+                    ->where("status = 0")
+                    ->get();
 
                 $attributes = $attribute
                     ->select("id, name")
