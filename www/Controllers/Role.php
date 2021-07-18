@@ -14,6 +14,7 @@ class Role
 
     public function showAllAction(){
 
+        session_start();
         \App\Core\Security::auth("roles");
 
         $role = new modelRole();
