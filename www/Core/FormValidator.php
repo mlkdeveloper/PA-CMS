@@ -296,6 +296,10 @@ class FormValidator
             $errors[] = "Le produit doit avoir un type connu";
         }
 
+        if($type != 1){
+            $errors[] = "Problème avec le type du produit";
+        }
+
         if(!in_array($category, $categories)){
             $errors[] = "La catégorie n'existe pas";
         }
@@ -367,7 +371,8 @@ class FormValidator
 
             foreach($value as $k => $v)
                 if(!in_array($v, $terms)){
-                        $errors[] = "Un problème est apparu dans la variante #$key du produit !";
+                    $errors[] = "Un problème est apparu dans la variante #$key du produit !";
+                    break;
                 }
         }
         

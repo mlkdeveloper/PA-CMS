@@ -93,13 +93,10 @@
                         <hr>
                     </div>
 
-                    <div>
-                        <label for="stock">Stock</label>
-                        <input class="input" type="number" id="stock" min="1">
-                    </div>
-                    <div>
-                        <label for="price">Prix</label>
-                        <input class="input" type="number" id="price" min="0.01">
+                    <div class="row">
+                        <input placeholder="stock" class="input col col-md-4 col-sm-4 col-lg-4" type="number" id="stock" min="1">
+                        <input placeholder="prix" class="input col col-md-4 col-sm-4 col-lg-4" type="number" id="price" min="0.01">
+                        <input class="input col col-md-4 col-sm-4 col-lg-4" type="file" id="file">
                     </div>
 
                 </div>

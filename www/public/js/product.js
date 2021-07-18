@@ -59,6 +59,8 @@ function isVariant() {
         $('#attr_container').show()
         $('#var_container').show()
         $('#without_attr').hide()
+        $('#valider').show()
+        $('#comb').empty()
     }else{
         $('#blockAttributes').hide();
         $('#selectedAttributes').html("")
@@ -66,6 +68,8 @@ function isVariant() {
         $('#attr_container').hide()
         $('#var_container').hide()    
         $('#without_attr').show()
+        $('#valider').hide()
+        $('#comb').html("<button class='button button--success' onclick='addProductWV()'>Enregistrer</button>")
     }
 }
 
@@ -341,4 +345,40 @@ function updateP(id){
             console.log(data)
         }
     })  
+}
+
+
+function addProductWV() {
+    var stock = $("#stock").val();
+    var price = $("#price").val();
+    var form_data = new FormData();
+
+    var product = {
+        name: $("#product_name").val(), 
+        description: $("#description").val(),
+        type: $("#variant").val(),
+        isPublished: 0,
+        idCategory: $("#category").val(),
+        price: price,
+        stock: stock
+
+    };
+
+    product = JSON.stringify(product)
+    form_data.append("product", product)
+    form_data.append("file", $('#file')[0].files[0])
+
+
+    $.ajax({
+        type: 'POST',
+        url: "/admin/add-product-wv",
+        data: form_data,
+        processData: false,
+        contentType: false,
+        // enctype: 'multipart/form-data',
+        success: (data) => {
+            showStatus(data)
+        },
+        error: () => {}
+    })
 }

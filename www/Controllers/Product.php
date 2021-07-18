@@ -26,7 +26,10 @@ class Product
         $view->assign("title","Produit");
 
         $attribute = new Attributes();
-        $attributes = $attribute->select("id, name")->get();
+        $attributes = $attribute
+            ->select("id, name")
+            ->where("id <> 1")
+            ->get();
 
         $category = new Category;
         $categories = $category
@@ -297,6 +300,7 @@ class Product
 
                 $attributes = $attribute
                     ->select("id, name")
+                    ->where("id <> 1")
                     ->get();
 
                 $product = new Products;
@@ -532,6 +536,75 @@ class Product
         }else{
             \http_response_code(403);
         }    
+    }
+
+    public function addProductWVAction(){
+        if(isset($_POST["product"]) && count($_POST) === 1 &&
+            isset($_FILES["file"]) && count($_FILES) === 1 || 
+            isset($_POST["product"], $_POST['file']) && count($_POST) === 2
+        ){
+
+            $product = json_decode($_POST["product"], true);
+            $s = $product["stock"];
+            $p = $product["price"];
+
+            $gv = new Group_variant;
+            $product_model = new Products;
+            $pt = new Product_term;
+
+            $gv->setStock($product["stock"]);
+            $gv->setPrice($product["price"]);
+
+            $f = $_FILES["file"];
+            //Id group pour l'image
+            $idG = new Group_variant;
+
+            $idG = $idG->select("MAX(id) as id")->get();
+            $idG = $idG[0]["id"] + 1;
+            $upload = new Uploader($f,false);
+            $res = $upload
+                ->setName("file_".$idG)
+                ->setSize(10)
+                ->setDirectory("./images/products")
+                ->upload();
+
+            if(isset($f) && $res){
+                $gv->setPicture($upload->getName().".".$upload->getExtension());
+            }else{
+                $gv->setPicture("");
+            }
+            $gv->save();
+
+            unset($s, $p);
+            $product_model->populate($product);
+            $product_model->setStatus(1);
+            $product_model->save();
+
+            //Récupération de l'id produit
+            $idProduct = $product_model
+            ->select("MAX(id) as id")
+            ->get();
+
+            $idProduct = $idProduct[0]["id"];
+
+            //Récupération de l'id du groupe
+            $idGroup = $gv
+            ->select("MAX(id) as id")
+            ->get();
+
+            $idGroup = $idGroup[0]["id"];
+            $pt->setIdProduct($idProduct);
+            $pt->setIdGroup($idGroup);
+            $pt->setStatus(1);
+            $pt->save();
+
+            echo "<div class='alert alert--green'>Produit créé avec succès !</div>";
+
+            http_response_code(201);
+
+        }else{
+            http_response_code(403);
+        }
     }
 
 }

@@ -238,3 +238,7 @@
 /admin/update-p:
   controller: Product
   action: update
+
+/admin/add-product-wv:
+  controller: Product
+  action: addProductWV
