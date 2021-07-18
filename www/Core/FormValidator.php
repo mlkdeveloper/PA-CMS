@@ -408,7 +408,7 @@ class FormValidator
     static function checkId($id, $class){
         $check = $class
             ->select("id")
-            ->where("id = :id")->setParams(["id" => $id])
+            ->where("id = :id", "status = 1")->setParams(["id" => $id])
             ->get();
 
         if (empty($check)) return false;

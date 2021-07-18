@@ -201,19 +201,27 @@ class Product
         $category = new Category;
 
         if(isset($_GET["id"]) && is_numeric($_GET["id"])){
-            $view = new View("infoProducts_products.back","back");
-            $view->assign("title", "Information");
-            $view->assign("stylesheet", "products");
-            
-            $datas = $pt
-                ->select("*, ". DBPREFIXE."product_term.id as idPt, ".DBPREFIXE."products.id as idProduit")
-                ->innerJoin(DBPREFIXE."products", "idProduct", "=", DBPREFIXE."products.id")
-                ->innerJoin(DBPREFIXE."group_variant", "idGroup", "=", DBPREFIXE."group_variant.id")
-                ->innerJoin(DBPREFIXE."terms", "idTerm", "=", DBPREFIXE."terms.id")
-                ->where(DBPREFIXE."products.id = :id", DBPREFIXE."product_term.status = 1")->setParams(["id" => $_GET["id"]])
-                ->get();
+            $pid = new Products;
+            $checkId = FormValidator::checkId($_GET["id"], $pid);
+            if($checkId){
+                $view = new View("infoProducts_products.back","back");
+                $view->assign("title", "Information");
+                $view->assign("stylesheet", "products");
+                
+                $datas = $pt
+                    ->select("*, ". DBPREFIXE."product_term.id as idPt, ".DBPREFIXE."products.id as idProduit")
+                    ->innerJoin(DBPREFIXE."products", "idProduct", "=", DBPREFIXE."products.id")
+                    ->innerJoin(DBPREFIXE."group_variant", "idGroup", "=", DBPREFIXE."group_variant.id")
+                    ->innerJoin(DBPREFIXE."terms", "idTerm", "=", DBPREFIXE."terms.id")
+                    ->where(DBPREFIXE."products.id = :id", DBPREFIXE."product_term.status = 1")->setParams(["id" => $_GET["id"]])
+                    ->get();
 
-            $view->assign("produits", $datas);
+                $view->assign("produits", $datas);
+            }else{
+                throw new MyException("Produit introuvable", 403);
+            }
+        }else{
+            throw new MyException("Produit introuvable", 403);
         }
     }
 
@@ -248,12 +256,10 @@ class Product
             $attribute = new Attributes();
             $product = new Products;
 
-            $checkId = $product
-                ->select("id")
-                ->where("id = :id")->setParams(["id" => $_GET["id"]])
-                ->get();
+            $pid = new Products;
+            $checkId = FormValidator::checkId($_GET["id"], $pid);
 
-            if(!empty($checkId)){
+            if($checkId){
                 $view = new View("updateProduct.back","back");
                 $view->assign("title", "Modification d'un produit");
                 $view->assign("stylesheet", "products");
@@ -523,7 +529,7 @@ class Product
                 $p = new Products;
                 $p->populate($_POST);
                 $p->setId($_GET["id"]);
-                $p->setStatus(0);
+                $p->setStatus(1);
                 $p->setIsPublished(0);
                 $p->save();
 
