@@ -28,7 +28,7 @@ class Stripe
                     'currency' => 'eur',
                     'unit_amount' => $_SESSION['panierTotal']*100,
                     'product_data' => [
-                        'name' => 'Stubborn Attachments',
+                        'name' => 'Validation du panier',
                         'images' => ["https://i.imgur.com/EHyR2nP.png"],
                     ],
                 ],
@@ -43,23 +43,10 @@ class Stripe
     }
 
     function successAction(){
+
+
         $view = new View("successStripe");
         session_start();
-
-
-
-
-        /*
-         * Insertion des produits dans la base de données
-         */
-
-        foreach ($_SESSION['panier'] as $key => $value) {
-            for($i = 0; $i< intval($value); $i++ ){
-
-                //$stock = $stock->select('stock')->where("id = :id")->setParams(["id" => $key])->get();
-            }
-        }
-
 
 
         $orders = new Orders_model();
@@ -93,6 +80,9 @@ class Stripe
                 $stock = new Group_variant();
             }
         }
+        unset($_SESSION['panier']);
+        unset($_SESSION['panierTotal']);
+
         $view->assign("title", "C&C - Succes du paiement");
     }
     function cancelAction(){
@@ -112,14 +102,10 @@ class Stripe
         $stocks = new Group_variant();
         $stock = new Group_variant();
 
-        echo '<pre>';
-        //var_dump($_SESSION['panier']);
-
         foreach ($_SESSION['panier'] as $key => $value) {
             $stocks = $stock->select('*')->where("id = :id")->setParams(["id" => $key])->get();
             //var_dump($stocks);
             $stock->populate($stocks[0]);
-
 
             for($i = 0; $i< intval($value); $i++ ) {
                 $stock->setStock(intval($stock->getStock()) - 1);
@@ -132,8 +118,5 @@ class Stripe
             $stock = new Group_variant();
             $stocks = new Group_variant();
         }
-
-        //http_response_code(200);
     }
-
 }
