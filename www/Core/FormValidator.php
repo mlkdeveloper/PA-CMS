@@ -304,9 +304,10 @@ class FormValidator
             $errors[] = "La catégorie n'existe pas";
         }
 
-        if (!$class->find_duplicates_sql_id("id", $_GET["id"], $name)) {
-            $errors[] = "Le produit existe déjà";
-        }
+        if(isset($_GET["id"]))
+            if (!$class->find_duplicates_sql_id("id", $_GET["id"], $name)) {
+                $errors[] = "Le produit existe déjà";
+            }
 
 
         return $errors;

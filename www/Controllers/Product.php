@@ -344,6 +344,7 @@ class Product
             $product_model = new Products;
             $terms = new Terms;
             $category = new Category;
+            $produit = new Products;
 
             $comb = json_decode($_POST['comb_array'], true);
             $product = json_decode($_POST['product'], true);
@@ -383,11 +384,12 @@ class Product
                     $pt->save();
                 }
 
-                $product_model->populate($product);
-                $product_model->setId($_GET["id"]);
-                $product_model->setType(1);
-                $product_model->save();
 
+                $produit->populate($product);
+                $produit->setId($_GET["id"]);
+                $produit->setType(1);
+                $produit->setStatus(1);
+                $produit->save();
 
                 $idProduct = $_GET["id"];
 
