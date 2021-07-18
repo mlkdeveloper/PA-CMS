@@ -119,4 +119,15 @@ class Security
            exit();
         }
     }
+
+    public static function isAdmin(){
+
+        return $_SESSION['user']['id_role'] == 1 ? true : false;
+    }
+
+    public static function isClient(){
+
+        return $_SESSION['user']['id_role'] == 2 ? true : false;
+
+    }
 }

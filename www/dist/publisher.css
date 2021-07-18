@@ -2,24 +2,62 @@
     background-color: #FFFFFF;
 }
 
+#bodyContainer{
+    transition: all 0.7s;
+}
+
+#containerLoader{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    background: white;
+}
+
+#loadingPage{
+    position: absolute;
+    display: block;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#errorMobile{
+    text-align: center;
+    margin-top: 100px;
+}
+
 #headerMenu{
-    padding: 20px 0 150px 0;
+    padding: 20px 0 100px 0;
 }
 
 #hamburger{
     width: 2.2rem;
 }
 
-.sidenavPublisher img{
-    width: 3rem;
+#sidenavPublisher img{
+    width: 2.5rem;
     cursor: pointer;
+}
+
+#menuObject .col:hover {
+    transform: scale(1.3);
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+#sidenavPublisher span{
+    display: block;
+    margin-top: 8px;
 }
 
 a{
     text-decoration: none;
 }
 
-#menuObject{
+.objectMenuHide{
     display: none;
 }
 
@@ -27,7 +65,12 @@ a{
     padding-bottom: 30px;
 }
 
-.sidenavPublisher {
+#menuObject .row:nth-child(3){
+    padding-bottom: 0px;
+}
+
+
+#sidenavPublisher {
     height: 100vh;
     position: fixed;
     width: 200px;
@@ -45,7 +88,7 @@ a{
     position: relative;
     padding: 10px;
     margin: 0;
-    background-color: red;
+    background-color: #d5d4d4;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -66,6 +109,11 @@ a{
     cursor: pointer;
 }
 
+#selectCol h3{
+    padding-bottom: 40px;
+    font-weight: normal;
+}
+
 #selectCol img:hover {
     transform: scale(1.3);
     transition: all 0.5s;
@@ -77,6 +125,12 @@ a{
 
 .activeCol{
     border: solid 3px #2D9CDB;
+}
+
+.activeRow{
+    border: solid 3px #8B0000;
+    border-radius: 15px;
+    padding: 20px 10px;
 }
 
 .colBlock:hover{
@@ -98,12 +152,124 @@ a{
 }
 
 #buttonSave{
+    display: none;
+}
+
+#loader{
+    display: none;
+    transition: all 0.8s;
+}
+
+#alertSave{
+    background-color: #2dc26b;
+    color: white;
+    font-weight: bold;
+    width: max-content;
+    padding: 20px 10px;
+    border-radius: 10px;
+    display: none;
+}
+
+#containerSave{
     position: fixed;
     z-index: 5;
     right: 15px;
     bottom: 15px;
+}
+
+@keyframes fadeInAlert{
+    from {opacity: 0; transform: translateY(100%);}
+    to {opacity: 1; transform: translateY(0%);}
+}
+
+#containerDeleteSection{
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+
+#containerDeleteSection:hover {
+    transform: scale(1.1);
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+#containerDeleteSection span{
+    display: inline;
+    font-size: 0.9rem;
+}
+
+#containerDeleteSection img{
+    width: 1.5rem;
+    vertical-align: middle;
+}
+
+#listImages img{
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin: 10px;
+}
+
+#listImages img:hover{
+    cursor: pointer;
+    opacity: 70%;
+}
+
+.activeImage{
+    border: solid 4px #4cb0f1;
+    padding: 4px;
+}
+
+#confirmDeleteImage{
     display: none;
 }
 
+#selectImage h3{
+    text-align: center;
+    margin-bottom: 30px;
+    margin-top: 90px;
+}
 
+#inputUpload{
+    display: none;
+}
 
+.buttonModalImage{
+    display: flex;
+    justify-content: center;
+}
+
+.buttonModalImage > div{
+    position: fixed;
+    background-color: white;
+    padding: 20px 20px;
+    border-radius: 10px;
+    z-index: 10;
+}
+
+.buttonModalImage button{
+    margin-right: 20px;
+}
+
+.buttonModalImage button:last-child{
+    margin-right: 0;
+}
+
+#contentModalImage{
+    min-width: 550px;
+}
+
+#btnShowMenu{
+    cursor: pointer;
+    display: none;
+    transition: all 1s;
+    z-index: 10;
+    margin: 20px;
+    position: relative;
+}
+
+#modalparamBloc > div{
+    text-align: center;
+    min-width: 550px;
+}

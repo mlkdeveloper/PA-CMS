@@ -171,7 +171,7 @@ class User extends Database
                     $user->setStatus(1);
                     $user->setIdRole(2);
                     $user->setToken($token);
-                    
+
                     $user->save();
 
                     Email::sendEmail($email, "Veuillez confirmer votre compte", "http://localhost:8080/confirmation-inscription?tkn=".$token,"Confimer mon compte", "/");

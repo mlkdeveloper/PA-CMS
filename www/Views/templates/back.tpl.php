@@ -1,4 +1,9 @@
 <?php
+$aut = new \App\Controller\Auth();
+session_start();
+if (!$aut->isConnected()){
+    //header('location:/connexion');
+}
 ?>
 
 <!DOCTYPE html>
@@ -20,6 +25,7 @@
 
         <link rel="stylesheet" href="../../dist/main.css">
         <link rel="stylesheet" href="../../public/css/back.css">
+        <link rel="stylesheet" href="../../public/css/navbarFront.css">
 
 
         <?php  if(isset($stylesheet) && !empty($stylesheet))
@@ -35,6 +41,7 @@
         </div>
     </div>
 
+
         <nav class="sidenav" id="sidenav">
             <ul>
                 <a href="/admin/dashboard"><li>Dashboard</li></a>
@@ -49,17 +56,18 @@
                     <a href="#"><li>Avis</li></a>
                 </ul>
             </ul>
-        <ul>
-            <hr>
-            <li class="dropdownMenu" id="dropdownSettings">Paramètres du site<i class="fa fa-caret-down"></i></li>
-            <ul class="dropdown-container">
-                <a href="/admin/liste-magasin"><li>Magasins</li></a>
-                <a href="#"><li>Navigation</li></a>
-                <a href="#"><li>Paramètres</li></a>
+            <ul>
+                <hr>
+                <li class="dropdownMenu" id="dropdownSettings">Paramètres du site<i class="fa fa-caret-down"></i></li>
+                <ul class="dropdown-container">
+                    <a href="/admin/liste-magasin"><li>Magasins</li></a>
+                    <a href="#"><li>Navigation</li></a>
+                    <a href="#"><li>Paramètres</li></a>
+                </ul>
+                <a href="#"><li>Paramètres du CMS</li></a>
             </ul>
-            <a href="#"><li>Paramètres du CMS</li></a>
-        </ul>
         </nav>
+
 
         <div class="container-body">
             <header>
