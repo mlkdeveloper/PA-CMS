@@ -1,3 +1,8 @@
+<?php
+
+use App\Models\Themes;
+
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -12,9 +17,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="../../dist/main.css">
-    <link rel="stylesheet" href="../../dist/pageFronts.css">
+
+    <?php
+    $theme = new Themes();
+    $getTheme = $theme->select("file")->where("status = 1")->get();
+
+    echo "<link rel='stylesheet' href='../../dist/".$getTheme[0]['file']."'>"
+    ?>
+
+
 </head>
 <body>
+
 
     <header>
         <span id="hamburger">
