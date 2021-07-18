@@ -14,7 +14,7 @@ class Stripe
     function paymentStripeAction(){
         require 'vendor/autoload.php';
         session_start();
-
+        
         \Stripe\Stripe::setApiKey('sk_test_51JC0puGueu1Z1r2SmxqKTcVKd7GHDBvZV0fPSbBI8GczQXd4y4bPAv5HgfMLJSy38vW6uyHwmN7bMrKUrIEw9sF400YiBrLMKe');
 
         header('Content-Type: application/json');
@@ -123,7 +123,7 @@ class Stripe
 
             for($i = 0; $i< intval($value); $i++ ) {
                 $stock->setStock(intval($stock->getStock()) - 1);
-                if ($stock->getStock() == 0){
+                if ($stock->getStock() < 0){
                     http_response_code(400);
                     exit();
                 }
