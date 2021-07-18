@@ -28,8 +28,8 @@ class Stripe
                     'currency' => 'eur',
                     'unit_amount' => $_SESSION['panierTotal']*100,
                     'product_data' => [
-                        'name' => 'Validation du panier',
-                        'images' => ["https://i.imgur.com/EHyR2nP.png"],
+                        'name' => 'Montant du panier',
+                        'images' => [],
                     ],
                 ],
                 'quantity' => 1,
@@ -63,7 +63,7 @@ class Stripe
 
             for($i = 0; $i< intval($value); $i++ ){
 
-                $stock = $stock->select('stock')->where("id = :id")->setParams(["id" => $key])->get();
+                $stock = $stock->select('stock, price')->where("id = :id")->setParams(["id" => $key])->get();
 
                 $_SESSION['errorPanier']  = null;
 
@@ -71,6 +71,13 @@ class Stripe
                     $_SESSION['errorPanier'] = "un ou plusieurs produit n'ont plus assez de stock ";
                     exit();
                 }else{
+                    $variant = new Group_variant();
+                    $variant->setId($key);
+                    $variant->setStock(intval($stock[0]['stock']) -1 );
+                    $variant->setPrice(intval($stock[0]['price']) );
+                    $variant->save();
+
+
                     $product = new Product_order();
                     $product->setIdGroupVariant($key);
                     $product->setIdOrder($panier[0]['id']);
