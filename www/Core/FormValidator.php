@@ -278,10 +278,10 @@ class FormValidator
         return $errors;
     }
 
-    static function checkProduct1($class, $name, $category, $categories, $type ){
+    static function checkProduct1($class, $name, $category, $categories, $type, $fdq = true ){
         $errors = [];
 
-        if ($class->find_duplicates_sql("name", $name)) {
+        if ($class->find_duplicates_sql("name", $name) && $fdq) {
             $errors[] = "Le produit existe déjà"; 
         }
 
@@ -303,6 +303,11 @@ class FormValidator
         if(!in_array($category, $categories)){
             $errors[] = "La catégorie n'existe pas";
         }
+
+        if (!$class->find_duplicates_sql_id("id", $_GET["id"], $name)) {
+            $errors[] = "Le produit existe déjà";
+        }
+
 
         return $errors;
     }
@@ -335,6 +340,7 @@ class FormValidator
             foreach($value as $k => $v)
                 if(!in_array($v, $terms)){
                         $errors[] = "Un problème est apparu dans la variante #$key du produit !";
+                        break;
                 }
         }
         
@@ -347,7 +353,7 @@ class FormValidator
     {    
 
 
-        $errors = self::checkProduct1($class, $products["name"], $products["idCategory"], $categories, $products["type"] );
+        $errors = self::checkProduct1($class, $products["name"], $products["idCategory"], $categories, $products["type"], false);
 
         foreach($variants as $key => $value){
             $prix = $value[count($value)-1];

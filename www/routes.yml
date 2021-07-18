@@ -242,3 +242,15 @@
 /admin/add-product-wv:
   controller: Product
   action: addProductWV
+
+/admin/del-product:
+  controller: Product
+  action: delProduct
+
+/admin/publish-product:
+  controller: Product
+  action: publishProduct
+
+/admin/depublish-product:
+  controller: Product
+  action: depublishProduct

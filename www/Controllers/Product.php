@@ -186,6 +186,7 @@ class Product
         
         $datas = $product_model
             ->select()
+            ->where("status = 1")
             ->get();
 
         $view->assign("produits", $datas);
@@ -384,7 +385,9 @@ class Product
 
                 $product_model->populate($product);
                 $product_model->setId($_GET["id"]);
+                $product_model->setType(1);
                 $product_model->save();
+
 
                 $idProduct = $_GET["id"];
 
@@ -432,7 +435,6 @@ class Product
 
                     $idGroup = $idGroup[0]["id"];
 
-                    print_r($value);
                     foreach($value as $v){
                         $pt1->setIdProduct($idProduct);
                         $pt1->setIdTerm($v);
@@ -513,7 +515,7 @@ class Product
             }
 
             $errors = 
-            FormValidator::checkProduct1($product, $_POST['name'], $_POST['idCategory'], $categories, $_POST['type']);
+            FormValidator::checkProduct1($product, $_POST['name'], $_POST['idCategory'], $categories, $_POST['type'], false);
 
             if(empty($errors) && $checkId){
                 $p = new Products;
@@ -605,6 +607,80 @@ class Product
         }else{
             http_response_code(403);
         }
+    }
+
+    public function delProductAction()
+    {
+        if(isset($_GET["id"]) && is_numeric($_GET["id"])){
+            
+            $pid = new Products;
+            $checkId = FormValidator::checkId($_GET['id'], $pid);
+            $product = new Products;
+
+            $product_datas = $product
+                ->select()
+                ->where("id = :id")->setParams(["id" => $_GET["id"]])
+                ->get();
+
+            if($checkId){
+                $product->populate($product_datas[0]);
+                $product->setStatus(0);
+                $product->save();
+            }else{
+                throw new MyException("Erreur sur la suppression du produit", 403);
+            }
+            header("Location: /admin/liste-produits");
+        }else{
+            http_response_code(404);
+        }
+    }
+
+    public function publishProductAction(){
+        if(isset($_GET["id"]) && is_numeric($_GET["id"])){
+            $pid = new Products;
+            $checkId = FormValidator::checkId($_GET['id'], $pid);
+            $product = new Products;
+
+            $product_datas = $product
+                ->select()
+                ->where("id = :id")->setParams(["id" => $_GET["id"]])
+                ->get();
+
+            if($checkId){
+                $product->populate($product_datas[0]);
+                $product->setIsPublished(1);
+                $product->save();
+            }else{
+                throw new MyException("Erreur sur la publication du produit", 403);
+            }
+            header("Location: /admin/liste-produits");
+        }else{
+            http_response_code(404);
+        } 
+    }
+
+    public function depublishProductAction(){
+        if(isset($_GET["id"]) && is_numeric($_GET["id"])){
+            $pid = new Products;
+            $checkId = FormValidator::checkId($_GET['id'], $pid);
+            $product = new Products;
+
+            $product_datas = $product
+                ->select()
+                ->where("id = :id")->setParams(["id" => $_GET["id"]])
+                ->get();
+
+            if($checkId){
+                $product->populate($product_datas[0]);
+                $product->setIsPublished(0);
+                $product->save();
+            }else{
+                throw new MyException("Erreur sur la dépublication du produit", 403);
+            }
+            header("Location: /admin/liste-produits");
+        }else{
+            http_response_code(404);
+        } 
     }
 
 }

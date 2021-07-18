@@ -2,11 +2,6 @@
 <h2 class="centered">Nom du produit : <?= $product_name ?></h2> -->
 
 <div class="container">
-    <?php if (isset($_SESSION["msg"])): ?>
-        <div class="row">
-            <?= $_SESSION['msg']; ?>
-        </div>
-    <?php endif; ?>
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="jumbotron">

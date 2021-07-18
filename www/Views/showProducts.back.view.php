@@ -2,9 +2,7 @@
 
     <div class="align">
         <h1>Liste des produits</h1>
-        <button class="button button--blue">
-            <a href="/admin/nouvelle-categorie">Ajouter une catégorie</a>
-        </button>
+        <a class="button button--blue" href="/admin/ajout-produit">Ajouter un produit</a>
     </div>
     <div class="row">
         <div class="col-md-12 col-sm-12">
@@ -12,7 +10,6 @@
                 <table id="table" class="row-border hover">
                     <thead>
                     <tr>
-                        <th>N° catégorie</th>
                         <th>Nom</th>
                         <th>Description</th>
                         <th>Variants</th>
@@ -25,21 +22,22 @@
                         foreach ($produits as $produit):
                     ?>
                     <tr>
-                        <td><?= $produit['id'] ?></td>
                         <td><?= $produit['name'] ?></td>
                         <td><?= $produit['description'] ?></td>
                         <td><?= $produit['type'] ? "Oui" : "Non" ?></td>
-                        <td><?= $produit['isPublished'] ?></td>
+                        <td><?= $produit['isPublished'] ? "<span class='alert alert--green'>Oui</span>" : "<span class='alert alert--red'>Non</span>" ?></td>
                         <td>
-                            <button class="button button--black">
-                                <i class="fas fa-pencil-alt"></i>
-                                <a href="/admin/modification-produit?id=<?= $produit['id'] ?>">Modifier</a>
-                            </button>
+                            <a class="button button--black" href="/admin/modification-produit?id=<?= $produit['id'] ?>"><i class="fas fa-pencil-alt"></i></a>
 
-                            <button class="button button--warning">
-                                <i class="fas fa-info"></i>
-                                <a href="/admin/information-produit?id=<?= $produit['id'] ?>">Informations</a>
-                            </button>
+                            <a class="button button--blue" href="/admin/information-produit?id=<?= $produit['id'] ?>"><i class="fas fa-info"></i></a>
+                            
+                            <a class="button button--alert" href="/admin/del-product?id=<?= $produit['id'] ?>"><i class="fas fa-trash"></i></a>
+
+                            <?php if($produit["isPublished"] == 0):?>
+                                <a class="button button--success" href="/admin/publish-product?id=<?= $produit['id'] ?>"><i class="fas fa-check"></i></a>
+                            <?php else: ?>
+                                <a class="button button--warning" href="/admin/depublish-product?id=<?= $produit['id'] ?>"><i class="fas fa-times-circle"></i></a>
+                            <?php endif; ?>
                         </td>
                     </tr>
                     <?php endforeach;?>
