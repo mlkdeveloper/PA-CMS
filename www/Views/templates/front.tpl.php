@@ -22,7 +22,11 @@ use App\Models\Themes;
     $theme = new Themes();
     $getTheme = $theme->select("file")->where("status = 1")->get();
 
-    echo "<link rel='stylesheet' href='../../dist/".$getTheme[0]['file']."'>"
+    if (file_exists("./dist/".$getTheme[0]['file'])){
+        echo "<link rel='stylesheet' href='../../dist/".$getTheme[0]['file']."'>";
+    }else{
+        throw new \App\Core\MyException("Fichier manquant",404);
+    }
     ?>
 
 
