@@ -64,7 +64,7 @@ class Security
                     break;
                 case 'saveShopInstallation':
                     $contenu[$line+1] = "  controller: Installation";
-                    $contenu[$line+2] = "  action: saveShopInstallation";
+                    $contenu[$line+2] = "  action: shopInstall";
                     break;
                 case 'deleteStartInstallation':
                     for ($i = -1; $i < 4; $i++){

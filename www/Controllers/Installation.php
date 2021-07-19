@@ -194,7 +194,7 @@ class Installation
         $view->assign("title", "Intallation");
     }
 
-    public function saveShopInstallationAction(){
+    public function shopInstallAction(){
         Security::changeFile($this->fileRoutes, 'deleteStartInstallation');
         Security::changeFile($this->fileRoutes, 'changeRoute');
 

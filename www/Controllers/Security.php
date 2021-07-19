@@ -19,6 +19,7 @@ class Security
 
         //Affiche la vue home intégrée dans le template du front
         $view = new View("installRegister.install", "install");
+        $view->assign("title", "Intallation");
 
         $formInstallRegister = $user->formBuilderInstallRegister();
 
