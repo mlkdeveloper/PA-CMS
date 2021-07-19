@@ -1,17 +1,22 @@
 <div class="container">
-    <div class="">
+    <div class="align">
+
         <h1>Ma commande #<?= $order[0]['id'] ?>  </h1>
+
+        <?php if($order[0]['status'] == 0) : ?>
+            <a href="/annuler-commande?id=<?= $order[0]['id'] ?>  "><button class="button button--alert">Annuler ma commande</button></a>
+        <?php endif; ?>
     </div>
 
     <div class="">
         <p>Statut de la commande : <?php
             if ($order[0]['status'] == -1){
                 echo "Annulé";
-            }else if($order[0]['status'] == 0){
+            }if($order[0]['status'] == 0){
                 echo "En attente";
-            }else if($order[0]['status'] == 1){
+            }if($order[0]['status'] == 1){
                 echo "Validé";
-            }else if($order[0]['status'] == 2){
+            }if($order[0]['status'] == 2){
                 echo "Terminé";
             }?>
         </p>
