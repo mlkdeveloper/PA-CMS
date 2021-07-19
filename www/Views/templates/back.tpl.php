@@ -25,6 +25,7 @@ if (!$aut->isConnected()){
 
         <link rel="stylesheet" href="../../dist/main.css">
         <link rel="stylesheet" href="../../public/css/back.css">
+        <link rel="stylesheet" href="../../public/css/navbarFront.css">
 
 
         <?php  if(isset($stylesheet) && !empty($stylesheet))
@@ -40,32 +41,33 @@ if (!$aut->isConnected()){
         </div>
     </div>
 
-    <nav class="sidenav">
-        <ul>
-            <li><a href="#">Dashboard</a></li>
-            <li><a href="/admin/liste-commande">Commandes</a></li>
-            <a class="dropdown-btn">Produit<i class="fa fa-caret-down"></i></a>
-            <ul class="dropdown-container">
-                <li><a href="#">Categories</a>
-                <li><a href="#">Promotions</a>
-                <li><a href="#">Link 3</a>
+
+        <nav class="sidenav" id="sidenav">
+            <ul>
+                <a href="/admin/dashboard"><li>Dashboard</li></a>
+                <a href="#"><li>Commandes</li></a>
+                <li id="dropdownProducts" class="dropdownMenu">Produits<i class="fa fa-caret-down"></i></li>
+                <ul class="dropdown-container">
+                    <a href="#"><li>Categories</li></a>
+                    <a href="#"><li>Promotions</li></a>
+                </ul>
+                    <a href="#"><li>Pages</li></a>
+                    <a href="/admin/liste-client"><li>Clients</li></a>
+                    <a href="#"><li>Avis</li></a>
+                </ul>
             </ul>
-            <li><a href="#">Pages</a></li>
-            <li><a href="/admin/liste-client">Clients</a></li>
-            <li><a href="#">Avis</a></li>
-        </ul>
-    </ul>
-    <ul>
-        <hr>
-        <a class="dropdown-btn">Paramètres du site<i class="fa fa-caret-down"></i></a>
-        <ul class="dropdown-container">
-            <li><a href="/admin/liste-magasin">Magasin</a>
-            <li><a href="#">Theme</a>
-            <li><a href="#">Navigation</a>
-        </ul>
-        <li><a href="#">Paramètres du CMS</a></li>
-    </ul>
-</nav>
+            <ul>
+                <hr>
+                <li class="dropdownMenu" id="dropdownSettings">Paramètres du site<i class="fa fa-caret-down"></i></li>
+                <ul class="dropdown-container">
+                    <a href="/admin/liste-magasin"><li>Magasins</li></a>
+                    <a href="#"><li>Navigation</li></a>
+                    <a href="#"><li>Paramètres</li></a>
+                </ul>
+                <a href="#"><li>Paramètres du CMS</li></a>
+            </ul>
+        </nav>
+
 
         <div class="container-body">
             <header>

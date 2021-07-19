@@ -643,7 +643,77 @@ class User extends Database
         ];
     }
 
+    public function formBuilderInstallRegister(){
 
+        return [
+
+            "config"=>[
+                "method"=>"POST",
+                "action"=>"",
+                "class"=>"form_control",
+                "id"=>"form_register",
+                "submit"=>"Terminer l'installation",
+                "classButton" => "button button--blue"
+            ],
+            "inputs"=>[
+                "firstname"=>[
+                    "type"=>"text",
+                    "divClass"=> "form_align--top",
+                    "placeholder"=>"Exemple : Yves",
+                    "label"=>"Prénom",
+                    "required"=>true,
+                    "class"=>"input",
+                    "minLength"=>2,
+                    "maxLength"=>50,
+                    "error"=>"Votre prénom doit faire entre 2 et 50 caractères"
+                ],
+                "lastname"=>[
+                    "type"=>"text",
+                    "divClass"=> "form_align--top",
+                    "placeholder"=>"Exemple : Skrzypczyk",
+                    "label"=>"Nom",
+                    "required"=>true,
+                    "class"=>"input",
+                    "minLength"=>2,
+                    "maxLength"=>100,
+                    "error"=>"Votre nom doit faire entre 2 et 100 caractères"
+                ],
+
+                "email"=>[
+                    "type"=>"email",
+                    "divClass"=> "form_align--top",
+                    "placeholder"=>"Exemple : nom@gmail.com",
+                    "label"=>"Email",
+                    "required"=>true,
+                    "class"=>"input",
+                    "minLength"=>8,
+                    "maxLength"=>320,
+                    "error"=>"Votre email doit faire entre 8 et 320 caractères"
+                ],
+
+                "pwd"=>[
+                    "type"=>"password",
+                    "divClass"=> "form_align--top",
+                    "label"=>"Mot de passe",
+                    "required"=>true,
+                    "class"=>"input",
+                    "minLength"=>8,
+                    "error"=>"Votre mot de passe doit faire au minimum 8 caractères"
+                ],
+                "pwdConfirm"=>[
+                    "type"=>"password",
+                    "divClass"=> "form_align--top",
+                    "label"=>"Confirmation",
+                    "required"=>true,
+                    "class"=>"input",
+                    "confirm"=>"pwd",
+                    "error"=>"Votre mot de passe de confirmation ne correspond pas"
+                ],
+            ]
+
+        ];
+
+    }
 
 }
 

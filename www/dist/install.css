@@ -1,3 +1,39 @@
+#titleInstall{
+    padding-bottom: 50px;
+    text-align: center;
+}
 .container-input{
-    /*width: fit-content;*/
+    float: right;
+    padding-right: 30%;
+}
+.container-input label{
+    padding-right: 40px;
+}
+
+.form_align input, .form_align select {
+    width: 250px;
+}
+
+.form_align textarea{
+    width: 350px;
+    height: 70px;
+}
+
+@media only screen and (max-width: 1230px) {
+    .form_align {
+        display: block;
+        width: 70%;
+        margin: auto;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .form_align {
+        width: 80%;
+    }
+}
+
+#button_install{
+    display: flex;
+    margin-left: 85%;
 }

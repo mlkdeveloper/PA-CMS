@@ -9,9 +9,9 @@
                     <thead>
                     <tr>
                         <th>Id</th>
-                        <th>Utilisateur</th>
-                        <th>Nb Article</th>
-                        <th>Montant Total</th>
+                        <th>Client</th>
+                        <th>Nombres d'articles</th>
+                        <th>Total €</th>
                         <th>Statut</th>
                         <th style="width: 150px">Actions</th>
                     </tr>

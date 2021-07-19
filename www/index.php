@@ -15,13 +15,9 @@ Autoload::register();
 
 new ConstantManager();
 
-
-//require "Core/Router.php";
-
-//On récupère le slug dans la super globale SERVER
-//On le transforme en minuscule
 $slug = mb_strtolower($_SERVER["REQUEST_URI"]);
 $slug = explode("?", $slug);
+
 
 try {
     $route = new Router($slug[0]);

@@ -15,43 +15,6 @@ class Shop extends Database
     protected $zipCode;
     protected $phoneNumber;
     protected $description;
-    protected $isDeleted;
-
-    /**
-     * @return mixed
-     */
-    public function getIsDeleted()
-    {
-        return $this->isDeleted;
-    }
-
-    /**
-     * @param mixed $isDeleted
-     */
-    public function setIsDeleted($isDeleted)
-    {
-        $this->isDeleted = $isDeleted;
-    }
-
-    public function __construct(){
-        parent::__construct();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param mixed $description
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
 
     /**
      * @return null
@@ -149,6 +112,25 @@ class Shop extends Database
         $this->phoneNumber = $phoneNumber;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param mixed $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+
+
+
     public function formBuilderCreateShop(){
         return [
 
@@ -168,7 +150,7 @@ class Shop extends Database
                     "divClass"=> "form_align--top",
                     "label"=>"Nom",
                     "required"=>true,
-                    "class"=>"form_input",
+                    "class"=>"input",
                     "minLength"=>2,
                     "maxLength"=>320,
                     "error"=>"Le nom doit faire entre 2 et 320 caractères"
@@ -180,7 +162,7 @@ class Shop extends Database
                     "divClass"=> "form_align--top",
                     "placeholder"=>"ex : 29 rue de la liberte",
                     "required"=>true,
-                    "class"=>"form_input",
+                    "class"=>"input",
                     "minLength"=>5,
                     "error"=>"L'adresse doit faire au minimum 5 caractères"
                 ],
@@ -190,7 +172,7 @@ class Shop extends Database
                     "divClass"=> "form_align--top",
                     "placeholder"=>"ex : Paris",
                     "required"=>true,
-                    "class"=>"form_input",
+                    "class"=>"input",
                     "minLength"=>2,
                     "error"=>"La ville doit faire au minimum 2 caractères"
                 ],
@@ -200,7 +182,7 @@ class Shop extends Database
                     "divClass"=> "form_align--top",
                     "placeholder"=>"ex : 75015",
                     "required"=>true,
-                    "class"=>"form_input",
+                    "class"=>"input",
                     "minLength"=>2,
                     "error"=>"Le code postal doit faire au 5 caractères"
                 ],
@@ -210,7 +192,7 @@ class Shop extends Database
                     "divClass"=> "form_align--top",
                     "placeholder"=>"Votre description",
                     "required"=>true,
-                    "class"=>"form_input",
+                    "class"=>"input input--textarea",
                     "minLength"=>5,
                     "error"=>"La description doit faire au minimum 5 caractères"
                 ],
@@ -221,7 +203,7 @@ class Shop extends Database
                     "divClass"=> "form_align--top",
                     "placeholder"=>"Numero de telephone",
                     "required"=>true,
-                    "class"=>"form_input",
+                    "class"=>"input",
                     "minLength"=>1,
                     "error"=>"le numero de telphone est obligatoire et doit être composé uniquement de 10 chiffres"
                 ],

@@ -38,6 +38,7 @@ class Database extends QueryBuilder
 
             $query = $this->pdo->prepare("INSERT INTO " . $this->table . " (" . implode(',', array_keys($column)) . ") VALUES (:" . implode(',:', array_keys($column)) . ") "); //1
 
+
         } else {
 
             foreach($column as $key => $value){
