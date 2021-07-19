@@ -13,3 +13,14 @@
     align-items: center;
 }
 
+.label-file {
+    cursor: pointer;
+    font-size: 30px;
+}
+.label-file:hover {
+    color: #25a5c4;
+}
+
+.input-file {
+    display: none;
+}

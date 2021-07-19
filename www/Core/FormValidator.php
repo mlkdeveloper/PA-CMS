@@ -278,10 +278,10 @@ class FormValidator
         return $errors;
     }
 
-    static function checkProduct1($class, $name, $category, $categories, $type, $fdq = true ){
+    static function checkProduct1($class, $name, $category, $categories, $type, $fdq = true, $hasVariant=true ){
         $errors = [];
 
-        if ($class->find_duplicates_sql("name", $name) && $fdq) {
+        if ($class->find_duplicates_sql("name", trim($name)) && $fdq) {
             $errors[] = "Le produit existe déjà"; 
         }
 
@@ -296,7 +296,7 @@ class FormValidator
             $errors[] = "Le produit doit avoir un type connu";
         }
 
-        if($type != 1){
+        if($type != 1 && $hasVariant || $type != 0 && !$hasVariant){
             $errors[] = "Problème avec le type du produit";
         }
 
@@ -305,7 +305,7 @@ class FormValidator
         }
 
         if(isset($_GET["id"]))
-            if (!$class->find_duplicates_sql_id("id", $_GET["id"], $name)) {
+            if (!$class->find_duplicates_sql_id("id", $_GET["id"], $name, true)) {
                 $errors[] = "Le produit existe déjà";
             }
 
@@ -405,14 +405,24 @@ class FormValidator
         return $errors;
     }
 
-    static function checkId($id, $class){
-        $check = $class
-            ->select("id")
-            ->where("id = :id", "status = 1")->setParams(["id" => $id])
-            ->get();
+    static function checkId($id, $class, $status = true){
+        if($status){
+            $check = $class
+                ->select("id")
+                ->where("id = :id", "status = 1")->setParams(["id" => $id])
+                ->get();
 
-        if (empty($check)) return false;
-        else return true;
+            if (empty($check)) return false;
+            else return true;
+        }else{
+            $check = $class
+                ->select("id")
+                ->where("id = :id")->setParams(["id" => $id])
+                ->get();
+
+            if (empty($check)) return false;
+            else return true; 
+        }
     }
 
 }

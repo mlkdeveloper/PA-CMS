@@ -382,3 +382,7 @@ function addProductWV() {
         error: () => {}
     })
 }
+
+function hasVariants(){
+    
+}

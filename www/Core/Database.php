@@ -93,21 +93,36 @@ class Database extends QueryBuilder
         else return true;
     }
 
-    public function find_duplicates_sql_id($col, $id, $value): bool
+    public function find_duplicates_sql_id($col, $id, $value, $status = false): bool
     {
-        $datas = $this
-            ->select("name")
-            ->where("$col <> :$col")
-            ->setParams(["$col" => $id])
-            ->get();
+        if(!$status){
+            $datas = $this
+                ->select("name")
+                ->where("$col <> :$col")
+                ->setParams(["$col" => $id])
+                ->get();
 
-        $array = [];
-        foreach($datas as $data)
-            array_push($array, $data["name"]);
+            $array = [];
+            foreach($datas as $data)
+                array_push($array, $data["name"]);
 
-        if(in_array($value, $array)) return false;
-        else return true;
+            if(in_array($value, $array)) return false;
+            else return true;
+        }else{
+            $datas = $this
+                ->select("name")
+                ->where("$col <> :$col", "status = 1")
+                ->setParams(["$col" => $id])
+                ->get();
 
+            $array = [];
+            foreach($datas as $data)
+                array_push($array, $data["name"]);
+
+            if(in_array($value, $array)) return false;
+            else return true;
+
+        }
     }
 
 }

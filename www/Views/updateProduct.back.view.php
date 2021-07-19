@@ -32,8 +32,17 @@
                 </div>
 
                 <div class="mt-3">
-                    <input id="variant" type="checkbox" value="1" checked onclick="isVariant()">
-                    <label>Ce produit comporte plusieurs variantes, ex. différentes tailles ou couleurs. *</label>
+                    <?php if (isset($produits[0]["type"]) && isset($p[0]["type"])): ?>
+                        <input id="variant" type="checkbox" value="1" 
+                        <?= ($produits[0]["type"] || $p[0]["type"]) ? "checked" :  ""?> onclick="hasVariants()">
+
+                        <label>Ce produit comporte plusieurs variantes, ex. différentes tailles ou couleurs. *</label>
+                    <?php else: ?>
+
+                        <input id="variant" type="checkbox" value="1" onclick="hasVariants()">
+                        <label>Ce produit comporte plusieurs variantes, ex. différentes tailles ou couleurs. *</label>
+
+                    <?php endif;?>
                 </div>
             </div>
         </div>
@@ -86,8 +95,9 @@
 
     <div class="container">
         <div class="row mt-1" id="btns">
-            <button id="addVar" class="button button--blue" onclick="updateP(<?= $p[0]["id"] ?>)">Enregistrer</button>
-            <button id="addVar" class="button button--blue" onclick="add_variante()">Recréer les variantes</button>
+            <button id="addVar" class="button button--blue mr-1" onclick="updateP(<?= $p[0]["id"] ?>)">Enregistrer</button>
+            <button id="addVar" class="button button--warning mr-1" onclick="add_variante()">Recréer les variantes</button>
+            <a class="button button--alert" href="delete-variantes?id=<?= $_GET['id'] ?>">Supprimer les variantes</a>
         </div>
     </div>
     <div class="container">
@@ -104,7 +114,14 @@
             </div>
             <div class="centered mt-1">
                 <?php if(!empty($input[0]['picture'])): ?> 
-                    <img style="width: 200px;" src="../images/products/<?=$input[0]['picture']?>" />
+                    <div>
+                        <img style="width: 200px;" src="../images/products/<?=$input[0]['picture']?>" />
+                        <label for="file" class="label-file"><i class="fas fa-file-upload"></i></label>
+                        <input id="file" class="input-file" type="file">  
+                        <a class="button button--alert" href="/admin/del-picture-variante?id=<?= $input[0]["idGroup"] ?>">
+                            <i class="fas fa-trash"></i>
+                        </a>                      
+                    </div>
                 <?php else: ?>
                     <div class="row"><p>Pas d'image pour cette variante <button class="button button--success">+</button></p></div>
                 <?php endif; ?>

@@ -254,3 +254,11 @@
 /admin/depublish-product:
   controller: Product
   action: depublishProduct
+
+/admin/del-picture-variante:
+  controller: Product
+  action: delPicture
+
+/admin/delete-variantes:
+  controller: Product
+  action: delVariantes

@@ -34,7 +34,7 @@ class Product
         $category = new Category;
         $categories = $category
         ->select("id, name")
-        ->where("status = 0")
+        ->where("status = 1")
         ->get();
 
         $view->assign("attributes", $attributes);
@@ -76,7 +76,7 @@ class Product
 
             $lc = $category
                 ->select("id")
-                ->where("status = 0")
+                ->where("status = 1")
                 ->get();
 
             $list_categories = [];
@@ -130,7 +130,7 @@ class Product
 
                         $gv->setPrice($p);
                         $gv->setStock($s);
-                        ($res) ? $gv->setPicture($upload->getName().".".$upload->getExtension()) : $gv->setPicture("");
+                        ($res) ? $gv->setPicture($upload->getName().".".$upload->getExtension()) : $gv->setPicture(NULL);
                         $gv->save();
                     }else{
                         $s = $value[count($value)-2];
@@ -140,7 +140,7 @@ class Product
 
                         $gv->setPrice($p);
                         $gv->setStock($s);
-                        $gv->setPicture("");
+                        $gv->setPicture(NULL);
                         $gv->save();
                     }
 
@@ -153,7 +153,7 @@ class Product
 
                     foreach($value as $v){
                         $pt->setIdProduct($idProduct);
-                        $pt->setIdTerm($v);
+                        $v != 1 ? $pt->setIdTerm($v) : http_response_code(403);
                         $pt->setIdGroup($idGroup);
                         $pt->setStatus(1);
                         $pt->save();
@@ -265,7 +265,9 @@ class Product
                 $view->assign("stylesheet", "products");
                 
                 $datas = $product_model
-                    ->select("*, ". DBPREFIXE ."products.name as productName, ". DBPREFIXE ."products.id as idP, ". DBPREFIXE ."product_term.id as idpt, ". DBPREFIXE ."group_variant.id as idgv, ". DBPREFIXE ."terms.id as idt")
+
+                    ->select("*, ". DBPREFIXE ."products.name as productName, ". DBPREFIXE ."products.id as idP, ". DBPREFIXE ."product_term.id as idpt, ". DBPREFIXE ."group_variant.id as idgv, ". DBPREFIXE ."terms.id as idt," . DBPREFIXE."product_term.status as statuspt")
+
                     ->innerJoin(DBPREFIXE."category", DBPREFIXE."category.id", "=", DBPREFIXE."products.idCategory")
                     ->innerJoin(DBPREFIXE."product_term", DBPREFIXE."product_term.idProduct", "=", DBPREFIXE."products.id")
                     ->innerJoin(DBPREFIXE."terms", DBPREFIXE."terms.id", "=", DBPREFIXE."product_term.idTerm")
@@ -302,7 +304,7 @@ class Product
 
                 $categories = $categories
                     ->select()
-                    ->where("status = 0")
+                    ->where("status = 1")
                     ->get();
 
                 $attributes = $attribute
@@ -313,8 +315,9 @@ class Product
                 $product = new Products;
                 $datas_p = $product
                     ->select("*,name as productName")
-                    ->where("id = :id")->setParams(["id" => $_GET["id"]])
+                    ->where("id = :id", "status <> 0")->setParams(["id" => $_GET["id"]])
                     ->get();
+
 
                 $view->assign("attributes", $attributes);
                 $view->assign("datas_inputs", $comb);
@@ -361,7 +364,7 @@ class Product
 
             $lc = $category
                 ->select("id")
-                ->where("status = 0")
+                ->where("status = 1")
                 ->get();
 
             $list_categories = [];
@@ -421,7 +424,7 @@ class Product
                         unset($value[count($value)-1], $value[count($value)-1]);
                         $gv->setPrice($p);
                         $gv->setStock($s);
-                        ($res) ? $gv->setPicture($upload->getName().".".$upload->getExtension()) : $gv->setPicture("");
+                        ($res) ? $gv->setPicture($upload->getName().".".$upload->getExtension()) : $gv->setPicture(NULL);
                         $gv->save();
                     }else{
                         $s = $value[count($value)-2];
@@ -432,7 +435,7 @@ class Product
 
                         $gv->setPrice($p);
                         $gv->setStock($s);
-                        $gv->setPicture("");
+                        $gv->setPicture(NULL);
                         $gv->save();
                     }
 
@@ -515,6 +518,7 @@ class Product
             $category = new Category;
             $category = $category
                 ->select("id")
+                ->where("status = 1")
                 ->get();
 
             $categories = [];
@@ -523,7 +527,7 @@ class Product
             }
 
             $errors = 
-            FormValidator::checkProduct1($product, $_POST['name'], $_POST['idCategory'], $categories, $_POST['type'], false);
+            FormValidator::checkProduct1($product, trim($_POST['name']), $_POST['idCategory'], $categories, $_POST['type'], false);
 
             if(empty($errors) && $checkId){
                 $p = new Products;
@@ -558,62 +562,103 @@ class Product
             $s = $product["stock"];
             $p = $product["price"];
 
-            $gv = new Group_variant;
-            $product_model = new Products;
-            $pt = new Product_term;
+            $category = new Category;
+            $category = $category
+                ->select("id")
+                ->where("status = 1")
+                ->get();
 
-            $gv->setStock($product["stock"]);
-            $gv->setPrice($product["price"]);
-
-            $f = $_FILES["file"];
-            //Id group pour l'image
-            $idG = new Group_variant;
-
-            $idG = $idG->select("MAX(id) as id")->get();
-            $idG = $idG[0]["id"] + 1;
-            $upload = new Uploader($f,false);
-            $res = $upload
-                ->setName("file_".$idG)
-                ->setSize(10)
-                ->setDirectory("./images/products")
-                ->upload();
-
-            if(isset($f) && $res){
-                $gv->setPicture($upload->getName().".".$upload->getExtension());
-            }else{
-                $gv->setPicture("");
+            $categories = [];
+            foreach ($category as $value) {
+                $categories[] = $value["id"];
             }
-            $gv->save();
 
-            unset($s, $p);
-            $product_model->populate($product);
-            $product_model->setStatus(1);
-            $product_model->save();
 
-            //Récupération de l'id produit
-            $idProduct = $product_model
-            ->select("MAX(id) as id")
-            ->get();
+            $errors_p = 
+            FormValidator::checkProduct1(
+                new Products,
+                $product["name"],
+                $product["idCategory"],
+                $categories,
+                $product["type"],
+                true,
+                false
+            );
 
-            $idProduct = $idProduct[0]["id"];
+            $errors_g = FormValidator::checkGroup($product["stock"],$product["price"]);
 
-            //Récupération de l'id du groupe
-            $idGroup = $gv
-            ->select("MAX(id) as id")
-            ->get();
+            $errors = array_merge($errors_p, $errors_g);
 
-            $idGroup = $idGroup[0]["id"];
-            $pt->setIdProduct($idProduct);
-            $pt->setIdGroup($idGroup);
-            $pt->setStatus(1);
-            $pt->save();
+            if(empty($errors)){
+                $gv = new Group_variant;
+                $product_model = new Products;
+                $pt = new Product_term;
 
-            echo "<div class='alert alert--green'>Produit créé avec succès !</div>";
+                $gv->setStock($product["stock"]);
+                $gv->setPrice($product["price"]);
 
-            http_response_code(201);
+                if(isset($_FILES["file"])){
+                   
+                    $f = $_FILES["file"];
+                    //Id group pour l'image
+                    $idG = new Group_variant;
+
+                    $idG = $idG->select("MAX(id) as id")->get();
+                    $idG = $idG[0]["id"] + 1;
+                    $upload = new Uploader($f,false);
+                    $res = $upload
+                        ->setName("file_".$idG)
+                        ->setSize(10)
+                        ->setDirectory("./images/products")
+                        ->upload();
+
+                }
+
+                if(isset($f) && $res){
+                    $gv->setPicture($upload->getName().".".$upload->getExtension());
+                }else{
+                    $gv->setPicture(NULL);
+                    echo "<div class='alert alert--red'>Attention ! Le format d'image n'est pas correct, le fichier n'a pas été ajouté !</div>";
+                }
+                $gv->save();
+
+                unset($s, $p);
+                $product_model->populate($product);
+                $product_model->setStatus(1);
+                $product_model->save();
+
+                //Récupération de l'id produit
+                $idProduct = $product_model
+                ->select("MAX(id) as id")
+                ->get();
+
+                $idProduct = $idProduct[0]["id"];
+
+                //Récupération de l'id du groupe
+                $idGroup = $gv
+                ->select("MAX(id) as id")
+                ->get();
+
+                $idGroup = $idGroup[0]["id"];
+                $pt->setIdProduct($idProduct);
+                $pt->setIdTerm(1);
+                $pt->setIdGroup($idGroup);
+                $pt->setStatus(1);
+                $pt->save();
+
+                echo "<div class='alert alert--green'>Produit créé avec succès !</div>";
+
+                http_response_code(201);
+            }else{
+                echo "<ul class='alert alert--red'>";
+                foreach($errors as $err){
+                    echo "<li>". $err ;
+                }
+                echo "</ul>"; 
+            }
 
         }else{
-            http_response_code(403);
+            http_response_code(404);
         }
     }
 
@@ -689,6 +734,72 @@ class Product
         }else{
             http_response_code(404);
         } 
+    }
+
+    public function delPictureAction(){
+        if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
+            $gid = new Group_variant;
+            $checkId = FormValidator::checkId($_GET['id'], $gid, false);
+
+            $group = new Group_variant;
+            $datas = $group
+                ->select()
+                ->where("id = :id")->setParams(["id" => $_GET["id"]])
+                ->get();
+
+            if($checkId){
+                $group->populate($datas[0]);
+                $group->setPicture(NULL);
+                $group->save();
+                header('Location: ' . $_SERVER['HTTP_REFERER']);
+            }else{
+                throw new MyException("Erreur, contactez l'administrateur", 404);
+            }
+
+        }else{
+            throw new MyException("Erreur, contactez l'administrateur", 403);
+        }
+    }
+
+    public function delVariantesAction(){
+        if(isset($_GET["id"]) && is_numeric($_GET["id"])){
+            $pid = new Products;
+            $checkId = FormValidator::checkId($_GET['id'], $pid);
+
+            if($checkId){
+                $product_term = new Product_term;
+                $product = new Products;
+
+                $datas = $product_term
+                    ->select()
+                    ->where("idProduct = :id")->setParams(["id" => $_GET["id"]])
+                    ->get();
+
+                foreach($datas as $key => $value){
+                    $product_term->populate($datas[$key]);
+                    $product_term->setStatus(0);
+                    $product_term->save();
+                }
+
+                $datas_product = $product
+                    ->select()
+                    ->where("id = :id", "status <> 0")->setParams(["id" => $_GET["id"]])
+                    ->get();
+
+                $product->populate($datas_product[0]);
+                $product->setType(0);
+                $product->save();
+
+                header('Location: ' . $_SERVER['HTTP_REFERER']);
+
+
+            }else{
+                throw new MyException("Erreur, contactez l'administrateur", 404);
+            }
+
+        }else{
+            throw new MyException("Erreur, contactez l'administrateur", 403);
+        }
     }
 
 }
