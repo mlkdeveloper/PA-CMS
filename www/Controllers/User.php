@@ -43,6 +43,12 @@ class User extends Database
                             $monUser = $user->select('*')->where('email=:email', 'pwd=:pwd')->setParams([":email" => $_POST['email'], ":pwd" => $pwdGet[0]["pwd"],])->get();
                             $_SESSION['user'] = $monUser[0];
                             var_dump($_SESSION["user"]);
+                            if (isset($_GET['reason']) && !empty($_GET['reason'])){
+                                if ($_GET['reason'] == 'stripe'){
+                                    header('location:/panier');
+                                    exit();
+                                }
+                            }
                             header('location:/');
                         }else{
                             array_push($errors,"Vous devez d'abord confimer votre compte");

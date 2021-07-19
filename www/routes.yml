@@ -260,7 +260,27 @@
 /admin/terminer-commande:
   controller: Commande
   action: DoneCommande
+  
+/create-checkout-session:
+  controller: Stripe
+  action: paymentStripe
 
+/paiement-stripe:
+  controller: Stripe
+  action: pagePaiementStripe
+
+/success:
+  controller: Stripe
+  action: success
+
+/cancel:
+  controller: Stripe
+  action: cancel
+
+/verification-stock-panier:
+  controller: Stripe
+  action: checkStockProducts
+  
 /annuler-commande:
   controller: Commande
   action: cancelOrderFront

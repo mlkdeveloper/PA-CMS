@@ -15,23 +15,7 @@ class Orders extends Database
     protected $montant;
 
     /**
-     * @return mixed
-     */
-    public function getMontant()
-    {
-        return $this->montant;
-    }
-
-    /**
-     * @param mixed $montant
-     */
-    public function setMontant($montant)
-    {
-        $this->montant = $montant;
-    }
-
-    /**
-     * @return mixed
+     * @return null
      */
     public function getId()
     {
@@ -39,7 +23,7 @@ class Orders extends Database
     }
 
     /**
-     * @param mixed $id
+     * @param null $id
      */
     public function setId($id)
     {
@@ -97,19 +81,18 @@ class Orders extends Database
     /**
      * @return mixed
      */
-    public function getAsupprimer()
+    public function getMontant()
     {
-        return $this->asupprimer;
+        return $this->montant;
     }
 
     /**
-     * @param mixed $asupprimer
+     * @param mixed $montant
      */
-    public function setAsupprimer($asupprimer)
+    public function setMontant($montant)
     {
-        $this->asupprimer = $asupprimer;
+        $this->montant = $montant;
     }
-
 
 
 }

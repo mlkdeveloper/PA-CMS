@@ -4,10 +4,14 @@
         <div class="align">
             <h1>Panier</h1>
             <?php if(!empty($_SESSION['panier'])): ?>
-            <button class="button button--blue">Procéder au paiement</button>
+                <?php if(empty($_SESSION['user'])): ?>
+                    <button class="button button--blue"><a onclick="showModalConnexionStripe()">Procéder au paiement</a></button>
+                <?php endif; ?>
+                <?php if(!empty($_SESSION['user'])): ?>
+                    <button class="button button--blue" id="checkStock"><a onclick="showModalCheckStockStripe()">Procéder au paiement</a></button>
+                <?php endif; ?>
             <?php endif; ?>
         </div>
-
         <?php if(empty($_SESSION['panier'])): ?>
         <div>
             <p>Votre panier est vide.</p>
@@ -60,12 +64,78 @@
             </div>
 
             <?php endif; ?>
-
     </div>
-</section>
 
+        <div class="modal" id="modalConnexionStripe">
+            <div class="modal-content">
+                <h3>Vous devez être connecter pour pouvoir passer au paiement de votre commande</h3>
+                <a id="buttonConnexionStripe"><button class="button button--success">Connexion</button></a>
+                <button class="button button--alert" onclick="hideModalConnexionStripe()">Annuler</button>
+            </div>
+        </div>
+
+        <div class="modal" id="modalCheckStockStripe">
+            <div class="modal-content">
+                <h3 id="titre-paiement"></h3>
+                <p id="passage-paiement"></p>
+                <p id="btnPaiementStripe">
+                    <button class="button button--success" id="paiement-stripee">Paiement</button>
+                    <button class="button button--alert" onclick="hideModalCheckStockStripe()">Fermer</button>
+
+                </p>
+            </div>
+        </div>
+
+</section>
+<script type="text/javascript">
+    var checkoutButton = document.getElementById("checkStock");
+
+    checkoutButton.addEventListener("click", function () {
+
+        $.ajax({
+            url: '/verification-stock-panier',
+            error: function() {
+                $('#titre-paiement').append('Erreur sur votre panier')
+                $('#passage-paiement').append("Certains produits de votre panier n'est plus en stock dans notre boutique. <br> Nous vous invitons à le supprimer de votre panier")
+                $('#paiement-stripee').remove()
+            },
+            success: function(data) {
+                $('#titre-paiement').append('Procéder au paiement')
+                $('#btnPaiementStripe button:first-child').attr('id', 'paiement-stripee')
+            },
+            type: 'GET'
+        });
+    });
+
+    // Create an instance of the Stripe object with your publishable API key
+    var stripe = Stripe("pk_test_51JC0puGueu1Z1r2S3oq9aEovJmlKpYwQ8isyViEyKtwQrLXIEZBdOVeXiihXPpi4EtJHkTd53Whc5F6J7TNxLEQz00XaTk67k0");
+    var checkoutButton = document.getElementById("paiement-stripee");
+    checkoutButton.addEventListener("click", function () {
+        fetch("/create-checkout-session", {
+            method: "POST",
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (session) {
+                return stripe.redirectToCheckout({ sessionId: session.id });
+            })
+            .then(function (result) {
+                // If redirectToCheckout fails due to a browser or network
+                // error, you should display the localized error message to your
+                // customer using error.message.
+                if (result.error) {
+                    alert(result.error.message);
+                }
+            })
+            .catch(function (error) {
+                console.error("Error:", error);
+            });
+    });
+</script>
 
 
 
 
 <script src="../public/js/datatable.js"></script>
+<script src="../public/js/stripe.js"></script>
