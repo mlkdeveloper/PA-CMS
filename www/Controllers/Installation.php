@@ -31,8 +31,8 @@ class Installation
 
             $this->insertBDD($dataArray[5], $dataArray[0]);
 
-            Security::changeFile($this->fileRoutes, 'deleteStartInstallation');
-            Security::changeFile($this->fileRoutes, 'changeRoute');
+            Security::changeFile($this->fileRoutes, 'saveShopInstallation');
+            Security::changeFile($this->fileRoutes, 'shopInstallation');
 
             header('Location: /');
         }else{
@@ -187,5 +187,17 @@ class Installation
         $_SESSION['securityInstall'] = $error;
         header('Location: /');
         exit();
+    }
+
+    public function shopInstallationAction(){
+        $view = new View("installShop", "install");
+        $view->assign("title", "Intallation");
+    }
+
+    public function saveShopInstallationAction(){
+        Security::changeFile($this->fileRoutes, 'deleteStartInstallation');
+        Security::changeFile($this->fileRoutes, 'changeRoute');
+
+        header('Location: /');
     }
 }

@@ -21,11 +21,13 @@ class Security
         switch ($type){
             case 'changeRoute':
             case 'finalChangeRoute':
+            case 'shopInstallation':
                 $searchValue = '/:';
                 break;
             case 'changeConstantManager':
                 $searchValue = 'config-sample.env';
                 break;
+            case 'saveShopInstallation';
             case 'deleteStartInstallation':
                 $searchValue = '/start-install:';
                 break;
@@ -45,6 +47,10 @@ class Security
 
 
             switch ($type){
+                case 'shopInstallation':
+                    $contenu[$line+1] = "  controller: Installation";
+                    $contenu[$line+2] = "  action: shopInstallation";
+                    break;
                 case 'changeRoute':
                     $contenu[$line+1] = "  controller: Security";
                     $contenu[$line+2] = "  action: registerInstall";
@@ -56,13 +62,16 @@ class Security
                 case 'changeConstantManager':
                     $contenu[$line] = '    private $envFile = "config.env";';
                     break;
+                case 'saveShopInstallation':
+                    $contenu[$line+1] = "  controller: Installation";
+                    $contenu[$line+2] = "  action: saveShopInstallation";
+                    break;
                 case 'deleteStartInstallation':
                     for ($i = -1; $i < 4; $i++){
                         unset($contenu[$line+$i]);
                     }
                     break;
                 case 'removeRedirection':
-
                     unset($contenu[$line]);
                     unset($contenu[$line+1]);
                     unset($contenu[$line+2]);
