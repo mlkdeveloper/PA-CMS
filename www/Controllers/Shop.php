@@ -61,16 +61,11 @@ class Shop
         $product = new ProductsModel();
         $productModel = new ProductsMModel();
 
-        if (empty($_GET['id'])){
-            header('location:/admin/liste-magasin');
-        }
 
         $idShop = $_GET['id'];
-        $shopGet = $shop->select('*')->where('id = :id')->setParams([":id" => $idShop])->get();
-        $productsGet = $product->select('*')->where('id = :id')->setParams([":id" => $idShop])->get();
+        $shopGet = $shop->select('*')->where('id = 1')->get();
 
         $view = new View("detailShop.back", "back");
-        $view->assign("products", $productsGet);
 
         $formUpdateShop = $shop->formBuilderUpdateShop(...$shopGet);
 
@@ -83,7 +78,7 @@ class Shop
 
             if(empty($errors)){
 
-                $shop->setId($_GET['id']);
+                $shop->setId(1);
                 $shop->setName($_POST['nom']);
                 $shop->setAddress($_POST['address']);
                 $shop->setCity($_POST['ville']);
@@ -92,13 +87,11 @@ class Shop
                 $shop->setPhoneNumber($_POST['telephone']);
                 $shop->save();
 
-                header('location:/admin/liste-magasin');
+                header('location:/admin/detail-magasin');
             }else{
                 $view->assign("errors", $errors);
             }
         }
-
-
         $view->assign("values", ...$shopGet);
         $view->assign("form", $formUpdateShop);
         $view->assign("title", "Admin - Detail du magasin");
