@@ -60,7 +60,7 @@ if (!$aut->isConnected()){
                 <hr>
                 <li class="dropdownMenu" id="dropdownSettings">Paramètres du site<i class="fa fa-caret-down"></i></li>
                 <ul class="dropdown-container">
-                    <a href="/admin/liste-magasin"><li>Magasins</li></a>
+                    <a href="/admin/detail-magasin"><li>Magasins</li></a>
                     <a href="#"><li>Navigation</li></a>
                     <a href="#"><li>Paramètres</li></a>
                 </ul>
