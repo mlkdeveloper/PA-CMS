@@ -45,7 +45,7 @@ if (!$aut->isConnected()){
         <nav class="sidenav" id="sidenav">
             <ul>
                 <a href="/admin/dashboard"><li>Dashboard</li></a>
-                <a href="#"><li>Commandes</li></a>
+                <a href="/admin/liste-commande"><li>Commandes</li></a>
                 <li id="dropdownProducts" class="dropdownMenu">Produits<i class="fa fa-caret-down"></i></li>
                 <ul class="dropdown-container">
                     <a href="#"><li>Categories</li></a>
