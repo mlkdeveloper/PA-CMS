@@ -4,7 +4,6 @@ $(document).ready(function() {
     });
 });
 
-
 function navbar(){
     if ($("#main-nav").css("left") !== "0px"){
         $('#main-nav').animate({
