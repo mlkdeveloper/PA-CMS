@@ -17,7 +17,7 @@ class Reviews
         $view->assign("title", "Avis");
         $review = new Review();
         $datas = $review
-            ->select(DBPREFIXE."products.id as id_products," . DBPREFIXE . "review.id as id_review," . DBPREFIXE . "review.commentary as commentary, ". DBPREFIXE ."user.email as email, ". DBPREFIXE . "review.status as rs")
+            ->select(DBPREFIXE."products.id as id_products, name," . DBPREFIXE . "review.id as id_review," . DBPREFIXE . "review.commentary as commentary, ". DBPREFIXE ."user.email as email, ". DBPREFIXE . "review.status as rs")
             ->innerJoin(DBPREFIXE."products", "Products_id", "=", DBPREFIXE."products.id")
             ->innerJoin(DBPREFIXE."user", "User_id", "=", DBPREFIXE."user.id")
             ->get();
@@ -70,7 +70,7 @@ class Reviews
         $view->assign("title", "Liste des produits");
         $review = new Review();
         $datas = $review
-            ->select(DBPREFIXE."products.id as id_product, Products_id, commentary, AVG(mark) as mark, COUNT(commentary) as nb_commentary")
+            ->select(DBPREFIXE."products.id as id_product, Products_id, commentary, AVG(mark) as mark, COUNT(commentary) as nb_commentary, name")
             ->innerJoin(DBPREFIXE."products", DBPREFIXE."products.id", "=", "Products_id")
             ->groupBy("Products_id")
             ->get();

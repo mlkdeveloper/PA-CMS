@@ -8,6 +8,7 @@
                     <thead>
                     <tr>
                         <th>N° produit</th>
+                        <th>Nom du produit</th>
                         <th>Commentaire</th>
                         <th>Email</th>
                         <th>Statut</th>
@@ -18,6 +19,7 @@
                     <?php foreach ($datas as $review): ?>
                     <tr>
                         <td><?= $review["id_products"] ?></td>
+                        <td><?= $review["name"] ?></td>
                         <td><?= $review["commentary"] ?></td>
                         <td><?= $review["email"] ?></td>
 
