@@ -33,7 +33,7 @@ class Installation
 
             $this->insertBDD($dataArray[5], $dataArray[0]);
 
-            Security::changeFile($this->fileRoutes, 'saveShopInstallation');
+            Security::changeFile($this->fileRoutes, 'shopInstallation');
 
             header('Location: /');
         }else{
@@ -224,5 +224,9 @@ class Installation
         }
         $view->assign("form", $formShop);
         $view->assign("title", "Installation");
+    }
+
+    public function shopInstallAction(){
+
     }
 }
