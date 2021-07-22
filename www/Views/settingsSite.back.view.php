@@ -62,9 +62,8 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col">
                 <div class="jumbotron">
 
-                    <div class="align">
+                    <div class="">
                         <h4 class="">Mes thèmes</h4>
-                        <button class="button button--blue">Ajouter un thème</button>
                     </div>
 
                     <div class="row">
@@ -81,8 +80,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
                         <?php endforeach;?>
                     </div>
 

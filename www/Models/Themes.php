@@ -95,33 +95,6 @@ class Themes extends Database
         $this->admin = $admin;
     }
 
-    public function formBuilderRegister(){
-
-        return [
-
-            "inputs"=>[
-
-                "name"=>[
-                    "minLength"=>2,
-                    "maxLength"=>50,
-                    "uniq"=>true,
-                    "error"=>"Le nom doit être compris entre 2 et 50 caractères.",
-                    "errorUniq"=> "Le nom du thème doit être unique !"
-                ],
-                "file"=>[
-
-                ],
-
-                "status"=>[
-                    "status"=> [0,1],
-                    "error"=>"Erreur sur le statut."
-                ]
-            ]
-
-        ];
-
-    }
-
 
 
 }
