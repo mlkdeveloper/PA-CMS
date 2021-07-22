@@ -22,7 +22,7 @@
                                 </td>
                                 <td><?= $produit["price"] ?> &euro;</td>
                                 <td><?= $produit["stock"] ?></td>
-                                <td><?= !empty($produit["picture"]) ? "<img src='../images/products/".$produit["picture"]. "' />" : "Pas d'image pour cette variante" ?></td>
+                                <td><?= !empty($produit["picture"]) ? "<img style='width: 100px;' src='../images/products/".$produit["picture"]. "' />" : "Pas d'image pour cette variante" ?></td>
                                 <td>
                                     <a href="/admin/del-produit-term?id=<?= $produit["idGroup"] ?>" class="button button--alert">
                                         <i class="bi bi-trash-fill"></i>

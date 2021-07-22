@@ -533,7 +533,12 @@ class Product
             $errors = FormValidator::checkGroup($_POST["stock"], $_POST["price"]);
             if(empty($errors)){
                 $group = new Group_variant;
-                $group->setId($_GET["id"]);
+                $data_group = $group
+                    ->select()
+                    ->where("id = :id")->setParams(["id" => $_GET["id"]])
+                    ->get();
+
+                $group->populate($data_group[0]);
                 $group->setPrice($_POST['price']);
                 $group->setStock($_POST['stock']);
                 $group->save();
