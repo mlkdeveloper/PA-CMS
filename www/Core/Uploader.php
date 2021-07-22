@@ -97,7 +97,6 @@ class Uploader{
         return $this->error;
     }
 
-
     /**
      * @return mixed
      */
@@ -105,4 +104,5 @@ class Uploader{
     {
         return $this->name;
     }
+
 }

@@ -1,7 +1,7 @@
 .sidenav {
   height: 100vh;
   position: fixed;
-  width: 200px;
+  width: 210px;
   z-index: 1;
   top: 0;
   left: 0;
@@ -12,7 +12,7 @@
   justify-content: space-between;
 }
 
-.sidenav a {
+.sidenav a, .dropdownMenu {
   padding: 1em;
   text-decoration: none;
   color: $white;
@@ -25,7 +25,7 @@
   padding: 0;
 }
 
-.sidenav a:hover, .dropdown-container a:hover{
+.sidenav a:hover, .sidenav li:hover, .dropdown-container a:hover{
   color: #f1f1f1;
   background-color: #2D9CDB;
   cursor: pointer;
@@ -33,12 +33,11 @@
 
 .dropdown-container {
   display: none;
-  background-color: $blue;
+  background-color: #52809b;
   padding-left: 8px;
   flex-direction: column;
   align-items: center;
   border-left: solid 5px rgb(38, 15, 18);
-  opacity: 0.8;
 }
 
 .dropdown-container a{
@@ -46,9 +45,58 @@
   font-size: 0.8em;
 }
 
+.dropdown-container a{
+  width: 100%;
+  text-align: center;
+}
 
 .fa-caret-down {
   float: right;
   padding-right: 8px;
 }
 
+#hamburger {
+  display: none;
+  font-size: 2em;
+  position: absolute;
+  top: 25%;
+  left: 25px;
+  z-index: 10;
+}
+
+#hamburger:hover {
+  cursor: pointer;
+}
+
+
+
+@media only screen and (max-width: 1200px) {
+  .sidenav {
+    left: -100%;
+    width: 100%;
+  }
+
+  .sidenav ul {
+    text-align: center;
+  }
+
+  .sidenav i {
+    float: none;
+    padding-right: 0;
+    padding-left: 10px;
+  }
+
+  .container-body {
+    width: 100%;
+  }
+
+  #hamburger {
+    display: block;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .sidenav {
+    left: 0!important;
+  }
+}

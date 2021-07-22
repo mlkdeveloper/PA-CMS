@@ -10,10 +10,12 @@ class QueryBuilder
     private $params;
     private $select;
     private $where = [];
+    private $whereOr = [];
     private $order = [];
     private $groupBy;
     private $limit;
     private $join = [];
+    private $having;
 
 
     protected $pdo;
@@ -47,6 +49,11 @@ class QueryBuilder
         return $this;
     }
 
+    public function whereOr($condition){
+        $this->whereOr[] = $condition;
+        return $this;
+    }
+
     public function setParams(array $params){
         $this->params = $params;
         return $this;
@@ -59,6 +66,11 @@ class QueryBuilder
 
     public function orderBy($column,$direction){
         $this->order[] = "$column $direction";
+        return $this;
+    }
+
+    public function having($string){
+        $this->having = $string;
         return $this;
     }
 
@@ -79,9 +91,20 @@ class QueryBuilder
             $this->request.= " )";
         }
 
+        if (!empty($this->whereOr)){
+            $this->request.= " AND ( ";
+            $this->request.= implode( ' OR ',$this->whereOr);
+            $this->request.= " )";
+        }
+
         if (!empty($this->groupBy)){
             $this->request.= " GROUP BY " . $this->groupBy;
         }
+
+        if (!empty($this->having)){
+            $this->request.= " HAVING " . $this->having;
+        }
+
 
         if (!empty($this->order)){
             $this->request.= " ORDER BY " . implode(', ',$this->order);
@@ -91,7 +114,6 @@ class QueryBuilder
         if ($this->limit){
             $this->request.= " LIMIT " . $this->limit;
         }
-
 
         return $this->execute();
 

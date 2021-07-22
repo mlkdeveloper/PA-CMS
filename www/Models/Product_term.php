@@ -6,9 +6,9 @@ use App\Core\Database;
 
 class Product_term extends Database
 {
-	private $id;
-	protected $idProduct;
-	protected $idTerm;
+    private $id;
+    protected $idProduct;
+    protected $idTerm;
     protected $idGroup;
     protected $status;
 

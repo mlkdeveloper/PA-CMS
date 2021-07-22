@@ -6,12 +6,10 @@ use App\Core\Database;
 
 class Group_variant extends Database
 {
-
-	private $id;
+    private $id;
 	protected $price;
     protected $stock;
     protected $picture;
-
 
     /**
      * @return mixed
