@@ -194,29 +194,81 @@ class Product
 
     public function infoProductsAction(){
         //Instanciation des classes
-        $gv = new Group_variant;
-        $pt = new Product_term;
-        $product_model = new Products;
-        $terms = new Terms;
-        $category = new Category;
+        $product_model = new Products();
+        $categories = new Category();
 
         if(isset($_GET["id"]) && is_numeric($_GET["id"])){
             $pid = new Products;
             $checkId = FormValidator::checkId($_GET["id"], $pid);
+            $attribute = new Attributes();
+
+
             if($checkId){
                 $view = new View("infoProducts_products.back","back");
-                $view->assign("title", "Information");
+                $view->assign("title", "Information du produit");
                 $view->assign("stylesheet", "products");
-                
-                $datas = $pt
-                    ->select("*, ". DBPREFIXE."product_term.id as idPt, ".DBPREFIXE."products.id as idProduit")
-                    ->innerJoin(DBPREFIXE."products", "idProduct", "=", DBPREFIXE."products.id")
-                    ->innerJoin(DBPREFIXE."group_variant", "idGroup", "=", DBPREFIXE."group_variant.id")
-                    ->innerJoin(DBPREFIXE."terms", "idTerm", "=", DBPREFIXE."terms.id")
-                    ->where(DBPREFIXE."products.id = :id", DBPREFIXE."product_term.status = 1")->setParams(["id" => $_GET["id"]])
+
+                $datas = $product_model
+
+                    ->select("*, ". DBPREFIXE ."products.name as productName, ". DBPREFIXE ."products.id as idP, ". DBPREFIXE ."product_term.id as idpt, ". DBPREFIXE ."group_variant.id as idgv, ". DBPREFIXE ."terms.id as idt," . DBPREFIXE."product_term.status as statuspt")
+
+                    ->innerJoin(DBPREFIXE."category", DBPREFIXE."category.id", "=", DBPREFIXE."products.idCategory")
+                    ->innerJoin(DBPREFIXE."product_term", DBPREFIXE."product_term.idProduct", "=", DBPREFIXE."products.id")
+                    ->innerJoin(DBPREFIXE."terms", DBPREFIXE."terms.id", "=", DBPREFIXE."product_term.idTerm")
+                    ->innerJoin(DBPREFIXE."group_variant", DBPREFIXE."group_variant.id", "=", DBPREFIXE."product_term.idGroup")
+                    ->where(DBPREFIXE."products.id = :id", DBPREFIXE."product_term.status <> 0")->setParams(["id" => $_GET["id"]])
                     ->get();
 
+                $datas_inputs = [];
+
+                $keys = ["picture","nameAttr", "stock", "price", "idGroup", "idAttr", "idTerm", "idProductTerm", "idProduct"];
+
+                $comb = [];
+
+                foreach($datas as $key => $data){
+                    $datas_inputs[$key] = [];
+                    array_push($datas_inputs[$key], $data["picture"]);
+                    array_push($datas_inputs[$key], $data["name"]);
+                    array_push($datas_inputs[$key], $data["stock"]);
+                    array_push($datas_inputs[$key], $data["price"]);
+                    array_push($datas_inputs[$key], $data["idgv"]);
+                    array_push($datas_inputs[$key], $data["idAttributes"]);
+                    array_push($datas_inputs[$key], $data["idTerm"]);
+                    array_push($datas_inputs[$key], $data["idpt"]);
+                    array_push($datas_inputs[$key], $data["idP"]);
+                    $datas_inputs[$key] = array_combine($keys, $datas_inputs[$key]);
+                }
+
+                foreach($datas_inputs as $key => $value){
+                    isset($comb[$value["idGroup"]]) ?
+                        array_push($comb[$value["idGroup"]], $value) :
+                        $comb[$value["idGroup"]] = [$value];
+                }
+
+
+                $categories = $categories
+                    ->select()
+                    ->where("status = 1")
+                    ->get();
+
+                $attributes = $attribute
+                    ->select("id, name")
+                    ->where("id <> 1")
+                    ->get();
+
+                $product = new Products;
+                $datas_p = $product
+                    ->select("*,name as productName")
+                    ->where("id = :id", "status <> 0")->setParams(["id" => $_GET["id"]])
+                    ->get();
+
+
+                $view->assign("attributes", $attributes);
+                $view->assign("datas", $comb);
                 $view->assign("produits", $datas);
+                $view->assign("p", $datas_p);
+                $view->assign("categories", $categories);
+                $view->assign("produitVar", "");
             }else{
                 throw new MyException("Produit introuvable", 403);
             }

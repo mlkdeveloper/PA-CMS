@@ -97,7 +97,6 @@
         <div class="row mt-1" id="btns">
             <button id="addVar" class="button button--blue mr-1" onclick="updateP(<?= $p[0]["id"] ?>)">Enregistrer</button>
             <button id="addVar" class="button button--warning mr-1" onclick="add_variante()">Recréer les variantes</button>
-            <a class="button button--alert" href="delete-variantes?id=<?= $_GET['id'] ?>">Supprimer les variantes</a>
         </div>
     </div>
     <div class="container">
