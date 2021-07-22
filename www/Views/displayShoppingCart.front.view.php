@@ -37,7 +37,7 @@
                         </thead>
                         <tbody>
 
-                        <?php foreach ($products as $product)  :?>
+                        <?php foreach ($products as $product)  : var_dump( $_SESSION['panier'][$product[0]['id']] );?>
                             <tr>
 
                                 <td>

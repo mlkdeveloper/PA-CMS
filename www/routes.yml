@@ -297,6 +297,6 @@
   controller: Dashboard
   action: getData
 
-/test:
-  controller: Test
-  action : test
+/facture:
+  controller: Facture
+  action : facture
