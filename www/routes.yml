@@ -1,6 +1,6 @@
 /:
-  controller: Installation
-  action: install
+  controller: Pages
+  action: displayFront
 
 /404:
   controller: Main
@@ -173,6 +173,7 @@
 /admin/detail-commande:
   controller: Commande
   action: displayCommande
+
 /collections:
   controller: Product
   action : displayProductsFront
@@ -220,6 +221,13 @@
   controller: Settings
   action : updateAdminPassword
 
+/mon-profil:
+  controller: User
+  action: displayProfile
+
+/modification-mdp-profil:
+  controller: User
+  action: updateUserPassword
 
 /admin/barre-de-navigation:
   controller: Navbar
@@ -252,6 +260,30 @@
 /admin/terminer-commande:
   controller: Commande
   action: DoneCommande
+  
+/create-checkout-session:
+  controller: Stripe
+  action: paymentStripe
+
+/paiement-stripe:
+  controller: Stripe
+  action: pagePaiementStripe
+
+/success:
+  controller: Stripe
+  action: success
+
+/cancel:
+  controller: Stripe
+  action: cancel
+
+/verification-stock-panier:
+  controller: Stripe
+  action: checkStockProducts
+  
+/annuler-commande:
+  controller: Commande
+  action: cancelOrderFront
 
 /mes-commandes:
   controller : Commande
@@ -261,6 +293,6 @@
   controller : Commande
   action: informationsOrder
 
-/start-install:
-  controller: Installation
-  action: startInstall
+/admin/get-data-charts:
+  controller: Dashboard
+  action: getData

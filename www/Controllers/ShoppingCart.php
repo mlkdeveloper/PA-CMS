@@ -15,7 +15,6 @@ class ShoppingCart {
 
         $panier = new Panier();
         $array = $panier->display();
-
         $view = new View("displayShoppingCart.front");
         $view->assign("title","Panier");
         $view->assign("products",$array);

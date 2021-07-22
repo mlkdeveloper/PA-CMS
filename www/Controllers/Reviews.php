@@ -35,6 +35,8 @@ class Reviews
 
             $review->populate($review_datas[0]);
             $review->setStatus(1);
+            $review->setProductsId($review_datas[0]["Products_id"]);
+            $review->setUserId($review_datas[0]["User_id"]);
             $review->save();
             header("Location: /admin/reviews");
         }
@@ -53,6 +55,8 @@ class Reviews
 
             $review->populate($review_datas[0]);
             $review->setStatus(-1);
+            $review->setProductsId($review_datas[0]["Products_id"]);
+            $review->setUserId($review_datas[0]["User_id"]);
             $review->save();
             header("Location: /admin/reviews");
         }
