@@ -139,15 +139,16 @@ class Shop extends Database
                 "action"=>"",
                 "class"=>"form_control",
                 "id"=>"form_register",
-                "submit"=>"Enregistrer",
+                "submit"=>"Continuer",
                 "classButton" => "button button--blue"
             ],
             "inputs"=>[
 
                 "nom"=>[
                     "type"=>"text",
-                    "placeholder"=>"Chez Jacquie",
+                    "placeholder"=>"",
                     "divClass"=> "form_align--top",
+                    "value"=> "",
                     "label"=>"Nom",
                     "required"=>true,
                     "class"=>"input",
@@ -158,9 +159,10 @@ class Shop extends Database
 
                 "address"=>[
                     "type"=>"text",
+                    "value"=> "",
                     "label"=>"Adresse",
                     "divClass"=> "form_align--top",
-                    "placeholder"=>"ex : 29 rue de la liberte",
+                    "placeholder"=>"",
                     "required"=>true,
                     "class"=>"input",
                     "minLength"=>5,
@@ -169,8 +171,9 @@ class Shop extends Database
                 "ville"=>[
                     "type"=>"text",
                     "label"=>"Ville",
+                    "value"=> "",
                     "divClass"=> "form_align--top",
-                    "placeholder"=>"ex : Paris",
+                    "placeholder"=>"",
                     "required"=>true,
                     "class"=>"input",
                     "minLength"=>2,
@@ -179,33 +182,36 @@ class Shop extends Database
                 "zipCode"=>[
                     "type"=>"text",
                     "label"=>"Code postal",
+                    "value"=> "",
                     "divClass"=> "form_align--top",
-                    "placeholder"=>"ex : 75015",
+                    "placeholder"=>"",
                     "required"=>true,
                     "class"=>"input",
                     "minLength"=>2,
                     "error"=>"Le code postal doit faire au 5 caractères"
                 ],
+                "telephone"=>[
+                    "type"=>"text",
+                    "label"=>"N° Telephone",
+                    "value"=> "",
+                    "divClass"=> "form_align--top",
+                    "placeholder"=>"",
+                    "required"=>true,
+                    "class"=>"input",
+                    "data-format"=>"telephone",
+                    "minLength"=>1,
+                    "error"=>"le numero de telephone est obligatoire et doit être uniquement être composé de chiffres"
+                ],
                 "description"=>[
                     "type"=>"text",
                     "label"=>"Description",
+                    "value"=> "",
                     "divClass"=> "form_align--top",
-                    "placeholder"=>"Votre description",
+                    "placeholder"=>"",
                     "required"=>true,
                     "class"=>"input input--textarea",
                     "minLength"=>5,
                     "error"=>"La description doit faire au minimum 5 caractères"
-                ],
-                "telephone"=>[
-                    "type"=>"text",
-                    "data-format"=>"telephone",
-                    "label"=>"N° Telephone",
-                    "divClass"=> "form_align--top",
-                    "placeholder"=>"Numero de telephone",
-                    "required"=>true,
-                    "class"=>"input",
-                    "minLength"=>1,
-                    "error"=>"le numero de telphone est obligatoire et doit être composé uniquement de 10 chiffres"
                 ],
             ]
         ];
@@ -296,26 +302,4 @@ class Shop extends Database
             ]
         ];
     }
-
-    public function formBuilderDeleteShop($value){
-        return [
-
-            "config"=>[
-                "method"=>"POST",
-                "action"=>"",
-                "divClass"=> "align",
-                "id"=>"form_register",
-                "submit"=>"X",
-                "classButton" => "button button--alert"
-            ],
-            "inputs"=>[
-
-                "id"=>[
-                    "type"=>"hidden",
-                    "value" => $value
-                ]
-            ]
-        ];
-    }
-
 }

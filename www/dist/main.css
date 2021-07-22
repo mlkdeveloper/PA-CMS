@@ -38,7 +38,7 @@
 
 .container-body {
   position: absolute;
-  width: calc(100% - 200px);
+  width: calc(100% - 210px);
   top: 0;
   right: 0;
   min-height: 100vh;
@@ -637,7 +637,7 @@ a {
 }
 
 .input--textarea {
-  height: 8rem;
+  padding-bottom: 100px;
   resize: none;
 }
 

@@ -21,7 +21,6 @@ class Security
         switch ($type){
             case 'changeRoute':
             case 'finalChangeRoute':
-            case 'shopInstallation':
                 $searchValue = '/:';
                 break;
             case 'changeConstantManager':
@@ -47,10 +46,6 @@ class Security
 
 
             switch ($type){
-                case 'shopInstallation':
-                    $contenu[$line+1] = "  controller: Installation";
-                    $contenu[$line+2] = "  action: shopInstallation";
-                    break;
                 case 'changeRoute':
                     $contenu[$line+1] = "  controller: Security";
                     $contenu[$line+2] = "  action: registerInstall";

@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Core\ConstantManager;
+use App\Core\FormValidator;
 use App\Core\View;
 use App\Core\Security;
+use App\Models\Shop as ShopModel;
 
 session_start();
 
@@ -32,7 +34,6 @@ class Installation
             $this->insertBDD($dataArray[5], $dataArray[0]);
 
             Security::changeFile($this->fileRoutes, 'saveShopInstallation');
-            Security::changeFile($this->fileRoutes, 'shopInstallation');
 
             header('Location: /');
         }else{
@@ -190,14 +191,38 @@ class Installation
     }
 
     public function shopInstallationAction(){
+        $shop = new ShopModel();
+
         $view = new View("installShop", "install");
-        $view->assign("title", "Intallation");
-    }
 
-    public function shopInstallAction(){
-        Security::changeFile($this->fileRoutes, 'deleteStartInstallation');
-        Security::changeFile($this->fileRoutes, 'changeRoute');
+        $formShop = $shop->formBuilderCreateShop();
 
-        header('Location: /');
+        if(!empty($_POST)){
+
+            $errors = FormValidator::check($formShop, $_POST);
+            if (!is_numeric($_POST['zipCode'])){
+                array_push($errors,"Le code postale doit etre composé uniquement de chiffres");
+            }
+
+            if(empty($errors)){
+
+                $shop->setName($_POST['nom']);
+                $shop->setAddress($_POST['address']);
+                $shop->setCity($_POST['ville']);
+                $shop->setZipCode($_POST['zipCode']);
+                $shop->setDescription($_POST['description']);
+                $shop->setPhoneNumber($_POST['telephone']);
+                $shop->save();
+
+                Security::changeFile($this->fileRoutes, 'deleteStartInstallation');
+                Security::changeFile($this->fileRoutes, 'changeRoute');
+
+                header('Location: /');
+            }else{
+                $view->assign("errors", $errors);
+            }
+        }
+        $view->assign("form", $formShop);
+        $view->assign("title", "Installation");
     }
 }
