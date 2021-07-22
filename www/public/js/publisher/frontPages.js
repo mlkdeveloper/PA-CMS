@@ -1,11 +1,5 @@
 var htmlPage = "";
 
-$(document).ready(function() {
-    $("#hamburger").on("click", function () {
-        navbar();
-    });
-});
-
 $.ajax({
     type: 'POST',
     url: '.././Controllers/Pages.php',
@@ -49,17 +43,4 @@ function read(data){
     setTimeout(function (){
         $("#containerLoader").fadeOut(700);
     }, 500);
-}
-
-
-function navbar(){
-    if ($("#main-nav").css("left") !== "0px"){
-        $('#main-nav').animate({
-            left: 0
-        });
-    }else{
-        $('#main-nav').animate({
-            left: "-100%"
-        });
-    }
 }
