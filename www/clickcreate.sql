@@ -16,8 +16,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `cc_attributes` (
                                  `id` int(11) NOT NULL,
-                                 `name` varchar(50) NOT NULL,
-                                 `description` longtext
+                                 `name` varchar(50) COLLATE utf8_bin NOT NULL,
+                                 `description` longtext COLLATE utf8_bin
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -35,8 +35,8 @@ INSERT INTO `cc_attributes` (`id`, `name`, `description`) VALUES
 
 CREATE TABLE `cc_category` (
                                `id` int(11) NOT NULL,
-                               `name` varchar(150) NOT NULL,
-                               `description` longtext,
+                               `name` varchar(150) COLLATE utf8_bin NOT NULL,
+                               `description` longtext COLLATE utf8_bin,
                                `status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -60,10 +60,10 @@ CREATE TABLE `cc_group_variant` (
 
 CREATE TABLE `cc_orders` (
                              `id` int(11) NOT NULL,
-                             `Products_id` int(11) NOT NULL,
+                             `montant` int(11) NOT NULL,
                              `User_id` int(11) NOT NULL,
-                             `CreatedAt` timestamp NULL DEFAULT NULL,
-                             `status` tinyint(5) DEFAULT NULL
+                             `CreatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                             `status` tinyint(5) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -93,10 +93,22 @@ CREATE TABLE `cc_products` (
                                `description` longtext COLLATE utf8_bin NOT NULL,
                                `type` tinyint(1) NOT NULL,
                                `isPublished` tinyint(1) NOT NULL,
-                               `idCategory` int(11) NOT NULL
+                               `idCategory` int(11) NOT NULL,
+                               `status` int(11) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
+
+--
+-- Structure de la table `cc_product_order`
+--
+
+CREATE TABLE `cc_product_order` (
+                                    `id` int(11) NOT NULL,
+                                    `id_group_variant` int(11) NOT NULL,
+                                    `id_order` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 
 --
 -- Structure de la table `cc_product_term`
@@ -199,19 +211,6 @@ INSERT INTO `cc_role` (`id`, `name`, `roles`, `users`, `customers`, `products`, 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `cc_schedule`
---
-
-CREATE TABLE `cc_schedule` (
-                               `id` int(11) NOT NULL,
-                               `day` varchar(8) COLLATE utf8_bin DEFAULT NULL,
-                               `openHour` varchar(2) COLLATE utf8_bin DEFAULT NULL,
-                               `closeHour` varchar(2) COLLATE utf8_bin DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `cc_shop`
 --
 
@@ -228,23 +227,12 @@ CREATE TABLE `cc_shop` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `cc_shop_schedule`
---
-
-CREATE TABLE `cc_shop_schedule` (
-                                    `id_schedule` int(11) NOT NULL,
-                                    `id_shop` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `cc_terms`
 --
 
 CREATE TABLE `cc_terms` (
                             `id` int(11) NOT NULL,
-                            `name` varchar(30) NOT NULL,
+                            `name` varchar(30) COLLATE utf8_bin NOT NULL,
                             `idAttributes` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -327,8 +315,7 @@ ALTER TABLE `cc_group_variant`
 -- Index pour la table `cc_orders`
 --
 ALTER TABLE `cc_orders`
-    ADD PRIMARY KEY (`id`,`Products_id`,`User_id`),
-  ADD KEY `fk_Orders_Products1_idx` (`Products_id`),
+    ADD PRIMARY KEY (`id`),
   ADD KEY `fk_Orders_User1_idx` (`User_id`);
 
 --
@@ -344,6 +331,14 @@ ALTER TABLE `cc_pages`
 ALTER TABLE `cc_products`
     ADD PRIMARY KEY (`id`),
   ADD KEY `FK_category` (`idCategory`);
+
+--
+-- Index pour la table `cc_product_order`
+--
+ALTER TABLE `cc_product_order`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_order` (`id_order`),
+  ADD KEY `id_group_variant` (`id_group_variant`);
 
 --
 -- Index pour la table `cc_product_term`
@@ -391,23 +386,10 @@ ALTER TABLE `cc_role`
     ADD PRIMARY KEY (`id`);
 
 --
--- Index pour la table `cc_schedule`
---
-ALTER TABLE `cc_schedule`
-    ADD PRIMARY KEY (`id`);
-
---
 -- Index pour la table `cc_shop`
 --
 ALTER TABLE `cc_shop`
     ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `cc_shop_schedule`
---
-ALTER TABLE `cc_shop_schedule`
-    ADD PRIMARY KEY (`id_schedule`,`id_shop`),
-  ADD KEY `fk_shop_schedule_Shop1_idx` (`id_shop`);
 
 --
 -- Index pour la table `cc_terms`
@@ -472,7 +454,13 @@ ALTER TABLE `cc_pages`
 -- AUTO_INCREMENT pour la table `cc_products`
 --
 ALTER TABLE `cc_products`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `cc_product_order`
+--
+ALTER TABLE `cc_product_order`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `cc_product_term`
@@ -509,12 +497,6 @@ ALTER TABLE `cc_review`
 --
 ALTER TABLE `cc_role`
     MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT pour la table `cc_schedule`
---
-ALTER TABLE `cc_schedule`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `cc_shop`
@@ -555,7 +537,6 @@ ALTER TABLE `cc_tab_navbar`
 -- Contraintes pour la table `cc_orders`
 --
 ALTER TABLE `cc_orders`
-    ADD CONSTRAINT `fk_Orders_Products1` FOREIGN KEY (`Products_id`) REFERENCES `cc_products` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Orders_User1` FOREIGN KEY (`User_id`) REFERENCES `cc_user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
@@ -569,6 +550,13 @@ ALTER TABLE `cc_pages`
 --
 ALTER TABLE `cc_products`
     ADD CONSTRAINT `FK_category` FOREIGN KEY (`idCategory`) REFERENCES `cc_category` (`id`);
+
+--
+-- Contraintes pour la table `cc_product_order`
+--
+ALTER TABLE `cc_product_order`
+  ADD CONSTRAINT `cc_product_order_ibfk_2` FOREIGN KEY (`id_order`) REFERENCES `cc_orders` (`id`),
+  ADD CONSTRAINT `cc_product_order_ibfk_3` FOREIGN KEY (`id_group_variant`) REFERENCES `cc_group_variant` (`id`);
 
 --
 -- Contraintes pour la table `cc_product_term`
@@ -598,13 +586,6 @@ ALTER TABLE `cc_promotion_product`
 ALTER TABLE `cc_review`
     ADD CONSTRAINT `fk_Review_Products1` FOREIGN KEY (`Products_id`) REFERENCES `cc_products` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Review_User1` FOREIGN KEY (`User_id`) REFERENCES `cc_user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Contraintes pour la table `cc_shop_schedule`
---
-ALTER TABLE `cc_shop_schedule`
-    ADD CONSTRAINT `fk_shop_schedule_Schedule1` FOREIGN KEY (`id_schedule`) REFERENCES `cc_schedule` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_shop_schedule_Shop1` FOREIGN KEY (`id_shop`) REFERENCES `cc_shop` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Contraintes pour la table `cc_terms`
