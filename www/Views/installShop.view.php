@@ -12,7 +12,9 @@
                         <?php endforeach;?>
                     </ul>
                 <?php endif;?>
-                <?php App\Core\FormBuilder::render($form); ?>
+                <div class="col col-lg-4 col-md-4 center-margin">
+                    <?php App\Core\FormBuilder::render($form); ?>
+                </div>
             </div>
             </div>
         </div>
