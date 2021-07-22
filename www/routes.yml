@@ -296,3 +296,7 @@
 /admin/get-data-charts:
   controller: Dashboard
   action: getData
+
+/admin/activer-theme:
+  controller: Theme
+  action: enableTheme

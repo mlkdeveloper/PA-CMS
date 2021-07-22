@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Core\Uploader;
 use App\Core\View;
+use App\Models\Themes;
 use App\Models\User;
 
 session_start();
@@ -236,7 +237,12 @@ class Settings
         }
 
         $file = scandir("./images/logo/",1);
+
+        $theme = new Themes();
+        $themes = $theme->select()->get();
+
         $view->assign("logo",$file[0]);
+        $view->assign("themes",$themes);
 
     }
 
