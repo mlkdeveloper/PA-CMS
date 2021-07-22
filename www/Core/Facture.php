@@ -8,7 +8,10 @@ use App\Models\Orders;
 use App\Models\Products as ProductModel;
 use App\Models\Shop as ShopModel;
 use App\Models\User as UserModel;
+use App\Models\Product_term;
+use App\Core\MyException;
 
+session_start();
 
 class Facture
 {
@@ -74,30 +77,46 @@ class Facture
         $position_detail = 108; // Position ordonnée = $position_entete+hauteur de la cellule d'en-tête (60+8)
 
         $products_model = new Orders();
-        $products_data = $products_model->select('cc_products.name', 'cc_products.description' , 'cc_group_variant.price')
-            ->innerJoin('cc_products', 'cc_orders.Products_id', '=', 'cc_products.id')
-            ->innerJoin('cc_product_term', 'cc_product_term.idProduct', '=','cc_products.id')
-            ->innerJoin('cc_group_variant', 'cc_product_term.idGroup', '=','cc_group_variant.id')
-            ->innerJoin('cc_terms', 'cc_product_term.idTerm', '=', 'cc_terms.id')
-            ->where('cc_orders.id = :id')->setParams(['id' => $ordre['id']])->get();
+        $products_data = $products_model->select(DBPREFIXE."product_order.id_group_variant, " .DBPREFIXE."orders.id, " .DBPREFIXE."orders.CreatedAt, " .DBPREFIXE."orders.status, " .DBPREFIXE."orders.montant, " .DBPREFIXE."user.firstname, " .DBPREFIXE."user.lastname, " .DBPREFIXE."user.email"  )
+            ->innerJoin(DBPREFIXE."product_order",DBPREFIXE."orders.id","=",DBPREFIXE."product_order.id_order")
+            ->innerJoin(DBPREFIXE."user",DBPREFIXE."orders.User_id","=",DBPREFIXE."user.id")
+            ->where(DBPREFIXE."product_order.id_order = :id")->setParams(['id' => $_GET['id']])->get();
 
-        foreach ($products_data as $product) {
+        $array = [];
+
+        foreach ($products_data as $value){
+            $productTerm = new Product_term();
+            array_push($array,$productTerm->select(DBPREFIXE."terms.name AS nameTerm, ".DBPREFIXE."group_variant.id, ".DBPREFIXE."products.name, ".DBPREFIXE."group_variant.price ")
+                ->innerJoin(DBPREFIXE."group_variant",DBPREFIXE."product_term.idGroup ","=",DBPREFIXE."group_variant.id")
+                ->innerJoin(DBPREFIXE."products",DBPREFIXE."product_term.idProduct ","=",DBPREFIXE."products.id")
+                ->innerJoin(DBPREFIXE."terms",DBPREFIXE."product_term.idTerm ","=",DBPREFIXE."terms.id")
+                ->where(DBPREFIXE."product_term.idGroup = :idGroup")->setParams(["idGroup" => $value['id_group_variant']])->get());
+        }
+
+        foreach ($array as $product) {
             // position abcisse de la colonne 1 (10mm du bord)
             $pdf->SetY($position_detail);
             $pdf->SetX(10);
-            $pdf->Cell(20,8,utf8_decode($product['name']),1,'C');
+            $pdf->Cell(20,8,($product[0]['name']),1,'C');
+
             // position abcisse de la colonne 2 (70 = 10 + 60)
+            $proprieties = 0;
+            foreach (array_map("current", $product) as $value){
+                $proprieties .= ' '. $value;
+            }
+
             $pdf->SetY($position_detail);
             $pdf->SetX(30);
-            $pdf->MultiCell(90,8,utf8_decode($product['name'] . ' ' .$product['description'] ),1,'C');
+            $pdf->Cell(90,8,utf8_decode($product[0]['name'] . $proprieties),1,'C');
+
             // position abcisse de la colonne 3 (130 = 70+ 60)
             $pdf->SetY($position_detail);
             $pdf->SetX(120);
-            $pdf->MultiCell(40,8,$product['price'],1,'C');
+            $pdf->Cell(40,8, $_SESSION['panier'][$product[0]['id']],1,'C');
 
             $pdf->SetY($position_detail);
             $pdf->SetX(160);
-            $pdf->Cell(40,8,$product['price'],1,0,'C');
+            $pdf->Cell(40,8,$_SESSION['panier'][$product[0]['id']] *  $product[0]['price'] ,1,0,'C');
 
             // on incrémente la position ordonnée de la ligne suivante (+8mm = hauteur des cellules)
             $position_detail += 8;
