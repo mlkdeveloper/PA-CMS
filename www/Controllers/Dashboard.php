@@ -6,12 +6,18 @@ namespace App\Controller;
 use App\Core\View;
 use App\Models\Orders as modelOrders;
 
+use App\Core\Security;
+
+session_start();
 
 class Dashboard
 {
 
 
     public function dashboardAction(){
+
+        Security::isEmployee();
+
         $view = new View("dashboard.back", "back");
         $view->assign("title", "Dashboard");
     }

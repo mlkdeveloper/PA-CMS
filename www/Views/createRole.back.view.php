@@ -78,6 +78,16 @@
                         <label for="page">Gestion des pages</label>
                     </div>
 
+                    <div class="mb-1">
+                        <input type="checkbox" id="settingsCms" name="settingsCms" value="1">
+                        <label for="page">Paramètres du CMS</label>
+                    </div>
+
+                    <div class="mb-1">
+                        <input type="checkbox" id="settingsSite" name="settingsSite" value="1">
+                        <label for="page">Paramètres du site</label>
+                    </div>
+
                 </div>
             </div>
         </div>

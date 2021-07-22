@@ -7,9 +7,15 @@ use App\Core\View;
 use App\Models\Category as modelCategory;
 use App\Models\Products;
 
+use App\Core\Security;
+
+session_start();
+
 class Category{
 
     public function showAction(){
+
+        Security::auth('categories');
 
         $category = new modelCategory();
         $listCategory = $category->select()->get();
@@ -21,6 +27,8 @@ class Category{
     }
 
     public function newCategoryAction(){
+
+        Security::auth('categories');
 
         $category = new modelCategory();
         $view = new View("createCategory.back", "back");
@@ -46,6 +54,8 @@ class Category{
     }
 
     public function updateCategoryAction(){
+
+        Security::auth('categories');
 
         if (isset($_GET['id']) && !empty($_GET['id'])){
 
@@ -88,6 +98,8 @@ class Category{
     }
 
     public function deleteCategoryAction(){
+
+        Security::auth('categories');
 
         if(isset($_GET['id']) && !empty($_GET['id']) ){
 
