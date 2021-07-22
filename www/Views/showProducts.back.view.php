@@ -24,8 +24,8 @@
                     <tr>
                         <td><?= $produit['name'] ?></td>
                         <td><?= $produit['description'] ?></td>
-                        <td><?= $produit['type'] ? "Oui" : "Non" ?></td>
-                        <td><?= $produit['isPublished'] ? "<span class='alert alert--green'>Oui</span>" : "<span class='alert alert--red'>Non</span>" ?></td>
+                        <?= $produit['type'] ? "<td class='alert--green'>Oui</td>" : "<td class='alert--red'>Non</td>" ?>
+                        <?= $produit['isPublished'] ? "<td class='alert--green'>Oui</td>" : "<td class='alert--red'>Non</td>" ?>
                         <td>
                             <a class="button button--black" href="/admin/modification-produit?id=<?= $produit['id'] ?>"><i class="fas fa-pencil-alt"></i></a>
 
