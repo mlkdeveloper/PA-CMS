@@ -395,14 +395,14 @@ a {
 }
 
 .button--warning {
-  background-color: #fddc6e;
-  border-color: #fddc6e;
-  outline-color: #fddc6e;
+  background-color: #ffc107;
+  border-color: #ffc107;
+  outline-color: #ffc107;
   color: #000000;
 }
 
 .button--warning:hover {
-  background-color: #fee8a0;
+  background-color: #ffce3a;
 }
 
 .button a {
@@ -690,8 +690,9 @@ a {
 }
 
 .alert--warning {
-  background-color: #fddc6e;
-  color: #ff9900;
+  background-color: #fff3cd;
+  color: #856404;
+  border-color: #ffeeba;
 }
 
 @media only screen and (max-width: 1000px) {

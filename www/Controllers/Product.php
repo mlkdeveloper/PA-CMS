@@ -675,7 +675,7 @@ class Product
                     $gv->setPicture($upload->getName().".".$upload->getExtension());
                 }else{
                     $gv->setPicture(NULL);
-                    echo "<div class='alert alert--red'>Attention ! Le format d'image n'est pas correct, le fichier n'a pas été ajouté !</div>";
+                    echo "<div class='alert alert--warning'>Attention ! Le format d'image n'est pas correct, le fichier n'a pas été ajouté !</div>";
                 }
                 $gv->save();
 
