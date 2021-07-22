@@ -22,9 +22,9 @@ class Commande
         $view->assign("title", "Liste des commandes");
         $commande = new Product_order();
 
-        $listOrders = $commande->select('*, COUNT(cc_product_order.id) as nbArticle, cc_orders.status as idStatus ')
-            ->innerJoin("cc_orders", "cc_product_order.id_order", "=", "cc_orders.id")
-            ->innerJoin("cc_user", "cc_orders.User_id", "=", "cc_user.id")
+        $listOrders = $commande->select('*, COUNT('.DBPREFIXE.'product_order.id) as nbArticle, '.DBPREFIXE.'orders.status as idStatus ')
+            ->innerJoin(DBPREFIXE."orders", DBPREFIXE."product_order.id_order", "=", DBPREFIXE."orders.id")
+            ->innerJoin(DBPREFIXE."user", DBPREFIXE."orders.User_id", "=", DBPREFIXE."user.id")
             ->groupBy("id_order")->get();
         $view->assign("array", $listOrders);
 
@@ -96,7 +96,7 @@ class Commande
             $order->setStatus(-1);
             $order->save();
 
-            //Email::sendEmail($getUser[0]["email"], "Votre commande vient d'être annulée ", "http://localhost:8082/connexion","Mon compte", "/admin/liste-commande");
+            //Email::sendEmail("C&C - Annulation de votre commande",$getUser[0]["email"], "Votre commande vient d'être annulée ", "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/connexion","Mon compte", "/admin/liste-commande");
             // Rajouter header location
         }else{
             header("Location: /mes-commandes");
@@ -126,7 +126,7 @@ class Commande
             $order->setStatus(-1);
             $order->save();
 
-            Email::sendEmail($getUser[0]["email"], "Votre commande vient d'être annulée ", "http://localhost:8082/connexion","Mon compte", "/admin/liste-commande");
+            Email::sendEmail("C@C - Annulation de votr commande",$getUser[0]["email"], "Votre commande vient d'être annulée ", 'http://'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/connexion","Mon compte", "/admin/liste-commande");
 
         }else{
             header("Location: /admin/liste-commande");
@@ -156,7 +156,7 @@ class Commande
             $order->setStatus(1);
             $order->save();
 
-            Email::sendEmail($getUser[0]["email"], "Votre commande est prête ! <br> Vous pouvez venir la chercher en magasin", "http://localhost:8082/connexion","Mon compte", "/admin/liste-commande");
+            Email::sendEmail("C&C - Votre commande est prete !", $getUser[0]["email"], "Votre commande est prête ! <br> Vous pouvez venir la chercher en magasin", "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/connexion","Mon compte", "/admin/liste-commande");
 
         }else{
             header("Location: /admin/liste-commande");
@@ -186,7 +186,7 @@ class Commande
             $order->setStatus(2);
             $order->save();
 
-            Email::sendEmail($getUser[0]["email"], "Votre commande vient d'être cloturer <br> Merci et à bientôt !", "http://localhost:8082/connexion","Mon compte", "/admin/liste-commande");
+            Email::sendEmail("C&C - Votre commande a ete cloturer", $getUser[0]["email"], "Votre commande vient d'être cloturer <br> Merci et à bientôt !", "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/connexion","Mon compte", "/admin/liste-commande");
 
         }else{
             header("Location: /admin/liste-commande");

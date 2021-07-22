@@ -122,7 +122,7 @@ class Security
 
             if (empty($errors)) {
 
-                Email::sendEmail($email, "Récupération du mot de passe","http://localhost:8080/recuperation-mot-de-passe?tkn=".$user[0]["token"], "Je modifie mon mot de passe", "http://localhost:8080/connexion");
+                Email::sendEmail("C&C - Recuperation du mot de passe",$email, "Récupération du mot de passe","http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/recuperation-mot-de-passe?tkn=".$user[0]["token"], "Je modifie mon mot de passe", "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/connexion");
 
             }else{
                 $view->assign("errors", $errors);

@@ -14,12 +14,13 @@ class Stripe
     function paymentStripeAction(){
         require 'vendor/autoload.php';
         session_start();
-        
-        \Stripe\Stripe::setApiKey('sk_test_51JC0puGueu1Z1r2SmxqKTcVKd7GHDBvZV0fPSbBI8GczQXd4y4bPAv5HgfMLJSy38vW6uyHwmN7bMrKUrIEw9sF400YiBrLMKe');
+
+        \Stripe\Stripe::setApiKey(PRIVATEKEYSTRIPE);
 
         header('Content-Type: application/json');
 
-        $YOUR_DOMAIN = 'http://localhost:8080';
+        $YOUR_DOMAIN = 'http://'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'];
+
 
         $checkout_session = \Stripe\Checkout\Session::create([
             'payment_method_types' => ['card'],
@@ -50,14 +51,14 @@ class Stripe
 
 
         $orders = new Orders_model();
-        $orders->setUserId($_SESSION['user'][0]['id']);
+        $orders->setUserId($_SESSION['user']['id']);
         $orders->setMontant($_SESSION['panierTotal']);
         $orders->setStatus(0);
         $orders->save();
 
         $panier = New Orders_model();
         $panier = $orders->select('*')->where("montant = :montant", "status = 0", "User_id = :id")
-            ->setParams(["montant" =>$_SESSION['panierTotal'], "id" => $_SESSION['user'][0]['id']])->get();
+            ->setParams(["montant" =>$_SESSION['panierTotal'], "id" => $_SESSION['user']['id']])->get();
         $stock = new Group_variant();
         foreach ($_SESSION['panier'] as $key => $value) {
 
@@ -81,6 +82,7 @@ class Stripe
                     $product = new Product_order();
                     $product->setIdGroupVariant($key);
                     $product->setIdOrder($panier[0]['id']);
+                    var_dump($panier[0]['id']);
                     $product->save();
                 }
 

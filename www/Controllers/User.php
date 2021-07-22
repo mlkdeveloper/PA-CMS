@@ -180,7 +180,7 @@ class User extends Database
 
                     $user->save();
 
-                    Email::sendEmail($email, "Veuillez confirmer votre compte", "http://localhost:8080/confirmation-inscription?tkn=".$token,"Confimer mon compte", "/");
+                    Email::sendEmail("C&C - Confirmation du compte", $email, "Veuillez confirmer votre compte", "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/confirmation-inscription?tkn=".$token,"Confimer mon compte", "/");
 
 
                     header('location:/connexion');
@@ -252,7 +252,7 @@ class User extends Database
                     $view->assign("message", $message);
 
                     if($formStatus == Database::NEW_OBJECT){
-                        Email::sendEmail($client->getEmail(), "Veuillez confirmer votre compte", "http://localhost:8082/confirmation-inscription?tkn=".$token,"Confirmer mon compte", "/admin/liste-client");
+                        Email::sendEmail("C&C - Confirmation de votre compte",$client->getEmail(), "Veuillez confirmer votre compte", "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/confirmation-inscription?tkn=".$token,"Confirmer mon compte", "/admin/liste-client");
                     }
                 }else{
                     http_response_code(400);
@@ -363,7 +363,7 @@ class User extends Database
                 $user->setToken($token);
                 $user->save();
 
-                Email::sendEmail($user->getEmail(), "Veuillez confirmer votre compte", "http://localhost:8082/confirmation-inscription?tkn=".$token,"Confirmer mon compte", "/admin/dashboard");
+                Email::sendEmail("C&C - Confirmation de votre compte",$user->getEmail(), "Veuillez confirmer votre compte", "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/confirmation-inscription?tkn=".$token,"Confirmer mon compte", "/admin/dashboard");
 
                 $view->assign("success", "L'utilisateur a bien été créé !");
             } else {

@@ -85,7 +85,7 @@
                 </p>
             </div>
         </div>
-
+        <input type="hidden" value="<?=PUBLICKEYSTRIPE ?>" id="publicKeyStripe">
 </section>
 <script type="text/javascript">
     var checkoutButton = document.getElementById("checkStock");
@@ -108,7 +108,8 @@
     });
 
     // Create an instance of the Stripe object with your publishable API key
-    var stripe = Stripe("pk_test_51JC0puGueu1Z1r2S3oq9aEovJmlKpYwQ8isyViEyKtwQrLXIEZBdOVeXiihXPpi4EtJHkTd53Whc5F6J7TNxLEQz00XaTk67k0");
+    var publicKey = $('#publicKeyStripe').val();
+    var stripe = Stripe(publicKey);
     var checkoutButton = document.getElementById("paiement-stripee");
     checkoutButton.addEventListener("click", function () {
         fetch("/create-checkout-session", {
