@@ -297,6 +297,12 @@
   controller: Dashboard
   action: getData
 
+
 /facture:
   controller: Facture
   action : facture
+
+/admin/activer-theme:
+  controller: Theme
+  action: enableTheme
+
