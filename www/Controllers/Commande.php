@@ -96,7 +96,7 @@ class Commande
             $order->setStatus(-1);
             $order->save();
 
-            //Email::sendEmail($getUser[0]["email"], "Votre commande vient d'être annulée ", "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/connexion","Mon compte", "/admin/liste-commande");
+            //Email::sendEmail("C&C - Annulation de votre commande",$getUser[0]["email"], "Votre commande vient d'être annulée ", "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/connexion","Mon compte", "/admin/liste-commande");
             // Rajouter header location
         }else{
             header("Location: /mes-commandes");
@@ -126,7 +126,7 @@ class Commande
             $order->setStatus(-1);
             $order->save();
 
-            Email::sendEmail($getUser[0]["email"], "Votre commande vient d'être annulée ", 'http://'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/connexion","Mon compte", "/admin/liste-commande");
+            Email::sendEmail("C@C - Annulation de votr commande",$getUser[0]["email"], "Votre commande vient d'être annulée ", 'http://'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/connexion","Mon compte", "/admin/liste-commande");
 
         }else{
             header("Location: /admin/liste-commande");
@@ -156,7 +156,7 @@ class Commande
             $order->setStatus(1);
             $order->save();
 
-            Email::sendEmail($getUser[0]["email"], "Votre commande est prête ! <br> Vous pouvez venir la chercher en magasin", "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/connexion","Mon compte", "/admin/liste-commande");
+            Email::sendEmail("C&C - Votre commande est prete !", $getUser[0]["email"], "Votre commande est prête ! <br> Vous pouvez venir la chercher en magasin", "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/connexion","Mon compte", "/admin/liste-commande");
 
         }else{
             header("Location: /admin/liste-commande");
@@ -186,7 +186,7 @@ class Commande
             $order->setStatus(2);
             $order->save();
 
-            Email::sendEmail($getUser[0]["email"], "Votre commande vient d'être cloturer <br> Merci et à bientôt !", "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/connexion","Mon compte", "/admin/liste-commande");
+            Email::sendEmail("C&C - Votre commande a ete cloturer", $getUser[0]["email"], "Votre commande vient d'être cloturer <br> Merci et à bientôt !", "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/connexion","Mon compte", "/admin/liste-commande");
 
         }else{
             header("Location: /admin/liste-commande");
