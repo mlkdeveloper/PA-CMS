@@ -18,10 +18,6 @@
   controller: Security
   action: logout
 
-/admin/liste-magasin:
-  controller: Shop
-  action: displayShop
-
 /admin/reviews:
   controller: Reviews
   action: showReviews
@@ -45,10 +41,6 @@
 /admin/suppression-categorie:
   controller : Category
   action: deleteCategory
-
-/admin/nouveau-magasin:
-  controller: Shop
-  action: newShop
 
 /admin/pages:
   controller: Pages
