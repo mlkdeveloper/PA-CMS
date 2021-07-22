@@ -23,7 +23,7 @@
         <p>Date : <?= \App\Core\Helpers::dateFr($order[0]['CreatedAt'])?></p>
         <p>Total : € <?= $order[0]['montant']?></p>
 
-        <a class="button button--blue" href="/facture?id=<?= $order[0]['id'] ?>" > Facture <?= $order[0]['id'] ?></a>
+        <a class="button button--blue" href="/facture?id=<?= $order[0]['id'] ?>" > Facture</a>
     </div>
 
 
