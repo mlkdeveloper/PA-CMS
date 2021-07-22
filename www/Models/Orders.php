@@ -8,14 +8,14 @@ use App\Core\Database;
 
 class Orders extends Database
 {
-    private $id;
+    private $id = null;
     protected $status;
-    protected $Products_id;
     protected $User_id;
     protected $CreatedAt;
+    protected $montant;
 
     /**
-     * @return mixed
+     * @return null
      */
     public function getId()
     {
@@ -23,9 +23,9 @@ class Orders extends Database
     }
 
     /**
-     * @param mixed $id
+     * @param null $id
      */
-    public function setId($id): void
+    public function setId($id)
     {
         $this->id = $id;
     }
@@ -41,25 +41,9 @@ class Orders extends Database
     /**
      * @param mixed $status
      */
-    public function setStatus($status): void
+    public function setStatus($status)
     {
         $this->status = $status;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getProductsId()
-    {
-        return $this->Products_id;
-    }
-
-    /**
-     * @param mixed $Products_id
-     */
-    public function setProductsId($Products_id): void
-    {
-        $this->Products_id = $Products_id;
     }
 
     /**
@@ -73,7 +57,7 @@ class Orders extends Database
     /**
      * @param mixed $User_id
      */
-    public function setUserId($User_id): void
+    public function setUserId($User_id)
     {
         $this->User_id = $User_id;
     }
@@ -89,9 +73,25 @@ class Orders extends Database
     /**
      * @param mixed $CreatedAt
      */
-    public function setCreatedAt($CreatedAt): void
+    public function setCreatedAt($CreatedAt)
     {
         $this->CreatedAt = $CreatedAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMontant()
+    {
+        return $this->montant;
+    }
+
+    /**
+     * @param mixed $montant
+     */
+    public function setMontant($montant)
+    {
+        $this->montant = $montant;
     }
 
 

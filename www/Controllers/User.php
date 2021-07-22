@@ -41,8 +41,14 @@ class User extends Database
 
                             session_start();
                             $monUser = $user->select('*')->where('email=:email', 'pwd=:pwd')->setParams([":email" => $_POST['email'], ":pwd" => $pwdGet[0]["pwd"],])->get();
-                            $_SESSION['user'] = $monUser;
+                            $_SESSION['user'] = $monUser[0];
                             var_dump($_SESSION["user"]);
+                            if (isset($_GET['reason']) && !empty($_GET['reason'])){
+                                if ($_GET['reason'] == 'stripe'){
+                                    header('location:/panier');
+                                    exit();
+                                }
+                            }
                             header('location:/');
                         }else{
                             array_push($errors,"Vous devez d'abord confimer votre compte");
@@ -171,10 +177,10 @@ class User extends Database
                     $user->setStatus(1);
                     $user->setIdRole(2);
                     $user->setToken($token);
-                    
+
                     $user->save();
 
-                    Email::sendEmail($email, "Veuillez confirmer votre compte", "http://localhost:8080/confirmation-inscription?tkn=".$token,"Confimer mon compte", "/");
+                    Email::sendEmail("C&C - Confirmation du compte", $email, "Veuillez confirmer votre compte", "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/confirmation-inscription?tkn=".$token,"Confimer mon compte", "/");
 
 
                     header('location:/connexion');
@@ -192,6 +198,7 @@ class User extends Database
 	// CLIENTS //
 
     public function displayClientAction(){
+        session_start();
         $clients = new UserModel();
         $array = $clients->select()->where("status = 1","id_role = 2")->get();
         $view = new View("clientList.back", "back");
@@ -200,6 +207,7 @@ class User extends Database
     }
 
     public function newClientAction(){
+
         $client = new UserModel();
         $view = new View("createClient.back", "back");
         $view->assign("title", "Admin - Nouveau client");
@@ -244,7 +252,7 @@ class User extends Database
                     $view->assign("message", $message);
 
                     if($formStatus == Database::NEW_OBJECT){
-                        Email::sendEmail($client->getEmail(), "Veuillez confirmer votre compte", "http://localhost:8082/confirmation-inscription?tkn=".$token,"Confirmer mon compte", "/admin/liste-client");
+                        Email::sendEmail("C&C - Confirmation de votre compte",$client->getEmail(), "Veuillez confirmer votre compte", "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/confirmation-inscription?tkn=".$token,"Confirmer mon compte", "/admin/liste-client");
                     }
                 }else{
                     http_response_code(400);
@@ -301,7 +309,6 @@ class User extends Database
             $message = $this->returnValue($returnValue,3);
 
             if ($message != false) {
-                session_start();
                 $_SESSION['deleteClient'] = $message;
             }
             header("Location: /admin/liste-client");
@@ -351,7 +358,12 @@ class User extends Database
                 $user->populate($_POST);
                 $user->setPwd(password_hash($_POST['pwd'],PASSWORD_DEFAULT));
                 $user->setStatus(1);
+                $token = openssl_random_pseudo_bytes(32);
+                $token = bin2hex($token);
+                $user->setToken($token);
                 $user->save();
+
+                Email::sendEmail("C&C - Confirmation de votre compte",$user->getEmail(), "Veuillez confirmer votre compte", "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/confirmation-inscription?tkn=".$token,"Confirmer mon compte", "/admin/dashboard");
 
                 $view->assign("success", "L'utilisateur a bien été créé !");
             } else {
@@ -361,14 +373,14 @@ class User extends Database
     }
 
     public function displayUsersAction(){
-
+        session_start();
         $user = new UserModel();
         $view = new View("usersList.back", "back");
         $view->assign("title", "Admin - Utilisateurs");
 
-        $users = $user->select("cc_user.id,cc_user.lastname,cc_user.firstname,cc_user.email,cc_role.name")
-            ->where("cc_user.id_role > 2")
-            ->innerJoin("cc_role","cc_role.id","=","cc_user.id_role")
+        $users = $user->select(DBPREFIXE."user.id, ".DBPREFIXE."user.lastname, ".DBPREFIXE."user.firstname, ".DBPREFIXE."user.email, ".DBPREFIXE."role.name")
+            ->where(DBPREFIXE."user.id_role > 2")
+            ->innerJoin(DBPREFIXE."role",DBPREFIXE."role.id","=",DBPREFIXE."user.id_role")
             ->get();
 
         $view->assign("users", $users);
@@ -391,7 +403,6 @@ class User extends Database
             $user->setId($_GET['id']);
             $user->where("id= :id")->setParams(["id" => $_GET['id']])->delete();
 
-            session_start();
             $_SESSION['deleteUser'] = "Utilisateur supprimé ! ";
 
             header("Location: /admin/liste-utilisateurs");
@@ -404,7 +415,7 @@ class User extends Database
         if (isset($_GET['id']) && !empty($_GET['id'])) {
 
             $userId = new UserModel();
-            $verifyId = $userId->select("id, email,pwd")->where("id = :id", "id_role > 2")->setParams(["id" => $_GET['id']])->get();
+            $verifyId = $userId->select("id, email,pwd,token,isConfirmed")->where("id = :id", "id_role > 2")->setParams(["id" => $_GET['id']])->get();
 
             if (empty($verifyId)) {
                 header("Location: /admin/liste-utilisateurs");
@@ -428,6 +439,8 @@ class User extends Database
                     $userId->populate($_POST);
                     $userId->setId($_GET['id']);
                     $userId->setPwd($verifyId[0]["pwd"]);
+                    $userId->setToken($verifyId[0]["token"]);
+                    $userId->setIsConfirmed($verifyId[0]["isConfirmed"]);
                     $userId->setStatus(1);
                     $userId->save();
 
@@ -437,10 +450,10 @@ class User extends Database
                 }
             }
 
-            $users = $userId->select("cc_user.pwd,cc_user.id,cc_user.lastname,cc_user.firstname,cc_user.email,cc_role.name")
-                ->where("cc_user.id = :id","cc_user.id_role > 2")
+            $users = $userId->select(DBPREFIXE."user.pwd, ".DBPREFIXE."user.id, ".DBPREFIXE."user.lastname, ".DBPREFIXE."user.firstname, ".DBPREFIXE."user.email, ".DBPREFIXE."role.name")
+                ->where(DBPREFIXE."user.id = :id",DBPREFIXE."user.id_role > 2")
                 ->setParams(['id' => $_GET['id']])
-                ->innerJoin("cc_role","cc_role.id","=","cc_user.id_role")
+                ->innerJoin(DBPREFIXE."role",DBPREFIXE."role.id","=",DBPREFIXE."user.id_role")
                 ->get();
 
             $view->assign("users", $users[0]);
@@ -472,6 +485,8 @@ class User extends Database
                     $user->populate($verifyId[0]);
                     $user->setId($_GET['id']);
                     $user->setIdRole($verifyId[0]['id_role']);
+                    $user->setToken($verifyId[0]["token"]);
+                    $user->setIsConfirmed($verifyId[0]["isConfirmed"]);
                     $user->setPwd(password_hash($_POST['pwd'], PASSWORD_DEFAULT));
                     $user->save();
 
@@ -487,6 +502,99 @@ class User extends Database
         }else{
             header("Location: /admin/liste-utilisateurs");
         }
+    }
+
+
+    public function displayProfileAction(){
+        session_start();
+        $view = new View("myProfile.front");
+        $view->assign("title", "Mon profil");
+        $user = new UserModel();
+
+        $form = $user->formBuilderCreateClient();
+
+        if(!empty($_POST)) {
+
+            $error = FormValidator::checkClient($form, $_POST, trim($_POST['email']) === $_SESSION['user']["email"]);
+
+            if (empty($error)) {
+
+                $user->setId($_SESSION['user']['id']);
+                $getInfo = $user->select('pwd,token,isConfirmed')->where("id = :id ")->setParams(["id" => $_SESSION['user']['id']])->get();
+                $user->setPwd($getInfo[0]['pwd']);
+                $user->setToken($getInfo[0]['token']);
+                $user->setIsConfirmed($getInfo[0]['isConfirmed']);
+                $user->populate($_POST);
+                $user->setStatus(1);
+                $user->setIdRole(2);
+                $user->save();
+
+                $view->assign("message", "Votre profil a bien été modifié !");
+            }else{
+
+                $view->assign("errors", $error);
+            }
+        }
+        $getInfos = $user->select()->where("id = :id")->setParams(['id' => $_SESSION['user']['id']])->get();
+        $view->assign("user", $getInfos[0]);
+    }
+
+    public function updateUserPasswordAction(){
+        session_start();
+        if (!empty($_POST)) {
+            $user = new UserModel();
+
+            if (count($_POST) != 3) {
+                $this->errorRedirection('Formulaire non conforme', 'error');
+            } else {
+
+                $oldPwd = htmlspecialchars($_POST['old_pwd']);
+                $newPwd = htmlspecialchars($_POST['pwd']);
+                $newPwdConfirm = htmlspecialchars($_POST['new_pwd_confirm']);
+
+                if (empty($oldPwd) ||
+                    empty($newPwd) ||
+                    empty($newPwdConfirm)) {
+                    $this->errorRedirection('Veuillez remplir tous les champs', 'error');
+                }
+
+
+                $dataUser = $user->select()->where("id = :id")->setParams(["id" => $_SESSION['user']['id']])->get();
+
+                if (!password_verify($oldPwd, $dataUser[0]['pwd'])) {
+                    $this->errorRedirection('Le mot de passe est incorrect', 'error');
+                }
+
+                if( !preg_match("/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]){8,}/",$newPwd)){
+                    $this->errorRedirection('Votre mot de passe doit faire au minimum 8 caractères, contenir une majuscule et un chiffre.', 'error');
+                }
+
+                if ($newPwd !== $newPwdConfirm) {
+                    $this->errorRedirection('Les deux mots de passe sont différents', 'error');
+                }
+
+                $pwdHash = password_hash($newPwd, PASSWORD_BCRYPT);
+
+                $user->populate($dataUser[0]);
+                $user->setPwd($pwdHash);
+                $user->save();
+                $this->errorRedirection('Modification réussie', 'success');
+            }
+        }else{
+            header('Location: /mon-profil');
+        }
+    }
+
+    private function errorRedirection($msg, $type){
+
+	    session_start();
+        if ($type === 'error'){
+            $_SESSION['errors'] = $msg;
+        }else{
+            $_SESSION['success'] = $msg;
+        }
+        header('Location: /mon-profil');
+        exit();
     }
 
 }

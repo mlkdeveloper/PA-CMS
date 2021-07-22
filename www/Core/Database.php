@@ -12,7 +12,7 @@ class Database extends QueryBuilder
     const UPDATE_OBJECT = 2;
     const DELETE_OBJECT = 3;
 
-    const USER_TABLE = 'cc_user';
+    const USER_TABLE = DBPREFIXE.'user';
 
 
     public function __construct()
@@ -37,6 +37,7 @@ class Database extends QueryBuilder
         if (is_null($this->getId())) {
 
             $query = $this->pdo->prepare("INSERT INTO " . $this->table . " (" . implode(',', array_keys($column)) . ") VALUES (:" . implode(',:', array_keys($column)) . ") "); //1
+
 
         } else {
 

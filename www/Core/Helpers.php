@@ -30,4 +30,23 @@ class Helpers{
 
 	    return $newDate;
     }
+
+    public static function filter_by_value($array, $index, $value){
+        $newarray = null;
+	    if(is_array($array) && count($array)>0)
+        {
+            foreach(array_keys($array) as $key){
+                $temp[$key] = $array[$key][$index];
+
+                if ($temp[$key] == $value){
+                    $newarray[$key] = $array[$key];
+                }
+            }
+        }
+        return $newarray;
+    }
+
+    public static function checkStock(){
+	    echo 'ok';
+    }
 }

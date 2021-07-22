@@ -8,7 +8,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 
 class Email
 {
-    public static function sendEmail($emailDst, $msgEntete, $urlButton, $msgBouton, $urlResdirect){
+    public static function sendEmail($objet, $emailDst, $msgEntete, $urlButton, $msgBouton, $urlResdirect){
 
 
         // on crée une nouvelle instance de la classe
@@ -44,7 +44,7 @@ class Email
             /* CONTENU DE L'EMAIL*/
             ##########################
             $mail->isHTML(true);                                      // email au format HTML
-            $mail->Subject = utf8_decode("C&C - Récupération de mot de passe");      // Objet du message (éviter les accents là, sauf si utf8_encode)
+            $mail->Subject = utf8_decode($objet);      // Objet du message (éviter les accents là, sauf si utf8_encode)
             $mail->AddEmbeddedImage('./images/image-1.png', 'logo');
             $mail->Body = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional //EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">
                 <html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\">

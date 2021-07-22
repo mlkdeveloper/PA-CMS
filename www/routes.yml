@@ -1,6 +1,6 @@
 /:
-  controller: Security
-  action: install
+  controller: Pages
+  action: displayFront
 
 /404:
   controller: Main
@@ -52,15 +52,31 @@
 
 /admin/pages:
   controller: Pages
-  action: pages
+  action: show
 
-/admin/publisher:
+/admin/editeur:
   controller: Publisher
   action: publisher
 
 /admin/check-review:
   controller: Reviews
   action: checkReviews
+
+/admin/nouvelle-page:
+  controller: Pages
+  action: newPage
+
+/admin/modification-page:
+  controller: Pages
+  action: updatePage
+
+/admin/delete-page:
+  controller: Pages
+  action: deletePage
+
+/admin/update-publication:
+  controller: Pages
+  action: updatePublication
 
 /admin/nouveau-role:
   controller: Role
@@ -150,6 +166,14 @@
   controller: User
   action : changeUserPwd
 
+/admin/liste-commande:
+  controller: Commande
+  action: listeCommande
+
+/admin/detail-commande:
+  controller: Commande
+  action: displayCommande
+
 /collections:
   controller: Product
   action : displayProductsFront
@@ -178,10 +202,17 @@
   controller: Settings
   action : displaySettings
 
+/admin/parametres-site:
+  controller: Settings
+  action : displaySettingsSite
+
 /admin/update-settings:
   controller: Settings
   action : update
 
+/admin/annuler-commande:
+  controller: Commande
+  action: cancelCommande
 /admin/update-admin-email:
   controller: Settings
   action : updateAdminEmail
@@ -189,6 +220,82 @@
 /admin/update-admin-password:
   controller: Settings
   action : updateAdminPassword
+
+/mon-profil:
+  controller: User
+  action: displayProfile
+
+/modification-mdp-profil:
+  controller: User
+  action: updateUserPassword
+
+/admin/barre-de-navigation:
+  controller: Navbar
+  action: displayNavbar
+
+/admin/nouveau-onglet-navigation:
+  controller: Navbar
+  action: newNavbarTab
+
+/admin/get-data-navbar:
+  controller: Navbar
+  action: getDataNavbar
+
+/admin/up-navbar:
+  controller : Navbar
+  action : upNavbar
+
+/admin/down-navbar:
+  controller : Navbar
+  action : downNavbar
+
+/admin/onglet-barre-navigation:
+  controller : Navbar
+  action : deleteTab
+
+/admin/valider-commande:
+  controller: Commande
+  action: ValidCommande
+
+/admin/terminer-commande:
+  controller: Commande
+  action: DoneCommande
+  
+/create-checkout-session:
+  controller: Stripe
+  action: paymentStripe
+
+/paiement-stripe:
+  controller: Stripe
+  action: pagePaiementStripe
+
+/success:
+  controller: Stripe
+  action: success
+
+/cancel:
+  controller: Stripe
+  action: cancel
+
+/verification-stock-panier:
+  controller: Stripe
+  action: checkStockProducts
+  
+/annuler-commande:
+  controller: Commande
+  action: cancelOrderFront
+
+/mes-commandes:
+  controller : Commande
+  action: displayOrdersFront
+
+/ma-commande:
+  controller : Commande
+  action: informationsOrder
+
+/admin/get-data-charts:
+  controller: Dashboard
+  action: getData
 
 /test:
   controller: Test
