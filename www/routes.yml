@@ -1,18 +1,10 @@
 /:
-  controller: Security
-  action: install
+  controller: Pages
+  action: displayFront
 
 /404:
   controller: Main
   action: page404
-
-/utilisateur:
-  controller: User
-  action: default
-
-/ajout-d-un-utilisateur:
-  controller: User
-  action: add
 
 /connexion:
   controller: User
@@ -26,14 +18,6 @@
   controller: Security
   action: logout
 
-/afficher-un-utilisateur:
-  controller: User
-  action: show
-
-/afficher-les-utilisateurs:
-  controller: User
-  action: showAll
-
 /admin/liste-magasin:
   controller: Shop
   action: displayShop
@@ -45,7 +29,6 @@
 /admin/dashboard:
   controller: Dashboard
   action: dashboard
-
 
 /admin/display-category:
   controller: Category
@@ -67,21 +50,33 @@
   controller: Shop
   action: newShop
 
-
 /admin/pages:
   controller: Pages
-  action: pages
+  action: show
 
-
-/admin/publisher:
+/admin/editeur:
   controller: Publisher
   action: publisher
-
 
 /admin/check-review:
   controller: Reviews
   action: checkReviews
 
+/admin/nouvelle-page:
+  controller: Pages
+  action: newPage
+
+/admin/modification-page:
+  controller: Pages
+  action: updatePage
+
+/admin/delete-page:
+  controller: Pages
+  action: deletePage
+
+/admin/update-publication:
+  controller: Pages
+  action: updatePublication
 
 /admin/nouveau-role:
   controller: Role
@@ -110,14 +105,6 @@
 /admin/show-reviews-from-products:
   controller: Reviews
   action: showReviewsFromProducts
-
-/admin/orders:
-  controller: Orders
-  action: showOrders
-
-/admin/info-order:
-  controller: Orders
-  action: infoOrder
 
 /admin/ajout-client:
   controller: User
@@ -179,18 +166,221 @@
   controller: User
   action : changeUserPwd
 
+/admin/attribut:
+  controller : Attribute
+  action : attribute
+
+/admin/valeurs-attribut:
+  controller: Attribute
+  action: termsAttribute
+
+/admin/modification-attribut:
+  controller: Attribute
+  action: updateAttribute
+
+/admin/suppression-attribut:
+  controller: Attribute
+  action : deleteAttribute
+
+/admin/suppression-terme:
+  controller: Attribute
+  action : deleteTerm
+
+/admin/ajout-produit:
+  controller: Product
+  action : addProduct
+
+/admin/valeurs-attribut-ajax:
+  controller : Product
+  action : getValuesAttribute
+
+/admin/creer-produit-ajax:
+  controller : Product
+  action : createProduct
+
+/admin/liste-produits:
+  controller: Product
+  action: showProducts
+
+/admin/information-produit:
+  controller: Product
+  action: infoProducts
+
+/admin/del-produit-term:
+  controller: Product
+  action: deleteProduct
+
+/admin/modification-produit:
+  controller: Product
+  action: updateProductForm
+
+/admin/update-product-ajax:
+  controller : Product
+  action : updateProductAjax
+
+/admin/update-var:
+  controller: Product
+  action: updateVar
+
+/admin/update-p:
+  controller: Product
+  action: update
+
+/admin/add-product-wv:
+  controller: Product
+  action: addProductWV
+
+/admin/del-product:
+  controller: Product
+  action: delProduct
+
+/admin/publish-product:
+  controller: Product
+  action: publishProduct
+
+/admin/depublish-product:
+  controller: Product
+  action: depublishProduct
+
+/admin/del-picture-variante:
+  controller: Product
+  action: delPicture
+
+/admin/delete-variantes:
+  controller: Product
+  action: delVariantes
+
+/admin/liste-commande:
+  controller: Commande
+  action: listeCommande
+
+/admin/detail-commande:
+  controller: Commande
+  action: displayCommande
+
+/collections:
+  controller: Product
+  action : displayProductsFront
+
+/produit:
+  controller: Product
+  action: infoProductFront
+
+/produit/prix:
+  controller: Product
+  action: getPrice
+
+/panier:
+  controller: ShoppingCart
+  action : displayShoppingCart
+
+/ajout-panier:
+  controller : ShoppingCart
+  action : addShoppingCart
+
+/supprimer-panier:
+  controller: ShoppingCart
+  action: deleteShoppingCart
+
 /admin/parametres:
   controller: Settings
   action : displaySettings
 
-/update-settings:
+/admin/parametres-site:
+  controller: Settings
+  action : displaySettingsSite
+
+/admin/update-settings:
   controller: Settings
   action : update
 
-/update-admin-email:
+/admin/annuler-commande:
+  controller: Commande
+  action: cancelCommande
+/admin/update-admin-email:
   controller: Settings
   action : updateAdminEmail
 
-/update-admin-password:
+/admin/update-admin-password:
   controller: Settings
   action : updateAdminPassword
+
+/mon-profil:
+  controller: User
+  action: displayProfile
+
+/modification-mdp-profil:
+  controller: User
+  action: updateUserPassword
+
+/admin/barre-de-navigation:
+  controller: Navbar
+  action: displayNavbar
+
+/admin/nouveau-onglet-navigation:
+  controller: Navbar
+  action: newNavbarTab
+
+/admin/get-data-navbar:
+  controller: Navbar
+  action: getDataNavbar
+
+/admin/up-navbar:
+  controller : Navbar
+  action : upNavbar
+
+/admin/down-navbar:
+  controller : Navbar
+  action : downNavbar
+
+/admin/onglet-barre-navigation:
+  controller : Navbar
+  action : deleteTab
+
+/admin/valider-commande:
+  controller: Commande
+  action: ValidCommande
+
+/admin/terminer-commande:
+  controller: Commande
+  action: DoneCommande
+  
+/create-checkout-session:
+  controller: Stripe
+  action: paymentStripe
+
+/paiement-stripe:
+  controller: Stripe
+  action: pagePaiementStripe
+
+/success:
+  controller: Stripe
+  action: success
+
+/cancel:
+  controller: Stripe
+  action: cancel
+
+/verification-stock-panier:
+  controller: Stripe
+  action: checkStockProducts
+  
+/annuler-commande:
+  controller: Commande
+  action: cancelOrderFront
+
+/mes-commandes:
+  controller : Commande
+  action: displayOrdersFront
+
+/ma-commande:
+  controller : Commande
+  action: informationsOrder
+
+/admin/get-data-charts:
+  controller: Dashboard
+  action: getData
+
+/admin/activer-theme:
+  controller: Theme
+  action: enableTheme

@@ -4,6 +4,16 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f 
 RewriteCond %{REQUEST_FILENAME} !-d
 
+Options -Indexes
+
+RedirectMatch \.(env|yml|yaml)$ /
+
+RewriteCond %{REQUEST_URI} !^/sitemap.xml$
+RewriteCond %{REQUEST_URI} !^/config.env$
+RewriteCond %{REQUEST_URI} !^/config-sample.env$
 RewriteRule . /index.php [L]
 
+RewriteCond %{REQUEST_URI} ^/sitemap.xml$
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
+RewriteRule ^sitemap.php/  - [L]
 

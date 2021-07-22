@@ -3,7 +3,9 @@
 
 namespace App\Controller;
 
+use App\Core\Uploader;
 use App\Core\View;
+use App\Models\Themes;
 use App\Models\User;
 
 session_start();
@@ -149,69 +151,99 @@ class Settings
     }
 
     public function updateAdminEmailAction(){
+        if (!empty($_POST)) {
+            $admin = new User();
 
-        $admin = new User();
+            if (count($_POST) != 1) {
+                $this->errorRedirection('Formulaire non conforme', 'error');
+            } else {
 
-        if(count($_POST) != 1){
-            $this->errorRedirection('Formulaire non conforme', 'error');
-        }else {
+                $mailAdmin = htmlspecialchars(trim($_POST['admin_mail']));
 
-            $mailAdmin = htmlspecialchars(trim($_POST['admin_mail']));
+                if (empty($mailAdmin) ||
+                    !filter_var($mailAdmin, FILTER_VALIDATE_EMAIL)) {
+                    $this->errorRedirection('Veuillez remplir tous les champs', 'error');
+                }
 
-            if (empty($mailAdmin) ||
-                !filter_var($mailAdmin, FILTER_VALIDATE_EMAIL)){
-                $this->errorRedirection('Veuillez remplir tous les champs', 'error');
+                $checkMail = $admin->select()->where("email = :email")->setParams(["email" => $mailAdmin])->get();
+
+                if ($checkMail) {
+                    $this->errorRedirection('Ce mail est déjà utilisé', 'error');
+                }
+
+                $dataAdmin = $admin->select()->where("id = :id")->setParams(["id" => 1])->get();
+
+                $admin->populate($dataAdmin[0]);
+                $admin->setEmail($mailAdmin);
+                $admin->save();
+                $this->errorRedirection('Modification réussie', 'success');
             }
-
-            $checkMail = $admin->select()->where("email = :email")->setParams(["email" => $mailAdmin])->get();
-
-            if($checkMail){
-                $this->errorRedirection('Ce mail est déjà utilisé', 'error');
-            }
-
-            $dataAdmin = $admin->select()->where("id = :id")->setParams(["id" => 1])->get();
-
-            $admin->populate($dataAdmin[0]);
-            $admin->setEmail($mailAdmin);
-            $admin->save();
-            $this->errorRedirection('Modification réussie', 'success');
+        }else{
+            header('Location: /admin/parametres');
         }
     }
 
     public function updateAdminPasswordAction(){
 
-        $admin = new User();
+        if (!empty($_POST)) {
+            $admin = new User();
 
-        if(count($_POST) != 3){
-            $this->errorRedirection('Formulaire non conforme', 'error');
-        }else {
+            if (count($_POST) != 3) {
+                $this->errorRedirection('Formulaire non conforme', 'error');
+            } else {
 
-            $oldPwd = htmlspecialchars($_POST['old_pwd']);
-            $newPwd = htmlspecialchars($_POST['new_pwd']);
-            $newPwdConfirm = htmlspecialchars($_POST['new_pwd_confirm']);
+                $oldPwd = htmlspecialchars($_POST['old_pwd']);
+                $newPwd = htmlspecialchars($_POST['new_pwd']);
+                $newPwdConfirm = htmlspecialchars($_POST['new_pwd_confirm']);
 
-            if (empty($oldPwd) ||
-                empty($newPwd) ||
-                empty($newPwdConfirm)){
-                $this->errorRedirection('Veuillez remplir tous les champs', 'error');
+                if (empty($oldPwd) ||
+                    empty($newPwd) ||
+                    empty($newPwdConfirm)) {
+                    $this->errorRedirection('Veuillez remplir tous les champs', 'error');
+                }
+
+                $dataAdmin = $admin->select()->where("id = :id")->setParams(["id" => 1])->get();
+
+                if (!password_verify($oldPwd, $dataAdmin[0]['pwd'])) {
+                    $this->errorRedirection('Le mot de passe est incorrect', 'error');
+                }
+
+                if ($newPwd !== $newPwdConfirm) {
+                    $this->errorRedirection('Les deux mots de passe sont différents', 'error');
+                }
+
+                $pwdHash = password_hash($newPwd, PASSWORD_BCRYPT);
+
+                $admin->populate($dataAdmin[0]);
+                $admin->setPwd($pwdHash);
+                $admin->save();
+                $this->errorRedirection('Modification réussie', 'success');
             }
-
-            $dataAdmin = $admin->select()->where("id = :id")->setParams(["id" => 1])->get();
-
-            if (!password_verify($oldPwd, $dataAdmin[0]['pwd'])){
-                $this->errorRedirection('Le mot de passe est incorrect', 'error');
-            }
-
-            if ($newPwd !== $newPwdConfirm){
-                $this->errorRedirection('Les deux mots de passe sont différents', 'error');
-            }
-
-            $pwdHash = password_hash($newPwd, PASSWORD_BCRYPT);
-
-            $admin->populate($dataAdmin[0]);
-            $admin->setPwd($pwdHash);
-            $admin->save();
-            $this->errorRedirection('Modification réussie', 'success');
+        }else{
+            header('Location: /admin/parametres');
         }
     }
+
+    public function displaySettingsSiteAction(){
+
+        $view = new View("settingsSite.back", "back");
+        $view->assign("title","Paramètres du site");
+
+        if (isset($_FILES['logo']) && !empty($_FILES['logo'])){
+
+            $upload = new Uploader($_FILES['logo'],true);
+            $res = $upload->setName("logo")->setSize(10)->setDirectory("./images/logo")->upload();
+            ($res) ? $view->assign("success","Logo modifié !") : $view->assign("errors",$upload->errorsFile());
+        }
+
+        $file = scandir("./images/logo/",1);
+
+        $theme = new Themes();
+        $themes = $theme->select()->get();
+
+        $view->assign("logo",$file[0]);
+        $view->assign("themes",$themes);
+
+    }
+
 }

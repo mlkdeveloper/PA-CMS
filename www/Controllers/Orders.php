@@ -4,7 +4,7 @@
 namespace App\Controller;
 
 
-use App\Models\Order;
+use App\Models\Orders;
 use App\Core\View;
 
 class Orders

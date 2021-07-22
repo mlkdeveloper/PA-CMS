@@ -14,7 +14,7 @@
                         unset($_SESSION['successSettings']);
                     }
                     ?>
-                    <form method="POST" action="/update-settings">
+                    <form method="POST" action="/admin/update-settings">
 
                         <div class="row">
                             <h4 class="center-margin mb-5 mt-5">Configuration SMTP</h4>
@@ -117,7 +117,7 @@
                         <h4 class="center-margin mb-5 mt-5">Informations de l'administrateur</h4>
                     </div>
 
-                    <form method="POST" action="/update-admin-email">
+                    <form method="POST" action="/admin/update-admin-email">
 
                         <div class="row">
                             <div class="form_align--top center-margin">
@@ -134,7 +134,7 @@
                         </div>
                     </form>
 
-                    <form method="POST" action="/update-admin-password">
+                    <form method="POST" action="/admin/update-admin-password">
                         <div class="row">
                             <div class="form_align--top center-margin">
                                 <label for="old_pwd">Ancien mot de passe:</label>

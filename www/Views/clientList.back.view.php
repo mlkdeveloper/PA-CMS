@@ -8,9 +8,9 @@
 
     <div class="align">
         <h1>Liste des clients</h1>
-        <button class="button button--blue">
-            <a href="/admin/ajout-client">Nouveau client</a>
-        </button>
+        <a href="/admin/ajout-client">
+            <button class="button button--blue">Nouveau client</button>
+        </a>
     </div>
     <div class="row">
         <div class="col-md-12 col-sm-12">
