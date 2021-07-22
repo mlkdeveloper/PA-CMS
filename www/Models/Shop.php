@@ -231,7 +231,7 @@ class Shop extends Database
                     "value"=>$values['name'],
                     "label"=>"Nom",
                     "required"=>true,
-                    "class"=>"form_input",
+                    "class"=>"input",
                     "minLength"=>2,
                     "maxLength"=>320,
                     "error"=>"Le nom doit faire entre 2 et 320 caractères"
@@ -244,7 +244,7 @@ class Shop extends Database
                     "divClass"=> "form_align--top",
                     "placeholder"=>"ex : 29 rue de la liberte",
                     "required"=>true,
-                    "class"=>"form_input",
+                    "class"=>"input",
                     "minLength"=>5,
                     "error"=>"L'adresse doit faire au minimum 5 caractères"
                 ],
@@ -255,7 +255,7 @@ class Shop extends Database
                     "divClass"=> "form_align--top",
                     "placeholder"=>"ex : Paris",
                     "required"=>true,
-                    "class"=>"form_input",
+                    "class"=>"input",
                     "minLength"=>2,
                     "error"=>"La ville doit faire au minimum 2 caractères"
                 ],
@@ -266,7 +266,7 @@ class Shop extends Database
                     "divClass"=> "form_align--top",
                     "placeholder"=>"ex : 75015",
                     "required"=>true,
-                    "class"=>"form_input",
+                    "class"=>"input",
                     "minLength"=>2,
                     "error"=>"Le code postal doit faire au 5 caractères"
                 ],
@@ -277,7 +277,7 @@ class Shop extends Database
                     "divClass"=> "form_align--top",
                     "placeholder"=>"Numero de telephone",
                     "required"=>true,
-                    "class"=>"form_input",
+                    "class"=>"input",
                     "data-format"=>"telephone",
                     "minLength"=>1,
                     "error"=>"le numero de telephone est obligatoire et doit être uniquement être composé de chiffres"
@@ -289,7 +289,7 @@ class Shop extends Database
                     "divClass"=> "form_align--top",
                     "placeholder"=>"Votre description",
                     "required"=>true,
-                    "class"=>"form_input input--textarea",
+                    "class"=>"input input--textarea",
                     "minLength"=>5,
                     "error"=>"La description doit faire au minimum 5 caractères"
                 ],

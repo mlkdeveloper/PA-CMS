@@ -45,4 +45,8 @@ class Helpers{
         }
         return $newarray;
     }
+
+    public static function checkStock(){
+	    echo 'ok';
+    }
 }
