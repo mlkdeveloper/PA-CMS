@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 
+use App\Core\FormValidator;
+use App\Core\MyException;
 use App\Core\View;
+use App\Models\Products;
 use App\Models\Review;
 
 class Reviews
@@ -87,22 +90,28 @@ class Reviews
     public function showProductsAction()
     {
         if (isset($_GET["id"]) && !empty($_GET["id"]) && is_numeric($_GET["id"])) {
-            $view = new View("infoProducts.back", "back");
-            $view->assign("title", "Liste des produits");
-            $review = new Review();
-            $datas = $review
-                ->select("*, ". DBPREFIXE . "products.id as id_p, ". DBPREFIXE . "review.id as id_r")
-                ->innerJoin(DBPREFIXE. "products", DBPREFIXE. "products.id", "=", "Products_id")
-                ->innerJoin(DBPREFIXE. "user", "User_id", "=", DBPREFIXE."user.id")
-                ->where(DBPREFIXE. "products.id = :id")
-                ->setParams(["id" => $_GET["id"]])
-                ->get();
-            $view->assign("datas", $datas);
-            $view->assign("product", $datas[0]["Products_id"]);
-            $view->assign("product_name", $datas[0]["name"]);
+            $pid = new Products();
+            $check_id = FormValidator::checkId($_GET["id"], $pid, false);
+            if(!empty($check_id)){
+                $view = new View("infoProducts.back", "back");
+                $view->assign("title", "Liste des produits");
+                $review = new Review();
+                $datas = $review
+                    ->select("*, ". DBPREFIXE . "products.id as id_p, ". DBPREFIXE . "review.id as id_r")
+                    ->innerJoin(DBPREFIXE. "products", DBPREFIXE. "products.id", "=", "Products_id")
+                    ->innerJoin(DBPREFIXE. "user", "User_id", "=", DBPREFIXE."user.id")
+                    ->where(DBPREFIXE. "products.id = :id")
+                    ->setParams(["id" => $_GET["id"]])
+                    ->get();
+                $view->assign("datas", $datas);
+                $view->assign("product", $datas[0]["Products_id"]);
+                $view->assign("product_name", $datas[0]["name"]);
+            }else{
+                throw new MyException("Produit introuvable", 404);
+            }
 
         } else {
-            header("Location: /admin/reviews");
+            throw new MyException("Problème avec le produit", 403);
         }
     }
 
