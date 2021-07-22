@@ -48,12 +48,12 @@ if (!$aut->isConnected()){
                 <a href="/admin/liste-commande"><li>Commandes</li></a>
                 <li id="dropdownProducts" class="dropdownMenu">Produits<i class="fa fa-caret-down"></i></li>
                 <ul class="dropdown-container">
-                    <a href="#"><li>Categories</li></a>
+                    <a href="/admin/display-category"><li>Categories</li></a>
                     <a href="#"><li>Promotions</li></a>
                 </ul>
-                    <a href="#"><li>Pages</li></a>
+                    <a href="/admin/pages"><li>Pages</li></a>
                     <a href="/admin/liste-client"><li>Clients</li></a>
-                    <a href="#"><li>Avis</li></a>
+                    <a href="/admin/reviews"><li>Avis</li></a>
                 </ul>
             </ul>
             <ul>
@@ -61,10 +61,10 @@ if (!$aut->isConnected()){
                 <li class="dropdownMenu" id="dropdownSettings">Paramètres du site<i class="fa fa-caret-down"></i></li>
                 <ul class="dropdown-container">
                     <a href="/admin/detail-magasin"><li>Magasins</li></a>
-                    <a href="#"><li>Navigation</li></a>
-                    <a href="#"><li>Paramètres</li></a>
+                    <a href="/admin/barre-de-navigation"><li>Navigation</li></a>
+                    <a href="/admin/parametres-site"><li>Paramètres</li></a>
                 </ul>
-                <a href="#"><li>Paramètres du CMS</li></a>
+                <a href="/admin/parametres"><li>Paramètres du CMS</li></a>
             </ul>
         </nav>
 

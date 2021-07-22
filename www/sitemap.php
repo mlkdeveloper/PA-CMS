@@ -20,11 +20,16 @@ header("Content-Type: application/xml; charset=utf-8");
 echo '<?xml version="1.0" encoding="UTF-8"?>';
 echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
 
+$protocol = 'http://';
+
+if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
+    $protocol = 'https://';
+}
 
 foreach ($pages as $page){
 
     echo'<url>';
-    echo'<loc>'.$_SERVER["HTTP_HOST"]. $page['slug'] . '</loc>';
+    echo'<loc>'.$protocol.$_SERVER["HTTP_HOST"]. $page['slug'] . '</loc>';
     echo' <priority>1.0</priority>';
     echo '<changefreq>monthly</changefreq>';
     echo' </url>';
@@ -34,7 +39,7 @@ foreach ($pages as $page){
 foreach ($categories as $category){
 
     echo'<url>';
-    echo '<loc>'. $_SERVER["HTTP_HOST"]. '/collections?name=' . $category['name'] . '</loc>';
+    echo '<loc>' . $protocol . $_SERVER["HTTP_HOST"]. '/collections?name=' . $category['name'] . '</loc>';
     echo' <priority>1.0</priority>';
     echo '<changefreq>monthly</changefreq>';
     echo' </url>';
@@ -43,7 +48,7 @@ foreach ($categories as $category){
 foreach ($products as $product){
 
     echo'<url>';
-    echo '<loc>'. $_SERVER["HTTP_HOST"]. '/produit?id=' . $product['id'] . '</loc>';
+    echo '<loc>' . $protocol . $_SERVER["HTTP_HOST"]. '/produit?id=' . $product['id'] . '</loc>';
     echo' <priority>1.0</priority>';
     echo '<changefreq>monthly</changefreq>';
     echo' </url>';
@@ -51,67 +56,20 @@ foreach ($products as $product){
 
 
 echo'<url>';
-echo '<loc>'. $_SERVER["HTTP_HOST"]. '/connexion</loc>';
+echo '<loc>' . $protocol . $_SERVER["HTTP_HOST"]. '/connexion</loc>';
+echo' <priority>1.0</priority>';
+echo '<changefreq>monthly</changefreq>';
+echo' </url>';
+
+
+echo'<url>';
+echo '<loc>'. $protocol . $_SERVER["HTTP_HOST"]. '/inscription</loc>';
 echo' <priority>1.0</priority>';
 echo '<changefreq>monthly</changefreq>';
 echo' </url>';
 
 echo'<url>';
-echo '<loc>'. $_SERVER["HTTP_HOST"]. '/deconnexion</loc>';
-echo' <priority>1.0</priority>';
-echo '<changefreq>monthly</changefreq>';
-echo' </url>';
-
-echo'<url>';
-echo '<loc>'. $_SERVER["HTTP_HOST"]. '/connexion-admin</loc>';
-echo' <priority>1.0</priority>';
-echo '<changefreq>monthly</changefreq>';
-echo' </url>';
-
-echo'<url>';
-echo '<loc>'. $_SERVER["HTTP_HOST"]. '/inscription</loc>';
-echo' <priority>1.0</priority>';
-echo '<changefreq>monthly</changefreq>';
-echo' </url>';
-
-echo'<url>';
-echo '<loc>'. $_SERVER["HTTP_HOST"]. '/mot-de-passe-oublie</loc>';
-echo' <priority>1.0</priority>';
-echo '<changefreq>monthly</changefreq>';
-echo' </url>';
-
-echo'<url>';
-echo '<loc>'. $_SERVER["HTTP_HOST"]. '/recuperation-mot-de-passe</loc>';
-echo' <priority>1.0</priority>';
-echo '<changefreq>monthly</changefreq>';
-echo' </url>';
-
-echo'<url>';
-echo '<loc>'. $_SERVER["HTTP_HOST"]. '/confirmation-inscription</loc>';
-echo' <priority>1.0</priority>';
-echo '<changefreq>monthly</changefreq>';
-echo' </url>';
-
-echo'<url>';
-echo '<loc>'. $_SERVER["HTTP_HOST"]. '/panier</loc>';
-echo' <priority>1.0</priority>';
-echo '<changefreq>monthly</changefreq>';
-echo' </url>';
-
-echo'<url>';
-echo '<loc>'. $_SERVER["HTTP_HOST"]. '/mes-commandes</loc>';
-echo' <priority>1.0</priority>';
-echo '<changefreq>monthly</changefreq>';
-echo' </url>';
-
-echo'<url>';
-echo '<loc>'. $_SERVER["HTTP_HOST"]. '/ma-commande</loc>';
-echo' <priority>1.0</priority>';
-echo '<changefreq>monthly</changefreq>';
-echo' </url>';
-
-echo'<url>';
-echo '<loc>'. $_SERVER["HTTP_HOST"]. '/mon-profil</loc>';
+echo '<loc>' . $protocol . $_SERVER["HTTP_HOST"]. '/mon-profil</loc>';
 echo' <priority>1.0</priority>';
 echo '<changefreq>monthly</changefreq>';
 echo' </url>';
