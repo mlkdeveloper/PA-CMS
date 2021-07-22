@@ -38,7 +38,7 @@
 
 .container-body {
   position: absolute;
-  width: calc(100% - 200px);
+  width: calc(100% - 210px);
   top: 0;
   right: 0;
   min-height: 100vh;
@@ -395,14 +395,14 @@ a {
 }
 
 .button--warning {
-  background-color: #ffc800;
-  border-color: #ffc800;
-  outline-color: #ffc800;
+  background-color: #fddc6e;
+  border-color: #fddc6e;
+  outline-color: #fddc6e;
   color: #000000;
 }
 
 .button--warning:hover {
-  background-color: #ffd333;
+  background-color: #fee8a0;
 }
 
 .button a {
@@ -687,6 +687,11 @@ a {
 .alert--green {
   background-color: #d1e7dd;
   color: #0f5132;
+}
+
+.alert--warning {
+  background-color: #fddc6e;
+  color: #ff9900;
 }
 
 @media only screen and (max-width: 1000px) {

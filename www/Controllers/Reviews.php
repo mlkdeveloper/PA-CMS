@@ -17,7 +17,6 @@ class Reviews
             ->select(DBPREFIXE."products.id as id_products," . DBPREFIXE . "review.id as id_review," . DBPREFIXE . "review.commentary as commentary, ". DBPREFIXE ."user.email as email, ". DBPREFIXE . "review.status as rs")
             ->innerJoin(DBPREFIXE."products", "Products_id", "=", DBPREFIXE."products.id")
             ->innerJoin(DBPREFIXE."user", "User_id", "=", DBPREFIXE."user.id")
-            ->where(DBPREFIXE."review.status <> 1")
             ->get();
         $view->assign("datas", $datas);
     }
