@@ -18,6 +18,10 @@ new ConstantManager();
 $slug = mb_strtolower($_SERVER["REQUEST_URI"]);
 $slug = explode("?", $slug);
 
+if ($slug[0] !== '/start-install' && $slug[0] !== '/'){
+    header('Location: /');
+    exit();
+}
 
 try {
     $route = new Router($slug[0]);

@@ -1,6 +1,6 @@
 /:
-  controller: Pages
-  action: displayFront
+  controller: Installation
+  action: install
 
 /404:
   controller: Main
@@ -293,6 +293,6 @@
   controller : Commande
   action: informationsOrder
 
-/admin/get-data-charts:
-  controller: Dashboard
-  action: getData
+/start-install:
+  controller: Installation
+  action: startInstall
