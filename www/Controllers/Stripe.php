@@ -129,9 +129,9 @@ class Stripe
 
     public function insertPaymentIntentAction(){
         session_start();
-        $view = new View("cancelStripe");
-        $view->assign("title", "C&C - Echec du paiement");
-
+        if(!isset($_GET['payment_intent'])){
+            header('location:/');
+        }
         $_SESSION['payment_intent'] = $_GET['payment_intent'];
 
     }
