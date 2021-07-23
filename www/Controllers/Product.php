@@ -26,7 +26,7 @@ class Product
             }
 
             $category = new Category();
-            $idCategory = $category->select('id,description')->where("name = :name")->setParams(['name' => $_GET['name']])->get();
+            $idCategory = $category->select('id,description')->where("name = :name","status = 1")->setParams(['name' => $_GET['name']])->get();
 
             if (empty($idCategory)){
                 header("Location: /");
@@ -34,7 +34,7 @@ class Product
             }
 
             $product = new productModel();
-            $nbProduct = $product->select("count(*) as nbProduct")->where("idCategory = :id","status = 1")->setParams(["id" =>$idCategory[0]['id']])->get();
+            $nbProduct = $product->select("count(*) as nbProduct")->where("idCategory = :id","status = 1","isPublished = 1")->setParams(["id" =>$idCategory[0]['id']])->get();
             $nbProduct = $nbProduct[0]['nbProduct'];
 
             $perPage = 8;
@@ -42,7 +42,7 @@ class Product
             $first = ($page * $perPage) - $perPage;
 
             $products = new productModel();
-            $result = $products->select()->where("idCategory = :id","status = 1")->setParams(['id' => $idCategory[0]['id']])->limit("$first,$perPage")->get();
+            $result = $products->select()->where("idCategory = :id","status = 1","isPublished = 1")->setParams(['id' => $idCategory[0]['id']])->limit("$first,$perPage")->get();
 
             $view = new View("products.front");
             $view->assign("title","produits");
@@ -67,7 +67,10 @@ class Product
             $getVariant = [];
 
             $product = new Products();
-            $getProduct = $product->select()->where("id = :id","status = 1")->setParams(['id' => $_GET['id']])->get();
+            $getProduct = $product->select()
+                ->innerJoin(DBPREFIXE."category", DBPREFIXE."products.idCategory","=",DBPREFIXE."category.id")
+                ->where(DBPREFIXE."products.id = :id",DBPREFIXE."products.status = 1",DBPREFIXE."products.isPublished = 1", DBPREFIXE."category.status = 1")->setParams(['id' => $_GET['id']])
+                ->get();
 
             if (empty($getProduct)){
                 header("Location: /");
