@@ -105,7 +105,7 @@ class Commande
     }
 
     public function cancelCommandeAction(){
-
+        require 'vendor/autoload.php';
         if (isset($_GET['id']) && !empty($_GET['id'])){
 
             $order = new Orders();
@@ -122,11 +122,21 @@ class Commande
             $getUser = $user->select('*')->where("id = :id")->setParams(["id" => $commande[0]["User_id"]])->get();
 
             $order->populate($commande[0]);
+            $order->setPaymentIntent($commande[0]['payment_intent']);
             $order->setUserId($commande[0]['User_id']);
             $order->setStatus(-1);
             $order->save();
 
-            Email::sendEmail("C@C - Annulation de votr commande",$getUser[0]["email"], "Votre commande vient d'être annulée ", 'http://'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/connexion","Mon compte", "/admin/liste-commande");
+            /*
+             * Remboursement du montant de la commande Via Stripe
+             */
+           \Stripe\Stripe::setApiKey(PRIVATEKEYSTRIPE);
+
+            $re = \Stripe\Refund::create([
+                'payment_intent' => $commande[0]['payment_intent'],
+            ]);
+
+            Email::sendEmail("C&C - Annulation de votre commande",$getUser[0]["email"], "Votre commande vient d'être annulée ", 'http://'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/connexion","Mon compte", "/admin/liste-commande");
 
         }else{
             header("Location: /admin/liste-commande");
