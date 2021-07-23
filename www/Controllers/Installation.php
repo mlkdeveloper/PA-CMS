@@ -206,12 +206,12 @@ class Installation
 
             if(empty($errors)){
 
-                $shop->setName($_POST['nom']);
-                $shop->setAddress($_POST['address']);
-                $shop->setCity($_POST['ville']);
-                $shop->setZipCode($_POST['zipCode']);
-                $shop->setDescription($_POST['description']);
-                $shop->setPhoneNumber($_POST['telephone']);
+                $shop->setName(htmlspecialchars($_POST['nom']));
+                $shop->setAddress(htmlspecialchars($_POST['address']));
+                $shop->setCity(htmlspecialchars($_POST['ville']));
+                $shop->setZipCode(htmlspecialchars($_POST['zipCode']));
+                $shop->setDescription(htmlspecialchars($_POST['description']));
+                $shop->setPhoneNumber(htmlspecialchars($_POST['telephone']));
                 $shop->save();
 
                 Security::changeFile($this->fileRoutes, 'deleteStartInstallation');
@@ -224,9 +224,5 @@ class Installation
         }
         $view->assign("form", $formShop);
         $view->assign("title", "Installation");
-    }
-
-    public function shopInstallAction(){
-
     }
 }
