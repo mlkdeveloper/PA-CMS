@@ -277,7 +277,7 @@ class FormValidator
                     if (!empty($configInputs["uniq"]) &&
                         $configInputs["uniq"] === true
                     ) {
-                        $category = new Category();
+                        $category = new modelCategory();
                         if ($category->find_duplicates_sql($name, $data[$name]))
                             $errors[] = $configInputs["errorUniq"];
                     }
