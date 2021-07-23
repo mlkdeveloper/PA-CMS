@@ -54,8 +54,8 @@
                             <div class="form_align--top">
                                 <label class="label">Statut *</label>
                                 <select class="input" name="status">
-                                    <option value="0" <?= $category->getStatus() == 0 ? "selected" : "" ?> >Actif</option>
-                                    <option value="1"  <?= $category->getStatus() == 1 ? "selected" : "" ?>>Inactif</option>
+                                    <option value="1" <?= $category->getStatus() == 1 ? "selected" : "" ?> >Actif</option>
+                                    <option value="0"  <?= $category->getStatus() == 0 ? "selected" : "" ?>>Inactif</option>
                                 </select>
                             </div>
                         </div>
