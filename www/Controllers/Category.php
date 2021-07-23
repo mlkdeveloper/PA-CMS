@@ -113,7 +113,7 @@ class Category{
 
             $product = new Products();
             $checkProduct = $product->select('id')->where("idCategory = :id")->setParams(["id" => $_GET['id']])->get();
-            session_start();
+
             if (empty($checkProduct)){
                 $category->where("id = :id")->setParams(['id' => $_GET['id']])->delete();
                 $_SESSION['successDeleteCategory'] = "Catégorie supprimé !";
