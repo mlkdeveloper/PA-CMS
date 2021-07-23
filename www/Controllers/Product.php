@@ -7,10 +7,15 @@ namespace App\Controller;
 use App\Core\FormValidator;
 use App\Core\View;
 use App\Models\Group_variant;
+use App\Models\Product_order;
 use App\Models\Products;
 use App\Models\Products as productModel;
 use App\Models\Category;
 use App\Models\Review;
+
+use App\Core\Security;
+
+session_start();
 
 class Product
 {
@@ -92,33 +97,49 @@ class Product
             $form = $review->formBuilderRegister();
             if (!empty($_POST)){
 
+                if (!Security::isConnected()){
+                    header('Location: /');
+                    exit();
+                }
+
                 $errors = FormValidator::checkFormReview($form, $_POST);
 
                 if (empty($errors)){
-                    session_start();
+
                     $review->populate($_POST);
                     $review->setStatus(0);
                     $review->setProductsId($_GET['id']);
                     $review->setUserId($_SESSION['user']['id']);
                     $review->save();
-
                     $view->assign("success", "Commentaire envoyé !");
-
                 }else{
                     $view->assign("errors", $errors);
                 }
-
             }
 
             $reviews = $review->select(DBPREFIXE."user.lastname, ".DBPREFIXE."review.commentary, ".DBPREFIXE."review.mark, ".DBPREFIXE."review.createdAt")
                 ->innerJoin(DBPREFIXE."user",DBPREFIXE."review.User_id","=",DBPREFIXE."user.id")
                 ->where("Products_id = :id",DBPREFIXE."review.status = 1")->setParams(["id" => $_GET['id']])->get();
 
+            if (isset($_SESSION['user'])){
+
+                $order = new Product_order();
+                $orderUser = $order->select(DBPREFIXE."orders.User_id")
+                    ->innerJoin(DBPREFIXE."orders",DBPREFIXE."product_order.id_order","=",DBPREFIXE."orders.id")
+                    ->innerJoin(DBPREFIXE."product_term",DBPREFIXE."product_order.id_group_variant","=",DBPREFIXE."product_term.idGroup")
+                    ->where(DBPREFIXE."orders.User_id = :id", DBPREFIXE."product_term.idProduct = :idP")->setParams(["id" => $_SESSION['user']['id'], "idP" => $_GET['id']])
+                    ->limit(1)->get();
+
+                $userBuyed = (!empty($orderUser)) ? true : false;
+                $view->assign("userBuyed",$userBuyed);
+
+            }
 
             $view->assign("product",$getProduct[0]);
             $view->assign("title","produit");
             $view->assign("getVariant",$getVariant);
             $view->assign("reviews",$reviews);
+
         }
     }
 

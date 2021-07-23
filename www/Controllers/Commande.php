@@ -12,11 +12,16 @@ use App\Models\Orders;
 use App\Models\Product_order;
 use App\Models\Product_term;
 use App\Models\User;
+use App\Core\Security;
+
+session_start();
 
 class Commande
 {
 
     public function listeCommandeAction(){
+
+        Security::auth('orders');
 
         $view = new View("commandeList.back", "back");
         $view->assign("title", "Liste des commandes");
@@ -31,6 +36,8 @@ class Commande
     }
 
     public function displayCommandeAction(){
+
+        Security::auth('orders');
 
         if (isset($_GET['id']) && !empty($_GET['id'])) {
 
@@ -74,9 +81,10 @@ class Commande
 
     public function cancelOrderFrontAction(){
 
+        Security::auth('orders');
+
         if (isset($_GET['id']) && !empty($_GET['id'])){
 
-            session_start();
             $order = new Orders();
             $checkId = $order->select('id')->where("id = :id","User_id = :idUser")->setParams(['id' => $_GET['id'], 'idUser' => $_SESSION['user']['id']])->get();
 
@@ -105,7 +113,13 @@ class Commande
     }
 
     public function cancelCommandeAction(){
+
+
+        Security::auth('orders');
+
+
         require 'vendor/autoload.php';
+
         if (isset($_GET['id']) && !empty($_GET['id'])){
 
             $order = new Orders();
@@ -151,6 +165,8 @@ class Commande
 
     public function ValidCommandeAction(){
 
+        Security::auth('orders');
+
         if (isset($_GET['id']) && !empty($_GET['id'])){
 
             $order = new Orders();
@@ -186,6 +202,8 @@ class Commande
     }
 
     public function DoneCommandeAction(){
+
+        Security::auth('orders');
 
         if (isset($_GET['id']) && !empty($_GET['id'])){
 
@@ -224,7 +242,11 @@ class Commande
 // FRONT
     public function displayOrdersFrontAction(){
 
-        session_start();
+        if (!Security::isConnected()){
+            header("Location: /connexion");
+            exit();
+        }
+
         $view = new View("displayOrders.front");
         $view->assign("title","Mes commandes");
 
@@ -237,9 +259,15 @@ class Commande
 
     public function informationsOrderAction(){
 
+
+        if (!Security::isConnected()){
+            header("Location: /connexion");
+            exit();
+        }
+
         if (isset($_GET['id']) && !empty($_GET['id']) ){
 
-            session_start();
+
             $order = new Orders();
             $checkId = $order->select('id')->where("id = :id","User_id = :idUser")->setParams(['id' => $_GET['id'], 'idUser' => $_SESSION['user']['id']])->get();
 

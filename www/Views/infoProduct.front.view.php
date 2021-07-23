@@ -93,7 +93,7 @@
                 </div>
             </div>
         </div>
-       <?php //if (isset($_SESSION['user'])) : ?>
+       <?php if (isset($_SESSION['user']) && $userBuyed) : ?>
         <form method="POST">
         <div class="row">
 
@@ -123,7 +123,7 @@
 
         </div>
         </form>
-        <?php //endif; ?>
+        <?php endif; ?>
 
     </div>
 

@@ -6,10 +6,17 @@ namespace App\Controller;
 use App\Core\View;
 use App\Models\Review;
 
+use App\Core\Security;
+
+session_start();
+
 class Reviews
 {
     public function showReviewsAction()
     {
+
+        Security::auth("opinions");
+
         $view = new View("reviews.back", "back");
         $view->assign("title", "Avis");
         $review = new Review();
@@ -24,6 +31,9 @@ class Reviews
 
     public function checkReviewsAction()
     {
+
+        Security::auth("opinions");
+
         $review = new Review();
 
         if (isset($_GET["id"]) && !empty($_GET["id"])) {
@@ -44,6 +54,8 @@ class Reviews
 
     public function deleteReviewsAction()
     {
+
+        Security::auth("opinions");
         $review = new Review();
 
         if (isset($_GET["id"]) && !empty($_GET["id"])) {
@@ -64,6 +76,9 @@ class Reviews
 
     public function showReviewsFromProductsAction()
     {
+
+        Security::auth("opinions");
+
         $view = new View("reviewsProducts.back", "back");
         $view->assign("title", "Liste des produits");
         $review = new Review();
@@ -87,6 +102,8 @@ class Reviews
 
     public function showProductsAction()
     {
+
+        Security::auth("opinions");
         if (isset($_GET["id"]) && !empty($_GET["id"]) && is_numeric($_GET["id"])) {
             $view = new View("infoProducts.back", "back");
             $view->assign("title", "Liste des produits");

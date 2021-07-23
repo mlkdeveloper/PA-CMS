@@ -4,16 +4,21 @@
 namespace App\Controller;
 
 
+use App\Core\Security;
 use App\Core\View;
 use App\Core\FormValidator;
 use App\Models\Shop as ShopModel;
 use App\Models\Products as ProductsModel;
 use App\Models\Products_model as ProductsMModel;
 
+session_start();
+
 class Shop
 {
 
     public function detailShopAction(){
+
+        Security::auth("settingsSite");
         $shop = new ShopModel();
         $product = new ProductsModel();
         $productModel = new ProductsMModel();
@@ -54,4 +59,5 @@ class Shop
         $view->assign("title", "Admin - Detail du magasin");
 
     }
+
 }
