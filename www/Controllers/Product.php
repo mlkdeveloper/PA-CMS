@@ -1012,4 +1012,130 @@ class Product
         }
     }
 
+    public function updateProductWVAction(){
+        $pid = new Products();
+        $check_id = FormValidator::checkId($_GET["id"], $pid);
+        if(isset($_POST["product"], $_GET["id"]) && count($_POST) === 1 && is_numeric($_GET["id"]) &&
+            isset($_FILES["file"]) && count($_FILES) === 1 && $check_id ||
+            isset($_POST["product"], $_GET["id"], $_POST['file']) && count($_POST) === 2 && is_numeric($_GET["id"]) && $check_id
+        ){
+
+            $product = json_decode($_POST["product"], true);
+            $s = $product["stock"];
+            $p = $product["price"];
+
+            $category = new Category;
+            $category = $category
+                ->select("id")
+                ->where("status = 1")
+                ->get();
+
+            $categories = [];
+            foreach ($category as $value) {
+                $categories[] = $value["id"];
+            }
+
+
+            $errors_p =
+                FormValidator::checkProduct1(
+                    new Products,
+                    $product["name"],
+                    $product["idCategory"],
+                    $categories,
+                    $product["type"],
+                    false,
+                    false
+                );
+
+            $errors_g = FormValidator::checkGroup($product["stock"],$product["price"]);
+
+            $errors = array_merge($errors_p, $errors_g);
+
+            if(empty($errors)){
+                $pt = new Product_term();
+                $pt_data = $pt
+                    ->select()
+                    ->where("idProduct= :idProduct", "status = 1")
+                    ->setParams(["idProduct" => $_GET["id"]])
+                    ->get();
+
+                foreach($pt_data as $key => $data){
+                    $pt->populate($pt_data[$key]);
+                    $pt->setStatus(0);
+                    $pt->save();
+                }
+
+                $gv = new Group_variant;
+                $product_model = new Products;
+                $pt = new Product_term;
+
+                $gv->setStock($product["stock"]);
+                $gv->setPrice($product["price"]);
+
+                if(isset($_FILES["file"])){
+
+                    $f = $_FILES["file"];
+                    //Id group pour l'image
+                    $idG = new Group_variant;
+
+                    $idG = $idG->select("MAX(id) as id")->get();
+                    $idG = $idG[0]["id"] + 1;
+                    $upload = new Uploader($f,false);
+                    $res = $upload
+                        ->setName("file_".$idG)
+                        ->setSize(10)
+                        ->setDirectory("./images/products")
+                        ->upload();
+
+                }
+
+                if(isset($f) && $res){
+                    $gv->setPicture($upload->getName().".".$upload->getExtension());
+                }else{
+                    $gv->setPicture(NULL);
+                    echo "<div class='alert alert--warning'>Attention ! Le format d'image n'est pas correct, le fichier n'a pas été ajouté !</div>";
+                }
+                $gv->save();
+
+                unset($s, $p);
+                $product_model->populate($product);
+                $product_model->setStatus(1);
+                $product_model->setId($_GET["id"]);
+                $product_model->save();
+
+                //Récupération de l'id produit
+                $idProduct = $product_model
+                    ->select("MAX(id) as id")
+                    ->get();
+
+                $idProduct = $idProduct[0]["id"];
+
+                //Récupération de l'id du groupe
+                $idGroup = $gv
+                    ->select("MAX(id) as id")
+                    ->get();
+
+                $idGroup = $idGroup[0]["id"];
+                $pt->setIdProduct($idProduct);
+                $pt->setIdTerm(1);
+                $pt->setIdGroup($idGroup);
+                $pt->setStatus(1);
+                $pt->save();
+
+                echo "<div class='alert alert--green'>Produit créé avec succès !</div>";
+
+                http_response_code(201);
+            }else{
+                echo "<ul class='alert alert--red'>";
+                foreach($errors as $err){
+                    echo "<li>". $err ;
+                }
+                echo "</ul>";
+            }
+
+        }else{
+            http_response_code(404);
+        }
+    }
+
 }

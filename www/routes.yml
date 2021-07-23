@@ -384,3 +384,7 @@
 /admin/activer-theme:
   controller: Theme
   action: enableTheme
+
+/admin/update-product-wv:
+  controller: Product
+  action: updateProductWV

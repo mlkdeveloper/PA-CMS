@@ -350,7 +350,7 @@ class FormValidator
             $errors[] = "Le produit doit avoir un type connu";
         }
 
-        if($type != 1 && $hasVariant || $type != 0 && !$hasVariant){
+        if($type != 1 && $hasVariant || $type != 0 && $hasVariant){
             $errors[] = "Problème avec le type du produit";
         }
 
@@ -405,9 +405,7 @@ class FormValidator
 
 
     public static function checkProductUpdate($products, $categories, $variants, $class, $terms)
-    {    
-
-
+    {
         $errors = self::checkProduct1($class, $products["name"], $products["idCategory"], $categories, $products["type"], false);
 
         foreach($variants as $key => $value){

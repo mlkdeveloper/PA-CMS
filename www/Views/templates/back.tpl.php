@@ -35,11 +35,6 @@ if (!$aut->isConnected()){
 
     <body>
 
-    <div id="containerLoader">
-        <div id="loadingPage">
-            <div class="spinner"></div>
-        </div>
-    </div>
 
 
 

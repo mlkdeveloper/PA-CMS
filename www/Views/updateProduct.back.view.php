@@ -93,13 +93,13 @@
         </div>
     </div>
 
-    <div class="container">
-        <div class="row mt-1" id="btns">
+    <div class="container" id="btns">
+        <div class="row mt-1">
             <button id="addVar" class="button button--blue mr-1" onclick="updateP(<?= $p[0]["id"] ?>)">Enregistrer</button>
             <button id="addVar" class="button button--warning mr-1" onclick="add_variante()">Recréer les variantes</button>
         </div>
     </div>
-    <div class="container">
+    <div class="container" id="variantes_inputs">
         <?php foreach($datas_inputs as $input):?>
             <div name="comb" class="row jumbotron mt-2">
                 <label class='col col-sm-3 col-md-2 col-lg-4'>
@@ -128,10 +128,33 @@
         <?php endforeach;?>
     </div>
 
+    <div class="container" id='without_attr' style="display: none">
+        <div class="row">
+            <div class="col col-md-12 col-sm-12 col-lg-12">
+                <div class="jumbotron">
+
+                    <div class="">
+                        <h3>Stock et Prix</h3>
+                        <hr>
+                    </div>
+
+                    <div class="row">
+                        <input placeholder="stock" class="input col col-md-4 col-sm-4 col-lg-4" type="number" id="stock" min="1">
+                        <input placeholder="prix" class="input col col-md-4 col-sm-4 col-lg-4" type="number" id="price" min="0.01">
+                        <input class="input col col-md-4 col-sm-4 col-lg-4" type="file" id="file">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <div id="comb">
         </div>
     </div>
+
+
 </section>
 
 <script src="../public/js/product.js"></script>

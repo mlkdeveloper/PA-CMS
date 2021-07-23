@@ -7,8 +7,6 @@ function getSelectedAttributes(id){
     }
 }
 
-
-
 function deleteAttributes(id) {
     $("#selectedAttributes-" + id).remove();
 }
@@ -368,7 +366,6 @@ function addProductWV() {
     form_data.append("product", product)
     form_data.append("file", $('#file')[0].files[0])
 
-
     $.ajax({
         type: 'POST',
         url: "/admin/add-product-wv",
@@ -384,5 +381,52 @@ function addProductWV() {
 }
 
 function hasVariants(){
-    
+    if($('#variant').is(':checked')){
+        $("#btns").show();
+        $("#variantes_inputs").show();
+        $('#without_attr').hide()
+        $('#variant').val(1)
+        $("#comb").children().remove()
+    }else{
+        $('#variant').val(0)
+        $("#variantes_inputs").hide();
+        $("#btns").hide();
+        $('#without_attr').show()
+        $('#comb').html("<button class='button button--success' onclick='updateProductWV()'>Enregistrer</button>")
+    }
+}
+
+function updateProductWV(){
+    var stock = $("#stock").val();
+    var price = $("#price").val();
+    var form_data = new FormData();
+    var url = new URL(location);
+    var search_params = url.searchParams;
+
+    var product = {
+        name: $("#product_name").val(),
+        description: $("#description").val(),
+        type: $("#variant").val(),
+        isPublished: 0,
+        idCategory: $("#category").val(),
+        price: price,
+        stock: stock
+    };
+
+    product = JSON.stringify(product)
+    form_data.append("product", product)
+    form_data.append("file", $('#file')[0].files[0])
+
+    $.ajax({
+        type: 'POST',
+        url: "/admin/update-product-wv?id="+search_params.get('id'),
+        data: form_data,
+        processData: false,
+        contentType: false,
+        // enctype: 'multipart/form-data',
+        success: (data) => {
+            showStatus(data)
+        },
+        error: () => {}
+    })
 }
