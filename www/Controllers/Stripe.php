@@ -4,16 +4,25 @@
 namespace App\Controller;
 
 
+use App\Core\Security;
 use App\Core\View;
 use App\Models\Group_variant;
 use App\Models\Product_order;
 use App\Models\Orders as Orders_model;
 
+session_start();
+
 class Stripe
 {
     function paymentStripeAction(){
+
+
+        if (!Security::isConnected()){
+            header("Location: /connexion");
+            exit();
+        }
+
         require 'vendor/autoload.php';
-        session_start();
 
         \Stripe\Stripe::setApiKey(PRIVATEKEYSTRIPE);
 
@@ -45,10 +54,12 @@ class Stripe
 
     function successAction(){
 
+        if (!Security::isConnected()){
+            header("Location: /connexion");
+            exit();
+        }
 
         $view = new View("successStripe");
-        session_start();
-
 
         $orders = new Orders_model();
         $orders->setUserId($_SESSION['user']['id']);
@@ -79,7 +90,6 @@ class Stripe
                     $variant->setPrice(intval($stock[0]['price']) );
                     $variant->save();
 
-
                     $product = new Product_order();
                     $product->setIdGroupVariant($key);
                     $product->setIdOrder($panier[0]['id']);
@@ -95,6 +105,11 @@ class Stripe
         $view->assign("title", "C&C - Succes du paiement");
     }
     function cancelAction(){
+
+        if (!Security::isConnected()){
+            header("Location: /connexion");
+            exit();
+        }
         $view = new View("cancelStripe");
         $view->assign("title", "C&C - Echec du paiement");
     }
@@ -103,7 +118,12 @@ class Stripe
      * Vérification du stock en ajax
      */
     function checkStockProductsAction(){
-        session_start();
+
+        if (!Security::isConnected()){
+            header("Location: /connexion");
+            exit();
+        }
+
         $view = new View("cancelStripe");
         $view->assign("title", "C&C - Echec du paiement");
 
@@ -128,7 +148,7 @@ class Stripe
     }
 
     public function insertPaymentIntentAction(){
-        session_start();
+
         $view = new View("cancelStripe");
         $view->assign("title", "C&C - Echec du paiement");
 
