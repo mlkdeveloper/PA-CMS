@@ -101,13 +101,12 @@ class Product
                 $product_model->save();
 
                 //Récupération de l'id produit
-                $idProduct = $product_model
+                $product_model2 = new Products();
+                $idProduct = $product_model2
                 ->select("MAX(id) as id")
                 ->get();
 
                 $idProduct = $idProduct[0]["id"];
-
-
 
                 foreach($comb as $key => $value){
                     //Id group pour l'image
@@ -284,7 +283,7 @@ class Product
             $product_term = new Product_term;
             $pt = new Product_term;
             $datas = $product_term
-                ->select("*")
+                ->select()
                 ->where("idGroup = :id")->setParams(["id" => $_GET["id"]])
                 ->get(); 
 
@@ -294,9 +293,26 @@ class Product
                 $pt->save();
             }
 
+            $pt = new Product_term();
+            $datas2 = $pt
+                ->select()
+                ->where("idProduct = :id, status = 1")->setParams(["id" => $datas[0]["idProduct"]])
+                ->get();
+
+            if(empty($datas2)){
+                $produit = new Products();
+                $datas = $produit
+                    ->select()
+                    ->where("id = :id")->setParams(["id" => $datas[0]["idProduct"]])
+                    ->get();
+                $produit->populate($datas[0]);
+                $produit->setStatus(0);
+                $produit->save();
+            }
+
         } 
 
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        header('Location: ' . $_SERVER['HTTP_REFERER']/**/);
 
     }
 
@@ -1103,20 +1119,13 @@ class Product
                 $product_model->setId($_GET["id"]);
                 $product_model->save();
 
-                //Récupération de l'id produit
-                $idProduct = $product_model
-                    ->select("MAX(id) as id")
-                    ->get();
-
-                $idProduct = $idProduct[0]["id"];
-
                 //Récupération de l'id du groupe
                 $idGroup = $gv
                     ->select("MAX(id) as id")
                     ->get();
 
                 $idGroup = $idGroup[0]["id"];
-                $pt->setIdProduct($idProduct);
+                $pt->setIdProduct($_GET["id"]);
                 $pt->setIdTerm(1);
                 $pt->setIdGroup($idGroup);
                 $pt->setStatus(1);

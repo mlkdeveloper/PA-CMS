@@ -350,7 +350,7 @@ class FormValidator
             $errors[] = "Le produit doit avoir un type connu";
         }
 
-        if($type != 1 && $hasVariant || $type != 0 && $hasVariant){
+        if($type == 1 && !$hasVariant || $type == 0 && $hasVariant){
             $errors[] = "Problème avec le type du produit";
         }
 
@@ -359,7 +359,7 @@ class FormValidator
         }
 
         if(isset($_GET["id"]))
-            if (!$class->find_duplicates_sql_id("id", $_GET["id"], $name, true)) {
+            if (!$class->find_duplicates_sql_id("id", $_GET["id"], $name, false)) {
                 $errors[] = "Le produit existe déjà";
             }
 
