@@ -90,6 +90,7 @@ class Stripe
                     $variant->setPrice(intval($stock[0]['price']) );
                     $variant->save();
 
+
                     $product = new Product_order();
                     $product->setIdGroupVariant($key);
                     $product->setIdOrder($panier[0]['id']);
