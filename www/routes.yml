@@ -288,3 +288,7 @@
 /admin/get-data-charts:
   controller: Dashboard
   action: getData
+
+/insert-payment-stripe:
+  controller: Stripe
+  action: insertPaymentIntent

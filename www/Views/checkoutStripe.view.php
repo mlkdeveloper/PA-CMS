@@ -24,17 +24,18 @@
 </body>
 <script type="text/javascript">
     // Create an instance of the Stripe object with your publishable API key
-    var stripe = Stripe("pk_test_51JC0puGueu1Z1r2S3oq9aEovJmlKpYwQ8isyViEyKtwQrLXIEZBdOVeXiihXPpi4EtJHkTd53Whc5F6J7TNxLEQz00XaTk67k0");
     var checkoutButton = document.getElementById("checkout-button");
-
+alert('test');
     checkoutButton.addEventListener("click", function () {
         fetch("/create-checkout-session", {
             method: "POST",
         })
             .then(function (response) {
+                alert(response.json());
                 return response.json();
             })
             .then(function (session) {
+                alert("session id " + session.id);
                 return stripe.redirectToCheckout({ sessionId: session.id });
             })
             .then(function (result) {

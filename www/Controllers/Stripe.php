@@ -40,7 +40,7 @@ class Stripe
             'cancel_url' => $YOUR_DOMAIN . '/cancel',
         ]);
 
-        echo json_encode(['id' => $checkout_session->id]);
+        echo json_encode(['id' => $checkout_session->id, 'payment_intent' => $checkout_session->payment_intent]);
     }
 
     function successAction(){
@@ -53,6 +53,7 @@ class Stripe
         $orders = new Orders_model();
         $orders->setUserId($_SESSION['user']['id']);
         $orders->setMontant($_SESSION['panierTotal']);
+        $orders->setPaymentIntent($_SESSION['payment_intent']);
         $orders->setStatus(0);
         $orders->save();
 
@@ -82,7 +83,6 @@ class Stripe
                     $product = new Product_order();
                     $product->setIdGroupVariant($key);
                     $product->setIdOrder($panier[0]['id']);
-                    var_dump($panier[0]['id']);
                     $product->save();
                 }
 
@@ -113,7 +113,6 @@ class Stripe
 
         foreach ($_SESSION['panier'] as $key => $value) {
             $stocks = $stock->select('*')->where("id = :id")->setParams(["id" => $key])->get();
-            //var_dump($stocks);
             $stock->populate($stocks[0]);
 
             for($i = 0; $i< intval($value); $i++ ) {
@@ -127,5 +126,14 @@ class Stripe
             $stock = new Group_variant();
             $stocks = new Group_variant();
         }
+    }
+
+    public function insertPaymentIntentAction(){
+        session_start();
+        $view = new View("cancelStripe");
+        $view->assign("title", "C&C - Echec du paiement");
+
+        $_SESSION['payment_intent'] = $_GET['payment_intent'];
+
     }
 }
