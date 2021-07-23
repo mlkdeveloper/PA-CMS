@@ -257,10 +257,6 @@
   controller: Stripe
   action: paymentStripe
 
-/paiement-stripe:
-  controller: Stripe
-  action: pagePaiementStripe
-
 /success:
   controller: Stripe
   action: success

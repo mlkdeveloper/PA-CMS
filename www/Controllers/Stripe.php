@@ -98,11 +98,10 @@ class Stripe
         $view = new View("cancelStripe");
         $view->assign("title", "C&C - Echec du paiement");
     }
-    function pagePaiementStripeAction(){
-        $view = new View("checkoutStripe");
-        $view->assign("title", "C&C - Page de paiement");
-    }
 
+    /*
+     * Vérification du stock en ajax
+     */
     function checkStockProductsAction(){
         session_start();
         $view = new View("cancelStripe");

@@ -127,13 +127,16 @@ class Commande
             $order->setStatus(-1);
             $order->save();
 
+            /*
+             * Remboursement du montant de la commande Via Stripe
+             */
            \Stripe\Stripe::setApiKey(PRIVATEKEYSTRIPE);
 
             $re = \Stripe\Refund::create([
                 'payment_intent' => $commande[0]['payment_intent'],
             ]);
 
-            Email::sendEmail("C@C - Annulation de votre commande",$getUser[0]["email"], "Votre commande vient d'être annulée ", 'http://'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/connexion","Mon compte", "/admin/liste-commande");
+            Email::sendEmail("C&C - Annulation de votre commande",$getUser[0]["email"], "Votre commande vient d'être annulée ", 'http://'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/connexion","Mon compte", "/admin/liste-commande");
 
         }else{
             header("Location: /admin/liste-commande");
