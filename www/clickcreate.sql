@@ -239,6 +239,12 @@ CREATE TABLE `cc_terms` (
                             `idAttributes` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+--
+-- Déchargement des données de la table `cc_product_term`
+--
+
+INSERT INTO `cc_terms` (`id`, `name`, `idAttributes`) VALUES ('1', 'Aucun attribut', '1');
+
 -- --------------------------------------------------------
 
 --
