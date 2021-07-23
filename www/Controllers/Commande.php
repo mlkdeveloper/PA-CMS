@@ -135,6 +135,11 @@ class Commande
             $commande = $order->select('*')->where("id = :id")->setParams(["id" => $_GET['id']])->get();
             $getUser = $user->select('*')->where("id = :id")->setParams(["id" => $commande[0]["User_id"]])->get();
 
+            if ($commande[0]['status'] == 1 || $commande[0]['status']  == 2){
+                header('location:/admin/liste-commande');
+                exit();
+            }
+
             $order->populate($commande[0]);
             $order->setPaymentIntent($commande[0]['payment_intent']);
             $order->setUserId($commande[0]['User_id']);
@@ -177,7 +182,13 @@ class Commande
             $commande = $order->select('*')->where("id = :id")->setParams(["id" => $_GET['id']])->get();
             $getUser = $user->select('*')->where("id = :id")->setParams(["id" => $commande[0]["User_id"]])->get();
 
+            if ($commande[0]['status'] == -1 || $commande[0]['status']  == 2){
+                header('location:/admin/liste-commande');
+                exit();
+            }
+
             $order->populate($commande[0]);
+            $order->setPaymentIntent($commande[0]['payment_intent']);
             $order->setUserId($commande[0]['User_id']);
             $order->setStatus(1);
             $order->save();
@@ -209,7 +220,13 @@ class Commande
             $commande = $order->select('*')->where("id = :id")->setParams(["id" => $_GET['id']])->get();
             $getUser = $user->select('*')->where("id = :id")->setParams(["id" => $commande[0]["User_id"]])->get();
 
+            if ($commande[0]['status'] == -1){
+                header('location:/admin/liste-commande');
+                exit();
+            }
+
             $order->populate($commande[0]);
+            $order->setPaymentIntent($commande[0]['payment_intent']);
             $order->setUserId($commande[0]['User_id']);
             $order->setStatus(2);
             $order->save();
