@@ -558,6 +558,12 @@ ALTER TABLE `cc_tab_navbar`
 ALTER TABLE `cc_themes`
     MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
+--
+-- AUTO_INCREMENT pour la table `cc_orders`
+--
+ALTER TABLE `cc_orders`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 
 --
 -- Contraintes pour les tables déchargées
