@@ -49,7 +49,8 @@ CREATE TABLE `cc_category` (
 CREATE TABLE `cc_group_variant` (
                                     `id` int(11) NOT NULL,
                                     `price` double NOT NULL,
-                                    `stock` int(11) NOT NULL
+                                    `stock` int(11) NOT NULL,
+                                    `picture` varchar(255) COLLATE utf8_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -61,6 +62,7 @@ CREATE TABLE `cc_group_variant` (
 CREATE TABLE `cc_orders` (
                              `id` int(11) NOT NULL,
                              `montant` int(11) NOT NULL,
+                             `payment_intent` VARCHAR(255) NOT NULL,
                              `User_id` int(11) NOT NULL,
                              `CreatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
                              `status` tinyint(5) NOT NULL DEFAULT '0'
@@ -118,7 +120,8 @@ CREATE TABLE `cc_product_term` (
                                    `id` int(11) NOT NULL,
                                    `idProduct` int(11) NOT NULL,
                                    `idTerm` int(11) NOT NULL,
-                                   `idGroup` int(11) NOT NULL
+                                   `idGroup` int(11) NOT NULL,
+                                   `status` tinyint(4) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -292,6 +295,20 @@ CREATE TABLE `cc_tab_navbar` (
 
 -- -------------------------------------------------------
 
+--
+-- Structure de la table `cc_themes`
+--
+
+CREATE TABLE `cc_themes` (
+                             `id` int(11) NOT NULL,
+                             `name` varchar(20) COLLATE utf8_bin NOT NULL,
+                             `file` varchar(255) COLLATE utf8_bin NOT NULL,
+                             `status` int(11) NOT NULL,
+                             `admin` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -------------------------------------------------------
+
 
 --
 -- Index pour la table `cc_attributes`
@@ -423,6 +440,13 @@ ALTER TABLE `cc_tab_navbar`
   ADD KEY `FK_navbar` (`navbar`);
 
 --
+-- Index pour la table `cc_themes`
+--
+ALTER TABLE `cc_themes`
+    ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_user` (`admin`);
+
+--
 -- AUTO_INCREMENT pour les tables déchargées
 --
 
@@ -528,6 +552,12 @@ ALTER TABLE `cc_navbar`
 ALTER TABLE `cc_tab_navbar`
     MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
+--
+-- AUTO_INCREMENT pour la table `cc_themes`
+--
+ALTER TABLE `cc_themes`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 
 --
 -- Contraintes pour les tables déchargées
@@ -615,6 +645,13 @@ ALTER TABLE `cc_tab_navbar`
     ADD CONSTRAINT `FK_cate_tab` FOREIGN KEY (`category`) REFERENCES `cc_category` (`id`),
   ADD CONSTRAINT `FK_navbar` FOREIGN KEY (`navbar`) REFERENCES `cc_navbar` (`id`),
   ADD CONSTRAINT `FK_page_tab` FOREIGN KEY (`page`) REFERENCES `cc_pages` (`id`);
+COMMIT;
+
+--
+-- Contraintes pour la table `cc_themes`
+--
+ALTER TABLE `cc_themes`
+    ADD CONSTRAINT `FK_user` FOREIGN KEY (`admin`) REFERENCES `cc_user` (`id`);
 COMMIT;
 
 
