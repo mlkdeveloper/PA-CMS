@@ -127,51 +127,6 @@ CREATE TABLE `cc_product_term` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `cc_promotion`
---
-
-CREATE TABLE `cc_promotion` (
-                                `id` int(11) NOT NULL,
-                                `name` varchar(45) COLLATE utf8_bin DEFAULT NULL,
-                                `status` tinyint(5) DEFAULT NULL,
-                                `type` tinyint(2) DEFAULT NULL,
-                                `valueType` float DEFAULT NULL,
-                                `startDate` date DEFAULT NULL,
-                                `expiryDate` date DEFAULT NULL,
-                                `usageLimit` int(11) DEFAULT NULL,
-                                `quantity` int(11) DEFAULT NULL,
-                                `minimumAmount` float DEFAULT NULL,
-                                `minimumQuantity` int(11) DEFAULT NULL,
-                                `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `cc_promotion_category`
---
-
-CREATE TABLE `cc_promotion_category` (
-                                         `id` int(11) NOT NULL,
-                                         `Promotion_id` int(11) NOT NULL,
-                                         `Category_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `cc_promotion_product`
---
-
-CREATE TABLE `cc_promotion_product` (
-                                        `id` int(11) NOT NULL,
-                                        `Products_id` int(11) NOT NULL,
-                                        `Promotion_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `cc_review`
 --
 
@@ -192,7 +147,7 @@ CREATE TABLE `cc_review` (
 
 CREATE TABLE `cc_role` (
                            `id` int(11) NOT NULL,
-                           `name` varchar(50) COLLATE utf8_bin NOT NULL,
+                           `name` varchar(255) NOT NULL,
                            `roles` tinyint(1) NOT NULL DEFAULT '0',
                            `users` tinyint(1) NOT NULL DEFAULT '0',
                            `customers` tinyint(1) NOT NULL DEFAULT '0',
@@ -200,16 +155,19 @@ CREATE TABLE `cc_role` (
                            `categories` tinyint(1) NOT NULL DEFAULT '0',
                            `orders` tinyint(1) NOT NULL DEFAULT '0',
                            `opinions` tinyint(1) NOT NULL DEFAULT '0',
-                           `pages` tinyint(1) NOT NULL DEFAULT '0'
+                           `pages` tinyint(1) NOT NULL DEFAULT '0',
+                           `settingsCms` tinyint(1) NOT NULL DEFAULT '0',
+                           `settingsSite` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Déchargement des données de la table `cc_role`
 --
 
-INSERT INTO `cc_role` (`id`, `name`, `roles`, `users`, `customers`, `products`, `categories`, `orders`, `opinions`, `pages`) VALUES
-(1, 'admin', 1, 1, 1, 1, 1, 1, 1, 1),
-(2, 'client', 0, 0, 0, 0, 0, 0, 0, 0);
+INSERT INTO `cc_role` (`id`, `name`, `roles`, `users`, `customers`, `products`, `categories`, `orders`, `opinions`, `pages`, `settingsCms`, `settingsSite`) VALUES
+(1, 'Admin', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+(2, 'Client', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(3, 'ModÃ©rateur', 1, 1, 0, 0, 0, 0, 0, 0, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -373,28 +331,6 @@ ALTER TABLE `cc_product_term`
   ADD KEY `FK_group_variant` (`idGroup`);
 
 --
--- Index pour la table `cc_promotion`
---
-ALTER TABLE `cc_promotion`
-    ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `cc_promotion_category`
---
-ALTER TABLE `cc_promotion_category`
-    ADD PRIMARY KEY (`id`,`Promotion_id`,`Category_id`),
-  ADD KEY `fk_Promotion_category_Promotion1_idx` (`Promotion_id`),
-  ADD KEY `fk_Promotion_category_Category1_idx` (`Category_id`);
-
---
--- Index pour la table `cc_promotion_product`
---
-ALTER TABLE `cc_promotion_product`
-    ADD PRIMARY KEY (`id`,`Products_id`,`Promotion_id`),
-  ADD KEY `fk_Promotion_product_Products1_idx` (`Products_id`),
-  ADD KEY `fk_Promotion_product_Promotion1_idx` (`Promotion_id`);
-
---
 -- Index pour la table `cc_review`
 --
 ALTER TABLE `cc_review`
@@ -499,24 +435,6 @@ ALTER TABLE `cc_product_term`
     MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT pour la table `cc_promotion`
---
-ALTER TABLE `cc_promotion`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT pour la table `cc_promotion_category`
---
-ALTER TABLE `cc_promotion_category`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT pour la table `cc_promotion_product`
---
-ALTER TABLE `cc_promotion_product`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT pour la table `cc_review`
 --
 ALTER TABLE `cc_review`
@@ -526,7 +444,7 @@ ALTER TABLE `cc_review`
 -- AUTO_INCREMENT pour la table `cc_role`
 --
 ALTER TABLE `cc_role`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `cc_shop`
@@ -607,20 +525,6 @@ ALTER TABLE `cc_product_term`
     ADD CONSTRAINT `FK_group_variant` FOREIGN KEY (`idGroup`) REFERENCES `cc_group_variant` (`id`),
   ADD CONSTRAINT `FK_product` FOREIGN KEY (`idProduct`) REFERENCES `cc_products` (`id`),
   ADD CONSTRAINT `FK_term` FOREIGN KEY (`idTerm`) REFERENCES `cc_terms` (`id`);
-
---
--- Contraintes pour la table `cc_promotion_category`
---
-ALTER TABLE `cc_promotion_category`
-    ADD CONSTRAINT `fk_Promotion_category_Category1` FOREIGN KEY (`Category_id`) REFERENCES `cc_category` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_Promotion_category_Promotion1` FOREIGN KEY (`Promotion_id`) REFERENCES `cc_promotion` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Contraintes pour la table `cc_promotion_product`
---
-ALTER TABLE `cc_promotion_product`
-    ADD CONSTRAINT `fk_Promotion_product_Products1` FOREIGN KEY (`Products_id`) REFERENCES `cc_products` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_Promotion_product_Promotion1` FOREIGN KEY (`Promotion_id`) REFERENCES `cc_promotion` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Contraintes pour la table `cc_review`
