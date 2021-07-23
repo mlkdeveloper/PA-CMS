@@ -148,7 +148,7 @@ class Shop extends Database
                     "type"=>"text",
                     "placeholder"=>"",
                     "divClass"=> "form_align--top",
-                    "value"=> "",
+                    "value"=> "ESGI",
                     "label"=>"Nom",
                     "required"=>true,
                     "class"=>"input",
@@ -159,7 +159,7 @@ class Shop extends Database
 
                 "address"=>[
                     "type"=>"text",
-                    "value"=> "",
+                    "value"=> "242 Rue du Faubourg Saint-Antoine",
                     "label"=>"Adresse",
                     "divClass"=> "form_align--top",
                     "placeholder"=>"",
@@ -171,7 +171,7 @@ class Shop extends Database
                 "ville"=>[
                     "type"=>"text",
                     "label"=>"Ville",
-                    "value"=> "",
+                    "value"=> "Paris",
                     "divClass"=> "form_align--top",
                     "placeholder"=>"",
                     "required"=>true,
@@ -182,7 +182,7 @@ class Shop extends Database
                 "zipCode"=>[
                     "type"=>"text",
                     "label"=>"Code postal",
-                    "value"=> "",
+                    "value"=> "75012",
                     "divClass"=> "form_align--top",
                     "placeholder"=>"",
                     "required"=>true,
@@ -193,7 +193,7 @@ class Shop extends Database
                 "telephone"=>[
                     "type"=>"text",
                     "label"=>"N° Telephone",
-                    "value"=> "",
+                    "value"=> "0156069041",
                     "divClass"=> "form_align--top",
                     "placeholder"=>"",
                     "required"=>true,
@@ -205,7 +205,7 @@ class Shop extends Database
                 "description"=>[
                     "type"=>"text",
                     "label"=>"Description",
-                    "value"=> "",
+                    "value"=> "Magnifique boutique",
                     "divClass"=> "form_align--top",
                     "placeholder"=>"",
                     "required"=>true,

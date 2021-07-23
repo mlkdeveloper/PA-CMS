@@ -663,6 +663,7 @@ class User extends Database
                     "label"=>"Prénom",
                     "required"=>true,
                     "class"=>"input",
+                    "value"=>"Yves",
                     "minLength"=>2,
                     "maxLength"=>50,
                     "error"=>"Votre prénom doit faire entre 2 et 50 caractères"
@@ -671,6 +672,7 @@ class User extends Database
                     "type"=>"text",
                     "divClass"=> "form_align--top",
                     "placeholder"=>"Exemple : Skrzypczyk",
+                    "value"=>"Skrzypczyk",
                     "label"=>"Nom",
                     "required"=>true,
                     "class"=>"input",
@@ -684,6 +686,7 @@ class User extends Database
                     "divClass"=> "form_align--top",
                     "placeholder"=>"Exemple : nom@gmail.com",
                     "label"=>"Email",
+                    "value"=>"admin@gmail.com",
                     "required"=>true,
                     "class"=>"input",
                     "minLength"=>8,
@@ -697,6 +700,7 @@ class User extends Database
                     "label"=>"Mot de passe",
                     "required"=>true,
                     "class"=>"input",
+                    "value"=>"Waseem6",
                     "minLength"=>8,
                     "error"=>"Votre mot de passe doit faire au minimum 8 caractères"
                 ],
@@ -706,6 +710,7 @@ class User extends Database
                     "label"=>"Confirmation",
                     "required"=>true,
                     "class"=>"input",
+                    "value"=>"Waseem6",
                     "confirm"=>"pwd",
                     "error"=>"Votre mot de passe de confirmation ne correspond pas"
                 ],
