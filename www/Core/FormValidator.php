@@ -416,21 +416,21 @@ class FormValidator
                 || empty($prix)
                 && !is_numeric($prix)
             ){
-                $errors[] = "Le prix de la variante #$key+1 doit être saisi correctement.";
+                $errors[] = "Le prix de la variante #".$key+1 ." doit être saisi correctement.";
             }
             
-            if($stock <= 0 
+            if($stock < 0
                 || empty($stock)
                 && !is_numeric($stock)
             ){
-                $errors[] = "Le stock de la variante #$key+1 doit être saisi.";
+                $errors[] = "Le stock de la variante #".$key + 1 . "doit être saisi.";
             }   
 
             unset($value[count($value)-1], $value[count($value)-1]);
 
             foreach($value as $k => $v)
                 if(!in_array($v, $terms)){
-                    $errors[] = "Un problème est apparu dans la variante #$key du produit !";
+                    $errors[] = "Un problème est apparu dans la variante #". $key+1 ." du produit !";
                     break;
                 }
         }

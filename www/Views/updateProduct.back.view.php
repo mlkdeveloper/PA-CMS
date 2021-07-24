@@ -17,7 +17,7 @@
 
                 <div class="form_align--top mt-1">
                     <label class="label">Description</label>
-                    <textarea class="input" type="text" id="description" placeholder="..."><?= $produits[0]["description"]?? $p[0]["description"] ?></textarea>
+                    <textarea class="input" type="text" id="description" placeholder="..."><?=  $p[0]["description"] ?></textarea>
                 </div>
             </div>
 

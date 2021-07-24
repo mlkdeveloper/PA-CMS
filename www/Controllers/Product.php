@@ -285,7 +285,7 @@ class Product
             $datas = $product_term
                 ->select()
                 ->where("idGroup = :id")->setParams(["id" => $_GET["id"]])
-                ->get(); 
+                ->get();
 
             foreach($datas as $key => $d){
                 $pt->populate($datas[$key]);
@@ -296,8 +296,9 @@ class Product
             $pt = new Product_term();
             $datas2 = $pt
                 ->select()
-                ->where("idProduct = :id, status = 1")->setParams(["id" => $datas[0]["idProduct"]])
+                ->where("idProduct = :id", "status = 1")->setParams(["id" => $datas[0]["idProduct"]])
                 ->get();
+
 
             if(empty($datas2)){
                 $produit = new Products();
