@@ -49,8 +49,18 @@ use App\Models\Themes;
                     <li><img src="../../images/logo/logo.png" alt="Logo" width="50"></li>
                     <?= \App\Core\NavbarBuilder::navbar() ?>
                 </ul>
-                <ul>
-                   <li><a href="/panier">Panier &nbsp<i class="fa fa-shopping-cart"></i></a></li>
+                <ul class="align">
+                    <?php if (isset($_SESSION['user'])): ?>
+                        <li class="dropdownMenuFront"><a>Votre compte</a>
+                        <ul class="submenu">
+                            <li><a href="mon-profil">Votre profil</a>
+                            <li><a href="mes-commandes">Vos commandes</a>
+                        </ul>
+                    <?php else: ?>
+                        <li><a href="/connexion">Connexion<i class="fa fa-user"></i></a></li>
+                    <?php endif;?>
+                    <li><a href="/panier">Panier &nbsp<i class="fa fa-shopping-cart"> </i></a></li>
+
                 </ul>
             </div>
         </nav>
