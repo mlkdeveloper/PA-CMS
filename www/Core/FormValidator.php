@@ -116,21 +116,21 @@ class FormValidator
                             $errors[] = $configInputs["errorBdd"];
                     }
                 }
+            }
 
-                $file = './routes.yml';
+            $file = './routes.yml';
 
-                $ptr = fopen("$file", "r");
-                $contenu = fread($ptr, filesize($file));
+            $ptr = fopen("$file", "r");
+            $contenu = fread($ptr, filesize($file));
 
-                fclose($ptr);
-                $contenu = explode(PHP_EOL, $contenu);
+            fclose($ptr);
+            $contenu = explode(PHP_EOL, $contenu);
 
-                foreach ($contenu as $index => $value) {
-                    if (preg_match('/^\/.+$/', $value)) {
-                        if ($contenu[$index] == $data["slug"].':'){
-                            $errors[] = "Ce slug est déjà utilisé par le CMS";
-                            break;
-                        }
+            foreach ($contenu as $index => $value) {
+                if (preg_match('/^\/.+$/', $value)) {
+                    if ($contenu[$index] == $data["slug"].':'){
+                        $errors[] = "Ce slug est déjà utilisé par le CMS";
+                        break;
                     }
                 }
             }
