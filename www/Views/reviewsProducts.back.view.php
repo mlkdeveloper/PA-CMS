@@ -8,7 +8,6 @@
                     <thead>
                     <tr>
                         <th>N° produit</th>
-                        <th>Image</th>
                         <th>Commentaire</th>
                         <th>Notes</th>
                         <th>Actions</th>
@@ -17,8 +16,7 @@
                     <tbody>
                     <?php foreach ($datas as $product): ?>
                         <tr>
-                            <td><?= $product["id_product"] ?></td>
-                            <td><?= $product["commentary"] ?></td>
+                            <td><?= $product["name"] ?></td>
                             <td><?= (($product[0]["nb_commentary_check"]) ?? "0"). " commentaire(s) vérifié(s) / ". $product["nb_commentary"] . " commentaires totaux" ?></td>
                             <td><?= round($product["mark"], 1) . "/5"; ?></td>
                             <td>

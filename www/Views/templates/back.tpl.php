@@ -48,12 +48,15 @@ if (!$aut->isConnected()){
                 <a href="/admin/liste-commande"><li>Commandes</li></a>
                 <li id="dropdownProducts" class="dropdownMenu">Produits<i class="fa fa-caret-down"></i></li>
                 <ul class="dropdown-container">
+                    <a href="/admin/liste-produits"><li>Liste des produits</li></a>
+                    <a href="/admin/ajout-produit"><li>Ajouter un produit</li></a>
+                    <a href="/admin/attribut"><li>Ajouter un attribut</li></a>
                     <a href="#"><li>Categories</li></a>
-                    <a href="#"><li>Promotions</li></a>
                 </ul>
                     <a href="#"><li>Pages</li></a>
                     <a href="/admin/liste-client"><li>Clients</li></a>
-                    <a href="#"><li>Avis</li></a>
+                    <a href="/admin/reviews"><li>Avis</li></a>
+                    <a href="/admin/show-reviews-from-products"><li>Avis de chaque produit</li></a>
                 </ul>
             </ul>
             <ul>

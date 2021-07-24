@@ -97,8 +97,12 @@ class Uploader{
         return $this->error;
     }
 
-
-
-
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 
 }

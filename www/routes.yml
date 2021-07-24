@@ -166,6 +166,90 @@
   controller: User
   action : changeUserPwd
 
+/admin/attribut:
+  controller : Attribute
+  action : attribute
+
+/admin/valeurs-attribut:
+  controller: Attribute
+  action: termsAttribute
+
+/admin/modification-attribut:
+  controller: Attribute
+  action: updateAttribute
+
+/admin/suppression-attribut:
+  controller: Attribute
+  action : deleteAttribute
+
+/admin/suppression-terme:
+  controller: Attribute
+  action : deleteTerm
+
+/admin/ajout-produit:
+  controller: Product
+  action : addProduct
+
+/admin/valeurs-attribut-ajax:
+  controller : Product
+  action : getValuesAttribute
+
+/admin/creer-produit-ajax:
+  controller : Product
+  action : createProduct
+
+/admin/liste-produits:
+  controller: Product
+  action: showProducts
+
+/admin/information-produit:
+  controller: Product
+  action: infoProducts
+
+/admin/del-produit-term:
+  controller: Product
+  action: deleteProduct
+
+/admin/modification-produit:
+  controller: Product
+  action: updateProductForm
+
+/admin/update-product-ajax:
+  controller : Product
+  action : updateProductAjax
+
+/admin/update-var:
+  controller: Product
+  action: updateVar
+
+/admin/update-p:
+  controller: Product
+  action: update
+
+/admin/add-product-wv:
+  controller: Product
+  action: addProductWV
+
+/admin/del-product:
+  controller: Product
+  action: delProduct
+
+/admin/publish-product:
+  controller: Product
+  action: publishProduct
+
+/admin/depublish-product:
+  controller: Product
+  action: depublishProduct
+
+/admin/del-picture-variante:
+  controller: Product
+  action: delPicture
+
+/admin/delete-variantes:
+  controller: Product
+  action: delVariantes
+
 /admin/liste-commande:
   controller: Commande
   action: listeCommande
@@ -300,3 +384,7 @@
 /admin/activer-theme:
   controller: Theme
   action: enableTheme
+
+/admin/update-product-wv:
+  controller: Product
+  action: updateProductWV
