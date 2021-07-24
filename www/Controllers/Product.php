@@ -905,13 +905,14 @@ class Product
             $first = ($page * $perPage) - $perPage;
 
             $products = new Products();
-            $result = $products->select(DBPREFIXE."products.id AS idProduct",DBPREFIXE."products.name AS nameProduct", DBPREFIXE."group_variant.picture AS pictureProduct" )
+            $result = $products->select("MIN(".DBPREFIXE."group_variant.price) AS price",DBPREFIXE."products.id AS idProduct",DBPREFIXE."products.name AS nameProduct", DBPREFIXE."group_variant.picture AS pictureProduct" )
                 ->innerJoin(DBPREFIXE."product_term",DBPREFIXE."products.id ","=",DBPREFIXE."product_term.idProduct")
                 ->innerJoin(DBPREFIXE."group_variant",DBPREFIXE."product_term.idGroup","=",DBPREFIXE."group_variant.id")
                 ->where(DBPREFIXE."products.idCategory = :id",DBPREFIXE."products.status = 1","isPublished = 1",DBPREFIXE."product_term.status = 1")->setParams(['id' => $idCategory[0]['id']])
                 ->groupBy(DBPREFIXE."products.id")
                 ->limit("$first,$perPage")
                 ->get();
+
             $view = new View("products.front");
             $view->assign("title","produits");
             $view->assign("products",$result);

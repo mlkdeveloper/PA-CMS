@@ -27,6 +27,7 @@
                             <?php endif; ?>
                         </div>
                         <h4 class="card-title"> <?= $product['nameProduct'] ?></h4>
+                        <p>€ <?= $product['price'] ?> </p>
                         <a href="/produit?id=<?= $product['idProduct']?>"><button class="button button--blue">En savoir plus</button></a>
                     </div>
                 </div>
