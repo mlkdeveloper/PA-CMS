@@ -542,14 +542,12 @@ class Product
 
 
     public function updateVarAction(){
-        if (isset($_GET["id"], $_POST['price'], $_POST['stock']) &&
-            is_numeric($_GET["id"]) &&
-            count($_POST) === 2) 
-        {
-            $group_id = new Group_variant;
-            $checkId = FormValidator::checkId($_GET["id"], $group_id);
+        if (isset($_GET["id"], $_POST['price'], $_POST['stock'], $_POST['file']) &&
+            is_numeric($_GET["id"]) && count($_POST) === 3
+            ){
+            $checkId = FormValidator::checkId($_GET["id"], new Group_variant, false);
             $errors = FormValidator::checkGroup($_POST["stock"], $_POST["price"]);
-            if(empty($errors)){
+            if(empty($errors) && $checkId){
                 $group = new Group_variant;
                 $data_group = $group
                     ->select()
@@ -570,6 +568,43 @@ class Product
                     echo "<li>". $err ;
                 }
                 echo "</ul>";   
+            }
+        }else if (isset($_GET["id"], $_POST['price'], $_POST['stock'], $_FILES["file"]) && is_numeric($_GET["id"]) && count($_POST) === 2 &&
+            count($_FILES) === 1)
+        {
+            $checkId = FormValidator::checkId($_GET["id"], new Group_variant(), false);
+            $errors = FormValidator::checkGroup($_POST["stock"], $_POST["price"]);
+            if(empty($errors) && $checkId){
+                $group = new Group_variant;
+                $data_group = $group
+                    ->select()
+                    ->where("id = :id")->setParams(["id" => $_GET["id"]])
+                    ->get();
+
+                $f = $_FILES["file"];
+                $upload = new Uploader($f,false);
+                $res = $upload
+                    ->setName("file_".$_GET["id"])
+                    ->setSize(10)
+                    ->setDirectory("./images/products")
+                    ->upload();
+
+                $group->populate($data_group[0]);
+                $group->setPrice($_POST['price']);
+                $group->setStock($_POST['stock']);
+                if($res) $group->setPicture($upload->getName().".".$upload->getExtension());
+                else echo "<div class='alert--red alert'>Image non enregistrée, vérifiez l'extension et la qualité de l'image</div>";
+                $group->save();
+
+                echo "<div class='alert alert--green'>Variante modifiée avec succès !</div>";
+
+                \http_response_code(201);
+            }else{
+                echo "<ul class='alert alert--red'>";
+                foreach($errors as $err){
+                    echo "<li>". $err ;
+                }
+                echo "</ul>";
             }
         }else{
             \http_response_code(403);

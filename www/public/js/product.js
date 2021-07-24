@@ -310,16 +310,22 @@ function add_variante() {
 }
 
 function update_var(idGroup){
+    const form_data = new FormData();
+    form_data.append("stock", $("#stock-"+idGroup).val())
+    form_data.append("price", $("#price-"+idGroup).val())
+    form_data.append("file", $('#file-'+idGroup)[0].files[0])
+
+    console.log($('#file-'+idGroup)[0].files[0])
     $.ajax({
         type: 'POST',
         url: "/admin/update-var?id="+idGroup,
-        data: "stock=" + $("#stock-"+idGroup).val() + "&price=" + $("#price-"+idGroup).val(),
+        data: form_data,
+        processData: false,
+        contentType: false,
         success: (data) => {
             showStatus(data)
         },
-        error: (data, res) => {
-            console.log(data)
-        }
+        error: () => {}
     })
 }
 
@@ -388,6 +394,8 @@ function hasVariants(){
         $('#variant').val(1)
         $("#comb").children().remove()
     }else{
+        $('#attr_container').hide()
+        $('#var_container').hide()
         $('#variant').val(0)
         $("#variantes_inputs").hide();
         $("#btns").hide();
@@ -395,6 +403,7 @@ function hasVariants(){
         $('#comb').html("<button class='button button--success' onclick='updateProductWV()'>Enregistrer</button>")
     }
 }
+if(!$('#variant').is(':checked') && $("#btns") !== undefined) $("#btns").hide();
 
 function updateProductWV(){
     var stock = $("#stock").val();
