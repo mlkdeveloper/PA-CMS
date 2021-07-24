@@ -17,10 +17,17 @@
             foreach ($products as $product):
             ?>
             <div class="col-lg-3 col-md-3  col-sm-6 col">
-                <div class="card">
+                <div class="card" style="min-height: 300px;">
                     <div class="card-body">
-                        <h3 class="card-title"> <?= $product['name'] ?></h3>
-                        <a href="/produit?id=<?= $product['id']?>"><button class="button button--blue">En savoir plus</button></a>
+                        <div class="card-img-top">
+                            <?php if(isset($product['pictureProduct'])) : ?>
+                                <img style="max-height: 200px; min-height: 200px" class="card-img" src="../images/products/<?= $product['pictureProduct'] ?>">
+                            <?php else: ?>
+                                <img style="max-height: 200px; min-height: 200px" class="card-img" src="../images/cc.png">
+                            <?php endif; ?>
+                        </div>
+                        <h4 class="card-title"> <?= $product['nameProduct'] ?></h4>
+                        <a href="/produit?id=<?= $product['idProduct']?>"><button class="button button--blue">En savoir plus</button></a>
                     </div>
                 </div>
             </div>

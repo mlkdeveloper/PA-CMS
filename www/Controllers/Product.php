@@ -8,6 +8,7 @@ use App\Core\View;
 use App\Core\FormValidator;
 use App\Core\Helpers;
 use App\Models\Attributes;
+use App\Models\Review;
 use App\Models\Terms;
 use App\Models\Group_variant;
 use App\Models\Product_term;
@@ -749,6 +750,7 @@ class Product
                 ->where("id = :id")->setParams(["id" => $_GET["id"]])
                 ->get();
 
+
             if($checkId){
                 $product->populate($product_datas[0]);
                 $product->setStatus(0);
@@ -894,7 +896,7 @@ class Product
                 exit();
             }
 
-            $product = new productModel();
+            $product = new Products();
             $nbProduct = $product->select("count(*) as nbProduct")->where("idCategory = :id","status = 1","isPublished = 1")->setParams(["id" =>$idCategory[0]['id']])->get();
             $nbProduct = $nbProduct[0]['nbProduct'];
 
@@ -902,9 +904,14 @@ class Product
             $pages = ceil( $nbProduct/ $perPage);
             $first = ($page * $perPage) - $perPage;
 
-            $products = new productModel();
-            $result = $products->select()->where("idCategory = :id","status = 1","isPublished = 1")->setParams(['id' => $idCategory[0]['id']])->limit("$first,$perPage")->get();
-
+            $products = new Products();
+            $result = $products->select(DBPREFIXE."products.id AS idProduct",DBPREFIXE."products.name AS nameProduct", DBPREFIXE."group_variant.picture AS pictureProduct" )
+                ->innerJoin(DBPREFIXE."product_term",DBPREFIXE."products.id ","=",DBPREFIXE."product_term.idProduct")
+                ->innerJoin(DBPREFIXE."group_variant",DBPREFIXE."product_term.idGroup","=",DBPREFIXE."group_variant.id")
+                ->where(DBPREFIXE."products.idCategory = :id",DBPREFIXE."products.status = 1","isPublished = 1",DBPREFIXE."product_term.status = 1")->setParams(['id' => $idCategory[0]['id']])
+                ->groupBy(DBPREFIXE."products.id")
+                ->limit("$first,$perPage")
+                ->get();
             $view = new View("products.front");
             $view->assign("title","produits");
             $view->assign("products",$result);
@@ -928,7 +935,7 @@ class Product
             $getVariant = [];
 
             $product = new Products();
-            $getProduct = $product->select()
+            $getProduct = $product->select("*",DBPREFIXE."products.id AS idProduct", DBPREFIXE."products.description AS productDescription",  DBPREFIXE."products.name AS productName")
                 ->innerJoin(DBPREFIXE."category", DBPREFIXE."products.idCategory","=",DBPREFIXE."category.id")
                 ->where(DBPREFIXE."products.id = :id",DBPREFIXE."products.status = 1",DBPREFIXE."products.isPublished = 1", DBPREFIXE."category.status = 1")->setParams(['id' => $_GET['id']])
                 ->get();
@@ -942,7 +949,8 @@ class Product
                 ->innerJoin(DBPREFIXE."product_term",DBPREFIXE."products.id ","=",DBPREFIXE."product_term.idProduct")
                 ->innerJoin(DBPREFIXE."terms",DBPREFIXE."product_term.idTerm","=",DBPREFIXE."terms.id")
                 ->innerJoin(DBPREFIXE."attributes",DBPREFIXE."terms.idAttributes","=",DBPREFIXE."attributes.id")
-                ->where(DBPREFIXE."products.id = :id")->setParams(['id' => $_GET['id']])->get();
+                ->where(DBPREFIXE."products.id = :id", DBPREFIXE."product_term.status = 1")->setParams(['id' => $_GET['id']])->get();
+
 
             foreach ($sqlVariant as $key => $value){
                 empty($getVariant[$value["variant"]]) ?
@@ -990,6 +998,7 @@ class Product
 
         if (isset($_GET['id']) && !empty($_GET['id']) && isset($_GET['values']) && !empty($_GET['values'])){
 
+
             $values = $_GET['values'];
             $column['id'] = $_GET['id'];
             $product = new Products();
@@ -1007,11 +1016,11 @@ class Product
                 }
 
                 $count = count($values) - 1;
-                $getIdGroup = $getIdGroup->where(DBPREFIXE."products.id = :id")->groupBy(DBPREFIXE."product_term.idGroup")->having("COUNT(*) > $count");
+                $getIdGroup = $getIdGroup->where(DBPREFIXE."products.id = :id",DBPREFIXE."product_term.status = 1")->groupBy(DBPREFIXE."product_term.idGroup")->having("COUNT(*) > $count");
 
             }else{
                 $column['idTerm'] = $values[0];
-                $getIdGroup = $getIdGroup->where(DBPREFIXE."products.id = :id",DBPREFIXE."product_term.idTerm = :idTerm");
+                $getIdGroup = $getIdGroup->where(DBPREFIXE."products.id = :id",DBPREFIXE."product_term.idTerm = :idTerm",DBPREFIXE."product_term.status = 1");
             }
 
             $getIdGroup = $getIdGroup->setParams($column)->get();
@@ -1019,7 +1028,7 @@ class Product
             if (!empty($getIdGroup)){
 
                 $groupVariant = new Group_variant();
-                $getPrice = $groupVariant->select('id,price,stock')->where("id = :id")->setParams(['id' => $getIdGroup[0]['idGroup'] ])->get();
+                $getPrice = $groupVariant->select('id,price,stock,picture')->where("id = :id")->setParams(['id' => $getIdGroup[0]['idGroup'] ])->get();
 
                 echo json_encode($getPrice[0]);
                 http_response_code(200);

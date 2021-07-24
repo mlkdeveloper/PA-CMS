@@ -191,7 +191,7 @@ class FormValidator
 
                 if(!empty($configInputs["minLength"])
                     && is_numeric($configInputs["minLength"])
-                    && strlen($data[$name]) < $configInputs["minLength"]){
+                    && strlen(trim($data[$name])) < $configInputs["minLength"]){
 
                     $errors[] = $configInputs["error"];
 
@@ -199,7 +199,7 @@ class FormValidator
 
                 if(!empty($configInputs["maxLength"])
                     && is_numeric($configInputs["maxLength"])
-                    && strlen($data[$name]) > $configInputs["maxLength"]){
+                    && strlen(trim($data[$name])) > $configInputs["maxLength"]){
 
                     $errors[] = $configInputs["error"];
 
@@ -207,17 +207,15 @@ class FormValidator
 
                 if ($configInputs["type"] === "email"){
 
-                    if(!filter_var($data[$name], FILTER_VALIDATE_EMAIL )){
+                    if(!filter_var(trim($data[$name]), FILTER_VALIDATE_EMAIL )){
                         $errors[] = "Email invalide !";
                     }else {
                         if (!$isCreated) {
                             $user = new User();
 
-                            if ($user->find_duplicates_sql($name, $data[$name])){
+                            if ($user->find_duplicates_sql($name, trim($data[$name]))){
                                 $errors[] = "L'email existe déjà  !";
                             }
-
-
                         }
                     }
                 }
@@ -278,7 +276,7 @@ class FormValidator
                         $configInputs["uniq"] === true
                     ) {
                         $category = new modelCategory();
-                        if ($category->find_duplicates_sql($name, $data[$name]))
+                        if ($category->find_duplicates_sql($name, trim($data[$name])))
                             $errors[] = $configInputs["errorUniq"];
                     }
                 }
@@ -340,8 +338,8 @@ class FormValidator
         }
 
         if (
-            strlen($name) < 2 ||
-            strlen($name) > 50 
+            strlen(trim($name)) < 2 ||
+            strlen(trim($name)) > 50
         ) {
             $errors[] = "Le produit doit avoir un nom entre 2 et 50 caractères, sans caractères spéciaux ni numérique";
         }

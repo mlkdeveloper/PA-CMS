@@ -17,7 +17,7 @@ class MyException extends \Exception
 
     public function error(){
 
-        $view = new View('errors',"back");
+        $view = new View('errors',"errors");
         $view->assign("message", $this->getMessage());
         $view->assign("status", $this->getCode());
         $view->assign("title", $this->getCode());
