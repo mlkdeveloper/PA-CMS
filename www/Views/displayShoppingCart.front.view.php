@@ -23,7 +23,7 @@
         <?php if(!empty($_SESSION['panier'])): ?>
 
         <div class="row">
-            <div class="col-md-12 col-sm-12">
+            <div class="col col-md-12 col-sm-12 col-lg-12">
                 <div class="jumbotron">
                     <table id="table" class="row-border hover">
                         <thead>

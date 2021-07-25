@@ -5,7 +5,7 @@
         <a class="button button--blue" href="/admin/ajout-produit">Ajouter un produit</a>
     </div>
     <div class="row">
-        <div class="col-md-12 col-sm-12">
+        <div class="col col-md-12 col-sm-12 col-lg-12">
             <div class="jumbotron">
                 <table id="table" class="row-border hover">
                     <thead>
