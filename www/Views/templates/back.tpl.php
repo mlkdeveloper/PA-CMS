@@ -43,9 +43,9 @@
                     <a href="/admin/liste-produits"><li>Liste des produits</li></a>
                     <a href="/admin/ajout-produit"><li>Ajouter un produit</li></a>
                     <a href="/admin/attribut"><li>Ajouter un attribut</li></a>
-                    <a href="#"><li>Categories</li></a>
+                    <a href="/admin/display-category"><li>Catégories</li></a>
                 </ul>
-                    <a href="#"><li>Pages</li></a>
+                    <a href="/admin/pages"><li>Pages</li></a>
                     <a href="/admin/liste-client"><li>Clients</li></a>
                     <a href="/admin/reviews"><li>Avis</li></a>
                     <a href="/admin/show-reviews-from-products"><li>Avis de chaque produit</li></a>
@@ -56,10 +56,10 @@
                 <li class="dropdownMenu" id="dropdownSettings">Paramètres du site<i class="fa fa-caret-down"></i></li>
                 <ul class="dropdown-container">
                     <a href="/admin/detail-magasin"><li>Magasins</li></a>
-                    <a href="#"><li>Navigation</li></a>
-                    <a href="#"><li>Paramètres</li></a>
+                    <a href="/admin/barre-de-navigation"><li>Navigation</li></a>
+                    <a href="/admin/parametres-site"><li>Paramètres</li></a>
                 </ul>
-                <a href="#"><li>Paramètres du CMS</li></a>
+                <a href="/admin/parametres"><li>Paramètres du CMS</li></a>
             </ul>
         </nav>
 
