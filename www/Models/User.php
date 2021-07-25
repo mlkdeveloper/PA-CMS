@@ -296,7 +296,7 @@ class User extends Database
 			"config"=>[
 				"method"=>"POST",
 				"action"=>"",
-                "class"=>"form_control col col-md-10 container",
+                "class"=>"form_control col col-md-6 container",
 				"id"=>"form_register",
 				"submit"=>"S'inscrire",
                 "classButton" => "button button--blue"
