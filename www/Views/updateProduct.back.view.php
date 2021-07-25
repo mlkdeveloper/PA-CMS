@@ -125,7 +125,7 @@
                 <?php if (!empty($input[0]['picture'])): ?>
                     <div>
                         <img style="width: 200px;" src="../images/products/<?= $input[0]['picture'] ?>"/>
-                        <label for="file" class="label-file"><i class="fas fa-file-upload"></i></label>
+                        <i id="file-icon-<?= $input[0]["idGroup"] ?>" class="fas fa-file-upload" onclick="iconFile(this)"></i>
                         <input id="file-<?= $input[0]["idGroup"] ?>" class="input-file" type="file">
                         <a class="button button--alert"
                            href="/admin/del-picture-variante?id=<?= $input[0]["idGroup"] ?>">
@@ -135,7 +135,7 @@
                 <?php else: ?>
                     <div class="row">
                         <p>Pas d'image pour cette variante
-                            <label for="file" class="label-file"><i class="fas fa-file-upload"></i></label>
+                            <i id="file-icon-<?= $input[0]["idGroup"] ?>" class="fas fa-file-upload" onclick="iconFile(this)"></i>
                             <input id="file-<?= $input[0]["idGroup"] ?>" class="input-file" type="file">
                         </p>
                     </div>
