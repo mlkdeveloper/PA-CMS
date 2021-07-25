@@ -12,7 +12,7 @@ new ConstantManager();
 $page = new Pages();
 $category = new Category();
 $product = new Products();
-$categories = $category->select("name")->where("status = 0")->get();
+$categories = $category->select("name")->where("status = 1")->get();
 $pages = $page->select("slug")->where("publication = 1")->get();
 $products = $product->select("id")->where("status = 1")->get();
 

@@ -91,11 +91,10 @@ class Category extends Database
             "inputs"=>[
 
                 "name"=>[
-                    "minLength"=>2,
-                    "maxLength"=>50,
                     "uniq"=>true,
-                    "error"=>"Le nom de la catégorie doit être compris entre 2 et 50 caractères.",
-                    "errorUniq"=> "Cette catégorie existe déjà !"
+                    "error"=>"Le nom de la catégorie doit être compris entre 2 et 50 caractères et ne doit pas comporter de caractères spéciaux.",
+                    "errorUniq"=> "Cette catégorie existe déjà !",
+                    "regex"=>"/^[A-Za-z-_]{2,50}$/",
                 ],
                 "description"=>[
                     "maxLength"=>255,

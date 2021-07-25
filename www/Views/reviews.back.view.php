@@ -8,7 +8,7 @@
                     <thead>
                     <tr>
                         <th>N° produit</th>
-                        <th>Image</th>
+                        <th>Nom du produit</th>
                         <th>Commentaire</th>
                         <th>Email</th>
                         <th>Statut</th>
@@ -19,16 +19,26 @@
                     <?php foreach ($datas as $review): ?>
                     <tr>
                         <td><?= $review["id_products"] ?></td>
-                        <td><?= $review["commentary"] ?></td>
+                        <td><?= $review["name"] ?></td>
                         <td><?= $review["commentary"] ?></td>
                         <td><?= $review["email"] ?></td>
-                        <td><?= $review["rs"] ?></td>
+
+
+                        <?php
+                            if($review["rs"] == 1){
+                                echo "<td class='alert--green'>Vérifié</td>";
+                            }else if($review["rs"] == 0){
+                                echo "<td class='alert--warning'>Non Vérifié</td>";
+                            }else{
+                                echo "<td class='alert--red'>Non respect des lois</td>";
+                            }
+                        ?>
                         <td>
                             <a href="/admin/check-review?id=<?= $review["id_review"] ?>" class="button button--success">
-                                <i class="bi bi-check"></i>
+                                <i class="fas fa-check"></i>
                             </a>
                             <a href="/admin/del-review?id=<?= $review["id_review"] ?>" class="button button--alert">
-                                <i class="bi bi-trash-fill"></i>
+                                <i class="fas fa-trash"></i>
                             </a>
                         </td>
                     </tr>
