@@ -119,7 +119,10 @@ class Facture
             $quantityModel = new Product_order();
 
             foreach ($array as $key => $product) {
-                $quantity = $quantityModel->select('id')->where('id_order = :order', 'id_group_variant = :variant')->setParams(['order' => $_GET['id'], 'variant' => $product[0]['id']])->get();
+                $quantity = $quantityModel->select('id')
+                    ->where('id_order = :order', 'id_group_variant = :variant')
+                    ->setParams(['order' => $_GET['id'], 'variant' => $product[0]['id']])
+                    ->get();
                 $array[$key]['quantity'] = count($quantity);
             }
 
@@ -134,7 +137,7 @@ class Facture
                 // position abcisse de la colonne 2 (70 = 10 + 60)
                 $pdf->SetY($position_detail);
                 $pdf->SetX(30);
-                $pdf->Cell(90,8,utf8_decode($product[0]['name']),1,0, 'C');
+                $pdf->Cell(90,8,utf8_decode($product[0]['name']) .' '.utf8_decode($product[0]['nameTerm']) ,1,0, 'C');
 
                 // position abcisse de la colonne 3 (130 = 70+ 60)
                 $pdf->SetY($position_detail);
