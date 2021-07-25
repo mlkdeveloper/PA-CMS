@@ -1008,9 +1008,10 @@ class Product
                 if (!empty($_POST)) {
 
                     $errors = FormValidator::checkFormReview($form, $_POST);
-
+                    session_start();
+                    $getNbReviews = $this->checkReviewsFront(new Review, $_SESSION['user']['id'], $_GET['id']);
+                    if(!$getNbReviews) array_push($errors, "Vous avez posté trop d'avis pour ce produit.");
                     if (empty($errors)) {
-                        session_start();
                         $review->populate($_POST);
                         $review->setStatus(0);
                         $review->setProductsId($_GET['id']);
@@ -1018,7 +1019,6 @@ class Product
                         $review->save();
 
                         $view->assign("success", "Commentaire envoyé !");
-
                     } else {
                         $view->assign("errors", $errors);
                     }
@@ -1206,4 +1206,12 @@ class Product
         }
     }
 
+    private function checkReviewsFront($class, $uid, $pid){
+        $datas = $class
+            ->select()
+            ->where("User_id = :id", "Products_id = :idP")->setParams(["id"=>$uid, "idP"=>$pid])
+            ->get();
+        if (count($datas) < 2) return true;
+        else return false;
+    }
 }
