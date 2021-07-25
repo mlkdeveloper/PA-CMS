@@ -10,7 +10,6 @@ require "PHPMailer/src/SMTP.php";
 require "PHPMailer/src/PHPMailer.php";
 require "PHPMailer/src/Exception.php";
 require "Autoload.php";
-require "Controllers/Auth.php";
 Autoload::register();
 
 new ConstantManager();
