@@ -7,6 +7,7 @@ use App\Core\View;
 use App\Models\Pages as modelPages;
 use App\Models\Navbar as modelNavbar;
 use App\Models\Tab_navbar as modelTab_navbar;
+use App\Core\Security;
 
 session_start();
 
@@ -21,6 +22,9 @@ class Pages
 
     public function showAction(){
 
+
+        Security::auth("pages");
+
         $pages = new modelPages();
         $array = $pages->select()->get();
 
@@ -33,6 +37,7 @@ class Pages
 
     public function newPageAction(){
 
+        Security::auth("pages");
         $pages = new modelPages();
         $view = new View("createPage.back", "back");
         $view->assign("title", "Création de la page");
@@ -71,6 +76,8 @@ class Pages
     }
 
     public function updatePageAction(){
+
+        Security::auth("pages");
         if (isset($_GET['id']) && isset($_GET['slug']) && $_GET['id'] != 1){
 
             $pages = new modelPages();
@@ -121,6 +128,8 @@ class Pages
     }
 
     public function deletePageAction(){
+
+        Security::auth("pages");
 
         if(isset($_GET["idPage"])
             && isset($_GET["name"])
@@ -187,6 +196,8 @@ class Pages
     }
 
     public function updatePublicationAction(){
+
+        Security::auth("pages");
 
         if(isset($_POST['valuePublication'])
         && isset($_POST['idPage'])

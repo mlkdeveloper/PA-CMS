@@ -12,10 +12,15 @@ use App\Models\Attributes;
 use App\Models\Category;
 use App\Models\Group_variant;
 use App\Models\Product_term;
+use App\Models\Product_order;
 use App\Models\Products;
 use App\Models\Review;
 use App\Models\Terms;
 
+
+use App\Core\Security;
+
+session_start();
 
 class Product
 {
@@ -976,6 +981,11 @@ class Product
      */
     public function infoProductFrontAction()
     {
+        if (!Security::isConnected()){
+            header('Location: /');
+            exit();
+        }
+
         if (isset($_GET['id']) && !empty($_GET['id'])) {
 
             $getVariant = [];
@@ -1023,9 +1033,22 @@ class Product
                         $view->assign("errors", $errors);
                     }
                 }
+
                 $reviews = $review->select(DBPREFIXE . "user.lastname, " . DBPREFIXE . "review.commentary, " . DBPREFIXE . "review.mark, " . DBPREFIXE . "review.createdAt")
                     ->innerJoin(DBPREFIXE . "user", DBPREFIXE . "review.User_id", "=", DBPREFIXE . "user.id")
                     ->where("Products_id = :id", DBPREFIXE . "review.status = 1")->setParams(["id" => $_GET['id']])->get();
+
+                if (isset($_SESSION['user'])){
+                    $order = new Product_order();
+                    $orderUser = $order->select(DBPREFIXE."orders.User_id")
+                        ->innerJoin(DBPREFIXE."orders",DBPREFIXE."product_order.id_order","=",DBPREFIXE."orders.id")
+                        ->innerJoin(DBPREFIXE."product_term",DBPREFIXE."product_order.id_group_variant","=",DBPREFIXE."product_term.idGroup")
+                        ->where(DBPREFIXE."orders.User_id = :id", DBPREFIXE."product_term.idProduct = :idP")->setParams(["id" => $_SESSION['user']['id'], "idP" => $_GET['id']])
+                        ->limit(1)->get();
+
+                    $userBuyed = (!empty($orderUser)) ? true : false;
+                    $view->assign("userBuyed",$userBuyed);
+                }
 
                 $view->assign("product", $getProduct[0]);
                 $view->assign("title", "produit");

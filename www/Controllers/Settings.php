@@ -8,13 +8,16 @@ use App\Core\View;
 use App\Models\Themes;
 use App\Models\User;
 
+use App\Core\Security;
+
 session_start();
 
 class Settings
 {
 
-
     public function displaySettingsAction(){
+
+        Security::auth("settingsCms");
         $view = new View("settings.back", "back");
         $view->assign("title", "Paramètres");
 
@@ -27,6 +30,8 @@ class Settings
 
     public function updateAction()
     {
+
+        Security::auth("settingsCms");
         if (!empty($_POST)) {
 
             $dataArray = $this->checkInformations($_POST);
@@ -151,6 +156,8 @@ class Settings
     }
 
     public function updateAdminEmailAction(){
+
+        Security::auth("settingsCms");
         if (!empty($_POST)) {
             $admin = new User();
 
@@ -184,6 +191,8 @@ class Settings
     }
 
     public function updateAdminPasswordAction(){
+
+        Security::auth("settingsCms");
 
         if (!empty($_POST)) {
             $admin = new User();
@@ -225,6 +234,8 @@ class Settings
     }
 
     public function displaySettingsSiteAction(){
+
+        Security::auth("settingsSite");
 
         $view = new View("settingsSite.back", "back");
         $view->assign("title","Paramètres du site");

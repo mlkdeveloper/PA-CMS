@@ -10,6 +10,8 @@ use App\Models\Tab_navbar as modelTab_navbar;
 use App\Models\Category as modelCategory;
 use App\Models\Pages as modelPages;
 
+use App\Core\Security;
+
 session_start();
 
 
@@ -18,6 +20,9 @@ class Navbar
 
 
     public function displayNavbarAction(){
+
+        Security::auth("settingsSite");
+
         $navbar = new modelNavbar();
         $dataNavbar = $navbar->select('id,name, status')->orderBy('sort', 'ASC')->get();
 
@@ -27,6 +32,10 @@ class Navbar
     }
 
     public function newNavbarTabAction(){
+
+        Security::auth("settingsSite");
+
+
         $navbar = new modelNavbar();
         $tabNavbar = new modelTab_navbar();
         $sortMax = $navbar->select('MAX(sort)')->get();
@@ -108,6 +117,9 @@ class Navbar
     }
 
     public function getDataNavbarAction(){
+
+        Security::auth("settingsSite");
+
         $type = $_POST['type'];
 
         switch ($type){
@@ -127,6 +139,9 @@ class Navbar
     }
 
     private function dropdownNavbar($data){
+
+        Security::auth("settingsSite");
+
         $countSelectTypeDropdown = 0;
         $countTypeDropdown = 0;
         $countNameDropdown = 0;
@@ -160,6 +175,8 @@ class Navbar
     }
 
     public function upNavbarAction(){
+
+        Security::auth("settingsSite");
 
         if (isset($_POST['id']) && !empty($_POST['id'])){
 
@@ -198,6 +215,8 @@ class Navbar
 
     public function downNavbarAction(){
 
+        Security::auth("settingsSite");
+
         if (isset($_POST['id']) && !empty($_POST['id'])){
 
             $tab = new modelNavbar();
@@ -235,6 +254,9 @@ class Navbar
     }
 
     public function deleteTabAction(){
+
+        Security::auth("settingsSite");
+
         if (isset($_GET['id']) && isset($_GET['status'])){
             $idTab = htmlspecialchars($_GET['id']);
             $statusTab = htmlspecialchars($_GET['status']);

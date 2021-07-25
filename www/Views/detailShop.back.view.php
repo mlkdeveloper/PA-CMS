@@ -15,15 +15,3 @@
         </div>
     </div>
 </div>
-<script>
-    $(document).ready(function () {
-        $('#table').DataTable({
-            language: {
-                url: '//cdn.datatables.net/plug-ins/1.10.22/i18n/French.json'
-            },
-            "columnDefs": [
-                {"className": "dt-center", "targets": "_all"}
-            ]
-        });
-    });
-</script>
