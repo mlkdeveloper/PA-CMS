@@ -373,6 +373,10 @@
   controller: Stripe
   action: insertPaymentIntent
   
+/facture:
+  controller: Facture
+  action : facture
+
 /admin/activer-theme:
   controller: Theme
   action: enableTheme
@@ -380,3 +384,4 @@
 /admin/update-product-wv:
   controller: Product
   action: updateProductWV
+
