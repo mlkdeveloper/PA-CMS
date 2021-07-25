@@ -136,7 +136,8 @@ CREATE TABLE `cc_review` (
                              `mark` float DEFAULT NULL,
                              `status` tinyint(4) NOT NULL,
                              `Products_id` int(11) NOT NULL,
-                             `User_id` int(11) NOT NULL
+                             `User_id` int(11) NOT NULL,
+                             `createdAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
