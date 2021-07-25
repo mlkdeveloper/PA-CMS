@@ -48,6 +48,7 @@
 .col {
   flex-basis: 100%;
   padding: 10px 10px;
+  width: 100%;
 }
 
 @media only screen and (min-width: 576px) {
@@ -607,6 +608,10 @@ a {
 #table {
   padding-top: 50px;
   margin-bottom: 40px;
+}
+
+#table_wrapper {
+  overflow-x: scroll;
 }
 
 #table tr {

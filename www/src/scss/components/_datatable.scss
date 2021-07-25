@@ -2,6 +2,9 @@
   padding-top: 50px;
   margin-bottom: 40px;
 }
+#table_wrapper {
+  overflow-x: scroll;
+}
 
 #table{
   & tr {
