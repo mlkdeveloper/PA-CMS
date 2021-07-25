@@ -46,6 +46,11 @@
                         <p>Par : <?= $order[0]['firstname'].' '.$order[0]['lastname']. ' ('.  $order[0]['email']. ')'?></p>
                     </div>
                 </div>
+                <div class="align">
+                    <div>
+                        <a class="button button--blue " href="/facture?id=<?= $order[0]['id'] ?>" > Facture</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
