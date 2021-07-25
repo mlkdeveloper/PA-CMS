@@ -8,10 +8,10 @@ use App\Models\Themes;
 <head>
 	<meta charset="UTF-8">
     <title><?= $title ?></title>
-	<meta name="description" content="description de la page de front">
+	<meta name="description" content="bienvenue chez click&create">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <script src="../../src/js/jquery-3.5.1.min.js"></script>
+    <script src="../../public/js/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
     <script src="../../public/js/navbarFront.js"></script>
 
@@ -46,19 +46,19 @@ use App\Models\Themes;
         <nav id="main-nav">
             <div>
                 <ul>
-                    <li><img src="../../images/logo/logo.png" alt="Logo" width="50"></li>
+                    <li><a style="padding: 0" href="/"><img src="../../images/logo/logo.png" alt="Logo" width="50"></a></li>
                     <?= \App\Core\NavbarBuilder::navbar() ?>
                 </ul>
                 <ul class="align">
                     <?php if (isset($_SESSION['user'])): ?>
-                        <li class="dropdownMenuFront"><a>Votre compte</a>
+                        <li class="dropdownMenuFront"><a>Compte &nbsp<i class="fas fa-user"></i></a>
                         <ul class="submenu">
                             <li><a href="/mon-profil">Votre profil</a>
                             <li><a href="/mes-commandes">Vos commandes</a>
                             <li><a href="/deconnexion">Déconnexion</a>
                         </ul>
                     <?php else: ?>
-                        <li class="dropdownMenuFront"><a>Mon Compte</a>
+                        <li class="dropdownMenuFront"><a>Compte &nbsp<i class="fas fa-user"></i></a>
                         <ul class="submenu">
                             <li><a href="/connexion">Connexion</a>
                             <li><a href="/inscription">Inscription</a>

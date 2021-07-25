@@ -1,3 +1,12 @@
+
+
+function iconFile(id){
+    const idG = $(id).attr('id').split("-")[2]
+
+    $("#file-"+idG).click()
+
+}
+
 function getSelectedAttributes(id){
 
     if($('#attr-' + id ).is(':checked')){
@@ -439,3 +448,4 @@ function updateProductWV(){
         error: () => {}
     })
 }
+

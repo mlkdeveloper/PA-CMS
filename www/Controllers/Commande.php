@@ -18,7 +18,9 @@ session_start();
 
 class Commande
 {
-
+    /*
+    Affichage des commandes
+    */
     public function listeCommandeAction(){
 
         Security::auth('orders');
@@ -35,6 +37,9 @@ class Commande
 
     }
 
+    /*
+     * Affichage des produits liées au commandes
+     */
     public function displayCommandeAction(){
 
         Security::auth('orders');
@@ -80,7 +85,7 @@ class Commande
     }
 
     public function cancelOrderFrontAction(){
-
+        require 'vendor/autoload.php';
         if (!Security::isConnected()){
             header("Location: /connexion");
             exit();
@@ -102,15 +107,33 @@ class Commande
             $commande = $order->select('*')->where("id = :id")->setParams(["id" => $_GET['id']])->get();
             $getUser = $user->select('*')->where("id = :id")->setParams(["id" => $commande[0]["User_id"]])->get();
 
+            /*
+             * Si la commande a déjà été annuler, alors je redirige
+             */
+            if ($commande[0]['status'] == -1 ){
+                header('location:/mes-commandes');
+                exit();
+            }
+
             $order->populate($commande[0]);
             $order->setUserId($commande[0]['User_id']);
             $order->setStatus(-1);
             $order->save();
 
-            //Email::sendEmail("C&C - Annulation de votre commande",$getUser[0]["email"], "Votre commande vient d'être annulée ", "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/connexion","Mon compte", "/admin/liste-commande");
-            // Rajouter header location
+            /*
+             * Remboursement du montant de la commande Via Stripe
+             */
+            \Stripe\Stripe::setApiKey(PRIVATEKEYSTRIPE);
+
+            $re = \Stripe\Refund::create([
+                'payment_intent' => $commande[0]['payment_intent'],
+            ]);
+
+            Email::sendEmail("C&C - Annulation de votre commande",$getUser[0]["email"], "Votre commande vient d'être annulée. <br> Vous aller recevoir votre remboursement sous peu (1-2j)", "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/connexion","Mon compte", "/mes-commandes");
+
+            header('location: /mes-commandes');
         }else{
-            header("Location: /mes-commandes");
+            header('Location: /mes-commandes');
         }
 
     }

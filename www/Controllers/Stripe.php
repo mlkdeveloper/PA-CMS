@@ -59,6 +59,11 @@ class Stripe
             exit();
         }
 
+        if (!isset($_SESSION['panier']) || empty($_SESSION['panier'])){
+            header("Location: /mes-commandes");
+            exit();
+        }
+
         $view = new View("successStripe");
 
         $orders = new Orders_model();
@@ -69,7 +74,7 @@ class Stripe
         $orders->save();
 
         $panier = New Orders_model();
-        $panier = $orders->select('*')->where("montant = :montant", "status = 0", "User_id = :id")
+        $panier = $orders->select('MAX(id) as id, montant, payment_intent, User_id, User_id, status')->where("montant = :montant", "status = 0", "User_id = :id")
             ->setParams(["montant" =>$_SESSION['panierTotal'], "id" => $_SESSION['user']['id']])->get();
         $stock = new Group_variant();
         foreach ($_SESSION['panier'] as $key => $value) {
