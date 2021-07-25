@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 
+use App\Core\Database;
 use App\Core\FormValidator;
 use App\Core\MyException;
 use App\Core\Uploader;
@@ -198,6 +199,9 @@ class Product
         $view->assign("produits", $datas);
     }
 
+    /**
+     * @throws MyException
+     */
     public function infoProductsAction()
     {
         Security::auth("products");
@@ -206,8 +210,7 @@ class Product
         $categories = new Category();
 
         if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
-            $pid = new Products;
-            $checkId = FormValidator::checkId($_GET["id"], $pid);
+            $checkId = FormValidator::checkId($_GET["id"], new Products());
             $attribute = new Attributes();
 
 
@@ -334,8 +337,7 @@ class Product
             $attribute = new Attributes();
             $product = new Products;
 
-            $pid = new Products;
-            $checkId = FormValidator::checkId($_GET["id"], $pid);
+            $checkId = FormValidator::checkId($_GET["id"], new Products);
 
             if ($checkId) {
                 $view = new View("updateProduct.back", "back");
