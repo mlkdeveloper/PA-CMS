@@ -29,7 +29,7 @@
             <div class="jumbotron">
                 <center>
                     <h1><?php echo $totalReview; ?></h1>
-                    <h1>Nombre de commentaires</h1>
+                    <h1>Commentaires</h1>
                 </center>
             </div>
         </div>
