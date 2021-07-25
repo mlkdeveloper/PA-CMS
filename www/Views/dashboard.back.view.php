@@ -1,5 +1,41 @@
 <div class="container">
+    <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-12 col">
+            <div class="jumbotron">
+                <center>
+                    <h1><?php echo $totalOrder; ?></h1>
+                    <h1>Total commande</h1>
+                </center>
 
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-12 col">
+            <div class="jumbotron">
+                <center>
+                    <h1><?php echo $totalAmount; ?></h1>
+                    <h1>Total montant</h1>
+                </center>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-12 col">
+            <div class="jumbotron">
+                <center>
+                    <h1><?php echo $totalProduct; ?></h1>
+                    <h1>Total produits</h1>
+                </center>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-12 col">
+            <div class="jumbotron">
+                <center>
+                    <h1><?php echo $totalReview; ?></h1>
+                    <h1>Nombre de commentaires</h1>
+                </center>
+            </div>
+        </div>
+
+
+    </div>
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col">
         <div class="jumbotron" id="jumbotronTurnover">
