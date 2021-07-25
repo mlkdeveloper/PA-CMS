@@ -61,7 +61,7 @@ CREATE TABLE `cc_group_variant` (
 
 CREATE TABLE `cc_orders` (
                              `id` int(11) NOT NULL,
-                             `montant` int(11) NOT NULL,
+                             `montant` float NOT NULL,
                              `payment_intent` VARCHAR(255) NOT NULL,
                              `User_id` int(11) NOT NULL,
                              `CreatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
