@@ -293,10 +293,6 @@
   controller: Facture
   action : facture
 
-/insert-payment-stripe:
-  controller: Stripe
-  action: insertPaymentIntent
-  
 /admin/activer-theme:
   controller: Theme
   action: enableTheme
