@@ -286,6 +286,12 @@ class FormValidator
 
                     $errors[] = $configInputs["error"];
                 }
+
+
+                if (!empty($configInputs["regex"])
+                    && !preg_match($configInputs["regex"], $data[$name])){
+                    $errors[] = $configInputs["error"];
+                }
             }
         }
         return $errors;
