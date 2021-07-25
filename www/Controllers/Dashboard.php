@@ -5,6 +5,9 @@ namespace App\Controller;
 
 use App\Core\View;
 use App\Models\Orders as modelOrders;
+use App\Models\Review as modelReview;
+use App\Models\Products as modelProduct;
+
 
 use App\Core\Security;
 
@@ -17,8 +20,31 @@ class Dashboard
     public function dashboardAction(){
 
         Security::isEmployee();
+        $amountTotal = 0;
+
+        //Orders
+        $orderModel = new modelOrders();
+        $orderTotal = $orderModel->select('montant')->where('status >= :status')->setParams(['status' => 1])->get();
+
+        //Price
+        foreach ($orderTotal as $amount){
+            $amountTotal += $amount['montant'];
+        }
+
+        //Review
+        $reviewModel = new modelReview();
+        $reviewTotal = $reviewModel->select()->where('status = :status')->setParams(['status' => 1])->get();
+
+        //Products
+        $productModel = new modelProduct();
+        $productTotal = $productModel->select()->get();
+
 
         $view = new View("dashboard.back", "back");
+        $view->assign('totalOrder', count($orderTotal));
+        $view->assign('totalAmount', $amountTotal);
+        $view->assign('totalReview', count($reviewTotal));
+        $view->assign('totalProduct', count($productTotal));
         $view->assign("title", "Dashboard");
     }
 
