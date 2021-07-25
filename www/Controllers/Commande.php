@@ -18,7 +18,9 @@ session_start();
 
 class Commande
 {
-
+    /*
+    Affichage des commandes
+    */
     public function listeCommandeAction(){
 
         Security::auth('orders');
@@ -35,6 +37,9 @@ class Commande
 
     }
 
+    /*
+     * Affichage des produits liées au commandes
+     */
     public function displayCommandeAction(){
 
         Security::auth('orders');
@@ -86,7 +91,6 @@ class Commande
             exit();
         }
 
-
         if (isset($_GET['id']) && !empty($_GET['id'])){
 
             $order = new Orders();
@@ -103,6 +107,9 @@ class Commande
             $commande = $order->select('*')->where("id = :id")->setParams(["id" => $_GET['id']])->get();
             $getUser = $user->select('*')->where("id = :id")->setParams(["id" => $commande[0]["User_id"]])->get();
 
+            /*
+             * Si la commande a déjà été annuler, alors je redirige
+             */
             if ($commande[0]['status'] == -1 ){
                 header('location:/mes-commandes');
                 exit();
