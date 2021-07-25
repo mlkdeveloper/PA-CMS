@@ -9,7 +9,7 @@
                         <th>Prix</th>
                         <th>Stock</th>
                         <th>Image de la variante</th>
-                        <th>Actions</th>
+                        <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>

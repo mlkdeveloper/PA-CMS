@@ -19,7 +19,7 @@
                         <th>Date de création</th>
                         <th>Chemin d'accès</th>
                         <th>Publier</th>
-                        <th>Actions</th>
+                        <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>

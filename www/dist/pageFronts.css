@@ -48,6 +48,7 @@ img{
     list-style: none;
     display: flex;
     box-sizing: border-box;
+    align-items: center;
 }
 
 #main-nav li {
