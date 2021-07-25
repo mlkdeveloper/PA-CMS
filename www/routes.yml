@@ -18,10 +18,6 @@
   controller: Security
   action: logout
 
-/admin/liste-magasin:
-  controller: Shop
-  action: displayShop
-
 /admin/reviews:
   controller: Reviews
   action: showReviews
@@ -45,10 +41,6 @@
 /admin/suppression-categorie:
   controller : Category
   action: deleteCategory
-
-/admin/nouveau-magasin:
-  controller: Shop
-  action: newShop
 
 /admin/pages:
   controller: Pages
@@ -265,10 +257,6 @@
   controller: Stripe
   action: paymentStripe
 
-/paiement-stripe:
-  controller: Stripe
-  action: pagePaiementStripe
-
 /success:
   controller: Stripe
   action: success
@@ -297,11 +285,14 @@
   controller: Dashboard
   action: getData
 
-
 /facture:
   controller: Facture
   action : facture
 
+/insert-payment-stripe:
+  controller: Stripe
+  action: insertPaymentIntent
+  
 /admin/activer-theme:
   controller: Theme
   action: enableTheme

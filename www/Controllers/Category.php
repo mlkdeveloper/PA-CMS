@@ -7,9 +7,15 @@ use App\Core\View;
 use App\Models\Category as modelCategory;
 use App\Models\Products;
 
+use App\Core\Security;
+
+session_start();
+
 class Category{
 
     public function showAction(){
+
+        Security::auth('categories');
 
         $category = new modelCategory();
         $listCategory = $category->select()->get();
@@ -21,6 +27,8 @@ class Category{
     }
 
     public function newCategoryAction(){
+
+        Security::auth('categories');
 
         $category = new modelCategory();
         $view = new View("createCategory.back", "back");
@@ -46,6 +54,8 @@ class Category{
     }
 
     public function updateCategoryAction(){
+
+        Security::auth('categories');
 
         if (isset($_GET['id']) && !empty($_GET['id'])){
 
@@ -89,6 +99,8 @@ class Category{
 
     public function deleteCategoryAction(){
 
+        Security::auth('categories');
+
         if(isset($_GET['id']) && !empty($_GET['id']) ){
 
             $category = new modelCategory();
@@ -101,7 +113,7 @@ class Category{
 
             $product = new Products();
             $checkProduct = $product->select('id')->where("idCategory = :id")->setParams(["id" => $_GET['id']])->get();
-            session_start();
+
             if (empty($checkProduct)){
                 $category->where("id = :id")->setParams(['id' => $_GET['id']])->delete();
                 $_SESSION['successDeleteCategory'] = "Catégorie supprimé !";

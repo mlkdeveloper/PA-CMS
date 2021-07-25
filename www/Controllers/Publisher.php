@@ -2,6 +2,9 @@
 namespace App\Controller;
 
 use App\Core\View;
+use App\Core\Security;
+
+session_start();
 
 $myPublisher = new Publisher();
 
@@ -33,6 +36,9 @@ if (isset($_FILES['file'])){
 class Publisher
 {
     public function publisherAction(){
+
+        Security::auth("pages");
+
         if (!file_exists("./publisher/templatesPublisher/".$_GET["name"].".json")){
             header("Location: /admin/pages");
             exit();
@@ -42,11 +48,12 @@ class Publisher
     }
 
     public function savePublisher($dataHtml, $namePage){
+        Security::auth("pages");
         file_put_contents("../publisher/templatesPublisher/".$namePage.".json", $dataHtml);
     }
 
     public function readPublisher($namePage){
-
+        Security::auth("pages");
         if (file_exists("../publisher/templatesPublisher/".$namePage.".json")){
             echo  file_get_contents("../publisher/templatesPublisher/".$namePage.".json");
         }else {
@@ -55,6 +62,8 @@ class Publisher
     }
 
     public function listImages(){
+
+        Security::auth("pages");
         $images = "";
         $list =array_diff(scandir("../publisher/images"), array('.', '..'));
         foreach ($list as $image){
@@ -69,6 +78,8 @@ class Publisher
     }
 
     public function checkDeleteImage($srcImage, $namePage){
+
+        Security::auth("pages");
         $result = "false";
 
         $list =array_diff(scandir("../publisher/templatesPublisher"), array('.', '..'));
@@ -86,10 +97,13 @@ class Publisher
     }
 
     public function deleteImage($srcImage){
+        Security::auth("pages");
         unlink($srcImage);
     }
 
     public function uploadImage(){
+
+        Security::auth("pages");
 
         if(isset($_FILES['file']['name'])){
 

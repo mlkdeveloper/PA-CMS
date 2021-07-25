@@ -56,8 +56,8 @@ if (isset($successNewCategory)){
                             <div class="form_align--top">
                                 <label class="label">Statut *</label>
                                 <select class="input" name="status">
-                                    <option value="0">Actif</option>
-                                    <option value="1">Inactif</option>
+                                    <option value="1">Actif</option>
+                                    <option value="0">Inactif</option>
                                 </select>
                             </div>
                         </div>

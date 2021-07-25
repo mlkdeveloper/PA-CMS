@@ -88,13 +88,6 @@ class FormValidator
 
             foreach ($config["inputs"] as $name => $configInputs) {
 
-//                if (!empty($configInputs["uniq"]) && $configInputs["uniq"] === true){
-//                    $page = new Pages();
-//                    if ($page->find_duplicates_sql($name, $data[$name])){
-//                        $errors[] = $configInputs["errorBdd"];
-//                    }
-//                }
-
                 if(	!empty($configInputs["minLength"])
                     && is_numeric($configInputs["minLength"])
                     && strlen($data[$name]) < $configInputs["minLength"]){
@@ -121,6 +114,23 @@ class FormValidator
                         $category = new Pages();
                         if ($category->find_duplicates_sql($name, $data[$name]))
                             $errors[] = $configInputs["errorBdd"];
+                    }
+                }
+            }
+
+            $file = './routes.yml';
+
+            $ptr = fopen("$file", "r");
+            $contenu = fread($ptr, filesize($file));
+
+            fclose($ptr);
+            $contenu = explode(PHP_EOL, $contenu);
+
+            foreach ($contenu as $index => $value) {
+                if (preg_match('/^\/.+$/', $value)) {
+                    if ($contenu[$index] == $data["slug"].':'){
+                        $errors[] = "Ce slug est déjà utilisé par le CMS";
+                        break;
                     }
                 }
             }
@@ -276,7 +286,7 @@ class FormValidator
                     if (!empty($configInputs["uniq"]) &&
                         $configInputs["uniq"] === true
                     ) {
-                        $category = new Category();
+                        $category = new modelCategory();
                         if ($category->find_duplicates_sql($name, $data[$name]))
                             $errors[] = $configInputs["errorUniq"];
                     }
