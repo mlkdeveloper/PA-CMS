@@ -51,14 +51,14 @@ use App\Models\Themes;
                 </ul>
                 <ul class="align">
                     <?php if (isset($_SESSION['user'])): ?>
-                        <li class="dropdownMenuFront"><a>Votre compte</a>
+                        <li class="dropdownMenuFront"><a>Compte &nbsp<i class="fas fa-user"></i></a>
                         <ul class="submenu">
                             <li><a href="/mon-profil">Votre profil</a>
                             <li><a href="/mes-commandes">Vos commandes</a>
                             <li><a href="/deconnexion">Déconnexion</a>
                         </ul>
                     <?php else: ?>
-                        <li class="dropdownMenuFront"><a>Mon Compte</a>
+                        <li class="dropdownMenuFront"><a>Compte &nbsp<i class="fas fa-user"></i></a>
                         <ul class="submenu">
                             <li><a href="/connexion">Connexion</a>
                             <li><a href="/inscription">Inscription</a>
