@@ -16,8 +16,6 @@ use App\Models\Product_order;
 use App\Models\Products;
 use App\Models\Review;
 use App\Models\Terms;
-
-
 use App\Core\Security;
 
 session_start();
@@ -27,7 +25,7 @@ class Product
 
     public function addProductAction()
     {
-
+        Security::auth("products");
         $view = new View("createProduct.back", "back");
         $view->assign("title", "Produit");
 
@@ -48,10 +46,9 @@ class Product
         $view->assign("file_stylesheet", "../../dist/product.css");
     }
 
-
     public function getValuesAttributeAction()
     {
-
+        Security::auth("products");
         if (isset($_GET['id']) && $_GET['id'] != 1) {
 
             $term = new Terms();
@@ -62,7 +59,7 @@ class Product
 
     public function createProductAction()
     {
-
+        Security::auth("products");
         if (
             isset($_POST['comb_array']) &&
             isset($_POST['product']) &&
@@ -186,6 +183,7 @@ class Product
 
     public function showProductsAction()
     {
+        Security::auth("products");
         $product_model = new Products;
 
         $view = new View("showProducts.back", "back");
@@ -202,6 +200,7 @@ class Product
 
     public function infoProductsAction()
     {
+        Security::auth("products");
         //Instanciation des classes
         $product_model = new Products();
         $categories = new Category();
@@ -286,6 +285,7 @@ class Product
 
     public function deleteProductAction()
     {
+        Security::auth("products");
         if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
 
             $product_term = new Product_term;
@@ -327,6 +327,7 @@ class Product
 
     public function updateProductFormAction()
     {
+        Security::auth("products");
         if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
             $product_model = new Products;
             $categories = new Category;
@@ -411,7 +412,7 @@ class Product
     //Mise à jour du produit
     public function updateProductAjaxAction()
     {
-
+        Security::auth("products");
         $pid = new Products;
         $checkId = FormValidator::checkId($_GET['id'], $pid);
         if (isset($_POST['comb_array']) &&
@@ -546,9 +547,9 @@ class Product
         }
     }
 
-
     public function updateVarAction()
     {
+        Security::auth("products");
         if (isset($_GET["id"], $_POST['price'], $_POST['stock'], $_POST['file']) &&
             is_numeric($_GET["id"]) && count($_POST) === 3
         ) {
@@ -620,6 +621,7 @@ class Product
 
     public function updateAction()
     {
+        Security::auth("products");
         if (isset($_GET["id"],
                 $_POST['name'],
                 $_POST['idCategory'],
@@ -670,6 +672,8 @@ class Product
 
     public function addProductWVAction()
     {
+        Security::auth("products");
+
         if (isset($_POST["product"]) && count($_POST) === 1 &&
             isset($_FILES["file"]) && count($_FILES) === 1 ||
             isset($_POST["product"], $_POST['file']) && count($_POST) === 2
@@ -781,6 +785,7 @@ class Product
 
     public function delProductAction()
     {
+        Security::auth("products");
         if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
 
             $pid = new Products;
@@ -808,6 +813,7 @@ class Product
 
     public function publishProductAction()
     {
+        Security::auth("products");
         if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
             $pid = new Products;
             $checkId = FormValidator::checkId($_GET['id'], $pid);
@@ -833,6 +839,7 @@ class Product
 
     public function depublishProductAction()
     {
+        Security::auth("products");
         if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
             $pid = new Products;
             $checkId = FormValidator::checkId($_GET['id'], $pid);
@@ -858,6 +865,7 @@ class Product
 
     public function delPictureAction()
     {
+        Security::auth("products");
         if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
             $gid = new Group_variant;
             $checkId = FormValidator::checkId($_GET['id'], $gid, false);
@@ -884,6 +892,7 @@ class Product
 
     public function delVariantesAction()
     {
+        Security::auth("products");
         if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
             $pid = new Products;
             $checkId = FormValidator::checkId($_GET['id'], $pid);
@@ -981,10 +990,6 @@ class Product
      */
     public function infoProductFrontAction()
     {
-        if (!Security::isConnected()){
-            header('Location: /');
-            exit();
-        }
 
         if (isset($_GET['id']) && !empty($_GET['id'])) {
 
@@ -1018,7 +1023,6 @@ class Product
                 if (!empty($_POST)) {
 
                     $errors = FormValidator::checkFormReview($form, $_POST);
-                    session_start();
                     $getNbReviews = $this->checkReviewsFront(new Review, $_SESSION['user']['id'], $_GET['id']);
                     if(!$getNbReviews) array_push($errors, "Vous avez posté trop d'avis pour ce produit.");
                     if (empty($errors)) {
@@ -1111,6 +1115,7 @@ class Product
 
     public function updateProductWVAction()
     {
+        Security::auth("products");
         $pid = new Products();
         $check_id = FormValidator::checkId($_GET["id"], $pid);
         if (isset($_POST["product"], $_GET["id"]) && count($_POST) === 1 && is_numeric($_GET["id"]) &&

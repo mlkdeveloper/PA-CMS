@@ -5,14 +5,18 @@ namespace App\Controller;
 
 
 use App\Core\FormValidator;
+use App\Core\Security;
 use App\Core\View;
 use App\Models\Attributes;
 use App\Models\Terms;
+
+session_start();
 
 class Attribute
 {
 
     public function attributeAction(){
+        Security::auth("products");
 
         $view = new View("attribute.back","back");
         $view->assign("title","Attribut");
@@ -40,6 +44,7 @@ class Attribute
     }
 
     public function termsAttributeAction(){
+        Security::auth("products");
 
         if(!empty($_GET['id']) && $_GET['id'] != 1){
 
@@ -83,6 +88,7 @@ class Attribute
     }
 
     public function updateAttributeAction(){
+        Security::auth("products");
 
         if(!empty($_GET['id']) && $_GET['id'] != 1){
 
@@ -121,6 +127,7 @@ class Attribute
     }
 
     public function deleteAttributeAction(){
+        Security::auth("products");
 
         if(!empty($_POST["id"])){
 
@@ -156,8 +163,8 @@ class Attribute
         }
     }
 
-
     public function deleteTermAction(){
+        Security::auth("products");
 
         if(!empty($_POST["id"]) && !empty($_POST["idAttributes"])){
             
