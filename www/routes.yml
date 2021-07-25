@@ -10,10 +10,6 @@
   controller: User
   action: login
 
-/connexion-admin:
-  controller: User
-  action: loginAdmin
-
 /deconnexion:
   controller: Security
   action: logout

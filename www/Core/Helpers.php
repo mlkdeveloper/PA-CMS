@@ -23,11 +23,6 @@ class Helpers{
         return $mdp;
     }
 
-    public static function vd(...$array){
-        echo "<pre>";
-        var_dump($array);
-    }
-
     public static function dateFr($data){
 
 	    $timestamp = strtotime($data);
