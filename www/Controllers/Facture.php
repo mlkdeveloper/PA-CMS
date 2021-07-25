@@ -134,10 +134,16 @@ class Facture
                 $pdf->SetX(10);
                 $pdf->Cell(20,8, $product['quantity'],1,0,'C');
 
+                //Récupérer les attributs d'un produit
+                $attributs = "";
+                foreach ($product as $value){
+                    $attributs .= $value['nameTerm']." " ;
+                }
+
                 // position abcisse de la colonne 2 (70 = 10 + 60)
                 $pdf->SetY($position_detail);
                 $pdf->SetX(30);
-                $pdf->Cell(90,8,utf8_decode($product[0]['name']) .' '.utf8_decode($product[0]['nameTerm']) ,1,0, 'C');
+                $pdf->Cell(90,8,utf8_decode($product[0]['name']) .' '.utf8_decode($attributs) ,1,0, 'C');
 
                 // position abcisse de la colonne 3 (130 = 70+ 60)
                 $pdf->SetY($position_detail);
