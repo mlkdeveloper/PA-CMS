@@ -37,7 +37,8 @@
                         </thead>
                         <tbody>
 
-                        <?php foreach ($products as $product)  :?>
+                        <?php foreach ($products as $product)  : ?>
+
                             <tr>
 
                                 <td>
