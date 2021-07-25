@@ -32,14 +32,8 @@ class Security
             $pwd = htmlspecialchars(trim($_POST["pwd"]));
             $pwdConfirm = htmlspecialchars(trim($_POST['pwdConfirm']));
 
-            $emailVerif = $user->select('email')->where("email=:email")->setParams(["email" => $email])->get();
-
             $errors = [];
-            if ($emailVerif){
-                array_push($errors, "L'email est deja connu de notre base de données");
-                $view->assign("errors", $errors);
-            }
-
+            
             if(empty($errors)) {
 
                 if ($pwd == $pwdConfirm) {
@@ -57,6 +51,7 @@ class Security
                     $user->setPwd($pwdHash);
                     $user->setStatus(1);
                     $user->setIdRole(1);
+                    $user->setIsConfirmed(1);
                     $user->setToken($token);
 
                     $user->save();
