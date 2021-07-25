@@ -4,7 +4,7 @@
             <div class="jumbotron">
                 <center>
                     <h1><?php echo $totalOrder; ?></h1>
-                    <h1>Total commande</h1>
+                    <h1>Total commandes</h1>
                 </center>
 
             </div>
