@@ -24,7 +24,7 @@ function getPrice(id){
                 if (json.picture !== null)
                     $("#displayImage").html("<img width='100%' src='../../images/products/"+ json.picture+"'>")
                 else
-                    $("#displayImage").empty();
+                    $("#displayImage").html("<img width='100%' src='../../images/cc.png'>");
 
 
                 if (json.stock == 0){

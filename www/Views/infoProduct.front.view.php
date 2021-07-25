@@ -22,7 +22,7 @@
         <div class="row">
             <div class="col-md-6 col col-sm-6 col-lg-6">
                 <div style="" id="displayImage">
-
+                    <img width="100%" src="../images/cc.png" />
                 </div>
             </div>
             <div class="col-md-6 col col-sm-6 col-lg-4">
