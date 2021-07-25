@@ -73,7 +73,7 @@
                     <span id="hamburger">
                         <i class="fas fa-bars"></i>
                     </span>
-                    <h1>Header</h1>
+                    <h1><?= $_SESSION["user"]["firstname"] ." ". $_SESSION["user"]["lastname"] ?></h1>
                     <button onclick="location.href='/deconnexion';" class="button button--blue">Déconnexion</button>
                 </div>
             </header>
