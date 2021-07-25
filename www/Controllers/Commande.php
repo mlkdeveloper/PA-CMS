@@ -81,7 +81,10 @@ class Commande
 
     public function cancelOrderFrontAction(){
 
-        Security::auth('orders');
+        if (!Security::isConnected()){
+            header("Location: /connexion");
+            exit();
+        }
 
         if (isset($_GET['id']) && !empty($_GET['id'])){
 

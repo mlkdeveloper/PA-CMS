@@ -21,6 +21,12 @@ function getPrice(id){
                 let json = JSON.parse(data);
                 $("#price").empty().append("€ " + json.price);
 
+                if (json.picture !== null)
+                    $("#displayImage").html("<img width='100%' src='../../images/products/"+ json.picture+"'>")
+                else
+                    $("#displayImage").html("<img width='100%' src='../../images/cc.png'>");
+
+
                 if (json.stock == 0){
                     $("#quantity").attr('disabled','disabled');
                     $("#add").css("display","none");
