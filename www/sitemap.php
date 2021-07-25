@@ -63,12 +63,6 @@ echo '<changefreq>monthly</changefreq>';
 echo' </url>';
 
 echo'<url>';
-echo '<loc>'. $_SERVER["HTTP_HOST"]. '/connexion-admin</loc>';
-echo' <priority>1.0</priority>';
-echo '<changefreq>monthly</changefreq>';
-echo' </url>';
-
-echo'<url>';
 echo '<loc>'. $_SERVER["HTTP_HOST"]. '/inscription</loc>';
 echo' <priority>1.0</priority>';
 echo '<changefreq>monthly</changefreq>';

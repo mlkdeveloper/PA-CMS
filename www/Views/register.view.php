@@ -1,6 +1,6 @@
 <div class="container">
-    <div class="row">
-        <div class="col col-lg-12">
+    <div class="row centered">
+        <div class="col col-lg-10">
             <h1 style="text-align: center;font-size: 40px">Inscription</h1>
             <div class="jumbotron">
                 <?php if(isset($errors)):?>

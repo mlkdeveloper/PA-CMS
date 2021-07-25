@@ -44,14 +44,20 @@ class User extends Database
 
                             $monUser = $user->select('*')->where('email=:email', 'pwd=:pwd')->setParams([":email" => $_POST['email'], ":pwd" => $pwdGet[0]["pwd"],])->get();
                             $_SESSION['user'] = $monUser[0];
-                            var_dump($_SESSION["user"]);
+
                             if (isset($_GET['reason']) && !empty($_GET['reason'])){
                                 if ($_GET['reason'] == 'stripe'){
                                     header('location:/panier');
                                     exit();
                                 }
                             }
-                            header('location:/');
+
+                            if ($_SESSION['user']['id_role'] != 2){
+                                header('location: /admin/dashboard');
+                            }else{
+                                header('location: /');
+                            }
+                            
                         }else{
                             array_push($errors,"Vous devez d'abord confimer votre compte");
                             $view->assign("errors", $errors);
@@ -79,57 +85,6 @@ class User extends Database
         $view->assign("title", "C&C - Connexion");
 		$view->assign("formLogin", $user->formBuilderLogin());
 	}
-
-    //Method : Action
-    public function loginAdminAction(){
-
-        $user = new UserModel();
-
-        $monUser = new UserModel();
-        $view = new View("login", "front");
-
-        $form = $user->formBuilderLogin();
-
-        if(!empty($_POST)){
-            $errors = [];
-            if(empty($errors)){
-
-                $pwdGet = $user->select('pwd')->where('email=:email')->setParams([":email" => $_POST['email']])->get();
-
-
-
-
-                if ($user->select('*')->where("email=:email", "id_role = 1")->setParams([":email" => $_POST['email']])->get()){
-                    $pwdGet = $user->select('pwd')->where('email=:email')->setParams([":email" => $_POST['email']])->get();
-
-
-                    if(password_verify($_POST["pwd"], $pwdGet[0]["pwd"])){
-
-                        $monUser = $user->select('*')->where('email=:email', 'pwd=:pwd')->setParams([":email" => $_POST['email'],":pwd" => $pwdGet[0]["pwd"],])->get();
-                        $_SESSION['user'] = $monUser[0];
-                        var_dump($_SESSION["user"]);
-                        header('location:/');
-                    }else{
-                        array_push($errors,"L'email et le mot de passe ne correspondent pas");
-                        $view->assign("errors", $errors);
-
-                    }
-                }else{
-                    array_push($errors,"Cette adresse mail est inconnu ou n'a pas les droits administrateur");
-                    $view->assign("errors", $errors);
-                }
-
-
-                //$user->save();
-            }else{
-                $view->assign("errors", $errors);
-            }
-        }
-
-        $view->assign("form", $form);
-        $view->assign("title", "C&C - Connexion");
-        $view->assign("formLogin", $user->formBuilderLogin());
-    }
 
 
 	public function registerAction()
