@@ -47,8 +47,11 @@
                 </ul>
                     <a href="/admin/pages"><li>Pages</li></a>
                     <a href="/admin/liste-client"><li>Clients</li></a>
-                    <a href="/admin/reviews"><li>Avis</li></a>
-                    <a href="/admin/show-reviews-from-products"><li>Avis de chaque produit</li></a>
+                    <li class="dropdownMenu" id="dropdownReviews">Avis<i class="fa fa-caret-down"></i></li>
+                    <ul class="dropdown-container">
+                        <a href="/admin/reviews"><li>Liste des avis</li></a>
+                        <a href="/admin/show-reviews-from-products"><li>Avis des produits</li></a>
+                    </ul>
                 </ul>
             </ul>
             <ul>
