@@ -35,14 +35,11 @@
                             <td><?= $value['id'] ?></td>
                             <td><?= $value['name'] ?></td>
 
-                            <td >
-                                <div class="align">
-                                    <button class="button button--black">
-                                        <i class="fas fa-pencil-alt"></i>
-                                        <a href="/admin/modification-role?id=<?= $value['id'] ?>">Modifier</a>
-                                    </button>
+                            <td>
+                                <a class="button button--black" href="/admin/modification-role?id=<?= $value['id'] ?>"><i class="fas fa-pencil-alt"></i></a>
+                                <button class="button button--alert">
                                     <i class="fas fa-trash" onclick="showModalDeleteRole(<?= $value['id'] ?>)"></i>
-                                </div>
+                                </button>
                             </td>
                         </tr>
                     <?php endforeach;?>
