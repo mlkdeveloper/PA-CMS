@@ -93,7 +93,7 @@ class Pages
             $form = $pages->formBuilderRegister();
 
             if(!empty($_POST)){
-                $errors = FormValidator::checkPage($form, $_POST, trim($_POST['name']) === $pages->getName() || trim($_POST['slug']) == $pages->getSlug());
+                $errors = FormValidator::checkPage($form, $_POST, trim($_POST['name']) === $pages->getName(), trim($_POST['slug']) == $pages->getSlug());
 
                 if(empty($errors)){
                     $pages->populate($_POST);
