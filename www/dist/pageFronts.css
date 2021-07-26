@@ -37,7 +37,7 @@ img{
     transition: background 0.4s;
     padding: 15px;
 }
-#main-nav a:hover {
+#main-nav li:hover {
     background: #9ecad0;
 }
 

@@ -217,6 +217,10 @@ class Settings
                     $this->errorRedirection('Le mot de passe est incorrect', 'error');
                 }
 
+                if( !preg_match("/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]){8,}/",$newPwd)){
+                    $this->errorRedirection('Votre mot de passe doit faire au minimum 8 caractères, contenir une majuscule et un chiffre.', 'error');
+                }
+
                 if ($newPwd !== $newPwdConfirm) {
                     $this->errorRedirection('Les deux mots de passe sont différents', 'error');
                 }
