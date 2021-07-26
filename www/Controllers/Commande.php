@@ -118,17 +118,19 @@ class Commande
                 exit();
             }
 
+            /*
+             * Si on annule la commande
+             * Alors je rajoute le stock en BDD
+             */
             for ($i = 0; $i < sizeof($products); $i++){
                 $product = new Group_variant();
                 $prod = new Group_variant();
-                echo "<pre>";
+
                 $product = $product->select('*')->where("id = :id")->setParams(["id" => $products[$i]['id_group_variant']])->get();
-                var_dump($product);
 
                 $prod->populate($product[0]);
                 $prod->setId($product[0]['id']);
                 $prod->setStock(intval($product[0]['stock']) + 1);
-                var_dump($prod);
                 $prod->save();
 
             }
