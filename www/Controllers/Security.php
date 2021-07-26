@@ -60,6 +60,7 @@ class Security
 
                     SecurityCore::changeFile('./routes.yml', 'finalChangeRoute');//Suppression de la partie installation
                     SecurityCore::changeFile('./index.php', 'removeRedirection');
+                    SecurityCore::changeFile('./sitemap.php', 'removeRedirectionSitemap');
 
 
                     header('Location: /');

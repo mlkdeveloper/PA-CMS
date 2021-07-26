@@ -34,6 +34,9 @@ class Security
             case 'removeRedirection':
                 $searchValue = '$slug[0]';
                 break;
+            case 'removeRedirectionSitemap':
+                $searchValue = 'header';
+                break;
         }
 
         foreach ($contenu as $index => $value) {
@@ -72,6 +75,10 @@ class Security
                     unset($contenu[$line+1]);
                     unset($contenu[$line+2]);
                     unset($contenu[$line+3]);
+                    break;
+                case 'removeRedirectionSitemap':
+                    unset($contenu[$line]);
+                    unset($contenu[$line+1]);
                     break;
             }
 
