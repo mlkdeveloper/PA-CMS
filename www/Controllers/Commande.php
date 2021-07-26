@@ -104,9 +104,11 @@ class Commande
             }
 
             $user = new User();
+            $products = new Product_order();
 
             $commande = $order->select('*')->where("id = :id")->setParams(["id" => $_GET['id']])->get();
             $getUser = $user->select('*')->where("id = :id")->setParams(["id" => $commande[0]["User_id"]])->get();
+            $products = $products->select('*')->where("id_order = :idOrder")->setParams(["idOrder" => $commande[0]['id']])->get();
 
             /*
              * Si la commande a déjà été annuler, alors je redirige
@@ -114,6 +116,21 @@ class Commande
             if ($commande[0]['status'] == -1 ){
                 header('location:/mes-commandes');
                 exit();
+            }
+
+            for ($i = 0; $i < sizeof($products); $i++){
+                $product = new Group_variant();
+                $prod = new Group_variant();
+                echo "<pre>";
+                $product = $product->select('*')->where("id = :id")->setParams(["id" => $products[$i]['id_group_variant']])->get();
+                var_dump($product);
+
+                $prod->populate($product[0]);
+                $prod->setId($product[0]['id']);
+                $prod->setStock(intval($product[0]['stock']) + 1);
+                var_dump($prod);
+                $prod->save();
+
             }
 
             $order->populate($commande[0]);
@@ -179,8 +196,6 @@ class Commande
                 $prod->setId($product[0]['id']);
                 $prod->setStock(intval($product[0]['stock']) + 1);
                 $prod->save();
-                var_dump($prod);
-
 
             }
 
