@@ -86,7 +86,7 @@ class Installation
                 $this->errorRedirection('Le port n\'est pas valide');
             }
 
-            if(!preg_match("/^[a-zA-z-_]+$/", $dataArray[5])){
+            if(!preg_match("/^[a-zA-z-_]{2,50}$/", $dataArray[5])){
                 $this->errorRedirection('Le préfixe n\'est pas valide');
             }
 
