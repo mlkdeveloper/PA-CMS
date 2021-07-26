@@ -6,37 +6,9 @@ use App\Core\Security;
 
 session_start();
 
-$myPublisher = new Publisher();
-
-if (isset($_POST['dataHtml']) && isset($_POST['namePage'])){
-    $myPublisher->savePublisher($_POST['dataHtml'], $_POST['namePage']);
-}
-
-if (isset($_POST['namePage'])){
-    $myPublisher->readPublisher($_POST['namePage']);
-}
-
-if (isset($_POST['listImages'])){
-    $myPublisher->listImages();
-}
-
-if (isset($_POST['checkDeleteImage']) && isset($_POST['namePageDeleteImage'])){
-    $myPublisher->checkDeleteImage($_POST['checkDeleteImage'], $_POST['namePageDeleteImage']);
-}
-
-if (isset($_POST['srcImage'])){
-    $myPublisher->deleteImage($_POST['srcImage']);
-}
-
-if (isset($_FILES['file'])){
-
-    $myPublisher->uploadImage();
-}
-
 class Publisher
 {
     public function publisherAction(){
-
         Security::auth("pages");
 
         if (!file_exists("./publisher/templatesPublisher/".$_GET["name"].".json")){
@@ -47,25 +19,32 @@ class Publisher
         $view->assign("title", "Editeur");
     }
 
-    public function savePublisher($dataHtml, $namePage){
+    public function savePublisherAction(){
         Security::auth("pages");
-        file_put_contents("../publisher/templatesPublisher/".$namePage.".json", $dataHtml);
+
+        $dataHtml = $_POST['dataHtml'];
+        $namePage = $_POST['namePage'];
+
+        file_put_contents("./publisher/templatesPublisher/".$namePage.".json", $dataHtml);
     }
 
-    public function readPublisher($namePage){
+    public function readPublisherAction(){
         Security::auth("pages");
-        if (file_exists("../publisher/templatesPublisher/".$namePage.".json")){
-            echo  file_get_contents("../publisher/templatesPublisher/".$namePage.".json");
+
+        $namePage = $_POST['namePage'];
+
+        if (file_exists("./publisher/templatesPublisher/".$namePage.".json")){
+            echo  file_get_contents("./publisher/templatesPublisher/".$namePage.".json");
         }else {
             echo null;
         }
     }
 
-    public function listImages(){
-
+    public function listImagesAction(){
         Security::auth("pages");
+
         $images = "";
-        $list =array_diff(scandir("../publisher/images"), array('.', '..'));
+        $list =array_diff(scandir("./publisher/images"), array('.', '..'));
         foreach ($list as $image){
             $images .= $image."|";
         }
@@ -77,15 +56,18 @@ class Publisher
         }
     }
 
-    public function checkDeleteImage($srcImage, $namePage){
-
+    public function checkDeleteImageAction(){
         Security::auth("pages");
+
+        $srcImage = $_POST['checkDeleteImage'];
+        $namePage = $_POST['namePageDeleteImage'];
+
         $result = "false";
 
-        $list =array_diff(scandir("../publisher/templatesPublisher"), array('.', '..'));
+        $list =array_diff(scandir("./publisher/templatesPublisher"), array('.', '..'));
         foreach ($list as $template){
             if ($template !== $namePage.".json"){
-                $content = file_get_contents("../publisher/templatesPublisher/".$template);
+                $content = file_get_contents("./publisher/templatesPublisher/".$template);
 
                 if(strpos($content, $srcImage) !== false) {
                     $result = explode(".", $template)[0];
@@ -96,12 +78,14 @@ class Publisher
         echo $result;
     }
 
-    public function deleteImage($srcImage){
+    public function deleteImageAction(){
         Security::auth("pages");
+
+        $srcImage = substr($_POST['srcImage'], 1);
         unlink($srcImage);
     }
 
-    public function uploadImage(){
+    public function uploadImageAction(){
 
         Security::auth("pages");
 
@@ -109,8 +93,7 @@ class Publisher
 
             $filename = $_FILES['file']['name'];
 
-            $location = "../publisher/images/".$filename;
-
+            $location = "./publisher/images/".$filename;
 
             $regex = '/(jpg|png|jpeg)$/i';
 
@@ -118,7 +101,7 @@ class Publisher
                 $error = (json_encode(array("error" => "Ce type d'image n'est pas pris en charge")));
             }else{
 
-                $list =array_diff(scandir("../publisher/images"), array('.', '..'));
+                $list =array_diff(scandir("./publisher/images"), array('.', '..'));
                 foreach ($list as $image){
                     if ($image === "$filename"){
                         $error = (json_encode(array("error" => "Une image avec ce nom existe déjà")));
@@ -140,6 +123,8 @@ class Publisher
             }else{
                 echo $error;
             }
+        }else {
+            echo (json_encode(array("error" => "Impossible d'enregistrer l'image")));
         }
     }
 }
