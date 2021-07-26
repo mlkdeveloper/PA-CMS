@@ -381,3 +381,6 @@
   controller: Product
   action: updateProductWV
 
+/admin/read-publisher:
+  controller: Publisher
+  action: readPublisher

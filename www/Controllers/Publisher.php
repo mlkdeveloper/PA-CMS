@@ -12,10 +12,6 @@ if (isset($_POST['dataHtml']) && isset($_POST['namePage'])){
     $myPublisher->savePublisher($_POST['dataHtml'], $_POST['namePage']);
 }
 
-if (isset($_POST['namePage'])){
-    $myPublisher->readPublisher($_POST['namePage']);
-}
-
 if (isset($_POST['listImages'])){
     $myPublisher->listImages();
 }
@@ -52,7 +48,9 @@ class Publisher
         file_put_contents("../publisher/templatesPublisher/".$namePage.".json", $dataHtml);
     }
 
-    public function readPublisher($namePage){
+    public function readPublisherAction(){
+        $namePage = $_POST['namePage'];
+
         Security::auth("pages");
         if (file_exists("../publisher/templatesPublisher/".$namePage.".json")){
             echo  file_get_contents("../publisher/templatesPublisher/".$namePage.".json");
