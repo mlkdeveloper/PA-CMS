@@ -20,7 +20,7 @@ if (isset($_POST['jsonPage'])){
 class Pages
 {
 
-    public function showAction(){
+    public function showAction(){ //Affichage des pages
 
 
         Security::auth("pages");
@@ -35,7 +35,7 @@ class Pages
     }
 
 
-    public function newPageAction(){
+    public function newPageAction(){ //Création d'une nouvelle page
 
         Security::auth("pages");
         $pages = new modelPages();
@@ -75,7 +75,7 @@ class Pages
 
     }
 
-    public function updatePageAction(){
+    public function updatePageAction(){ //Modification d'une page
 
         Security::auth("pages");
         if (isset($_GET['id']) && isset($_GET['slug']) && $_GET['id'] != 1){
@@ -127,7 +127,7 @@ class Pages
         }
     }
 
-    public function deletePageAction(){
+    public function deletePageAction(){ //Suppression d'une page
 
         Security::auth("pages");
 
@@ -170,7 +170,7 @@ class Pages
         }
     }
 
-    public function displayFrontAction(){
+    public function displayFrontAction(){ //Affichage des pages statiques côté front
         $uri = $_SERVER['REQUEST_URI'];
         $pages = new modelPages();
 
@@ -187,7 +187,7 @@ class Pages
         }
     }
 
-    public function readPage($namePage){
+    public function readPage($namePage){ //Lecture du fichier json
         if (file_exists("../publisher/templatesPublisher/".$namePage.".json")){
             echo (file_get_contents("../publisher/templatesPublisher/".$namePage.".json"));
         }else {
@@ -195,7 +195,7 @@ class Pages
         }
     }
 
-    public function updatePublicationAction(){
+    public function updatePublicationAction(){ //Publication d'un page
 
         Security::auth("pages");
 

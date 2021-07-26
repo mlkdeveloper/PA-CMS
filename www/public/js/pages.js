@@ -1,17 +1,17 @@
 let check = false;
 
 $(document).ready(function(){
-    $("#name").on("keyup paste change", function (){
+    $("#name").on("keyup paste change", function (){ //Création automatique du slug
         if (!check){
             $("#slug").val("/"+this.value.toLowerCase().replaceAll(" ", "_"));
         }
     });
 
-    $("#slug").on("keyup paste change", function (){
+    $("#slug").on("keyup paste change", function (){ //Désactivation de la création automatique du slug
         check = true;
     });
 
-    $("#publicationSwitch").on("click", function (){
+    $("#publicationSwitch").on("click", function (){ //Publication de la page
         var idPage;
         var valuePublication;
 
@@ -42,6 +42,8 @@ $(document).ready(function(){
         });
     });
 });
+
+//Modal de suppression de la page
 
 function showModalDeletePage(id, name, slug){
     $("#buttonDeletPage").attr("href", "/admin/delete-page?idPage="+id+"&name="+name+"&slug="+slug);

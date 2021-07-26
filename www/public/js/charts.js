@@ -1,4 +1,4 @@
-var ctx = document.getElementById('turnover').getContext('2d');
+var ctx = document.getElementById('turnover').getContext('2d'); //Structure du graphique chiffre d'affaires
 const chartTurnover = new Chart(ctx, {
     type: 'line',
     data: {
@@ -44,7 +44,7 @@ const chartTurnover = new Chart(ctx, {
 });
 
 
-var ctx = document.getElementById('chartSales').getContext('2d');
+var ctx = document.getElementById('chartSales').getContext('2d'); //Structure du graphique nombre de ventes
 const chartSales = new Chart(ctx, {
     type: 'line',
     data: {
@@ -91,7 +91,7 @@ const chartSales = new Chart(ctx, {
 getData('month', 'turnover');
 getData('month', 'sales');
 
-function getData(type, chart){
+function getData(type, chart){ //Récupération des données
 
     $.ajax({
         type: 'POST',
@@ -119,6 +119,8 @@ function getData(type, chart){
         }
     });
 }
+
+//Rafraichissement des données des graphiques
 
 function refreshChartSales(data) {
     chartSales.data.labels = data.map(o => o.name);
