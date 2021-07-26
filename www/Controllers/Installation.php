@@ -86,6 +86,10 @@ class Installation
                 $this->errorRedirection('Le port n\'est pas valide');
             }
 
+            if(!preg_match("/^[a-zA-z-_]+$/", $dataArray[5])){
+                $this->errorRedirection('Le préfixe n\'est pas valide');
+            }
+
             if(!preg_match("/^[a-zA-z]+$/", $dataArray[0])){
                 $this->errorRedirection('Le nom de la base de données ne peut contenir ques des lettres minuscules ou majuscules');
             }
@@ -200,18 +204,18 @@ class Installation
         if(!empty($_POST)){
 
             $errors = FormValidator::check($formShop, $_POST);
-            if (!is_numeric($_POST['zipCode'])){
+            if (!is_numeric(htmlspecialchars(trim($_POST['zipCode'])))){
                 array_push($errors,"Le code postale doit etre composé uniquement de chiffres");
             }
 
             if(empty($errors)){
 
-                $shop->setName(htmlspecialchars($_POST['nom']));
-                $shop->setAddress(htmlspecialchars($_POST['address']));
-                $shop->setCity(htmlspecialchars($_POST['ville']));
-                $shop->setZipCode(htmlspecialchars($_POST['zipCode']));
-                $shop->setDescription(htmlspecialchars($_POST['description']));
-                $shop->setPhoneNumber(htmlspecialchars($_POST['telephone']));
+                $shop->setName(htmlspecialchars(trim($_POST['nom'])));
+                $shop->setAddress(htmlspecialchars(trim($_POST['address'])));
+                $shop->setCity(htmlspecialchars(trim($_POST['ville'])));
+                $shop->setZipCode(htmlspecialchars(trim($_POST['zipCode'])));
+                $shop->setDescription(htmlspecialchars(trim($_POST['description'])));
+                $shop->setPhoneNumber(htmlspecialchars(trim($_POST['telephone'])));
                 $shop->save();
 
                 Security::changeFile($this->fileRoutes, 'deleteStartInstallation');

@@ -167,8 +167,7 @@ CREATE TABLE `cc_role` (
 
 INSERT INTO `cc_role` (`id`, `name`, `roles`, `users`, `customers`, `products`, `categories`, `orders`, `opinions`, `pages`, `settingsCms`, `settingsSite`) VALUES
 (1, 'Admin', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-(2, 'Client', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(3, 'ModÃ©rateur', 1, 1, 0, 0, 0, 0, 0, 0, 1, 1);
+(2, 'Client', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
