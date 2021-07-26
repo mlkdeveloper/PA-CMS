@@ -21,7 +21,7 @@
                         <th>Nom</th>
                         <th>Prénom</th>
                         <th>Email</th>
-                        <th>Téléphone</th>
+                        <th>N° de téléphone</th>
                         <th style="width: 150px">Actions</th>
                     </tr>
                     </thead>
@@ -33,13 +33,10 @@
                             <td><?= $client['email'] ?></td>
                             <td><?= $client['phoneNumber'] ?></td>
                             <td>
-                                <div class="align">
-                                    <button class="button button--black">
-                                        <i class="fas fa-pencil-alt"></i>
-                                        <a href="/admin/modification-client?id=<?= $client['id'] ?>">Modifier</a>
-                                    </button>
+                                <a class="button button--black" href="/admin/modification-client?id=<?= $client['id'] ?>"><i class="fas fa-pencil-alt"></i></a>
+                                <button class="button button--alert">
                                     <i class="fas fa-trash" onclick="showModalDeleteClient(<?= $client['id'] ?>)"></i>
-                                </div>
+                                </button>
                             </td>
                         </tr>
                     <?php endforeach;?>
