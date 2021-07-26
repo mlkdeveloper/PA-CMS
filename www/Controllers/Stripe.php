@@ -14,8 +14,10 @@ session_start();
 
 class Stripe
 {
+    /*
+     * Paiement du panier coté stripe
+     */
     function paymentStripeAction(){
-
 
         if (!Security::isConnected()){
             header("Location: /connexion");
@@ -52,6 +54,12 @@ class Stripe
         echo json_encode(['id' => $checkout_session->id, 'payment_intent' => $checkout_session->payment_intent]);
     }
 
+    /*
+     * Si le paiement stripe est valide
+     * Alors je passe au vérification du stock
+     * et au stockage des produits en BDD
+     * + décrémentation du stock
+     */
     function successAction(){
 
         if (!Security::isConnected()){
@@ -145,6 +153,9 @@ class Stripe
         }
     }
 
+    /*
+     * Méthode permettant de stocker le 'payment_intent' afin de pouvoir rembourser sur stripe
+     */
     public function insertPaymentIntentAction(){
 
         if(!isset($_GET['payment_intent'])){
