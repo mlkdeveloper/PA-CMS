@@ -8,6 +8,7 @@ use App\Core\Email;
 use App\Core\Helpers;
 use App\Core\View;
 use App\Core\FormValidator;
+use App\Models\Group_variant;
 use App\Models\Orders;
 use App\Models\Product_order;
 use App\Models\Product_term;
@@ -158,13 +159,29 @@ class Commande
             }
 
             $user = new User();
+            $products = new Product_order();
 
             $commande = $order->select('*')->where("id = :id")->setParams(["id" => $_GET['id']])->get();
             $getUser = $user->select('*')->where("id = :id")->setParams(["id" => $commande[0]["User_id"]])->get();
+            $products = $products->select('*')->where("id_order = :idOrder")->setParams(["idOrder" => $commande[0]['id']])->get();
 
             if ($commande[0]['status'] == 1 || $commande[0]['status']  == 2){
                 header('location:/admin/liste-commande');
                 exit();
+            }
+
+            for ($i = 0; $i < sizeof($products); $i++){
+                $product = new Group_variant();
+                $prod = new Group_variant();
+
+                $product = $product->select('*')->where("id = :id")->setParams(["id" => $products[$i]['id_group_variant']])->get();
+                $prod->populate($product[0]);
+                $prod->setId($product[0]['id']);
+                $prod->setStock(intval($product[0]['stock']) + 1);
+                $prod->save();
+                var_dump($prod);
+
+
             }
 
             $order->populate($commande[0]);
