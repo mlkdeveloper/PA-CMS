@@ -16,6 +16,9 @@ session_start();
 
 class User extends Database
 {
+    /*
+     * méthode de connexion user et admin
+     */
 	public function loginAction(){
 
 		$user = new UserModel();
@@ -490,13 +493,13 @@ class User extends Database
             if (empty($error)) {
 
                 $user->setId($_SESSION['user']['id']);
-                $getInfo = $user->select('pwd,token,isConfirmed')->where("id = :id ")->setParams(["id" => $_SESSION['user']['id']])->get();
+                $getInfo = $user->select('pwd,token,isConfirmed,id_role')->where("id = :id ")->setParams(["id" => $_SESSION['user']['id']])->get();
                 $user->setPwd($getInfo[0]['pwd']);
                 $user->setToken($getInfo[0]['token']);
                 $user->setIsConfirmed($getInfo[0]['isConfirmed']);
                 $user->populate($_POST);
                 $user->setStatus(1);
-                $user->setIdRole(2);
+                $user->setIdRole($getInfo[0]['id_role']);
                 $user->save();
 
                 $view->assign("message", "Votre profil a bien été modifié !");

@@ -14,8 +14,10 @@ session_start();
 
 class Stripe
 {
+    /*
+     * Paiement du panier coté stripe
+     */
     function paymentStripeAction(){
-
 
         if (!Security::isConnected()){
             header("Location: /connexion");
@@ -52,6 +54,12 @@ class Stripe
         echo json_encode(['id' => $checkout_session->id, 'payment_intent' => $checkout_session->payment_intent]);
     }
 
+    /*
+     * Si le paiement stripe est valide
+     * Alors je passe au vérification du stock
+     * et au stockage des produits en BDD
+     * + décrémentation du stock
+     */
     function successAction(){
 
         if (!Security::isConnected()){
@@ -77,26 +85,6 @@ class Stripe
             ->setParams(["id" => $_SESSION['user']['id']])->get();
 
         foreach ($_SESSION['panier'] as $key => $value) {
-
-            for($i = 0; $i < intval($value); $i++ ){
-                $stock = new Group_variant();
-                $stock = $stock->select('stock,price,picture')->where("id = :id")->setParams(["id" => $key])->get();
-
-                $_SESSION['errorPanier']  = null;
-                /*
-                 * Vérification du stock
-                 * Si pas de stock
-                 * Alors je n'ajoute aucun produit en BDD et je supprime l'enregistrement de la commande (table orders) de la BDD
-                 */
-
-                if ($stock[0]['stock'] == "0"){
-                    $_SESSION['errorPanier'] = "un ou plusieurs produit n'ont plus assez de stock ";
-                    $commandeSupp = new Orders_model();
-                    $commandeSupp->setId($panier[0]['id']);
-                    $commandeSupp->delete();
-                    exit();
-                }
-            }
 
             for($i = 0; $i < intval($value); $i++ ){
 
@@ -165,6 +153,9 @@ class Stripe
         }
     }
 
+    /*
+     * Méthode permettant de stocker le 'payment_intent' afin de pouvoir rembourser sur stripe
+     */
     public function insertPaymentIntentAction(){
 
         if(!isset($_GET['payment_intent'])){
