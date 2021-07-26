@@ -51,20 +51,23 @@ use App\Models\Themes;
                 </ul>
                 <ul class="align">
                     <?php if (isset($_SESSION['user'])): ?>
-                        <li class="dropdownMenuFront"><a>Compte &nbsp<i class="fas fa-user"></i></a>
+                        <li class="dropdownMenuFront icon"><a>Compte &nbsp<i class="fas fa-user"></i></a>
                         <ul class="submenu">
                             <li><a href="/mon-profil">Votre profil</a>
                             <li><a href="/mes-commandes">Vos commandes</a>
-                            <li><a href="/deconnexion">Déconnexion</a>
+                                <?php if ($_SESSION['user']['id_role'] != 2): ?>
+                            <li><a href="/admin/dashboard">Administration</a>
+                                <?php endif;?>
+                            <li ><a href="/deconnexion">Déconnexion</a>
                         </ul>
                     <?php else: ?>
-                        <li class="dropdownMenuFront"><a>Compte &nbsp<i class="fas fa-user"></i></a>
+                        <li class="dropdownMenuFront icon"><a>Compte &nbsp<i class="fas fa-user"></i></a>
                         <ul class="submenu">
                             <li><a href="/connexion">Connexion</a>
                             <li><a href="/inscription">Inscription</a>
                         </ul>
                     <?php endif;?>
-                    <li><a href="/panier">Panier &nbsp<i class="fa fa-shopping-cart"> </i></a></li>
+                    <li class="icon"><a href="/panier">Panier &nbsp<i class="fa fa-shopping-cart"> </i></a></li>
 
                 </ul>
             </div>
