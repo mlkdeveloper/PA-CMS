@@ -12,11 +12,18 @@ use App\Models\Orders;
 use App\Models\Product_order;
 use App\Models\Product_term;
 use App\Models\User;
+use App\Core\Security;
+
+session_start();
 
 class Commande
 {
-
+    /*
+    Affichage des commandes
+    */
     public function listeCommandeAction(){
+
+        Security::auth('orders');
 
         $view = new View("commandeList.back", "back");
         $view->assign("title", "Liste des commandes");
@@ -30,7 +37,12 @@ class Commande
 
     }
 
+    /*
+     * Affichage des produits liées au commandes
+     */
     public function displayCommandeAction(){
+
+        Security::auth('orders');
 
         if (isset($_GET['id']) && !empty($_GET['id'])) {
 
@@ -73,10 +85,14 @@ class Commande
     }
 
     public function cancelOrderFrontAction(){
+        require 'vendor/autoload.php';
+        if (!Security::isConnected()){
+            header("Location: /connexion");
+            exit();
+        }
 
         if (isset($_GET['id']) && !empty($_GET['id'])){
 
-            session_start();
             $order = new Orders();
             $checkId = $order->select('id')->where("id = :id","User_id = :idUser")->setParams(['id' => $_GET['id'], 'idUser' => $_SESSION['user']['id']])->get();
 
@@ -91,20 +107,45 @@ class Commande
             $commande = $order->select('*')->where("id = :id")->setParams(["id" => $_GET['id']])->get();
             $getUser = $user->select('*')->where("id = :id")->setParams(["id" => $commande[0]["User_id"]])->get();
 
+            /*
+             * Si la commande a déjà été annuler, alors je redirige
+             */
+            if ($commande[0]['status'] == -1 ){
+                header('location:/mes-commandes');
+                exit();
+            }
+
             $order->populate($commande[0]);
+            $order->setPaymentIntent($commande[0]['payment_intent']);
             $order->setUserId($commande[0]['User_id']);
             $order->setStatus(-1);
             $order->save();
 
-            //Email::sendEmail("C&C - Annulation de votre commande",$getUser[0]["email"], "Votre commande vient d'être annulée ", "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/connexion","Mon compte", "/admin/liste-commande");
-            // Rajouter header location
+            /*
+             * Remboursement du montant de la commande Via Stripe
+             */
+            \Stripe\Stripe::setApiKey(PRIVATEKEYSTRIPE);
+
+            $re = \Stripe\Refund::create([
+                'payment_intent' => $commande[0]['payment_intent'],
+            ]);
+
+            Email::sendEmail("C&C - Annulation de votre commande",$getUser[0]["email"], "Votre commande vient d'être annulée. <br> Vous aller recevoir votre remboursement sous peu (1-2j)", "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/connexion","Mon compte", "/mes-commandes");
+
+            header('location: /mes-commandes');
         }else{
-            header("Location: /mes-commandes");
+            header('Location: /mes-commandes');
         }
 
     }
 
     public function cancelCommandeAction(){
+
+
+        Security::auth('orders');
+
+
+        require 'vendor/autoload.php';
 
         if (isset($_GET['id']) && !empty($_GET['id'])){
 
@@ -121,12 +162,27 @@ class Commande
             $commande = $order->select('*')->where("id = :id")->setParams(["id" => $_GET['id']])->get();
             $getUser = $user->select('*')->where("id = :id")->setParams(["id" => $commande[0]["User_id"]])->get();
 
+            if ($commande[0]['status'] == 1 || $commande[0]['status']  == 2){
+                header('location:/admin/liste-commande');
+                exit();
+            }
+
             $order->populate($commande[0]);
+            $order->setPaymentIntent($commande[0]['payment_intent']);
             $order->setUserId($commande[0]['User_id']);
             $order->setStatus(-1);
             $order->save();
 
-            Email::sendEmail("C@C - Annulation de votr commande",$getUser[0]["email"], "Votre commande vient d'être annulée ", 'http://'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/connexion","Mon compte", "/admin/liste-commande");
+            /*
+             * Remboursement du montant de la commande Via Stripe
+             */
+           \Stripe\Stripe::setApiKey(PRIVATEKEYSTRIPE);
+
+            $re = \Stripe\Refund::create([
+                'payment_intent' => $commande[0]['payment_intent'],
+            ]);
+
+            Email::sendEmail("C&C - Annulation de votre commande",$getUser[0]["email"], "Votre commande vient d'être annulée ", 'http://'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/connexion","Mon compte", "/admin/liste-commande");
 
         }else{
             header("Location: /admin/liste-commande");
@@ -136,6 +192,8 @@ class Commande
 
     public function ValidCommandeAction(){
 
+        Security::auth('orders');
+
         if (isset($_GET['id']) && !empty($_GET['id'])){
 
             $order = new Orders();
@@ -151,7 +209,13 @@ class Commande
             $commande = $order->select('*')->where("id = :id")->setParams(["id" => $_GET['id']])->get();
             $getUser = $user->select('*')->where("id = :id")->setParams(["id" => $commande[0]["User_id"]])->get();
 
+            if ($commande[0]['status'] == -1 || $commande[0]['status']  == 2){
+                header('location:/admin/liste-commande');
+                exit();
+            }
+
             $order->populate($commande[0]);
+            $order->setPaymentIntent($commande[0]['payment_intent']);
             $order->setUserId($commande[0]['User_id']);
             $order->setStatus(1);
             $order->save();
@@ -166,6 +230,8 @@ class Commande
 
     public function DoneCommandeAction(){
 
+        Security::auth('orders');
+
         if (isset($_GET['id']) && !empty($_GET['id'])){
 
             $order = new Orders();
@@ -181,7 +247,13 @@ class Commande
             $commande = $order->select('*')->where("id = :id")->setParams(["id" => $_GET['id']])->get();
             $getUser = $user->select('*')->where("id = :id")->setParams(["id" => $commande[0]["User_id"]])->get();
 
+            if ($commande[0]['status'] == -1){
+                header('location:/admin/liste-commande');
+                exit();
+            }
+
             $order->populate($commande[0]);
+            $order->setPaymentIntent($commande[0]['payment_intent']);
             $order->setUserId($commande[0]['User_id']);
             $order->setStatus(2);
             $order->save();
@@ -197,7 +269,11 @@ class Commande
 // FRONT
     public function displayOrdersFrontAction(){
 
-        session_start();
+        if (!Security::isConnected()){
+            header("Location: /connexion");
+            exit();
+        }
+
         $view = new View("displayOrders.front");
         $view->assign("title","Mes commandes");
 
@@ -210,9 +286,15 @@ class Commande
 
     public function informationsOrderAction(){
 
+
+        if (!Security::isConnected()){
+            header("Location: /connexion");
+            exit();
+        }
+
         if (isset($_GET['id']) && !empty($_GET['id']) ){
 
-            session_start();
+
             $order = new Orders();
             $checkId = $order->select('id')->where("id = :id","User_id = :idUser")->setParams(['id' => $_GET['id'], 'idUser' => $_SESSION['user']['id']])->get();
 

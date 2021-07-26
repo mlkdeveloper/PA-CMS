@@ -18,6 +18,40 @@ class Role extends Database
     protected $orders = 0;
     protected $opinions = 0;
     protected $pages = 0;
+    protected $settingsCms = 0;
+    protected $settingsSite = 0;
+
+    /**
+     * @return int
+     */
+    public function getSettingsCms()
+    {
+        return $this->settingsCms;
+    }
+
+    /**
+     * @param int $settingsCms
+     */
+    public function setSettingsCms($settingsCms)
+    {
+        $this->settingsCms = $settingsCms;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSettingsSite()
+    {
+        return $this->settingsSite;
+    }
+
+    /**
+     * @param int $settingsSite
+     */
+    public function setSettingsSite($settingsSite)
+    {
+        $this->settingsSite = $settingsSite;
+    }
 
 
     public function __construct(){
@@ -227,6 +261,15 @@ class Role extends Database
                     "error"=> "Erreur au niveau de la valeur !"
                 ],
                 "page"=>[
+                    "value" => 1,
+                    "error"=> "Erreur au niveau de la valeur !"
+                ],
+
+                "settingsCms"=>[
+                    "value" => 1,
+                    "error"=> "Erreur au niveau de la valeur !"
+                ],
+                "settingsSite"=>[
                     "value" => 1,
                     "error"=> "Erreur au niveau de la valeur !"
                 ]

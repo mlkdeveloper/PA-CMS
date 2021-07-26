@@ -296,7 +296,7 @@ class User extends Database
 			"config"=>[
 				"method"=>"POST",
 				"action"=>"",
-                "class"=>"form_control col col-md-10 container",
+                "class"=>"form_control col col-md-6 container",
 				"id"=>"form_register",
 				"submit"=>"S'inscrire",
                 "classButton" => "button button--blue"
@@ -577,27 +577,6 @@ class User extends Database
 
         ];
     }
-
-    public function formPwdUsers(){
-
-        return [
-
-            "config"=>[
-                "method"=>"POST",
-                "action"=>"",
-            ],
-            "inputs"=>[
-
-                "pwd"=>[
-                    "type"=>"password",
-                    "required"=>true,
-                    "regex"=>"/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]){8,}/",
-                    "errorRegex"=>"Votre mot de passe doit faire au minimum 8 caractères, contenir une majuscule et un chiffre."
-                ]
-            ]
-        ];
-    }
-
 
     public function formUpdateUsers(){
 

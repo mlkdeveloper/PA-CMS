@@ -12,7 +12,7 @@ new ConstantManager();
 $page = new Pages();
 $category = new Category();
 $product = new Products();
-$categories = $category->select("name")->where("status = 0")->get();
+$categories = $category->select("name")->where("status = 1")->get();
 $pages = $page->select("slug")->where("publication = 1")->get();
 $products = $product->select("id")->where("status = 1")->get();
 
@@ -56,14 +56,43 @@ foreach ($products as $product){
 
 
 echo'<url>';
-echo '<loc>' . $protocol . $_SERVER["HTTP_HOST"]. '/connexion</loc>';
+echo '<loc>'. $_SERVER["HTTP_HOST"]. '/connexion</loc>';
 echo' <priority>1.0</priority>';
 echo '<changefreq>monthly</changefreq>';
 echo' </url>';
 
+echo'<url>';
+echo '<loc>'. $_SERVER["HTTP_HOST"]. '/deconnexion</loc>';
+echo' <priority>1.0</priority>';
+echo '<changefreq>monthly</changefreq>';
+echo' </url>';
 
 echo'<url>';
-echo '<loc>'. $protocol . $_SERVER["HTTP_HOST"]. '/inscription</loc>';
+echo '<loc>'. $_SERVER["HTTP_HOST"]. '/inscription</loc>';
+echo' <priority>1.0</priority>';
+echo '<changefreq>monthly</changefreq>';
+echo' </url>';
+
+echo'<url>';
+echo '<loc>'. $_SERVER["HTTP_HOST"]. '/mot-de-passe-oublie</loc>';
+echo' <priority>1.0</priority>';
+echo '<changefreq>monthly</changefreq>';
+echo' </url>';
+
+echo'<url>';
+echo '<loc>'. $_SERVER["HTTP_HOST"]. '/recuperation-mot-de-passe</loc>';
+echo' <priority>1.0</priority>';
+echo '<changefreq>monthly</changefreq>';
+echo' </url>';
+
+echo'<url>';
+echo '<loc>'. $_SERVER["HTTP_HOST"]. '/confirmation-inscription</loc>';
+echo' <priority>1.0</priority>';
+echo '<changefreq>monthly</changefreq>';
+echo' </url>';
+
+echo'<url>';
+echo '<loc>'. $_SERVER["HTTP_HOST"]. '/panier</loc>';
 echo' <priority>1.0</priority>';
 echo '<changefreq>monthly</changefreq>';
 echo' </url>';

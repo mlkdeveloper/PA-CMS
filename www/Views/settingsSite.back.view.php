@@ -32,12 +32,12 @@
                     <div class="jumbotron">
 
                         <div class="row mb-5">
-                            <h4 class="center-margin">Logo</h4>
+                            <h1>Logo</h1>
                         </div>
 
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-6 col">
-                                <img src="../images/logo/<?= $logo ?>">
+                                <img src="../images/logo/<?= $logo ?>" style="width: 20rem; height: 20rem; object-fit: cover;">
                             </div>
 
                             <div class="col-lg-6 col-md-6 col-sm-6 col">
@@ -53,6 +53,40 @@
                 </div>
             </div>
         </form>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col">
+                <div class="jumbotron">
+
+                    <div class="">
+                        <h4 class="">Mes thèmes</h4>
+                    </div>
+
+                    <div class="row">
+                        <?php foreach ($themes as $theme):?>
+                            <div class="col-lg-3 col-md-3  col-sm-6 col">
+                                <div class="card" style="min-height: 150px;">
+                                    <div class="card-body">
+                                        <h3 class="card-title"> <?= $theme['name'] ?></h3>
+                                        <?php if (!$theme['status']): ?>
+                                        <a href="/admin/activer-theme?id=<?= $theme['id']?>"><button class="button button--blue">Activer le thème</button></a>
+                                        <?php else: ?>
+                                        <p>Thème activé</p>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach;?>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
     </div>
 </section>
 

@@ -48,6 +48,7 @@
 .col {
   flex-basis: 100%;
   padding: 10px 10px;
+  width: 100%;
 }
 
 @media only screen and (min-width: 576px) {
@@ -330,6 +331,7 @@ p {
 
 a {
   text-decoration: none;
+  color: #2980B9;
 }
 
 .button {
@@ -350,7 +352,7 @@ a {
 }
 
 .button:hover {
-  background-color: #8ec5e5;
+  background-color: #2078b1;
   cursor: pointer;
 }
 
@@ -365,23 +367,23 @@ a {
 }
 
 .button--black {
-  background-color: #000000;
+  background-color: #2C3E50;
   color: #FFF;
 }
 
 .button--black:hover {
-  background-color: #1a1a1a;
+  background-color: #3e5871;
 }
 
 .button--blue {
-  background-color: #64b0dc;
-  border-color: #64b0dc;
-  outline-color: #64b0dc;
+  background-color: #2980B9;
+  border-color: #2980B9;
+  outline-color: #2980B9;
   color: #FFF;
 }
 
 .button--blue:hover {
-  background-color: #8ec5e5;
+  background-color: #409ad5;
 }
 
 .button--alert {
@@ -395,14 +397,14 @@ a {
 }
 
 .button--warning {
-  background-color: #ffc800;
-  border-color: #ffc800;
-  outline-color: #ffc800;
-  color: #000000;
+  background-color: #ffc107;
+  border-color: #ffc107;
+  outline-color: #ffc107;
+  color: #2C3E50;
 }
 
 .button--warning:hover {
-  background-color: #ffd333;
+  background-color: #ffce3a;
 }
 
 .button a {
@@ -484,7 +486,7 @@ a {
   z-index: 1;
   top: 0;
   left: 0;
-  background: #64b0dc;
+  background: #2980B9;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -593,7 +595,7 @@ a {
 }
 
 .headerBack h1 {
-  color: #000000;
+  color: #2C3E50;
 }
 
 .headerBack button {
@@ -607,6 +609,10 @@ a {
 #table {
   padding-top: 50px;
   margin-bottom: 40px;
+}
+
+#table_wrapper {
+  overflow-x: scroll;
 }
 
 #table tr {
@@ -647,7 +653,7 @@ a {
   font-weight: bold;
   font-size: 1rem;
   line-height: 2em;
-  color: #000000;
+  color: #2C3E50;
 }
 
 .checkboxes {
@@ -687,6 +693,12 @@ a {
 .alert--green {
   background-color: #d1e7dd;
   color: #0f5132;
+}
+
+.alert--warning {
+  background-color: #fff3cd;
+  color: #856404;
+  border-color: #ffeeba;
 }
 
 @media only screen and (max-width: 1000px) {

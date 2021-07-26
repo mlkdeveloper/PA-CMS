@@ -4,7 +4,7 @@
         <a href="/admin/nouvelle-page" class="button button--blue">Ajouter une page</a>
     </div>
     <div class="row">
-        <div class="col-md-12 col-sm-12 col">
+        <div class="col col-md-12 col-sm-12 col-lg-12">
             <div class="jumbotron">
                 <?php
                 if (isset($_SESSION['errorNavbar'])){
@@ -19,7 +19,7 @@
                         <th>Date de création</th>
                         <th>Chemin d'accès</th>
                         <th>Publier</th>
-                        <th>Actions</th>
+                        <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>

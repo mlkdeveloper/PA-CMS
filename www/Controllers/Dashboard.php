@@ -5,18 +5,50 @@ namespace App\Controller;
 
 use App\Core\View;
 use App\Models\Orders as modelOrders;
+use App\Models\Review as modelReview;
+use App\Models\Products as modelProduct;
 
+
+use App\Core\Security;
+
+session_start();
 
 class Dashboard
 {
 
 
     public function dashboardAction(){
+
+        Security::isEmployee();
+        $amountTotal = 0;
+
+        //Orders
+        $orderModel = new modelOrders();
+        $orderTotal = $orderModel->select('montant')->where('status >= 1')->get();
+
+        //Price
+        foreach ($orderTotal as $amount){
+            $amountTotal += $amount['montant'];
+        }
+
+        //Review
+        $reviewModel = new modelReview();
+        $reviewTotal = $reviewModel->select()->where('status = 1')->get();
+
+        //Products
+        $productModel = new modelProduct();
+        $productTotal = $productModel->select()->where('status = 1')->get();
+
+
         $view = new View("dashboard.back", "back");
+        $view->assign('totalOrder', count($orderTotal));
+        $view->assign('totalAmount', $amountTotal);
+        $view->assign('totalReview', count($reviewTotal));
+        $view->assign('totalProduct', count($productTotal));
         $view->assign("title", "Dashboard");
     }
 
-    public function getDataAction(){
+    public function getDataAction(){ //Récupération des données en fonction de la date
 
         switch ($_POST['type']){
             case 'month':
@@ -39,7 +71,7 @@ class Dashboard
         echo json_encode($arrayData);
     }
 
-    public function month(){
+    public function month(){ //Récupération des données du mois
 
         $data = $this->getSql("01-".date("m-Y"), date("t", date("m")).date("-m-Y"), true);
 
@@ -74,7 +106,7 @@ class Dashboard
         return $arrayData;
     }
 
-    public function months(){
+    public function months(){ //Récupération des données depuis 6 mois
 
         $newMonths = [];
         $dateForSql = "";
@@ -151,7 +183,7 @@ class Dashboard
         return array_reverse($newMonths);
     }
 
-    public function year(){
+    public function year(){ //Récupération des données de l'année
 
         $data = $this->getSql("01-01-".date("Y"), "31-12-".date("Y"), true);
 
@@ -201,7 +233,7 @@ class Dashboard
         return $arrayData;
     }
 
-    public function all(){
+    public function all(){ //Récupération des données depuis le début
         $countAll = 0;
 
         $data = $this->getSql("","",false);
@@ -249,7 +281,7 @@ class Dashboard
         return $arrayData;
     }
 
-    public function monthsFR($oldMonth){
+    public function monthsFR($oldMonth){ //Transformation du numéro du mois en texte
         switch ($oldMonth){
             case '1':
                 return 'Janvier';
@@ -279,7 +311,7 @@ class Dashboard
         return false;
     }
 
-    public function getSql($dateStart, $dateEnd, $withDate){
+    public function getSql($dateStart, $dateEnd, $withDate){ //Récupération des données depuis la BDD
         $orders = new modelOrders();
         if ($withDate === true){
             $dataSQL = $orders->select("CreatedAt, montant")->where("CreatedAt BETWEEN STR_TO_DATE(:dateStart, '%d-%m-%Y') AND STR_TO_DATE(:dateEnd, '%d-%m-%Y') AND status >= 1")->setParams(["dateStart" => $dateStart, "dateEnd" => $dateEnd])->get();

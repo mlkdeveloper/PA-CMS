@@ -22,7 +22,7 @@
                         Commande enregistré avec succes ! <br>
                         Vous receverez un mail lorsque vos produits seront prêt à être récuperer. <br> <br>
                         <button class="button button--blue">
-                            <a href="/liste-commande">Mes commandes</a>
+                            <a href="/mes-commandes">Mes commandes</a>
                         </button>
                     </p>
                 </section>

@@ -3,6 +3,10 @@ $(document).ready(function() {
         dropdown(this);
     });
 
+    $("#dropdownReviews").on("click", function () {
+        dropdown(this);
+    });
+
     $("#dropdownSettings").on("click", function () {
         dropdown(this);
     });

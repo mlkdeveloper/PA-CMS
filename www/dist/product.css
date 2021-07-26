@@ -1,0 +1,26 @@
+.attributes{
+    height: 150px;
+    overflow-y: scroll;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 1em;
+}
+
+#loader{
+    display: none;
+    transition: all 0.8s;
+    justify-content: center;
+    align-items: center;
+}
+
+.label-file {
+    cursor: pointer;
+    font-size: 30px;
+}
+.label-file:hover {
+    color: #25a5c4;
+}
+
+.input-file {
+    display: none;
+}

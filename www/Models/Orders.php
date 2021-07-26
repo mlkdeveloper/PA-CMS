@@ -13,6 +13,23 @@ class Orders extends Database
     protected $User_id;
     protected $CreatedAt;
     protected $montant;
+    protected $payment_intent;
+
+    /**
+     * @return mixed
+     */
+    public function getPaymentIntent()
+    {
+        return $this->payment_intent;
+    }
+
+    /**
+     * @param mixed $payment_intent
+     */
+    public function setPaymentIntent($payment_intent)
+    {
+        $this->payment_intent = $payment_intent;
+    }
 
     /**
      * @return null

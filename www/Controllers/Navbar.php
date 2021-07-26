@@ -10,6 +10,8 @@ use App\Models\Tab_navbar as modelTab_navbar;
 use App\Models\Category as modelCategory;
 use App\Models\Pages as modelPages;
 
+use App\Core\Security;
+
 session_start();
 
 
@@ -17,7 +19,10 @@ class Navbar
 {
 
 
-    public function displayNavbarAction(){
+    public function displayNavbarAction(){ //Affichage des onglets principaux
+
+        Security::auth("settingsSite");
+
         $navbar = new modelNavbar();
         $dataNavbar = $navbar->select('id,name, status')->orderBy('sort', 'ASC')->get();
 
@@ -26,7 +31,11 @@ class Navbar
         $view->assign("dataNavbar",$dataNavbar);
     }
 
-    public function newNavbarTabAction(){
+    public function newNavbarTabAction(){ //Création d'un onglet
+
+        Security::auth("settingsSite");
+
+
         $navbar = new modelNavbar();
         $tabNavbar = new modelTab_navbar();
         $sortMax = $navbar->select('MAX(sort)')->get();
@@ -107,7 +116,10 @@ class Navbar
 
     }
 
-    public function getDataNavbarAction(){
+    public function getDataNavbarAction(){ //Récupération de la liste des pages et des catégories
+
+        Security::auth("settingsSite");
+
         $type = $_POST['type'];
 
         switch ($type){
@@ -126,7 +138,10 @@ class Navbar
         }
     }
 
-    private function dropdownNavbar($data){
+    private function dropdownNavbar($data){ //Vérification du dropdown
+
+        Security::auth("settingsSite");
+
         $countSelectTypeDropdown = 0;
         $countTypeDropdown = 0;
         $countNameDropdown = 0;
@@ -159,7 +174,9 @@ class Navbar
         return $countTypeDropdown;
     }
 
-    public function upNavbarAction(){
+    public function upNavbarAction(){ //Déplacement vers le haut de l'onglet
+
+        Security::auth("settingsSite");
 
         if (isset($_POST['id']) && !empty($_POST['id'])){
 
@@ -196,7 +213,9 @@ class Navbar
         }
     }
 
-    public function downNavbarAction(){
+    public function downNavbarAction(){ //Déplacement vers le bas de l'onglet
+
+        Security::auth("settingsSite");
 
         if (isset($_POST['id']) && !empty($_POST['id'])){
 
@@ -234,7 +253,10 @@ class Navbar
         }
     }
 
-    public function deleteTabAction(){
+    public function deleteTabAction(){ //Suppression de l'onglet
+
+        Security::auth("settingsSite");
+
         if (isset($_GET['id']) && isset($_GET['status'])){
             $idTab = htmlspecialchars($_GET['id']);
             $statusTab = htmlspecialchars($_GET['status']);

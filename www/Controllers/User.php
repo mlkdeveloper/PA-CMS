@@ -10,6 +10,9 @@ use App\Core\FormValidator;
 use App\Models\User as UserModel;
 use App\Models\Page;
 use App\Models\Role;
+use App\Core\Security;
+
+session_start();
 
 class User extends Database
 {
@@ -39,17 +42,22 @@ class User extends Database
                         if ($isConfirmed[0]["isConfirmed"] == "1") {
 
 
-                            session_start();
                             $monUser = $user->select('*')->where('email=:email', 'pwd=:pwd')->setParams([":email" => $_POST['email'], ":pwd" => $pwdGet[0]["pwd"],])->get();
                             $_SESSION['user'] = $monUser[0];
-                            var_dump($_SESSION["user"]);
+
                             if (isset($_GET['reason']) && !empty($_GET['reason'])){
                                 if ($_GET['reason'] == 'stripe'){
                                     header('location:/panier');
                                     exit();
                                 }
                             }
-                            header('location:/');
+
+                            if ($_SESSION['user']['id_role'] != 2){
+                                header('location: /admin/dashboard');
+                            }else{
+                                header('location: /');
+                            }
+                            
                         }else{
                             array_push($errors,"Vous devez d'abord confimer votre compte");
                             $view->assign("errors", $errors);
@@ -77,57 +85,6 @@ class User extends Database
         $view->assign("title", "C&C - Connexion");
 		$view->assign("formLogin", $user->formBuilderLogin());
 	}
-
-    //Method : Action
-    public function loginAdminAction(){
-
-        $user = new UserModel();
-
-        $monUser = new UserModel();
-        $view = new View("login", "front");
-
-        $form = $user->formBuilderLogin();
-
-        if(!empty($_POST)){
-            $errors = [];
-            if(empty($errors)){
-
-                $pwdGet = $user->select('pwd')->where('email=:email')->setParams([":email" => $_POST['email']])->get();
-
-
-
-
-                if ($user->select('*')->where("email=:email", "id_role = 1")->setParams([":email" => $_POST['email']])->get()){
-                    $pwdGet = $user->select('pwd')->where('email=:email')->setParams([":email" => $_POST['email']])->get();
-
-
-                    if(password_verify($_POST["pwd"], $pwdGet[0]["pwd"])){
-                        session_start();
-                        $monUser = $user->select('*')->where('email=:email', 'pwd=:pwd')->setParams([":email" => $_POST['email'],":pwd" => $pwdGet[0]["pwd"],])->get();
-                        $_SESSION['user'] = $monUser;
-                        var_dump($_SESSION["user"]);
-                        header('location:/');
-                    }else{
-                        array_push($errors,"L'email et le mot de passe ne correspondent pas");
-                        $view->assign("errors", $errors);
-
-                    }
-                }else{
-                    array_push($errors,"Cette adresse mail est inconnu ou n'a pas les droits administrateur");
-                    $view->assign("errors", $errors);
-                }
-
-
-                //$user->save();
-            }else{
-                $view->assign("errors", $errors);
-            }
-        }
-
-        $view->assign("form", $form);
-        $view->assign("title", "C&C - Connexion");
-        $view->assign("formLogin", $user->formBuilderLogin());
-    }
 
 
 	public function registerAction()
@@ -198,7 +155,9 @@ class User extends Database
 	// CLIENTS //
 
     public function displayClientAction(){
-        session_start();
+
+	    Security::auth("customers");
+
         $clients = new UserModel();
         $array = $clients->select()->where("status = 1","id_role = 2")->get();
         $view = new View("clientList.back", "back");
@@ -207,6 +166,8 @@ class User extends Database
     }
 
     public function newClientAction(){
+
+        Security::auth("customers");
 
         $client = new UserModel();
         $view = new View("createClient.back", "back");
@@ -252,7 +213,7 @@ class User extends Database
                     $view->assign("message", $message);
 
                     if($formStatus == Database::NEW_OBJECT){
-                        Email::sendEmail("C&C - Confirmation de votre compte",$client->getEmail(), "Veuillez confirmer votre compte", "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/confirmation-inscription?tkn=".$token,"Confirmer mon compte", "/admin/liste-client");
+                        Email::sendEmail("C&C - Creation de votre compte",$client->getEmail(), "Votre mot de passe : " . $pwd, "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/confirmation-inscription?tkn=".$token,"Confirmer votre compte", "/admin/liste-client");
                     }
                 }else{
                     http_response_code(400);
@@ -264,6 +225,8 @@ class User extends Database
 
 
     function updateClientAction(){
+
+        Security::auth("customers");
         if (isset($_GET['id']) && !empty($_GET['id'])){
 
             $client = new UserModel();
@@ -291,6 +254,8 @@ class User extends Database
 
     function deleteClientAction()
     {
+
+        Security::auth("customers");
 
         if (isset($_GET['id']) && !empty($_GET['id'])){
 
@@ -340,6 +305,8 @@ class User extends Database
 
     public function addUsersAction(){
 
+        Security::auth("users");
+
         $user = new UserModel();
         $role = new Role();
         $view = new View("createUser.back", "back");
@@ -363,7 +330,7 @@ class User extends Database
                 $user->setToken($token);
                 $user->save();
 
-                Email::sendEmail("C&C - Confirmation de votre compte",$user->getEmail(), "Veuillez confirmer votre compte", "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/confirmation-inscription?tkn=".$token,"Confirmer mon compte", "/admin/dashboard");
+                Email::sendEmail("C&C - Creation de votre compte",$user->getEmail(), "Votre mot de passe : " . $_POST['pwd'], "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/confirmation-inscription?tkn=".$token,"Confirmer mon compte", "/admin/liste-utilisateurs");
 
                 $view->assign("success", "L'utilisateur a bien été créé !");
             } else {
@@ -373,7 +340,9 @@ class User extends Database
     }
 
     public function displayUsersAction(){
-        session_start();
+
+        Security::auth("users");
+
         $user = new UserModel();
         $view = new View("usersList.back", "back");
         $view->assign("title", "Admin - Utilisateurs");
@@ -389,6 +358,8 @@ class User extends Database
     }
 
     public function deleteUserAction(){
+
+        Security::auth("users");
 
         if (isset($_GET['id']) && !empty($_GET['id'])) {
 
@@ -411,6 +382,8 @@ class User extends Database
     }
 
     public function updateUserAction(){
+
+        Security::auth("users");
 
         if (isset($_GET['id']) && !empty($_GET['id'])) {
 
@@ -466,6 +439,8 @@ class User extends Database
 
     public function changeUserPwdAction(){
 
+        Security::auth("users");
+
         if (isset($_GET['id']) && !empty($_GET['id'])) {
 
             $user = new UserModel();
@@ -475,30 +450,20 @@ class User extends Database
                 header("Location: /admin/liste-utilisateurs");
                 exit();
             }
-            $form = $user->formPwdUsers();
 
-            if(!empty($_POST)) {
+            $user->populate($verifyId[0]);
+            $user->setId($_GET['id']);
+            $user->setIdRole($verifyId[0]['id_role']);
+            $user->setToken($verifyId[0]["token"]);
+            $user->setIsConfirmed($verifyId[0]["isConfirmed"]);
+            $pwd = Helpers::pwdGenerator();
+            $user->setPwd(password_hash($pwd, PASSWORD_DEFAULT));
+            $user->save();
 
-                $errors = FormValidator::checkClient($form, $_POST, false);
-                session_start();
-                if (empty($errors)) {
-                    $user->populate($verifyId[0]);
-                    $user->setId($_GET['id']);
-                    $user->setIdRole($verifyId[0]['id_role']);
-                    $user->setToken($verifyId[0]["token"]);
-                    $user->setIsConfirmed($verifyId[0]["isConfirmed"]);
-                    $user->setPwd(password_hash($_POST['pwd'], PASSWORD_DEFAULT));
-                    $user->save();
+            $_SESSION['successChangePwd'] = "Mot de passe modifié !";
 
-                    $_SESSION['successChangePwd'] = "Mot de passe modifié !";
+            Email::sendEmail("C&C - Changement de mot de passe",$user->getEmail(), "Votre nouveau mot de passe : " . $pwd, "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/admin/dashboard","Dashboard", "/admin/modification-utilisateur?id=" . $_GET['id']);
 
-                } else {
-                    $_SESSION['errorChangePwd'] = "Votre mot de passe doit faire au minimum 8 caractères, contenir une majuscule et un chiffre.";
-                }
-                header("Location: /admin/modification-utilisateur?id=" . $_GET['id']);
-            }else{
-                header("Location: /admin/liste-utilisateurs");
-            }
         }else{
             header("Location: /admin/liste-utilisateurs");
         }
@@ -506,7 +471,12 @@ class User extends Database
 
 
     public function displayProfileAction(){
-        session_start();
+
+        if (!Security::isConnected()){
+            header('Location: /');
+            exit();
+        }
+
         $view = new View("myProfile.front");
         $view->assign("title", "Mon profil");
         $user = new UserModel();
@@ -540,7 +510,12 @@ class User extends Database
     }
 
     public function updateUserPasswordAction(){
-        session_start();
+
+        if (!Security::isConnected()){
+            header('Location: /');
+            exit();
+        }
+
         if (!empty($_POST)) {
             $user = new UserModel();
 
@@ -587,7 +562,6 @@ class User extends Database
 
     private function errorRedirection($msg, $type){
 
-	    session_start();
         if ($type === 'error'){
             $_SESSION['errors'] = $msg;
         }else{

@@ -6,6 +6,7 @@ namespace App\Core;
 
 use App\Models\Role;
 
+
 class Security
 {
     public static function changeFile($file, $type){ //Fonction permettant la modification d'un fichier
@@ -113,13 +114,9 @@ class Security
     public static function auth($page){
 
         if(self::isConnected()){
-            try {
-                self::isAllowed($page);
-            } catch (MyException $e) {
-                $e->error();
-            }
+            self::isAllowed($page);
         }else{
-           header("Location: /connexion-admin");
+           header("Location: /");
            exit();
         }
     }
@@ -132,6 +129,20 @@ class Security
     public static function isClient(){
 
         return $_SESSION['user']['id_role'] == 2 ? true : false;
+
+    }
+
+    public static function isEmployee(){
+
+        if(self::isConnected()){
+            
+            if (self::isClient()){
+                throw new MyException("Vous n'avez pas les droits !");
+            }
+        }else{
+            header("Location: /");
+            exit();
+        }
 
     }
 }

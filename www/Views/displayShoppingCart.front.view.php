@@ -23,7 +23,7 @@
         <?php if(!empty($_SESSION['panier'])): ?>
 
         <div class="row">
-            <div class="col-md-12 col-sm-12">
+            <div class="col col-md-12 col-sm-12 col-lg-12">
                 <div class="jumbotron">
                     <table id="table" class="row-border hover">
                         <thead>
@@ -37,7 +37,8 @@
                         </thead>
                         <tbody>
 
-                        <?php foreach ($products as $product)  :?>
+                        <?php foreach ($products as $product)  : ?>
+
                             <tr>
 
                                 <td>
@@ -91,16 +92,18 @@
     var checkoutButton = document.getElementById("checkStock");
 
     checkoutButton.addEventListener("click", function () {
-
+        $('#titre-paiement').val("")
         $.ajax({
             url: '/verification-stock-panier',
             error: function() {
-                $('#titre-paiement').append('Erreur sur votre panier')
+                $('.msgConexion').remove()
+                $('#titre-paiement').append('<p class="msgConexion">Erreur sur votre panier</p>')
                 $('#passage-paiement').append("Certains produits de votre panier n'est plus en stock dans notre boutique. <br> Nous vous invitons à le supprimer de votre panier")
                 $('#paiement-stripee').remove()
             },
             success: function(data) {
-                $('#titre-paiement').append('Procéder au paiement')
+                $('.msgPaiement').remove()
+                $('#titre-paiement').append('<p class="msgPaiement">Procéder au paiement</p>')
                 $('#btnPaiementStripe button:first-child').attr('id', 'paiement-stripee')
             },
             type: 'GET'
@@ -119,6 +122,15 @@
                 return response.json();
             })
             .then(function (session) {
+                var pi = session.payment_intent
+
+                $.ajax({
+                    url: "/insert-payment-stripe",
+                    type: 'GET',
+                    data: {payment_intent: pi},
+                    success:function(data) {},
+                    error: function(request, status, error) {alert(request,status);}
+                });
                 return stripe.redirectToCheckout({ sessionId: session.id });
             })
             .then(function (result) {

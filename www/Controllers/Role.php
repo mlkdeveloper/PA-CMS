@@ -9,13 +9,18 @@ use App\Core\View;
 use App\Models\Role as modelRole;
 use App\Models\User;
 
+use App\Core\Security;
+
+session_start();
+
 class Role
 {
 
+
     public function showAllAction(){
 
-        session_start();
-        \App\Core\Security::auth("roles");
+
+        Security::auth("roles");
 
         $role = new modelRole();
         $listRoles = $role->select()->where("id > 2")->get();
@@ -27,6 +32,8 @@ class Role
     }
 
     public function newRoleAction(){
+
+        Security::auth("roles");
 
         $role = new modelRole();
         $view = new View("createRole.back", "back");
@@ -50,6 +57,9 @@ class Role
     }
 
     public function updateRoleAction(){
+
+
+        Security::auth("roles");
 
         if (isset($_GET['id']) && !empty($_GET['id']) && $_GET['id'] > 2){
 
@@ -87,6 +97,8 @@ class Role
 
     public function deleteRoleAction(){
 
+        Security::auth("roles");
+
         if (isset($_GET['id']) && !empty($_GET['id']) && $_GET['id'] > 2){
 
             $user = new User();
@@ -97,7 +109,6 @@ class Role
                 header("Location: /admin/role");
 
             $isAssign = $user->select("id")->where("id_role = :id")->setParams(["id" => $_GET['id']])->get();
-            session_start();
             if (empty($isAssign)){
                 $role->where("id = :id")->setParams(["id" => $_GET['id']])->delete();
                 header("Location: /admin/role");

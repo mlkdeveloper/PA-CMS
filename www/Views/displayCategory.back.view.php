@@ -19,7 +19,7 @@
         </button>
     </div>
     <div class="row">
-        <div class="col-md-12 col-sm-12">
+        <div class="col col-md-12 col-sm-12 col-lg-12">
             <div class="jumbotron">
                 <table id="table" class="row-border hover">
                     <thead>
@@ -39,13 +39,8 @@
                         <td><?= $category['name'] ?></td>
                         <td><?= $category['status'] ?></td>
                         <td>
-                            <div class="align">
-                                <button class="button button--black">
-                                    <i class="fas fa-pencil-alt"></i>
-                                    <a href="/admin/modification-categorie?id=<?= $category['id'] ?>">Modifier</a>
-                                </button>
-                                <a href="/admin/suppression-categorie?id=<?= $category['id'] ?>"><i class="fas fa-trash"></i></a>
-                           </div>
+                            <a class="button button--black" href="/admin/modification-categorie?id=<?= $category['id'] ?>"><i class="fas fa-pencil-alt"></i></a>
+                            <a class="button button--alert" href="/admin/suppression-categorie?id=<?= $category['id'] ?>"><i class="fas fa-trash"></i></a>
                         </td>
                     </tr>
                     <?php endforeach;?>

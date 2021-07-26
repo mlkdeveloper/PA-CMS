@@ -30,7 +30,12 @@ class ShoppingCart {
         {
 
             $productTerm = new Product_term();
-            $getTerms = $productTerm->select(DBPREFIXE.'product_term.idTerm')->innerJoin(DBPREFIXE."products",DBPREFIXE."product_term.idProduct","=",DBPREFIXE."products.id")->where(DBPREFIXE."product_term.idGroup = :idGroup", DBPREFIXE."product_term.idProduct = :idProduct", DBPREFIXE."products.status = 1")->setParams(["idGroup" => $_GET['idGroup'], "idProduct" => $_GET['id']])->get();
+            $getTerms = $productTerm->select(DBPREFIXE.'product_term.idTerm')
+                ->innerJoin(DBPREFIXE."products",DBPREFIXE."product_term.idProduct","=",DBPREFIXE."products.id")
+                ->innerJoin(DBPREFIXE."category",DBPREFIXE."products.idCategory","=",DBPREFIXE."category.id")
+                ->where(DBPREFIXE."product_term.idGroup = :idGroup", DBPREFIXE."product_term.idProduct = :idProduct", DBPREFIXE."products.status = 1",DBPREFIXE."product_term.status = 1",DBPREFIXE."category.status = 1")
+                ->setParams(["idGroup" => $_GET['idGroup'], "idProduct" => $_GET['id']])->get();
+
             $array = array_map("current", $getTerms);
 
             if(empty(array_diff($_GET['values'], $array))){

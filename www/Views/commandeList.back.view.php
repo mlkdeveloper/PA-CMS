@@ -3,17 +3,17 @@
         <h1>Liste des commandes</h1>
     </div>
     <div class="row">
-        <div class="col-md-12 col-sm-12">
+        <div class="col col-md-12 col-sm-12 col-lg-12">
             <div class="jumbotron">
                 <table id="table" class="row-border hover">
                     <thead>
                     <tr>
-                        <th>Id</th>
+                        <th>N° Commande</th>
                         <th>Client</th>
-                        <th>Nombres d'articles</th>
-                        <th>Total €</th>
+                        <th>Nombre d'articles</th>
+                        <th>Total en €</th>
                         <th>Statut</th>
-                        <th style="width: 150px">Actions</th>
+                        <th style="width: 150px">Action</th>
                     </tr>
                     </thead>
                     <tbody>

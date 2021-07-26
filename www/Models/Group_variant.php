@@ -6,11 +6,10 @@ use App\Core\Database;
 
 class Group_variant extends Database
 {
-
     private $id;
-    protected $price;
+	protected $price;
     protected $stock;
-
+    protected $picture;
 
     /**
      * @return mixed
@@ -68,6 +67,26 @@ class Group_variant extends Database
     public function setStock($stock)
     {
         $this->stock = $stock;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+
+    /**
+     * @param mixed $picture
+     *
+     * @return self
+     */
+    public function setPicture($picture)
+    {
+        $this->picture = $picture;
 
         return $this;
     }
