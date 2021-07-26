@@ -85,6 +85,9 @@ class Commande
 
     }
 
+    /*
+     * Annulation de la commande coté Front
+     */
     public function cancelOrderFrontAction(){
         require 'vendor/autoload.php';
         if (!Security::isConnected()){
@@ -159,6 +162,9 @@ class Commande
 
     }
 
+    /*
+     * Annulation de la commande _ remboursement coté BACK
+     */
     public function cancelCommandeAction(){
 
 
@@ -224,6 +230,9 @@ class Commande
 
     }
 
+    /*
+     * Validation de la commande
+     */
     public function ValidCommandeAction(){
 
         Security::auth('orders');
@@ -262,6 +271,9 @@ class Commande
 
     }
 
+    /*
+     * Cloture de la commande
+     */
     public function DoneCommandeAction(){
 
         Security::auth('orders');
@@ -300,7 +312,9 @@ class Commande
 
     }
 
-// FRONT
+    /*
+     * Affichage des commandes coté Front
+     */
     public function displayOrdersFrontAction(){
 
         if (!Security::isConnected()){
@@ -317,7 +331,9 @@ class Commande
         $view->assign("orders",$orders);
     }
 
-
+    /*
+     * Affichage du contenu de la commande (produit, prix, quantité) coté front
+     */
     public function informationsOrderAction(){
 
 
