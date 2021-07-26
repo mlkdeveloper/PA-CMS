@@ -37,7 +37,7 @@ img{
     transition: background 0.4s;
     padding: 15px;
 }
-#main-nav a:hover {
+#main-nav li:hover {
     background: #9ecad0;
 }
 
@@ -54,6 +54,7 @@ img{
 #main-nav li {
     text-align: center;
     position: relative;
+    width: 100%;
 }
 
 #main-nav li:hover .submenu > li {
@@ -72,7 +73,7 @@ img{
     display: flex;
     flex-direction: column;
     position: absolute;
-    width: 100%;
+    width: auto;
     margin: 0;
     padding: 0;
     background-color: #f0f0f0;
@@ -90,6 +91,10 @@ img{
 
 #hamburger {
     top: 15px;
+}
+
+.icon{
+    width: auto !important;
 }
 
 @media only screen and (max-width: 1200px) {
@@ -114,7 +119,7 @@ img{
     }
 
     #main-nav ul li {
-        width: auto;
+        width: 100%;
     }
 
     #hamburger {
