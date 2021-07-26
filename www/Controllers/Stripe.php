@@ -88,6 +88,7 @@ class Stripe
                  * Si pas de stock
                  * Alors je n'ajoute aucun produit en BDD et je supprime l'enregistrement de la commande (table orders) de la BDD
                  */
+
                 if ($stock[0]['stock'] == "0"){
                     $_SESSION['errorPanier'] = "un ou plusieurs produit n'ont plus assez de stock ";
                     $commandeSupp = new Orders_model();
