@@ -46,7 +46,8 @@
                     <a href="/admin/display-category"><li>Catégories</li></a>
                 </ul>
                 <a href="/admin/pages"><li>Pages</li></a>
-                <a href="/admin/barre-de-navigation"><li>Barre de navigation</li></a>
+                <a href="/admin/role"><li>Rôles</li></a>
+                <a href="/admin/liste-utilisateurs"><li>Utilisateurs</li></a>
                 <a href="/admin/liste-client"><li>Clients</li></a>
                     <li class="dropdownMenu" id="dropdownReviews">Avis<i class="fa fa-caret-down"></i></li>
                     <ul class="dropdown-container">

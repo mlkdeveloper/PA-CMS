@@ -578,27 +578,6 @@ class User extends Database
         ];
     }
 
-    public function formPwdUsers(){
-
-        return [
-
-            "config"=>[
-                "method"=>"POST",
-                "action"=>"",
-            ],
-            "inputs"=>[
-
-                "pwd"=>[
-                    "type"=>"password",
-                    "required"=>true,
-                    "regex"=>"/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]){8,}/",
-                    "errorRegex"=>"Votre mot de passe doit faire au minimum 8 caractères, contenir une majuscule et un chiffre."
-                ]
-            ]
-        ];
-    }
-
-
     public function formUpdateUsers(){
 
         return [

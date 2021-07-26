@@ -48,7 +48,7 @@ class Dashboard
         $view->assign("title", "Dashboard");
     }
 
-    public function getDataAction(){
+    public function getDataAction(){ //Récupération des données en fonction de la date
 
         switch ($_POST['type']){
             case 'month':
@@ -71,7 +71,7 @@ class Dashboard
         echo json_encode($arrayData);
     }
 
-    public function month(){
+    public function month(){ //Récupération des données du mois
 
         $data = $this->getSql("01-".date("m-Y"), date("t", date("m")).date("-m-Y"), true);
 
@@ -106,7 +106,7 @@ class Dashboard
         return $arrayData;
     }
 
-    public function months(){
+    public function months(){ //Récupération des données depuis 6 mois
 
         $newMonths = [];
         $dateForSql = "";
@@ -183,7 +183,7 @@ class Dashboard
         return array_reverse($newMonths);
     }
 
-    public function year(){
+    public function year(){ //Récupération des données de l'année
 
         $data = $this->getSql("01-01-".date("Y"), "31-12-".date("Y"), true);
 
@@ -233,7 +233,7 @@ class Dashboard
         return $arrayData;
     }
 
-    public function all(){
+    public function all(){ //Récupération des données depuis le début
         $countAll = 0;
 
         $data = $this->getSql("","",false);
@@ -281,7 +281,7 @@ class Dashboard
         return $arrayData;
     }
 
-    public function monthsFR($oldMonth){
+    public function monthsFR($oldMonth){ //Transformation du numéro du mois en texte
         switch ($oldMonth){
             case '1':
                 return 'Janvier';
@@ -311,7 +311,7 @@ class Dashboard
         return false;
     }
 
-    public function getSql($dateStart, $dateEnd, $withDate){
+    public function getSql($dateStart, $dateEnd, $withDate){ //Récupération des données depuis la BDD
         $orders = new modelOrders();
         if ($withDate === true){
             $dataSQL = $orders->select("CreatedAt, montant")->where("CreatedAt BETWEEN STR_TO_DATE(:dateStart, '%d-%m-%Y') AND STR_TO_DATE(:dateEnd, '%d-%m-%Y') AND status >= 1")->setParams(["dateStart" => $dateStart, "dateEnd" => $dateEnd])->get();
