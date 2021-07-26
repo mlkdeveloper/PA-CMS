@@ -45,8 +45,9 @@
                     <a href="/admin/attribut"><li>Ajouter un attribut</li></a>
                     <a href="/admin/display-category"><li>Catégories</li></a>
                 </ul>
-                    <a href="/admin/pages"><li>Pages</li></a>
-                    <a href="/admin/liste-client"><li>Clients</li></a>
+                <a href="/admin/pages"><li>Pages</li></a>
+                <a href="/admin/barre-de-navigation"><li>Barre de navigation</li></a>
+                <a href="/admin/liste-client"><li>Clients</li></a>
                     <li class="dropdownMenu" id="dropdownReviews">Avis<i class="fa fa-caret-down"></i></li>
                     <ul class="dropdown-container">
                         <a href="/admin/reviews"><li>Liste des avis</li></a>

@@ -24,7 +24,7 @@ class Dashboard
 
         //Orders
         $orderModel = new modelOrders();
-        $orderTotal = $orderModel->select('montant')->where('status >= :status')->setParams(['status' => 1])->get();
+        $orderTotal = $orderModel->select('montant')->where('status >= 1')->get();
 
         //Price
         foreach ($orderTotal as $amount){
@@ -33,11 +33,11 @@ class Dashboard
 
         //Review
         $reviewModel = new modelReview();
-        $reviewTotal = $reviewModel->select()->where('status = :status')->setParams(['status' => 1])->get();
+        $reviewTotal = $reviewModel->select()->where('status = 1')->get();
 
         //Products
         $productModel = new modelProduct();
-        $productTotal = $productModel->select()->get();
+        $productTotal = $productModel->select()->where('status = 1')->get();
 
 
         $view = new View("dashboard.back", "back");
