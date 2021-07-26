@@ -52,7 +52,7 @@ class Pages
             if(empty($errors)){
 
                     $pages->populate($_POST);
-                    $pages->setUserid(1);
+                    $pages->setUserid($_SESSION['user']['id']);
                     $pages->setPublication(0);
                     $pages->save();
 
@@ -97,7 +97,7 @@ class Pages
 
                 if(empty($errors)){
                     $pages->populate($_POST);
-                    $pages->setUserid(1);
+                    $pages->setUserid($_SESSION['user']['id']);
                     $pages->setId($_GET['id']);
                     $pages->save();
 
