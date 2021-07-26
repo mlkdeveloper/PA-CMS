@@ -179,7 +179,7 @@ class User extends Database
      */
     public function setFirstname($firstname)
     {
-        $this->firstname = $firstname;
+        $this->firstname = htmlspecialchars(trim($firstname));
     }
 
 
@@ -309,8 +309,7 @@ class User extends Database
 								"label"=>"Votre Prénom",
 								"required"=>true,
 								"class"=>"input",
-								"minLength"=>2,
-								"maxLength"=>50,
+                                "regex" => "/^[a-zA-Z-\séèàêïî]{2,50}$/",
 								"error"=>"Votre prénom doit faire entre 2 et 50 caractères"
 							],
 				"lastname"=>[
@@ -320,8 +319,7 @@ class User extends Database
 								"label"=>"Votre Nom",
 								"required"=>true,
 								"class"=>"input",
-								"minLength"=>2,
-								"maxLength"=>100,
+                                "regex" => "/^[a-zA-Z-\séèàêïî]{2,100}$/",
 								"error"=>"Votre nom doit faire entre 2 et 100 caractères"
 							],
 
@@ -343,8 +341,8 @@ class User extends Database
 								"label"=>"Votre mot de passe",
 								"required"=>true,
 								"class"=>"input",
-								"minLength"=>5,
-								"error"=>"Votre mot de passe doit faire au minimum 7 caractères"
+                                "regex"=>"/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]){8,}/",
+								"error"=>"Votre mot de passe doit faire au minimum 8 caractères, contenir une majuscule et un chiffre."
 							],
 
 				"pwdConfirm"=>[
@@ -448,8 +446,7 @@ class User extends Database
                     "label"=>"Nom",
                     "required"=>true,
                     "class"=>"input",
-                    "minLength"=>2,
-                    "maxLength"=>100,
+                    "regex" => "/^[a-zA-Z-\séèàêïî]{2,100}$/",
                     "error"=>"Le nom doit faire entre 2 et 100 caractères."
                 ],
                 "firstName"=>[
@@ -458,8 +455,7 @@ class User extends Database
                     "label"=>"Prénom",
                     "required"=>true,
                     "class"=>"input",
-                    "minLength"=>2,
-                    "maxLength"=>50,
+                    "regex" => "/^[a-zA-Z-\séèàêïî]{2,50}$/",
                     "error"=>"Le prénom doit faire entre 2 et 50 caractères."
                 ],
 
@@ -469,9 +465,8 @@ class User extends Database
                     "placeholder"=>"ex : 29 rue de la liberte",
                     "required"=>true,
                     "class"=>"input",
-                    "minLength"=>5,
-                    "maxLength"=>255,
-                    "error"=>"L'adresse doit faire entre 5 et 254 caractères."
+                    "regex" => "/^[0-9a-zA-Z-\séèàêïî]{2,150}$/",
+                    "error"=>"L'adresse doit faire entre 5 et 150 caractères."
                 ],
                 "city"=>[
                     "type"=>"text",
@@ -479,9 +474,8 @@ class User extends Database
                     "placeholder"=>"ex : Paris",
                     "required"=>true,
                     "class"=>"input",
-                    "minLength"=>2,
-                    "maxLength"=>20,
-                    "error"=>"La ville doit faire entre 2 et 20 caractères"
+                    "regex" => "/^[a-zA-Z-\séèàêïî]{2,80}$/",
+                    "error"=>"La ville doit faire entre 2 et 80 caractères"
                 ],
                 "zipCode"=>[
                     "type"=>"text",
@@ -489,8 +483,8 @@ class User extends Database
                     "placeholder"=>"ex : 75015",
                     "required"=>true,
                     "class"=>"input",
-                    "regex" => "/^[0-9]{5}/",
-                    "errorRegex" => "Code postal invalide !"
+                    "regex" => "/^[0-9]{5}$/",
+                    "error" => "Code postal invalide !"
                 ],
                 "country"=>[
                     "type"=>"text",
@@ -498,8 +492,7 @@ class User extends Database
                     "placeholder"=>"ex : fr",
                     "required"=>true,
                     "class"=>"input",
-                    "minLength"=> 2,
-                    "maxLength"=> 2,
+                    "regex" => "/^[a-zA-Z]{2,2}$/",
                     "error"=>"Le pays doit faire 2 caractères"
                 ],
                 "email"=>[
@@ -518,8 +511,8 @@ class User extends Database
                     "placeholder"=>"0122334455",
                     "required"=>true,
                     "class"=>"input",
-                    "regex" => "/^[0-9]{10}/",
-                    "errorRegex" => "Numéro de téléphone invalide !"
+                    "regex" => "/^0[0-9]{9}$/",
+                    "error" => "Numéro de téléphone invalide !"
                 ],
             ]
 

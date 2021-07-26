@@ -195,14 +195,12 @@ class FormValidator
     public static function checkClient($config,$data,$isCreated)
     {
         $errors = [];
-        $regex =  "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]){8,}/";
         if( count($data) != count($config["inputs"]) ){
             $errors[] = "Tentative de HACK - Faille XSS";
 
         }else{
 
             foreach ($config["inputs"] as $name => $configInputs) {
-
 
                 if(!empty($configInputs["minLength"])
                     && is_numeric($configInputs["minLength"])
@@ -237,22 +235,17 @@ class FormValidator
 
                 if(!empty($configInputs["regex"])
                     && !preg_match($configInputs["regex"],$data[$name])){
-                    $errors[] = $configInputs["errorRegex"];
+
+                    $errors[] = $configInputs["error"];
                 }
 
                 if(!empty($configInputs["confirm"])
                     && $data[$name] != $data[$configInputs["confirm"]]
                 ){
+
                     $errors[] = $configInputs["error"];
                 }
 
-                if (!empty($configInputs["required"])
-                    && $configInputs["required"] == true
-                    && strlen(trim($data[$name])) <= 0
-
-                ){
-                    $errors[] = $configInputs["error"];
-                }
 
             }
         }
