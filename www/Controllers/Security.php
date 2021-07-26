@@ -58,7 +58,7 @@ class Security
 
                     $this->insertInstallation();
 
-                    SecurityCore::changeFile('./routes.yml', 'finalChangeRoute');
+                    SecurityCore::changeFile('./routes.yml', 'finalChangeRoute');//Suppression de la partie installation
                     SecurityCore::changeFile('./index.php', 'removeRedirection');
 
 
@@ -75,7 +75,7 @@ class Security
 
     }
 
-    private function insertInstallation(){
+    private function insertInstallation(){ //Insertion des données dans les tables
         try{
             $this->pdo = new \PDO(DBDRIVER . ":host=" . DBHOST . ";dbname=" . DBNAME . ";port=" . DBPORT, DBUSER, DBPWD);
 

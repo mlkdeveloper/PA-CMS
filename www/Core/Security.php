@@ -8,7 +8,7 @@ use App\Models\Role;
 
 class Security
 {
-    public static function changeFile($file, $type){
+    public static function changeFile($file, $type){ //Fonction permettant la modification d'un fichier
         $ptr = fopen("$file", "r");
         $contenu = fread($ptr, filesize($file));
 

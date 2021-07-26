@@ -22,7 +22,7 @@ class Installation
         $view->assign("title", "Intallation");
     }
 
-    public function startInstallAction(){
+    public function startInstallAction(){ //Vérification, insertion et redirection première page d'installation
 
         if (!empty($_POST)){
 
@@ -41,7 +41,7 @@ class Installation
         }
     }
 
-    private function checkInformations($data){
+    private function checkInformations($data){ //Vérification des informations de la BDD, STRIPE, SMTP
         if(count($data) != 14){
             $this->errorRedirection('Formulaire non conforme');
         }else{
@@ -120,7 +120,7 @@ class Installation
         return null;
     }
 
-    private function createFile($dataArray){
+    private function createFile($dataArray){ //Création du fichier config.env
         $dbDriver = file_get_contents("config-sample.env", true, null, 0,14);
         $configFile = file_get_contents("config-sample.env", true, null, 14);
 
@@ -143,7 +143,7 @@ class Installation
     }
 
 
-    private function verificationBDD($dbDriver, $dataArray){
+    private function verificationBDD($dbDriver, $dataArray){ //Vérification de la connexion à la BDD
 
         $dbDriver = explode('=', $dbDriver);
 
@@ -171,7 +171,7 @@ class Installation
     }
 
 
-    private function insertBDD($prefix, $database){
+    private function insertBDD($prefix, $database){ //Création des tables
         $sql = file_get_contents("clickcreate.sql");
 
         $installSql = str_replace("cc_", $prefix, $sql);
@@ -184,13 +184,13 @@ class Installation
         }
     }
 
-    private function errorRedirection($error){
+    private function errorRedirection($error){ //Redirection des erreurs
         $_SESSION['securityInstall'] = $error;
         header('Location: /');
         exit();
     }
 
-    public function shopInstallationAction(){
+    public function shopInstallationAction(){ //Enregistrement et vérification de la page d'installation du magasin
         $shop = new ShopModel();
 
         $view = new View("installShop", "install");
