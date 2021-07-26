@@ -32,7 +32,7 @@
                     <div class="jumbotron">
 
                         <div class="row mb-5">
-                            <h4 class="center-margin">Logo</h4>
+                            <h1>Logo</h1>
                         </div>
 
                         <div class="row">

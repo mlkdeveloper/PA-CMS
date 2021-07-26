@@ -10,8 +10,8 @@
                     <tr>
                         <th>N° Commande</th>
                         <th>Client</th>
-                        <th>Nombres d'articles</th>
-                        <th>Total €</th>
+                        <th>Nombre d'articles</th>
+                        <th>Total en €</th>
                         <th>Statut</th>
                         <th style="width: 150px">Action</th>
                     </tr>

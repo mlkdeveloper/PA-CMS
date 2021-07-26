@@ -58,7 +58,7 @@
                 <hr>
                 <li class="dropdownMenu" id="dropdownSettings">Paramètres du site<i class="fa fa-caret-down"></i></li>
                 <ul class="dropdown-container">
-                    <a href="/admin/detail-magasin"><li>Magasins</li></a>
+                    <a href="/admin/detail-magasin"><li>Magasin</li></a>
                     <a href="/admin/barre-de-navigation"><li>Navigation</li></a>
                     <a href="/admin/parametres-site"><li>Paramètres</li></a>
                 </ul>

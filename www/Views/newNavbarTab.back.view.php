@@ -37,11 +37,11 @@
                     <div class="centered p-3">
                         <div>
                             <form method="POST" action="" class="form_align form_align--top">
-                                <label class="label" for="name">Titre: </label>
+                                <label class="label" for="name">Titre *</label>
                                 <input type="text" class="input" name="name" id="name" maxlength="50" minlength="2">
 
                                 <div id="containerSimpleTab">
-                                <label class="label pt-3" for="typeNavbar">Type: </label>
+                                <label class="label pt-3" for="typeNavbar">Type *</label>
                                 <select class="input" id="typeNavbar" name="typeNavbar">
                                     <option value="" disabled selected>Sélectionner le type de la page</option>
                                     <option value="page">Page statique</option>
@@ -51,15 +51,15 @@
                                 <label class="label pt-3" for="selectType" id="labelSelectType"></label>
                                 <select class="input" id="selectType" name="selectType"></select>
                                 </div>
-                                <label class="label pt-3" for="dropdown">Mode liste déroulante: </label>
+                                <label class="label pt-3" for="dropdown">Mode liste déroulante </label>
                                 <input class="input" type="checkbox" name="dropdown" id="dropdown" value="dropdown">
 
                                 <div id="containerDropdownNavbar" class="pt-3">
                                     <div class="pt-2">
-                                        <label class="label" for="nameDropdown1">Nom de l'onglet: </label>
+                                        <label class="label" for="nameDropdown1">Nom de l'onglet *</label>
                                         <input class="input" type="text" name="nameDropdown1" maxlength="50" minlength="2">
 
-                                        <label class="label" for="typeDropdown1">Type: </label>
+                                        <label class="label" for="typeDropdown1">Type *</label>
                                         <select class="input typeDropdown" name="typeDropdown1">
                                             <option value="" disabled selected>Sélectionner le type de la page</option>
                                             <option value="page">Page statique</option>
