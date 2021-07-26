@@ -73,15 +73,15 @@ class Stripe
         $orders->setStatus(0);
         $orders->save();
 
-        $panier = New Orders_model();
-        $panier = $orders->select('MAX(id) as id, montant, payment_intent, User_id, User_id, status')->where("montant = :montant", "status = 0", "User_id = :id")
-            ->setParams(["montant" =>$_SESSION['panierTotal'], "id" => $_SESSION['user']['id']])->get();
-        $stock = new Group_variant();
+        $panier = $orders->select('MAX(id) as id, montant, payment_intent, User_id, status')->where( "status = 0", "User_id = :id")
+            ->setParams(["id" => $_SESSION['user']['id']])->get();
+
         foreach ($_SESSION['panier'] as $key => $value) {
 
-            for($i = 0; $i< intval($value); $i++ ){
+            for($i = 0; $i < intval($value); $i++ ){
 
-                $stock = $stock->select('stock, price')->where("id = :id")->setParams(["id" => $key])->get();
+                $stock = new Group_variant();
+                $stock = $stock->select('stock,price,picture')->where("id = :id")->setParams(["id" => $key])->get();
 
                 $_SESSION['errorPanier']  = null;
 
@@ -92,7 +92,8 @@ class Stripe
                     $variant = new Group_variant();
                     $variant->setId($key);
                     $variant->setStock(intval($stock[0]['stock']) -1 );
-                    $variant->setPrice(intval($stock[0]['price']) );
+                    $variant->setPrice($stock[0]['price'] );
+                    $variant->setPicture($stock[0]['picture']);
                     $variant->save();
 
 
@@ -102,7 +103,6 @@ class Stripe
                     $product->save();
                 }
 
-                $stock = new Group_variant();
             }
         }
         unset($_SESSION['panier']);

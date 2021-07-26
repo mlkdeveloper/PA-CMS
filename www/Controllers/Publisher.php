@@ -8,7 +8,7 @@ session_start();
 
 class Publisher
 {
-    public function publisherAction(){
+    public function publisherAction(){ //Affichage de l'éditeur
         Security::auth("pages");
 
         if (!file_exists("./publisher/templatesPublisher/".$_GET["name"].".json")){
@@ -19,7 +19,7 @@ class Publisher
         $view->assign("title", "Editeur");
     }
 
-    public function savePublisherAction(){
+    public function savePublisherAction(){ //Enregistrement de la page
         Security::auth("pages");
 
         $dataHtml = $_POST['dataHtml'];
@@ -28,7 +28,7 @@ class Publisher
         file_put_contents("./publisher/templatesPublisher/".$namePage.".json", $dataHtml);
     }
 
-    public function readPublisherAction(){
+    public function readPublisherAction(){ //Lecture du fichier JSON
         Security::auth("pages");
 
         $namePage = $_POST['namePage'];
@@ -40,7 +40,7 @@ class Publisher
         }
     }
 
-    public function listImagesAction(){
+    public function listImagesAction(){ //Récupération de la liste des images
         Security::auth("pages");
 
         $images = "";
@@ -56,7 +56,7 @@ class Publisher
         }
     }
 
-    public function checkDeleteImageAction(){
+    public function checkDeleteImageAction(){ //Vérification de la suppression d'une image
         Security::auth("pages");
 
         $srcImage = $_POST['checkDeleteImage'];
@@ -78,14 +78,14 @@ class Publisher
         echo $result;
     }
 
-    public function deleteImageAction(){
+    public function deleteImageAction(){ //Suppression d'une image
         Security::auth("pages");
 
         $srcImage = substr($_POST['srcImage'], 1);
         unlink($srcImage);
     }
 
-    public function uploadImageAction(){
+    public function uploadImageAction(){ //Transfère d'une image
 
         Security::auth("pages");
 
