@@ -13,7 +13,7 @@ const namePage = urlParams.get('name')
 //Lecture du fichier JSON de la page
 $.ajax({
     type: 'POST',
-    url: '../.././Controllers/Publisher.php',
+    url: '/admin/read-publisher',
     data: {namePage: namePage},
     success: function(data) {
         if (data) {
@@ -302,7 +302,7 @@ function savePage(){
 
     $.ajax({
         type: 'POST',
-        url: '../.././Controllers/Publisher.php',
+        url: '/admin/save-publisher',
         data: {
             dataHtml: dataHtml,
             namePage: namePage
@@ -408,8 +408,8 @@ function modalImages(){
 
     $.ajax({
         type: 'POST',
-        url: '../.././Controllers/Publisher.php',
-        data: {listImages: ""},
+        url: '/admin/images-publisher',
+        data: '',
         success: function(data) {
             if (data) {
                 $("#listImages").html("");
@@ -450,7 +450,7 @@ function checkTemplateImage(){
 
     $.ajax({
         type: 'POST',
-        url: '../.././Controllers/Publisher.php',
+        url: '/admin/check-image-publisher',
         data: {
             checkDeleteImage: $(".activeImage").attr("src"),
             namePageDeleteImage: namePage
@@ -539,7 +539,7 @@ function deleteImage(){
 
     $.ajax({
         type: 'POST',
-        url: '../.././Controllers/Publisher.php',
+        url: '/admin/delete-image-publisher',
         data: {srcImage: $(".activeImage").attr("src")},
         success: function(data) {
             $(".activeImage").remove();
@@ -574,7 +574,7 @@ function uploadImage(){
         fd.append('file',files[0]);
 
         $.ajax({
-            url: '../.././Controllers/Publisher.php',
+            url: '/admin/upload-image-publisher',
             type: 'post',
             data: fd,
             contentType: false,
@@ -583,7 +583,7 @@ function uploadImage(){
                 var message = JSON.parse(response);
 
                 if(message.error === undefined){
-                    $("#listImages").prepend("<img src='"+message.success+"' alt='image' onclick='selectImage(this)'>")
+                    $("#listImages").prepend("<img src='."+message.success+"' alt='image' onclick='selectImage(this)'>")
                 }else{
                     if ($(".errorMessageImage").length === 0) {
                         $("#selectImage h3").append("<div class='alert alert--red errorMessageImage'>"+message.error+"</div>");
@@ -654,7 +654,7 @@ function showMenu(){
         {
             start: function() {
                 $("#btnShowMenu").hide();
-                $(".container-body").css("width", "calc(100% - 200px)");
+                $(".container-body").css("width", "calc(100% - 210px)");
             },
             step: function(now) {
                 if (now > 90){

@@ -384,3 +384,23 @@
 /admin/read-publisher:
   controller: Publisher
   action: readPublisher
+
+/admin/images-publisher:
+  controller: Publisher
+  action: listImages
+
+/admin/check-image-publisher:
+  controller: Publisher
+  action: checkDeleteImage
+
+/admin/delete-image-publisher:
+  controller: Publisher
+  action: deleteImage
+
+/admin/upload-image-publisher:
+  controller: Publisher
+  action: uploadImage
+
+/admin/save-publisher:
+  controller: Publisher
+  action: savePublisher
