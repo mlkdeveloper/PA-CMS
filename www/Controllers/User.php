@@ -16,6 +16,9 @@ session_start();
 
 class User extends Database
 {
+    /*
+     * méthode de connexion user et admin
+     */
 	public function loginAction(){
 
 		$user = new UserModel();

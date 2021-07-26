@@ -13,6 +13,9 @@ class Security
 
 
     //Method : Action
+    /*
+     * Enregistrement de l'administrateur lors de l'instalation
+     */
     public function registerInstallAction(){
 
         $user = new UserModel();
@@ -93,6 +96,10 @@ class Security
             exit();
         }
     }
+
+    /*
+     * Méthode de déconnexion
+     */
     public function logoutAction(){
         session_start();
         unset($_SESSION['user']);
@@ -101,6 +108,10 @@ class Security
         exit();
     }
 
+    /*
+     * Récupération de mot de passe
+     * Envoie de mail
+     */
     public function pwdPerduAction(){
 
         $view = new View("mdpOublie");
@@ -131,6 +142,9 @@ class Security
         }
 
     }
+    /*
+     * Envoie d'un mail de confirmation du compte
+     */
     public function confirmedRegisterAction(){
         $view = new View("confirmationInscription");
         $view->assign("title", "C&C - Confirmation du compte");
@@ -153,6 +167,9 @@ class Security
         $users->save();
     }
 
+    /*
+     * Récupération du mot de passe
+     */
     public function recuperationpwdAction(){
         $view = new View("recuperationPwd");
         $view->assign("title", "C&C - Modification du mot de passe");

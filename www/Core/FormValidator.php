@@ -315,29 +315,18 @@ class FormValidator
 
             foreach ($config["inputs"] as $name => $configInputs) {
 
-                if (!empty($configInputs["minLength"])
-                    && is_numeric($configInputs["minLength"])
-                    && strlen(trim($data[$name])) < $configInputs["minLength"]) {
-
-                    $errors[] = $configInputs["error"];
-                }
-
-                if (!empty($configInputs["maxLength"])
-                    && is_numeric($configInputs["maxLength"])
-                    && strlen(trim($data[$name])) > $configInputs["maxLength"]) {
-
-                    $errors[] = $configInputs["error"];
-                }
                 if (!$isCreated) {
                     if (!empty($configInputs["uniq"]) &&
                         $configInputs["uniq"] === true
                     ) {
-
                         if ($class->find_duplicates_sql($name, $data[$name]))
                             $errors[] = $configInputs["errorUniq"];
-
-
                     }
+                }
+
+                if (!empty($configInputs["regex"])
+                    && !preg_match($configInputs["regex"], $data[$name])){
+                    $errors[] = $configInputs["error"];
                 }
             }
         }

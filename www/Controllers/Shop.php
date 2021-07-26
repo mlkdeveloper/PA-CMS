@@ -16,6 +16,9 @@ session_start();
 class Shop
 {
 
+    /*
+     * Affichage du seul magasin disponible
+     */
     public function detailShopAction(){
 
         Security::auth("settingsSite");

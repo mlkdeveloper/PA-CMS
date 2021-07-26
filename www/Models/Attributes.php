@@ -80,10 +80,9 @@ class Attributes extends Database
                     "type"=>"text",
                     "required"=>true,
                     "uniq"=> true,
-                    "minLength"=>2,
-                    "maxLenght"=>50,
-                    "error"=>"Le nom doit faire entre 2 et 50 caractères",
-                    "errorUniq" => "Cet attribut existe déjà !"
+                    "errorUniq" => "Cet attribut existe déjà !",
+                    "error"=>"Le nom doit faire entre 2 et 50 caractères et ne doit pas comporter de caractères spéciaux",
+                    "regex"=>"/^[A-Za-z-_]{2,50}$/",
                 ],
 
                 "description" => [
