@@ -116,6 +116,7 @@ class Commande
             }
 
             $order->populate($commande[0]);
+            $order->setPaymentIntent($commande[0]['payment_intent']);
             $order->setUserId($commande[0]['User_id']);
             $order->setStatus(-1);
             $order->save();

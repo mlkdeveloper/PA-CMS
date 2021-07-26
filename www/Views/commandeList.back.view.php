@@ -8,12 +8,12 @@
                 <table id="table" class="row-border hover">
                     <thead>
                     <tr>
-                        <th>Id</th>
+                        <th>N° Commande</th>
                         <th>Client</th>
                         <th>Nombre d'articles</th>
                         <th>Total en €</th>
                         <th>Statut</th>
-                        <th style="width: 150px">Actions</th>
+                        <th style="width: 150px">Action</th>
                     </tr>
                     </thead>
                     <tbody>

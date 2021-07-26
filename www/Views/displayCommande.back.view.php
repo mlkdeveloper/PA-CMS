@@ -42,7 +42,7 @@
 
                     <div class="col-md-6 col-sm-6">
                         <p>Montant total du panier : <?= $order[0]['montant'] ?> €</p>
-                        <p>Commande passé le : <?= \App\Core\Helpers::dateFr($order[0]['CreatedAt'])?></p>
+                        <p>Commande passée le : <?= \App\Core\Helpers::dateFr($order[0]['CreatedAt'])?></p>
                         <p>Par : <?= $order[0]['firstname'].' '.$order[0]['lastname']. ' ('.  $order[0]['email']. ')'?></p>
                     </div>
                 </div>
