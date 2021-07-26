@@ -78,7 +78,7 @@ class FormValidator
         return $errors; //[] vide si ok
     }
 
-    public static function checkPage($config, $data, $isUpdated){
+    public static function checkPage($config, $data, $isUpdatedName, $isUpdatedSlug){
 
         $errors = [];
 
@@ -107,17 +107,20 @@ class FormValidator
                     && !preg_match($configInputs["regex"], $data[$name])){
                     $errors[] = $configInputs["errorRegex"];
                 }
-
-                if (!$isUpdated) {
-                    if (!empty($configInputs["uniq"]) &&
-                        $configInputs["uniq"] === true
-                    ) {
-                        $category = new Pages();
-                        if ($category->find_duplicates_sql($name, $data[$name]))
-                            $errors[] = $configInputs["errorBdd"];
-                    }
-                }
             }
+
+            if (!$isUpdatedName) {
+                $pages = new Pages();
+                if ($pages->find_duplicates_sql("name", $data["name"]))
+                    $errors[] = 'Une page avec ce nom existe déjà';
+            }
+
+            if (!$isUpdatedSlug) {
+                $pages = new Pages();
+                if ($pages->find_duplicates_sql("slug", $data["slug"]))
+                    $errors[] = 'Ce slug existe déjà';
+            }
+
 
             $file = './routes.yml';
 
@@ -129,9 +132,11 @@ class FormValidator
 
             foreach ($contenu as $index => $value) {
                 if (preg_match('/^\/.+$/', $value)) {
-                    if ($contenu[$index] == $data["slug"].':'){
-                        $errors[] = "Ce slug est déjà utilisé par le CMS";
-                        break;
+                    if (!$isUpdatedSlug){
+                        if ($contenu[$index] == $data["slug"].':'){
+                            $errors[] = "Ce slug est déjà utilisé par le CMS";
+                            break;
+                        }
                     }
                 }
             }
