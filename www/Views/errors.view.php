@@ -10,7 +10,7 @@
     </div>
 
         <div class="centered">
-            <img style="width: 50%" src="../images/errors.jpg">
+            <img style="width: 50%" src="/images/errors.jpg">
         </div>
     </div>
 </div>
