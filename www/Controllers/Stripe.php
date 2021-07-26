@@ -91,7 +91,8 @@ class Stripe
                 if ($stock[0]['stock'] == "0"){
                     $_SESSION['errorPanier'] = "un ou plusieurs produit n'ont plus assez de stock ";
                     $commandeSupp = new Orders_model();
-                    $commandeSupp->delete($panier[0]['id']);
+                    $commandeSupp->setId($panier[0]['id']);
+                    $commandeSupp->delete();
                     exit();
                 }
             }
