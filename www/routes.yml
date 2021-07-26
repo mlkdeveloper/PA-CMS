@@ -414,3 +414,18 @@
 /toto:
   controller: Pages
   action: displayFront
+
+#FRONT_jdjd-ddd
+/jdjd-ddd:
+  controller: Pages
+  action: displayFront
+
+#FRONT_dd
+/dd:
+  controller: Pages
+  action: displayFront
+
+#FRONT_ddddllslslss
+/ddddllslslss:
+  controller: Pages
+  action: displayFront

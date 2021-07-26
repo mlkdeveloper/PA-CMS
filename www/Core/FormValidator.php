@@ -91,14 +91,14 @@ class FormValidator
 
                 if(	!empty($configInputs["minLength"])
                     && is_numeric($configInputs["minLength"])
-                    && strlen($data[$name]) < $configInputs["minLength"]){
+                    && strlen(trim($data[$name])) < $configInputs["minLength"]){
 
                     $errors[] = $configInputs["errorLength"];
                 }
 
                 if(	!empty($configInputs["maxLength"])
                     && is_numeric($configInputs["maxLength"])
-                    && strlen($data[$name]) > $configInputs["maxLength"]){
+                    && strlen(trim($data[$name])) > $configInputs["maxLength"]){
 
                     $errors[] = $configInputs["errorLength"];
                 }
