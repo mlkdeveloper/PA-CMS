@@ -32,7 +32,7 @@ if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
 foreach ($pages as $page){
 
     echo'<url>';
-    echo'<loc>'.$protocol.$_SERVER["HTTP_HOST"]. $page['slug'] . '</loc>';
+    echo'<loc>' . $protocol . $_SERVER["HTTP_HOST"]. $page['slug'] . '</loc>';
     echo' <priority>1.0</priority>';
     echo '<changefreq>monthly</changefreq>';
     echo' </url>';
@@ -59,43 +59,43 @@ foreach ($products as $product){
 
 
 echo'<url>';
-echo '<loc>'. $_SERVER["HTTP_HOST"]. '/connexion</loc>';
+echo '<loc>' . $protocol . $_SERVER["HTTP_HOST"]. '/connexion</loc>';
 echo' <priority>1.0</priority>';
 echo '<changefreq>monthly</changefreq>';
 echo' </url>';
 
 echo'<url>';
-echo '<loc>'. $_SERVER["HTTP_HOST"]. '/deconnexion</loc>';
+echo '<loc>' . $protocol . $_SERVER["HTTP_HOST"]. '/deconnexion</loc>';
 echo' <priority>1.0</priority>';
 echo '<changefreq>monthly</changefreq>';
 echo' </url>';
 
 echo'<url>';
-echo '<loc>'. $_SERVER["HTTP_HOST"]. '/inscription</loc>';
+echo '<loc>' . $protocol . $_SERVER["HTTP_HOST"]. '/inscription</loc>';
 echo' <priority>1.0</priority>';
 echo '<changefreq>monthly</changefreq>';
 echo' </url>';
 
 echo'<url>';
-echo '<loc>'. $_SERVER["HTTP_HOST"]. '/mot-de-passe-oublie</loc>';
+echo '<loc>' . $protocol . $_SERVER["HTTP_HOST"]. '/mot-de-passe-oublie</loc>';
 echo' <priority>1.0</priority>';
 echo '<changefreq>monthly</changefreq>';
 echo' </url>';
 
 echo'<url>';
-echo '<loc>'. $_SERVER["HTTP_HOST"]. '/recuperation-mot-de-passe</loc>';
+echo '<loc>' . $protocol . $_SERVER["HTTP_HOST"]. '/recuperation-mot-de-passe</loc>';
 echo' <priority>1.0</priority>';
 echo '<changefreq>monthly</changefreq>';
 echo' </url>';
 
 echo'<url>';
-echo '<loc>'. $_SERVER["HTTP_HOST"]. '/confirmation-inscription</loc>';
+echo '<loc>' . $protocol . $_SERVER["HTTP_HOST"]. '/confirmation-inscription</loc>';
 echo' <priority>1.0</priority>';
 echo '<changefreq>monthly</changefreq>';
 echo' </url>';
 
 echo'<url>';
-echo '<loc>'. $_SERVER["HTTP_HOST"]. '/panier</loc>';
+echo '<loc>' . $protocol . $_SERVER["HTTP_HOST"]. '/panier</loc>';
 echo' <priority>1.0</priority>';
 echo '<changefreq>monthly</changefreq>';
 echo' </url>';
