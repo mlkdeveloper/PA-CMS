@@ -14,7 +14,7 @@ $category = new Category();
 $product = new Products();
 $categories = $category->select("name")->where("status = 1")->get();
 $pages = $page->select("slug")->where("publication = 1")->get();
-$products = $product->select("id")->where("status = 1")->get();
+$products = $product->select("id")->where("status = 1","isPublished = 1")->get();
 
 header("Content-Type: application/xml; charset=utf-8");
 echo '<?xml version="1.0" encoding="UTF-8"?>';
