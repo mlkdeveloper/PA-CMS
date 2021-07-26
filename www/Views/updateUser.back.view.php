@@ -85,20 +85,10 @@
             <div style="display: flex;justify-content: flex-end">
                 <i class="fas fa-times button button--alert" onclick="hideModalPwd()"></i>
             </div>
-            <h3>Changer le mot de passe :</h3>
+            <h3>Voulez-vous vraiment changer le mot de passe ?</h3>
+            <a href="/admin/utilisateur-changement-mdp?id=<?= $_GET['id'] ?>"><button class="button button--success">Oui</button></a>
+            <button class="button button--alert" onclick="hideModalPwd()">Non</button>
 
-            <form method="POST" action="/admin/utilisateur-changement-mdp?id=<?= $_GET['id'] ?>">
-
-                <div class="form_align--top">
-                    <label class="label">Mot de passe *</label>
-                    <input class="input" type="password" name="pwd" placeholder="*******" required="required">
-
-                    <div class="mt-1">
-                        <input type="submit" class="button button--blue" value="Enregistrer">
-                    </div>
-                </div>
-
-            </form>
         </div>
     </div>
 </section>
