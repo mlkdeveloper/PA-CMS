@@ -40,7 +40,7 @@ function addAttribute(id) {
                "<div class='attributes attrValues' id='val-"+id+"'>\n";
 
           array.map((value) => {
-                html += "<div class='mb-1'><input id='" + value.id + "' class='"+name+"' name='"+value.name+"' type='checkbox' value='"+ value.id+"'><label>" + value.name + "</label></div>"
+                html += "<div class='mb-1'><input id='" + value.id + "' class='"+name+" terms' name='"+value.name+"' type='checkbox' value='"+ value.id+"'><label>" + value.name + "</label></div>"
            });
 
           html +=
@@ -80,53 +80,61 @@ function isVariant() {
     }
 }
 
+function getTerms(){
+    return $("input:checkbox.terms").is(':checked')
+}
+
 function buildArray(callback, id) {
-    var className = '';
-    var array = [];
-    var count = 0;
-    var arrayAttributs = $('.attrValues input:checked');
-    array_id = []
+    if(getTerms()){
+        var className = '';
+        var array = [];
+        var count = 0;
+        var arrayAttributs = $('.attrValues input:checked');
+        array_id = []
 
-    $.each(arrayAttributs, function(i, attrib){
-        if (i === 0){
-            array.push([]);
-            array_id.push([]);
-            className = $(attrib).attr("class");
-        }
+        $.each(arrayAttributs, function (i, attrib) {
+            if (i === 0) {
+                array.push([]);
+                array_id.push([]);
+                className = $(attrib).attr("class");
+            }
 
-        if ($(attrib).attr("class") === className){
-            array[count].push($(attrib).attr("name"));
-            array_id[count].push($(attrib).attr("id"));
-        }else{
-            className = $(attrib).attr("class");
-            array.push([]);
-            array_id.push([]);
-            count++;
-            array[count].push($(attrib).attr("name"));
-            array_id[count].push($(attrib).attr("id"));
-        }
-    });
+            if ($(attrib).attr("class") === className) {
+                array[count].push($(attrib).attr("name"));
+                array_id[count].push($(attrib).attr("id"));
+            } else {
+                className = $(attrib).attr("class");
+                array.push([]);
+                array_id.push([]);
+                count++;
+                array[count].push($(attrib).attr("name"));
+                array_id[count].push($(attrib).attr("id"));
+            }
+        });
 
-    comb = generation(array_id);
-    let comb_label = generation(array);
+        comb = generation(array_id);
+        let comb_label = generation(array);
 
-    comb.map((x, y)=>{
-        generateInputs("#comb", comb_label[y]);
-    })
+        comb.map((x, y) => {
+            generateInputs("#comb", comb_label[y]);
+        })
 
-    display_buttons(callback, id)
+        display_buttons(callback, id)
 
-    $("#loader").show();
-    $("div[name='comb']").hide();
-    $("#sub_comb").hide();
+        $("#loader").show();
+        $("div[name='comb']").hide();
+        $("#sub_comb").hide();
 
-    setTimeout(() => {
-        $("#loader").fadeOut();
-        $("div[name='comb']").show();
-        $("#sub_comb").show();  
-    }, 10);
+        setTimeout(() => {
+            $("#loader").fadeOut();
+            $("div[name='comb']").show();
+            $("#sub_comb").show();
+        }, 10);
 
-    clearInterface()
+        clearInterface()
+    }else{
+        showStatus("<div class='alert--red alert'>Problème avec les variants</div>")
+    }
 
 }
 
