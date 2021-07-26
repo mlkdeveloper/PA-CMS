@@ -137,7 +137,7 @@ class User extends Database
 
                     $user->save();
 
-                    Email::sendEmail("C&C - Confirmation du compte", $email, "Veuillez confirmer votre compte", "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/confirmation-inscription?tkn=".$token,"Confimer mon compte", "/");
+                    Email::sendEmail("C&C - Confirmation du compte", $email, "Veuillez confirmer votre compte", "http://".$_SERVER['SERVER_NAME']."/confirmation-inscription?tkn=".$token,"Confimer mon compte", "/");
 
 
                     header('location:/connexion');
@@ -213,7 +213,7 @@ class User extends Database
                     $view->assign("message", $message);
 
                     if($formStatus == Database::NEW_OBJECT){
-                        Email::sendEmail("C&C - Creation de votre compte",$client->getEmail(), "Votre mot de passe : " . $pwd, "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/confirmation-inscription?tkn=".$token,"Confirmer votre compte", "/admin/liste-client");
+                        Email::sendEmail("C&C - Creation de votre compte",$client->getEmail(), "Votre mot de passe : " . $pwd, "http://".$_SERVER['SERVER_NAME']."/confirmation-inscription?tkn=".$token,"Confirmer votre compte", "/admin/liste-client");
                     }
                 }else{
                     http_response_code(400);
@@ -330,7 +330,7 @@ class User extends Database
                 $user->setToken($token);
                 $user->save();
 
-                Email::sendEmail("C&C - Creation de votre compte",$user->getEmail(), "Votre mot de passe : " . $_POST['pwd'], "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/confirmation-inscription?tkn=".$token,"Confirmer mon compte", "/admin/liste-utilisateurs");
+                Email::sendEmail("C&C - Creation de votre compte",$user->getEmail(), "Votre mot de passe : " . $_POST['pwd'], "http://".$_SERVER['SERVER_NAME']."/confirmation-inscription?tkn=".$token,"Confirmer mon compte", "/admin/liste-utilisateurs");
 
                 $view->assign("success", "L'utilisateur a bien été créé !");
             } else {
@@ -462,7 +462,7 @@ class User extends Database
 
             $_SESSION['successChangePwd'] = "Mot de passe modifié !";
 
-            Email::sendEmail("C&C - Changement de mot de passe",$user->getEmail(), "Votre nouveau mot de passe : " . $pwd, "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/admin/dashboard","Dashboard", "/admin/modification-utilisateur?id=" . $_GET['id']);
+            Email::sendEmail("C&C - Changement de mot de passe",$user->getEmail(), "Votre nouveau mot de passe : " . $pwd, "http://".$_SERVER['SERVER_NAME']."/admin/dashboard","Dashboard", "/admin/modification-utilisateur?id=" . $_GET['id']);
 
         }else{
             header("Location: /admin/liste-utilisateurs");
