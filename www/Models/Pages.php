@@ -79,7 +79,7 @@ class Pages extends Database
      */
     public function setSlug($slug)
     {
-        $this->slug = $slug;
+        $this->slug = htmlspecialchars(trim($slug));
     }
 
     /**
