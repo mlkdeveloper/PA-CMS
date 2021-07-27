@@ -59,42 +59,6 @@ INSERT INTO `cc_product_order` (`id`, `id_group_variant`, `id_order`) VALUES
 (139, 122, 26),
 (140, 126, 27);
 
-INSERT INTO `cc_product_term` (`id`, `idProduct`, `idTerm`, `idGroup`, `status`) VALUES
-(179, 42, 5, 116, 1),
-(180, 42, 4, 116, 1),
-(181, 42, 6, 117, 1),
-(182, 42, 4, 117, 1),
-(183, 43, 3, 118, 1),
-(184, 44, 5, 119, 1),
-(185, 44, 2, 119, 1),
-(186, 44, 7, 120, 1),
-(187, 44, 2, 120, 1),
-(188, 45, 24, 121, 1),
-(189, 45, 30, 121, 1),
-(190, 45, 34, 121, 1),
-(191, 45, 24, 122, 1),
-(192, 45, 30, 122, 1),
-(193, 45, 35, 122, 1),
-(194, 46, 9, 123, 1),
-(195, 46, 5, 123, 1),
-(196, 46, 9, 124, 1),
-(197, 46, 6, 124, 1),
-(198, 46, 9, 125, 1),
-(199, 46, 7, 125, 1),
-(200, 47, 1, 126, 1);
-
-INSERT INTO `cc_review` (`id`, `commentary`, `mark`, `status`, `Products_id`, `User_id`, `createdAt`) VALUES
-(2, 'Salut', 1, 1, 47, 1, '2021-07-27 20:15:10');
-
-INSERT INTO `cc_shop` (`id`, `name`, `address`, `city`, `zipCode`, `phoneNumber`, `description`) VALUES
-(2, 'shop1', '13 rue Jean Racine', 'tremblay en france', '2323', '3', NULL);
-
-INSERT INTO `cc_tab_navbar` (`id`, `name`, `page`, `category`, `navbar`) VALUES
-(4, 'Chapeau', NULL, 1, 5),
-(5, 'Outils', NULL, 6, 5),
-(6, 'Sports', NULL, 8, 5),
-(7, 'Pantalon', NULL, 3, 5);
-
 INSERT INTO `cc_terms` (`id`, `name`, `idAttributes`) VALUES
 (2, 'Bleu', 2),
 (3, 'Vert', 2),
@@ -141,3 +105,36 @@ INSERT INTO `cc_terms` (`id`, `name`, `idAttributes`) VALUES
 (44, 'DAS2', 16),
 (45, 'NiHM', 16),
 (46, 'DAS3', 16);
+
+INSERT INTO `cc_product_term` (`id`, `idProduct`, `idTerm`, `idGroup`, `status`) VALUES
+(179, 42, 5, 116, 1),
+(180, 42, 4, 116, 1),
+(181, 42, 6, 117, 1),
+(182, 42, 4, 117, 1),
+(183, 43, 3, 118, 1),
+(184, 44, 5, 119, 1),
+(185, 44, 2, 119, 1),
+(186, 44, 7, 120, 1),
+(187, 44, 2, 120, 1),
+(188, 45, 24, 121, 1),
+(189, 45, 30, 121, 1),
+(190, 45, 34, 121, 1),
+(191, 45, 24, 122, 1),
+(192, 45, 30, 122, 1),
+(193, 45, 35, 122, 1),
+(194, 46, 9, 123, 1),
+(195, 46, 5, 123, 1),
+(196, 46, 9, 124, 1),
+(197, 46, 6, 124, 1),
+(198, 46, 9, 125, 1),
+(199, 46, 7, 125, 1),
+(200, 47, 1, 126, 1);
+
+INSERT INTO `cc_review` (`id`, `commentary`, `mark`, `status`, `Products_id`, `User_id`, `createdAt`) VALUES
+(2, 'Salut', 1, 1, 47, 1, '2021-07-27 20:15:10');
+
+INSERT INTO `cc_tab_navbar` (`id`, `name`, `page`, `category`, `navbar`) VALUES
+(4, 'Chapeau', NULL, 1, 5),
+(5, 'Outils', NULL, 6, 5),
+(6, 'Sports', NULL, 8, 5),
+(7, 'Pantalon', NULL, 3, 5);
