@@ -50,7 +50,7 @@ INSERT INTO `cc_orders` (`id`, `montant`, `payment_intent`, `User_id`, `CreatedA
 INSERT INTO `cc_products` (`id`, `name`, `description`, `type`, `isPublished`, `idCategory`, `status`) VALUES
 (42, 'Chapeau Rouge', '', 1, 1, 1, 1),
 (43, 'Chapeau Vert', '', 1, 1, 1, 1),
-(44, 'Jean\'s', 'Beau jean de diffÃ©rentes tailles et couleurs', 1, 1, 3, 1),
+(44, 'Jeans', 'Le meilleur produit', 1, 1, 3, 1),
 (45, 'Samsung Galaxy S8', 'Beau samsung galaxy S8 venu tout droit de Chine', 1, 1, 7, 1),
 (46, 'Crampon Adidas', 'Crampon Adidas de diffÃ©rentes tailles:\n\n- 39\n-40\n-41\n-42\n-43\n-44', 1, 1, 8, 1),
 (47, 'Marteau', 'Marteau piqueur ', 0, 1, 6, 1);
