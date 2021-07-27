@@ -263,7 +263,7 @@ class Commande
             $order->setStatus(1);
             $order->save();
 
-            Email::sendEmail("C&C - Votre commande est prete !", $getUser[0]["email"], "Votre commande est prête ! <br> Vous pouvez venir la chercher en magasin", "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/connexion","Mon compte", "/admin/liste-commande");
+            Email::sendEmail("C&C - Votre commande est prête !", $getUser[0]["email"], utf8_decode('Votre commande est prête ! ')."<br> Vous pouvez venir la chercher en magasin", "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/connexion","Mon compte", "/admin/liste-commande");
 
         }else{
             header("Location: /admin/liste-commande");

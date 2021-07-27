@@ -10,7 +10,7 @@
                     <?php endforeach;?>
                 </ul>
                 <?php endif;?>
-                <?php App\Core\FormBuilder::render($form); ?>
+                <?php App\Core\FormBuilder::render($form, true, true); ?>
             </div>
         </div>
     </div>

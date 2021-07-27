@@ -23,11 +23,7 @@ class Shop
 
         Security::auth("settingsSite");
         $shop = new ShopModel();
-        $product = new ProductsModel();
-        $productModel = new ProductsMModel();
 
-
-        $idShop = $_GET['id'];
         $shopGet = $shop->select('*')->where('id = 1')->get();
 
         $view = new View("detailShop.back", "back");
@@ -37,9 +33,6 @@ class Shop
         if(!empty($_POST)){
 
             $errors = FormValidator::check($formUpdateShop, $_POST);
-            if (!is_numeric($_POST['zipCode'])){
-                array_push($errors,"Le code postale doit etre composé uniquement de chiffres");
-            }
 
             if(empty($errors)){
 

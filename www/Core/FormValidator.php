@@ -17,8 +17,6 @@ class FormValidator
     public static function check($config,$data)
     {
         $errors = [];
-        $regex =  "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]){7,}/";
-        $regex_telephone = "/(0|\\+33|0033)[1-9][0-9]{8}/";
         if( count($data) != count($config["inputs"]) ){
             $errors[] = "Tentative de HACK - Faille XSS";
 
@@ -29,7 +27,7 @@ class FormValidator
 
                 if(!empty($configInputs["minLength"])
                     && is_numeric($configInputs["minLength"])
-                    && strlen($data[$name]) < $configInputs["minLength"]){
+                    && strlen(trim($data[$name])) < $configInputs["minLength"]){
 
                     $errors[] = $configInputs["error"];
 
@@ -37,26 +35,18 @@ class FormValidator
 
                 if(!empty($configInputs["maxLength"])
                     && is_numeric($configInputs["maxLength"])
-                    && strlen($data[$name]) > $configInputs["maxLength"]){
+                    && strlen(trim($data[$name])) > $configInputs["maxLength"]){
 
                     $errors[] = $configInputs["error"];
 
                 }
 
-                if($configInputs["type"] === "password"
-                    && !preg_match($regex,$data[$name])
-                ){
+                if(!empty($configInputs["regex"])
+                    && !preg_match($configInputs["regex"],$data[$name])){
 
                     $errors[] = $configInputs["error"];
                 }
 
-                if(!empty($configInputs["data-format"])
-                    && $configInputs["data-format"] === "telephone"
-                    && !preg_match($regex_telephone,$data[$name])
-                ){
-
-                    $errors[] = $configInputs["error"];
-                }
 
                 if(!empty($configInputs["confirm"])
                     && $data[$name] != $data[$configInputs["confirm"]]
@@ -64,18 +54,11 @@ class FormValidator
                     $errors[] = $configInputs["error"];
                 }
 
-                if (!empty($configInputs["required"])
-                    && $configInputs["required"] == true
-                    && strlen($data[$name]) <= 0
-
-                ){
-                    $errors[] = $configInputs["error"];
-                }
 
             }
         }
 
-        return $errors; //[] vide si ok
+        return $errors;
     }
 
     public static function checkPage($config, $data, $isUpdatedName, $isUpdatedSlug){
@@ -91,14 +74,14 @@ class FormValidator
 
                 if(	!empty($configInputs["minLength"])
                     && is_numeric($configInputs["minLength"])
-                    && strlen($data[$name]) < $configInputs["minLength"]){
+                    && strlen(trim($data[$name])) < $configInputs["minLength"]){
 
                     $errors[] = $configInputs["errorLength"];
                 }
 
                 if(	!empty($configInputs["maxLength"])
                     && is_numeric($configInputs["maxLength"])
-                    && strlen($data[$name]) > $configInputs["maxLength"]){
+                    && strlen(trim($data[$name])) > $configInputs["maxLength"]){
 
                     $errors[] = $configInputs["errorLength"];
                 }
@@ -192,68 +175,85 @@ class FormValidator
     }
 
 
-    public static function checkClient($config,$data,$isCreated)
+    public static function checkClient($config,$data,$isCreated, $captcha=false)
     {
         $errors = [];
-        $regex =  "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]){8,}/";
-        if( count($data) != count($config["inputs"]) ){
+        $count = 0;
+
+        if ($captcha){
+            $count = 1;
+        }
+
+        if( count($data)-$count != count($config["inputs"]) ){
             $errors[] = "Tentative de HACK - Faille XSS";
 
         }else{
 
+            if ($captcha){
+                if (empty($data['captcha'])){
+                    $errors[] = "Veuillez remplir tous les champs";
+
+                    return  $errors;
+                }
+            }
+
             foreach ($config["inputs"] as $name => $configInputs) {
 
+                if (!empty($data[$name])) {
 
-                if(!empty($configInputs["minLength"])
-                    && is_numeric($configInputs["minLength"])
-                    && strlen(trim($data[$name])) < $configInputs["minLength"]){
+                    if (!empty($configInputs["minLength"])
+                        && is_numeric($configInputs["minLength"])
+                        && strlen(trim($data[$name])) < $configInputs["minLength"]) {
 
-                    $errors[] = $configInputs["error"];
+                        $errors[] = $configInputs["error"];
 
-                }
+                    }
 
-                if(!empty($configInputs["maxLength"])
-                    && is_numeric($configInputs["maxLength"])
-                    && strlen(trim($data[$name])) > $configInputs["maxLength"]){
+                    if (!empty($configInputs["maxLength"])
+                        && is_numeric($configInputs["maxLength"])
+                        && strlen(trim($data[$name])) > $configInputs["maxLength"]) {
 
-                    $errors[] = $configInputs["error"];
+                        $errors[] = $configInputs["error"];
 
-                }
+                    }
 
-                if ($configInputs["type"] === "email"){
+                    if ($configInputs["type"] === "email") {
 
-                    if(!filter_var(trim($data[$name]), FILTER_VALIDATE_EMAIL )){
-                        $errors[] = "Email invalide !";
-                    }else {
-                        if (!$isCreated) {
-                            $user = new User();
+                        if (!filter_var(trim($data[$name]), FILTER_VALIDATE_EMAIL)) {
+                            $errors[] = "Email invalide !";
+                        } else {
+                            if (!$isCreated) {
+                                $user = new User();
 
-                            if ($user->find_duplicates_sql($name, trim($data[$name]))){
-                                $errors[] = "L'email existe déjà  !";
+                                if ($user->find_duplicates_sql($name, trim($data[$name]))) {
+                                    $errors[] = "L'email existe déjà  !";
+                                }
                             }
                         }
                     }
+
+                    if (!empty($configInputs["regex"])
+                        && !preg_match($configInputs["regex"], $data[$name])) {
+
+                        $errors[] = $configInputs["error"];
+                    }
+
+                    if (!empty($configInputs["confirm"])
+                        && $data[$name] != $data[$configInputs["confirm"]]
+                    ) {
+
+                        $errors[] = $configInputs["error"];
+                    }
+                }else{
+                    $errors[] = "Veuillez remplir tous les champs";
+
+                    return  $errors;
                 }
-
-                if(!empty($configInputs["regex"])
-                    && !preg_match($configInputs["regex"],$data[$name])){
-                    $errors[] = $configInputs["errorRegex"];
+            }
+            if ($captcha){
+                if (strtoupper($data['captcha']) != $_SESSION['captcha']) {
+                    $errors[] = "Captcha incorrect";
                 }
-
-                if(!empty($configInputs["confirm"])
-                    && $data[$name] != $data[$configInputs["confirm"]]
-                ){
-                    $errors[] = $configInputs["error"];
-                }
-
-                if (!empty($configInputs["required"])
-                    && $configInputs["required"] == true
-                    && strlen(trim($data[$name])) <= 0
-
-                ){
-                    $errors[] = $configInputs["error"];
-                }
-
             }
         }
 
@@ -333,6 +333,13 @@ class FormValidator
 
                 if (!empty($configInputs["regex"])
                     && !preg_match($configInputs["regex"], $data[$name])){
+                    $errors[] = $configInputs["error"];
+                }
+
+                if (!empty($configInputs["maxLength"])
+                    && is_numeric($configInputs["maxLength"])
+                    && strlen(trim($data[$name])) > $configInputs["maxLength"]) {
+
                     $errors[] = $configInputs["error"];
                 }
             }
@@ -541,14 +548,14 @@ class FormValidator
 
                 if(	!empty($configInputs["minLength"])
                     && is_numeric($configInputs["minLength"])
-                    && strlen($data[$name]) < $configInputs["minLength"]){
+                    && strlen(trim($data[$name])) < $configInputs["minLength"]){
 
                     $errors[] = $configInputs["errorLength"];
                 }
 
                 if(	!empty($configInputs["maxLength"])
                     && is_numeric($configInputs["maxLength"])
-                    && strlen($data[$name]) > $configInputs["maxLength"]){
+                    && strlen(trim($data[$name])) > $configInputs["maxLength"]){
 
                     $errors[] = $configInputs["errorLength"];
                 }
@@ -600,14 +607,14 @@ class FormValidator
 
                 if(	!empty($configInputs["minLength"])
                     && is_numeric($configInputs["minLength"])
-                    && strlen($data[$name]) < $configInputs["minLength"]){
+                    && strlen(trim($data[$name])) < $configInputs["minLength"]){
 
                     $errors[] = $configInputs["errorLength"];
                 }
 
                 if(	!empty($configInputs["maxLength"])
                     && is_numeric($configInputs["maxLength"])
-                    && strlen($data[$name]) > $configInputs["maxLength"]){
+                    && strlen(trim($data[$name])) > $configInputs["maxLength"]){
 
                     $errors[] = $configInputs["errorLength"];
                 }

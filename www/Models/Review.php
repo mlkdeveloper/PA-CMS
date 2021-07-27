@@ -91,7 +91,7 @@ class Review extends Database
      */
     public function setMark($mark): void
     {
-        $this->mark = floatval($mark);
+        $this->mark = intval($mark);
     }
 
     /**
