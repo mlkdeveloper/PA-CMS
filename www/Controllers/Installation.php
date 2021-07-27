@@ -19,7 +19,7 @@ class Installation
 
     public function installAction(){
         $view = new View("install", "install");
-        $view->assign("title", "Intallation");
+        $view->assign("title", "Installation");
     }
 
     public function startInstallAction(){ //Vérification, insertion et redirection première page d'installation
