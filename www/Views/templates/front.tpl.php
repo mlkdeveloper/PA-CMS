@@ -46,7 +46,9 @@ use App\Models\Themes;
         <nav id="main-nav">
             <div>
                 <ul>
-                    <li><a style="padding: 0; background-color: white" href="/"><img src="../../images/logo/logo.png" alt="Logo" width="50"></a></li>
+
+                    <?php $file = scandir("./images/logo/",1); ?>
+                    <li><a style="padding: 0; background-color: white" href="/"><img src="../../images/logo/<?= $file[0] ?>" alt="Logo" width="50"></a></li>
                     <?= \App\Core\NavbarBuilder::navbar() ?>
                 </ul>
                 <ul class="align">
