@@ -23,7 +23,7 @@ class FormBuilder
 
             $html .= "<div class='".($configInput["divClass"]??"")."'>";
 
-            $html .="<label for='".($configInput["id"]??$name)."'>".($configInput["label"]??"")." *</label>";
+            $html .="<label for='".($configInput["id"]??$name)."'>".($configInput["label"]??"")."</label>";
 
             $html .="<input 
 						type='".($configInput["type"]??"text")."'
