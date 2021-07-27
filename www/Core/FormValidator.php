@@ -351,7 +351,7 @@ class FormValidator
         $errors = [];
 
         if ($class->find_duplicates_sql("name", trim($name)) && $fdq) {
-            $errors[] = "Le produit existe déjà";
+            $errors[] = "Le produit existe déjà"; 
         }
 
         if (
@@ -390,20 +390,20 @@ class FormValidator
         foreach($variants as $key => $value){
             $prix = $value[count($value)-1];
             $stock = $value[count($value)-2];
-
-            if ( $prix <= 0
+            
+            if ( $prix <= 0 
                 && empty($prix)
                 && !is_float($prix)
             ){
-                $errors[] = "Le prix de la variante #$key doit être saisi correctement";
+                $errors[] = "Le prix de la variante #$key doit être saisi correctement"; 
             }
-
-            if($stock <= 0
+            
+            if($stock < 0
                 && empty($stock)
                 && !is_int($stock) && is_numeric($stock)
             ){
                 $errors[] = "Le stock de la variante #$key doit être saisi correctement";
-            }
+            }   
 
             unset($value[count($value)-1], $value[count($value)-1]);
 
@@ -413,7 +413,7 @@ class FormValidator
                         break;
                 }
         }
-
+        
 
         return $errors; //[] vide si ok
     }
@@ -426,20 +426,20 @@ class FormValidator
         foreach($variants as $key => $value){
             $prix = $value[count($value)-1];
             $stock = $value[count($value)-2];
-
-            if ( $prix <= 0
+            
+            if ( $prix <= 0 
                 || empty($prix)
                 && !is_numeric($prix)
             ){
                 $errors[] = "Le prix de la variante #".$key+1 ." doit être saisi correctement.";
             }
-
+            
             if($stock < 0
                 || empty($stock)
                 && !is_numeric($stock)
             ){
                 $errors[] = "Le stock de la variante #".$key + 1 . "doit être saisi.";
-            }
+            }   
 
             unset($value[count($value)-1], $value[count($value)-1]);
 
@@ -449,26 +449,26 @@ class FormValidator
                     break;
                 }
         }
-
+        
 
         return $errors; //[] vide si ok
     }
 
     static function checkGroup($stock, $prix){
         $errors = [];
-        if($stock < 0
+        if($stock < 0 
             || empty($stock)
             && !is_numeric($stock)
         ){
             $errors[] = "Le stock de la variante n'est pas correct";
         }
 
-        if ( $prix <= 0
+        if ( $prix <= 0 
                 || empty($prix)
                 && !is_numeric($prix)
             ){
             $errors[] = "Le prix de la variante n'est pas correct";
-        }
+        }   
         return $errors;
     }
 
@@ -488,7 +488,7 @@ class FormValidator
                 ->get();
 
             if (empty($check)) return false;
-            else return true;
+            else return true; 
         }
     }
 

@@ -142,8 +142,8 @@
                         </div>
                     </div>
                 <?php endif; ?>
-            </div>
         <?php endforeach; ?>
+    </div>
 
     <div class="container" id='without_attr' style="display: none">
         <div class="row">
