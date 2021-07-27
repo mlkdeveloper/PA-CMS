@@ -64,7 +64,7 @@ class Navbar
             }
 
             if (empty($errors)){
-                $navbar->setName(htmlspecialchars($_POST['name']));
+                $navbar->setName(htmlspecialchars(trim($_POST['name'])));
                 $navbar->setSort($newSort);
 
                 if (isset($_POST['dropdown']) && $_POST['dropdown'] === 'dropdown'){
@@ -80,7 +80,7 @@ class Navbar
                     for ($i = 1; $i <= $countInputs; $i++){
                         $tabNavbar = new modelTab_navbar();
 
-                        $tabNavbar->setName(htmlspecialchars($_POST['nameDropdown'.$i]));
+                        $tabNavbar->setName(htmlspecialchars(trim($_POST['nameDropdown'.$i])));
                         $tabNavbar->setNavbar($newId);
 
                         switch ($_POST['typeDropdown'.$i]){
