@@ -121,28 +121,29 @@
                         onclick="update_var(<?= $input[0]['idGroup'] ?>)">Modifier
                 </button>
             </div>
-            <div class="centered mt-1">
                 <?php if (!empty($input[0]['picture'])): ?>
-                    <div>
-                        <img style="width: 200px;" src="../images/products/<?= $input[0]['picture'] ?>"/>
-                        <i id="file-icon-<?= $input[0]["idGroup"] ?>" class="fas fa-file-upload" onclick="iconFile(this)"></i>
-                        <input id="file-<?= $input[0]["idGroup"] ?>" class="input-file" type="file">
-                        <a class="button button--alert"
-                           href="/admin/del-picture-variante?id=<?= $input[0]["idGroup"] ?>">
-                            <i class="fas fa-trash"></i>
-                        </a>
+                    <div class="row centered">
+                        <div class="mt-1">
+                            <img id="preview-<?= $input[0]["idGroup"] ?>" style="width: 200px;" src="../images/products/<?= $input[0]['picture'] ?>"/>
+                            <i id="file-icon-<?= $input[0]["idGroup"] ?>" class="fas fa-file-upload" onclick="iconFile(this)"></i>
+                            <input id="file-<?= $input[0]["idGroup"] ?>" class="input-file" type="file" onchange="previewImage(<?= $input[0]["idGroup"] ?>)">
+                            <a class="button button--alert"
+                               href="/admin/del-picture-variante?id=<?= $input[0]["idGroup"] ?>">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
                     </div>
                 <?php else: ?>
-                    <div class="row">
-                        <p>Pas d'image pour cette variante
+                    <div class="row centered">
+                        <div class="mt-1">Pas d'image pour cette variante
                             <i id="file-icon-<?= $input[0]["idGroup"] ?>" class="fas fa-file-upload" onclick="iconFile(this)"></i>
-                            <input id="file-<?= $input[0]["idGroup"] ?>" class="input-file" type="file">
-                        </p>
+                            <input id="file-<?= $input[0]["idGroup"] ?>" class="input-file" type="file" onchange="previewImage(<?= $input[0]["idGroup"] ?>)">
+                            <img id="preview-<?= $input[0]["idGroup"] ?>" style="width: 200px" />
+                        </div>
                     </div>
                 <?php endif; ?>
             </div>
         <?php endforeach; ?>
-    </div>
 
     <div class="container" id='without_attr' style="display: none">
         <div class="row">

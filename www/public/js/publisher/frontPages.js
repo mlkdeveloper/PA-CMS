@@ -2,7 +2,7 @@ var htmlPage = "";
 
 $.ajax({
     type: 'POST',
-    url: '.././Controllers/Pages.php',
+    url: '/admin/read-frontpage',
     data: {jsonPage: $("#namePage").val()},
     success: function(data) {
         if (data) {

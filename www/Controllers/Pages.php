@@ -11,12 +11,6 @@ use App\Core\Security;
 
 session_start();
 
-$myPage = new Pages();
-
-if (isset($_POST['jsonPage'])){
-    $myPage->readPage($_POST['jsonPage']);
-}
-
 class Pages
 {
 
@@ -187,9 +181,11 @@ class Pages
         }
     }
 
-    public function readPage($namePage){ //Lecture du fichier json
-        if (file_exists("../publisher/templatesPublisher/".$namePage.".json")){
-            echo (file_get_contents("../publisher/templatesPublisher/".$namePage.".json"));
+    public function readPageAction(){ //Lecture du fichier json
+        $namePage = $_POST['jsonPage'];
+
+        if (file_exists("./publisher/templatesPublisher/".$namePage.".json")){
+            echo (file_get_contents("./publisher/templatesPublisher/".$namePage.".json"));
         }else {
             echo null;
         }

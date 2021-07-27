@@ -405,6 +405,10 @@
   controller: Publisher
   action: savePublisher
 
+/admin/read-frontpage:
+  controller: Pages
+  action: readPage
+
 /start-install:
   controller: Installation
   action: startInstall
