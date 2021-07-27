@@ -6,7 +6,7 @@ RewriteCond %{REQUEST_FILENAME} !-d
 
 Options -Indexes
 
-RedirectMatch \.(env|yml|yaml|htaccess)$ /
+RedirectMatch \.(env|yml|yaml|htaccess|sql)$ /
 
 RedirectMatch 403 ^/Autoload.php$
 RedirectMatch 403 ^/clickcreate.sql$
