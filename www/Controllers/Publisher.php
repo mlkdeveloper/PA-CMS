@@ -11,7 +11,7 @@ class Publisher
     public function publisherAction(){ //Affichage de l'éditeur
         Security::auth("pages");
 
-        if (!file_exists("./publisher/templatesPublisher/".htmlspecialchars(trim($_GET["name"])).".json")){
+        if (!file_exists("./publisher/templatesPublisher/".$_GET["name"].".json")){
             header("Location: /admin/pages");
             exit();
         }
@@ -22,8 +22,8 @@ class Publisher
     public function savePublisherAction(){ //Enregistrement de la page
         Security::auth("pages");
 
-        $dataHtml = htmlspecialchars(trim($_POST['dataHtml']));
-        $namePage = htmlspecialchars(trim($_POST['namePage']));
+        $dataHtml = $_POST['dataHtml'];
+        $namePage = $_POST['namePage'];
 
         file_put_contents("./publisher/templatesPublisher/".$namePage.".json", $dataHtml);
     }
@@ -31,7 +31,7 @@ class Publisher
     public function readPublisherAction(){ //Lecture du fichier JSON
         Security::auth("pages");
 
-        $namePage = htmlspecialchars(trim($_POST['namePage']));
+        $namePage = $_POST['namePage'];
 
         if (file_exists("./publisher/templatesPublisher/".$namePage.".json")){
             echo  file_get_contents("./publisher/templatesPublisher/".$namePage.".json");
@@ -59,8 +59,8 @@ class Publisher
     public function checkDeleteImageAction(){ //Vérification de la suppression d'une image
         Security::auth("pages");
 
-        $srcImage = htmlspecialchars(trim($_POST['checkDeleteImage']));
-        $namePage = htmlspecialchars(trim($_POST['namePageDeleteImage']));
+        $srcImage = $_POST['checkDeleteImage'];
+        $namePage = $_POST['namePageDeleteImage'];
 
         $result = "false";
 
@@ -81,7 +81,7 @@ class Publisher
     public function deleteImageAction(){ //Suppression d'une image
         Security::auth("pages");
 
-        $srcImage = htmlspecialchars(trim(substr($_POST['srcImage'], 1)));
+        $srcImage = substr($_POST['srcImage'], 1);
         unlink($srcImage);
     }
 
