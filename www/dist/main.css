@@ -38,7 +38,7 @@
 
 .container-body {
   position: absolute;
-  width: calc(100% - 210px);
+  width: calc(100% - 220px);
   top: 0;
   right: 0;
   min-height: 100vh;
@@ -486,12 +486,12 @@ li {
 .sidenav {
   height: 100vh;
   position: fixed;
-  width: 210px;
+  width: 220px;
   z-index: 1;
   top: 0;
   left: 0;
   background: #2980B9;
-  overflow-y: scroll;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

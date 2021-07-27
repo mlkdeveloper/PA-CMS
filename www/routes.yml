@@ -404,3 +404,7 @@
 /admin/save-publisher:
   controller: Publisher
   action: savePublisher
+
+/admin/read-frontpage:
+  controller: Pages
+  action: readPage
