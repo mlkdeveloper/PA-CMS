@@ -3,6 +3,7 @@
     <div class="alert alert--green">
         <h2>Félicitation !</h2>
         <p>Votre compte vient d'être vérifié, vous pouvez désormais profiter pleinement de toutes les fonctionnalités de Click & Create ! </p>
+
     </div>
     
 </div>

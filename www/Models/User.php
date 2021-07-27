@@ -369,7 +369,7 @@ class User extends Database
                 "action"=>"",
                 "class"=>"form_control col col-md-10 container",
                 "id"=>"form_register",
-                "submit"=>"Envoyé",
+                "submit"=>"Envoyer",
                 "classButton" => "button button--blue"
             ],
             "inputs"=>[
@@ -399,7 +399,7 @@ class User extends Database
                 "action"=>"",
                 "class"=>"form_control col col-md-10 container",
                 "id"=>"form_register",
-                "submit"=>"Envoyé",
+                "submit"=>"Envoyer",
                 "classButton" => "button button--blue"
             ],
             "inputs"=>[
@@ -421,7 +421,7 @@ class User extends Database
                     "data-format"=> "confirmPwd",
                     "class"=>"input",
                     "confirm"=>"pwd",
-                    "error"=>"Mot de passe différent"
+                    "error"=>"Mots de passe différents"
                 ],
             ]
 
