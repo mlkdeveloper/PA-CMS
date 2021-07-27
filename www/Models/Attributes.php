@@ -86,7 +86,9 @@ class Attributes extends Database
                 ],
 
                 "description" => [
-                    "type"=>"text"
+                    "type"=>"text",
+                    "maxLength"=>255,
+                    "error"=>"La description doit être inférieur à 255 caractères."
                 ]
             ]
         ];

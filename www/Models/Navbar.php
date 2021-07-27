@@ -44,7 +44,7 @@ class Navbar extends Database
      */
     public function setName($name): void
     {
-        $this->name = $name;
+        $this->name = htmlspecialchars(trim($name));
     }
 
     /**
