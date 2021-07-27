@@ -404,28 +404,3 @@
 /admin/save-publisher:
   controller: Publisher
   action: savePublisher
-
-#FRONT_teste
-/teste:
-  controller: Pages
-  action: displayFront
-
-#FRONT_toto
-/toto:
-  controller: Pages
-  action: displayFront
-
-#FRONT_jdjd-ddd
-/jdjd-ddd:
-  controller: Pages
-  action: displayFront
-
-#FRONT_dd
-/dd:
-  controller: Pages
-  action: displayFront
-
-#FRONT_ddddllslslss
-/ddddllslslss:
-  controller: Pages
-  action: displayFront

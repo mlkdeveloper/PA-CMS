@@ -29,51 +29,63 @@ class User extends Database
 
 		if(!empty($_POST)){
 
-            $errors = [];
-			if(empty($errors)){
+		    $errors = [];
 
-			    if ($user->select('*')->where('email=:email')->setParams([":email" => $_POST['email']])->get()){
-                    $pwdGet = $user->select('pwd')->where('email=:email')->setParams([":email" => $_POST['email']])->get();
+			if(!empty($_POST['email'] &&
+            !empty($_POST['pwd'] &&
+            !empty($_POST['captcha']) &&
+            count($_POST) == 3))) {
 
-                    $isConfirmed = $user->select('isConfirmed')->where('email=:email')->setParams([":email" => $_POST['email']])->get();
+                if (strtoupper($_POST['captcha']) == $_SESSION['captcha']) {
 
-                    if(password_verify($_POST["pwd"], $pwdGet[0]["pwd"])) {
+                    if ($user->select('*')->where('email=:email')->setParams([":email" => $_POST['email']])->get()) {
+                        $pwdGet = $user->select('pwd')->where('email=:email')->setParams([":email" => $_POST['email']])->get();
 
-                        if ($isConfirmed[0]["isConfirmed"] == "1") {
+                        $isConfirmed = $user->select('isConfirmed')->where('email=:email')->setParams([":email" => $_POST['email']])->get();
 
-                            $monUser = $user->select('*')->where('email=:email', 'pwd=:pwd')->setParams([":email" => $_POST['email'], ":pwd" => $pwdGet[0]["pwd"],])->get();
-                            $_SESSION['user'] = $monUser[0];
+                        if (password_verify($_POST["pwd"], $pwdGet[0]["pwd"])) {
 
-                            if (isset($_GET['reason']) && !empty($_GET['reason'])){
-                                if ($_GET['reason'] == 'stripe'){
-                                    header('location:/panier');
-                                    exit();
+                            if ($isConfirmed[0]["isConfirmed"] == "1") {
+
+
+                                $monUser = $user->select('*')->where('email=:email', 'pwd=:pwd')->setParams([":email" => $_POST['email'], ":pwd" => $pwdGet[0]["pwd"],])->get();
+                                $_SESSION['user'] = $monUser[0];
+
+                                if (isset($_GET['reason']) && !empty($_GET['reason'])) {
+                                    if ($_GET['reason'] == 'stripe') {
+                                        header('location:/panier');
+                                        exit();
+                                    }
                                 }
-                            }
 
-                            if ($_SESSION['user']['id_role'] != 2){
-                                header('location: /admin/dashboard');
-                            }else{
-                                header('location: /');
+                                if ($_SESSION['user']['id_role'] != 2) {
+                                    header('location: /admin/dashboard');
+                                } else {
+                                    header('location: /');
+                                }
+
+                            } else {
+                                array_push($errors, "Vous devez d'abord confimer votre compte");
+                                $view->assign("errors", $errors);
                             }
-                            
-                        }else{
-                            array_push($errors,"Vous devez d'abord confimer votre compte");
+                        } else {
+                            array_push($errors, "L'email et le mot de passe ne correspondent pas");
                             $view->assign("errors", $errors);
-                        }
-                    }else{
-                        array_push($errors,"L'email et le mot de passe ne correspondent pas");
-                        $view->assign("errors", $errors);
 
+                        }
+                    } else {
+                        array_push($errors, "L'email inconnu");
+                        $view->assign("errors", $errors);
                     }
                 }else{
-                    array_push($errors,"L'email inconnu");
+                    array_push($errors, 'Captcha incorrect');
                     $view->assign("errors", $errors);
                 }
+            } else {
+                array_push($errors, 'Veuillez remplir tous les champs');
+                $view->assign("errors", $errors);
+            }
 
-			}else{
-				$view->assign("errors", $errors);
-			}
 		}
 
 		$view->assign("form", $form);

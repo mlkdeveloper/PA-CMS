@@ -10,7 +10,7 @@
                         <?php endforeach;?>
                     </ul>
                 <?php endif;?>
-                <?php App\Core\FormBuilder::render($formLogin); ?>
+                <?php App\Core\FormBuilder::render($formLogin, true, true); ?>
                 <a href="/mot-de-passe-oublie" class="centered"> Mot de passe oublié</a>
                 <p class="centered">Pas encore de compte ?&nbsp;<a href="/inscription" class="centered">S'inscrire</a></p>
             </div>
