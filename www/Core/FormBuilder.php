@@ -9,7 +9,7 @@ class FormBuilder
 
     }
 
-    public static function render($config, $show=true){
+    public static function render($config, $show=true, $captcha=false){
 
         $html = "<form 
 				method='".($config["config"]["method"]??"GET")."' 
@@ -39,7 +39,25 @@ class FormBuilder
             $html .= "</div>";
         }
 
+        if ($captcha){
+            $html .= "<div class='centered'>";
+            $html .= "<img src='../captcha/captcha.php' class='mb-2 mt-1'><br>";
+            $html .= "</div>";
 
+            $html .= "<div class='form_align--top'>";
+            $html .= "<label for='captcha'>Captcha *</label>";
+            $html .= "<input 
+						type='text'
+						name='captcha'
+						placeholder=''
+						data-format=''
+						class='input'
+						id='captcha'
+						value=''
+						required='required'
+						 ><br>";
+            $html .= "</div>";
+        }
 
 
         $html .= "<input type='submit' class='".($config["config"]["classButton"]??"")."' value=\"".($config["config"]["submit"]??"Valider")."\">";
