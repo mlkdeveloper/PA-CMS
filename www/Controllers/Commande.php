@@ -304,7 +304,7 @@ class Commande
             $order->setStatus(2);
             $order->save();
 
-            Email::sendEmail("C&C - Votre commande a ete cloturer", $getUser[0]["email"], "Votre commande vient d'être cloturer <br> Merci et à bientôt !", "http://".$_SERVER['SERVER_NAME']."/connexion","Mon compte", "/admin/liste-commande");
+            Email::sendEmail("C&C - Votre commande a été clôturé", $getUser[0]["email"], utf8_decode("Votre commande vient d'être clôturé")." <br> ". utf8_decode("Merci et à bientôt !"), "http://".$_SERVER['SERVER_NAME']."/connexion","Mon compte", "/admin/liste-commande");
 
         }else{
             header("Location: /admin/liste-commande");
