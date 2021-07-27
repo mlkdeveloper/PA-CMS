@@ -50,10 +50,10 @@ INSERT INTO `cc_orders` (`id`, `montant`, `payment_intent`, `User_id`, `CreatedA
 INSERT INTO `cc_products` (`id`, `name`, `description`, `type`, `isPublished`, `idCategory`, `status`) VALUES
 (42, 'Chapeau Rouge', '', 1, 1, 1, 1),
 (43, 'Chapeau Vert', '', 1, 1, 1, 1),
-(44, 'Jeans', 'Le meilleur produit', 1, 1, 3, 1),
+(44, 'Jean', 'Beau jean de diffÃ©rentes tailles et couleurs', 1, 1, 3, 1),
 (45, 'Samsung Galaxy S8', 'Beau samsung galaxy S8 venu tout droit de Chine', 1, 1, 7, 1),
-(46, 'Crampon Adidas', 'Crampon Adidas de diffÃ©rentes tailles:\n\n- 39\n-40\n-41\n-42\n-43\n-44', 1, 1, 8, 1),
-(47, 'Marteau', 'Marteau piqueur ', 0, 1, 6, 1);
+(46, 'Crampon Adidas', 'Crampon Adidas de diffÃ©rentes tailles', 1, 1, 8, 1),
+(47, 'Marteau', 'Marteau piqueur', 0, 1, 6, 1);
 
 INSERT INTO `cc_product_order` (`id`, `id_group_variant`, `id_order`) VALUES
 (139, 122, 26),
@@ -85,6 +85,9 @@ INSERT INTO `cc_product_term` (`id`, `idProduct`, `idTerm`, `idGroup`, `status`)
 
 INSERT INTO `cc_review` (`id`, `commentary`, `mark`, `status`, `Products_id`, `User_id`, `createdAt`) VALUES
 (2, 'Salut', 1, 1, 47, 1, '2021-07-27 20:15:10');
+
+INSERT INTO `cc_shop` (`id`, `name`, `address`, `city`, `zipCode`, `phoneNumber`, `description`) VALUES
+(2, 'shop1', '13 rue Jean Racine', 'tremblay en france', '2323', '3', NULL);
 
 INSERT INTO `cc_tab_navbar` (`id`, `name`, `page`, `category`, `navbar`) VALUES
 (4, 'Chapeau', NULL, 1, 5),
