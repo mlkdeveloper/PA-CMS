@@ -47,7 +47,7 @@ class Pages
 
         if(!empty($_POST)){
 
-            $errors = FormValidator::checkPage($form, $_POST, false);
+            $errors = FormValidator::checkPage($form, $_POST, false,false);
 
             if(empty($errors)){
 

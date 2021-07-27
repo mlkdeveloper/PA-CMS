@@ -13,6 +13,9 @@ class Security
 
 
     //Method : Action
+    /*
+     * Enregistrement de l'administrateur lors de l'instalation
+     */
     public function registerInstallAction(){
 
         $user = new UserModel();
@@ -26,33 +29,20 @@ class Security
 
         if(!empty($_POST)){
 
-            $lastname = htmlspecialchars(trim($_POST["lastname"]));
-            $firstname = htmlspecialchars(trim($_POST["firstname"]));
-            $email = htmlspecialchars(trim($_POST["email"]));
-            $pwd = htmlspecialchars(trim($_POST["pwd"]));
-            $pwdConfirm = htmlspecialchars(trim($_POST['pwdConfirm']));
+            $errors = FormValidator::checkClient($formInstallRegister, $_POST,false);
 
-            $errors = [];
-            
+
             if(empty($errors)) {
 
-                if ($pwd == $pwdConfirm) {
-
-                    //Generate a random string.
+                    $user->populate($_POST);
                     $token = openssl_random_pseudo_bytes(32);
-                    //Convert the binary data into hexadecimal representation.
                     $token = bin2hex($token);
-
-                    $pwdHash = password_hash($pwd, PASSWORD_BCRYPT);
-
-                    $user->setLastname($lastname);
-                    $user->setFirstname($firstname);
-                    $user->setEmail($email);
+                    $pwdHash = password_hash($_POST['pwd'], PASSWORD_BCRYPT);
                     $user->setPwd($pwdHash);
                     $user->setStatus(1);
                     $user->setIdRole(1);
-                    $user->setIsConfirmed(1);
                     $user->setToken($token);
+                    $user->setIsConfirmed(1);
 
                     $user->save();
 
@@ -62,12 +52,7 @@ class Security
                     SecurityCore::changeFile('./index.php', 'removeRedirection');
                     SecurityCore::changeFile('./sitemap.php', 'removeRedirectionSitemap');
 
-
                     header('Location: /');
-                }else{
-                    array_push($errors, "Le mot de passe de confirmation ne correspond pas");
-                    $view->assign("errors", $errors);
-                }
             }else{
                 $view->assign("errors", $errors);
             }
@@ -90,6 +75,10 @@ class Security
             exit();
         }
     }
+
+    /*
+     * Méthode de déconnexion
+     */
     public function logoutAction(){
         session_start();
         unset($_SESSION['user']);
@@ -98,6 +87,10 @@ class Security
         exit();
     }
 
+    /*
+     * Récupération de mot de passe
+     * Envoie de mail
+     */
     public function pwdPerduAction(){
 
         $view = new View("mdpOublie");
@@ -119,7 +112,7 @@ class Security
 
             if (empty($errors)) {
 
-                Email::sendEmail("C&C - Recuperation du mot de passe",$email, "Récupération du mot de passe","http://".$_SERVER['SERVER_NAME']."/recuperation-mot-de-passe?tkn=".$user[0]["token"], "Je modifie mon mot de passe", "http://".$_SERVER['SERVER_NAME']."/connexion");
+                Email::sendEmail("C&C - Récupération du mot de passe",$email, utf8_decode('Récupération du mot de passe'),"http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/recuperation-mot-de-passe?tkn=".$user[0]["token"], "Je modifie mon mot de passe", "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/connexion");
 
             }else{
                 $view->assign("errors", $errors);
@@ -128,6 +121,9 @@ class Security
         }
 
     }
+    /*
+     * Envoie d'un mail de confirmation du compte
+     */
     public function confirmedRegisterAction(){
         $view = new View("confirmationInscription");
         $view->assign("title", "C&C - Confirmation du compte");
@@ -136,6 +132,7 @@ class Security
 
         if (empty($user->select("*")->where('token= :token')->setParams(["token"=>$_GET['tkn']])->get())){
             header("location:/");
+            exit();
         }
 
         $users = new UserModel();
@@ -145,57 +142,50 @@ class Security
         $users->setIdRole($user[0]['id_role']);
         $users->setIsConfirmed(1);
 
-        // Création du nv token
-
         $users->save();
     }
 
+    /*
+     * Récupération du mot de passe
+     */
     public function recuperationpwdAction(){
         $view = new View("recuperationPwd");
         $view->assign("title", "C&C - Modification du mot de passe");
+
+        if (empty($_GET['tkn'])){
+            header('location:/connexion');
+            exit();
+        }
 
         $user = new UserModel();
 
         $form = $user->formBuildermodifyPwd();
         $view->assign("form", $form);
 
-        //$errors = FormValidator::check($form, $_POST);
-    $errors = [];
-    if (empty($_GET['tkn'])){
-        header('location:/connexion');
-    }
-
         if (!empty($_POST)){
 
-            $pwd = htmlspecialchars($_POST['pwd']);
-            $pwdConfirm = htmlspecialchars(($_POST['pwdConfirm']));
+            $errors = FormValidator::checkClient($form, $_POST,false);
             $token = htmlspecialchars($_GET['tkn']);
 
-
-            if ($pwd != $pwdConfirm){
-                array_push($errors, 'Les mot de passe ne correspondent pas');
-            }
             if (!$user->select('id')->where('token=:token')->setParams(['token' => $token])->get()){
                 array_push($errors, "ALERTE : modification du token dans le GET");
             }
-
 
             if (empty($errors)){
 
                 $userSelect = $user->select('*')->where('token=:token')->setParams(['token' => $token])->get();
 
-                //Generate a random string.
                 $newToken = openssl_random_pseudo_bytes(32);
-                //Convert the binary data into hexadecimal representation.
                 $newToken = bin2hex($newToken);
 
                 $user->populate($userSelect[0]);
                 $user->setId($userSelect[0]['id']);
-                $pwdHash = password_hash($pwd, PASSWORD_BCRYPT);
+                $pwdHash = password_hash($_POST['pwd'], PASSWORD_BCRYPT);
                 $user->setPwd($pwdHash);
                 $user->setToken($newToken);
+                $user->setIsConfirmed($userSelect[0]['isConfirmed']);
+                $user->setIdRole($userSelect[0]['idRole']);
                 $user->save();
-                echo '<pre>';
 
                 header('location:/connexion');
 

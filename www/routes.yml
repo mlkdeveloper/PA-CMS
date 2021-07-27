@@ -368,7 +368,7 @@
 /insert-payment-stripe:
   controller: Stripe
   action: insertPaymentIntent
-
+  
 /facture:
   controller: Facture
   action : facture

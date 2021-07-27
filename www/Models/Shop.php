@@ -45,7 +45,7 @@ class Shop extends Database
      */
     public function setName($name)
     {
-        $this->name = $name;
+        $this->name = htmlspecialchars(trim($name));
     }
 
     /**
@@ -61,7 +61,7 @@ class Shop extends Database
      */
     public function setAddress($address)
     {
-        $this->address = $address;
+        $this->address = htmlspecialchars(trim($address));
     }
 
     /**
@@ -77,7 +77,7 @@ class Shop extends Database
      */
     public function setCity($city)
     {
-        $this->city = $city;
+        $this->city = htmlspecialchars(trim($city));
     }
 
     /**
@@ -125,7 +125,7 @@ class Shop extends Database
      */
     public function setDescription($description)
     {
-        $this->description = $description;
+        $this->description = htmlspecialchars(trim($description));
     }
 
 
@@ -165,8 +165,8 @@ class Shop extends Database
                     "placeholder"=>"",
                     "required"=>true,
                     "class"=>"input",
-                    "minLength"=>5,
-                    "error"=>"L'adresse doit faire au minimum 5 caractères"
+                    "regex" => "/^[0-9a-zA-Z-\séèàêïî]{2,150}$/",
+                    "error"=>"L'adresse doit faire entre 2 et 150 caractères. Attention aux caractères spéciaux !"
                 ],
                 "ville"=>[
                     "type"=>"text",
@@ -176,8 +176,8 @@ class Shop extends Database
                     "placeholder"=>"",
                     "required"=>true,
                     "class"=>"input",
-                    "minLength"=>2,
-                    "error"=>"La ville doit faire au minimum 2 caractères"
+                    "regex" => "/^[a-zA-Z-\séèàêïî]{2,80}$/",
+                    "error"=>"La ville doit faire entre 2 et 80 caractères"
                 ],
                 "zipCode"=>[
                     "type"=>"text",
@@ -187,8 +187,8 @@ class Shop extends Database
                     "placeholder"=>"",
                     "required"=>true,
                     "class"=>"input",
-                    "minLength"=>2,
-                    "error"=>"Le code postal doit faire au 5 caractères"
+                    "regex" => "/^[0-9]{5}$/",
+                    "error" => "Code postal invalide !"
                 ],
                 "telephone"=>[
                     "type"=>"text",
@@ -199,8 +199,8 @@ class Shop extends Database
                     "required"=>true,
                     "class"=>"input",
                     "data-format"=>"telephone",
-                    "minLength"=>1,
-                    "error"=>"le numero de telephone est obligatoire et doit être uniquement être composé de chiffres"
+                    "regex" => "/^0[0-9]{9}$/",
+                    "error" => "Numéro de téléphone invalide !"
                 ],
                 "description"=>[
                     "type"=>"text",
@@ -210,8 +210,8 @@ class Shop extends Database
                     "placeholder"=>"",
                     "required"=>true,
                     "class"=>"input input--textarea",
-                    "minLength"=>5,
-                    "error"=>"La description doit faire au minimum 5 caractères"
+                    "maxLength"=>255,
+                    "error"=>"La description doit être inférieur à 255 caractères."
                 ],
             ]
         ];
@@ -239,8 +239,8 @@ class Shop extends Database
                     "required"=>true,
                     "class"=>"input",
                     "minLength"=>2,
-                    "maxLength"=>320,
-                    "error"=>"Le nom doit faire entre 2 et 320 caractères"
+                    "maxLength"=>255,
+                    "error"=>"Le nom du magasin doit faire entre 2 et 255 caractères"
                 ],
 
                 "address"=>[
@@ -251,8 +251,8 @@ class Shop extends Database
                     "placeholder"=>"ex : 29 rue de la liberte",
                     "required"=>true,
                     "class"=>"input",
-                    "minLength"=>5,
-                    "error"=>"L'adresse doit faire au minimum 5 caractères"
+                    "regex" => "/^[0-9a-zA-Z-\séèàêïî]{2,150}$/",
+                    "error"=>"L'adresse doit faire entre 2 et 150 caractères. Attention aux caractères spéciaux !"
                 ],
                 "ville"=>[
                     "type"=>"text",
@@ -262,8 +262,8 @@ class Shop extends Database
                     "placeholder"=>"ex : Paris",
                     "required"=>true,
                     "class"=>"input",
-                    "minLength"=>2,
-                    "error"=>"La ville doit faire au minimum 2 caractères"
+                    "regex" => "/^[a-zA-Z-\séèàêïî]{2,80}$/",
+                    "error"=>"La ville doit faire entre 2 et 80 caractères"
                 ],
                 "zipCode"=>[
                     "type"=>"text",
@@ -273,8 +273,8 @@ class Shop extends Database
                     "placeholder"=>"ex : 75015",
                     "required"=>true,
                     "class"=>"input",
-                    "minLength"=>2,
-                    "error"=>"Le code postal doit faire au 5 caractères"
+                    "regex" => "/^[0-9]{5}$/",
+                    "error" => "Code postal invalide !"
                 ],
                 "telephone"=>[
                     "type"=>"text",
@@ -285,8 +285,8 @@ class Shop extends Database
                     "required"=>true,
                     "class"=>"input",
                     "data-format"=>"telephone",
-                    "minLength"=>1,
-                    "error"=>"le numero de telephone est obligatoire et doit être uniquement être composé de chiffres"
+                    "regex" => "/^0[0-9]{9}$/",
+                    "error" => "Numéro de téléphone invalide !"
                 ],
                 "description"=>[
                     "type"=>"text",
@@ -294,12 +294,14 @@ class Shop extends Database
                     "value"=>$values['description'],
                     "divClass"=> "form_align--top",
                     "placeholder"=>"Votre description",
-                    "required"=>true,
+                    "required"=> '',
                     "class"=>"input input--textarea",
-                    "minLength"=>5,
-                    "error"=>"La description doit faire au minimum 5 caractères"
+                    "maxLength"=>255,
+                    "error"=>"La description doit être inférieur à 255 caractères."
                 ],
             ]
         ];
     }
+
+
 }

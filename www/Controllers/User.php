@@ -16,69 +16,76 @@ session_start();
 
 class User extends Database
 {
+    /*
+     * méthode de connexion user et admin
+     */
 	public function loginAction(){
 
 		$user = new UserModel();
 
-		$monUser = new UserModel();
 		$view = new View("login", "front");
 
 		$form = $user->formBuilderLogin();
 
 		if(!empty($_POST)){
-			
-			//$errors = FormValidator::check($form, $_POST);
-            $errors = [];
-			if(empty($errors)){
+
+		    $errors = [];
+
+			if(!empty($_POST['email'] &&
+            !empty($_POST['pwd'] &&
+            !empty($_POST['captcha']) &&
+            count($_POST) == 3))) {
+
+                if (strtoupper($_POST['captcha']) == $_SESSION['captcha']) {
+
+                    if ($user->select('*')->where('email=:email')->setParams([":email" => $_POST['email']])->get()) {
+                        $pwdGet = $user->select('pwd')->where('email=:email')->setParams([":email" => $_POST['email']])->get();
+
+                        $isConfirmed = $user->select('isConfirmed')->where('email=:email')->setParams([":email" => $_POST['email']])->get();
+
+                        if (password_verify($_POST["pwd"], $pwdGet[0]["pwd"])) {
+
+                            if ($isConfirmed[0]["isConfirmed"] == "1") {
 
 
-			    if ($user->select('*')->where('email=:email')->setParams([":email" => $_POST['email']])->get()){
-                    $pwdGet = $user->select('pwd')->where('email=:email')->setParams([":email" => $_POST['email']])->get();
+                                $monUser = $user->select('*')->where('email=:email', 'pwd=:pwd')->setParams([":email" => $_POST['email'], ":pwd" => $pwdGet[0]["pwd"],])->get();
+                                $_SESSION['user'] = $monUser[0];
 
-                    $isConfirmed = $user->select('isConfirmed')->where('email=:email')->setParams([":email" => $_POST['email']])->get();
-
-                    if(password_verify($_POST["pwd"], $pwdGet[0]["pwd"])) {
-
-                        if ($isConfirmed[0]["isConfirmed"] == "1") {
-
-
-                            $monUser = $user->select('*')->where('email=:email', 'pwd=:pwd')->setParams([":email" => $_POST['email'], ":pwd" => $pwdGet[0]["pwd"],])->get();
-                            $_SESSION['user'] = $monUser[0];
-
-                            if (isset($_GET['reason']) && !empty($_GET['reason'])){
-                                if ($_GET['reason'] == 'stripe'){
-                                    header('location:/panier');
-                                    exit();
+                                if (isset($_GET['reason']) && !empty($_GET['reason'])) {
+                                    if ($_GET['reason'] == 'stripe') {
+                                        header('location:/panier');
+                                        exit();
+                                    }
                                 }
-                            }
 
-                            if ($_SESSION['user']['id_role'] != 2){
-                                header('location: /admin/dashboard');
-                            }else{
-                                header('location: /');
+                                if ($_SESSION['user']['id_role'] != 2) {
+                                    header('location: /admin/dashboard');
+                                } else {
+                                    header('location: /');
+                                }
+
+                            } else {
+                                array_push($errors, "Vous devez d'abord confimer votre compte");
+                                $view->assign("errors", $errors);
                             }
-                            
-                        }else{
-                            array_push($errors,"Vous devez d'abord confimer votre compte");
+                        } else {
+                            array_push($errors, "L'email et le mot de passe ne correspondent pas");
                             $view->assign("errors", $errors);
-                        }
-                    }else{
-                        array_push($errors,"L'email et le mot de passe ne correspondent pas");
-                        $view->assign("errors", $errors);
 
+                        }
+                    } else {
+                        array_push($errors, "L'email inconnu");
+                        $view->assign("errors", $errors);
                     }
                 }else{
-                    array_push($errors,"L'email inconnu");
+                    array_push($errors, 'Captcha incorrect');
                     $view->assign("errors", $errors);
                 }
+            } else {
+                array_push($errors, 'Veuillez remplir tous les champs');
+                $view->assign("errors", $errors);
+            }
 
-
-
-
-				//$user->save();
-			}else{
-				$view->assign("errors", $errors);
-			}
 		}
 
 		$view->assign("form", $form);
@@ -90,46 +97,21 @@ class User extends Database
 	public function registerAction()
     {
         $user = new UserModel();
-
-        $monUser = new UserModel();
         $view = new View("register");
 
         $form = $user->formBuilderRegister();
         $view->assign("form", $form);
         $view->assign("title", "C&C - Inscription");
 
-
         if(!empty($_POST)){
 
-            //$errors = FormValidator::check($form, $_POST);
-
-            $lastname = $_POST["lastname"];
-            $firstname = $_POST["firstname"];
-            $email = $_POST["email"];
-            $pwd = $_POST["pwd"];
-            $pwdConfirm = $_POST['pwdConfirm'];
-
-            $emailVerif = $user->select('email')->where("email=:email")->setParams(["email" => $email])->get();
-            $errors = [];
-            if ($emailVerif){
-                array_push($errors, "L'email est deja connu de notre base de données");
-                $view->assign("errors", $errors);
-            }
-
+            $errors = FormValidator::checkClient($form, $_POST,false, true);
             if(empty($errors)) {
 
-                if ($pwd == $pwdConfirm) {
-
-                    //Generate a random string.
                     $token = openssl_random_pseudo_bytes(32);
-                    //Convert the binary data into hexadecimal representation.
                     $token = bin2hex($token);
-
-                    $pwdHash = password_hash($pwd, PASSWORD_BCRYPT);
-
-                    $user->setLastname($lastname);
-                    $user->setFirstName($firstname);
-                    $user->setEmail($email);
+                    $pwdHash = password_hash($_POST['pwd'], PASSWORD_BCRYPT);
+                    $user->populate($_POST);
                     $user->setPwd($pwdHash);
                     $user->setStatus(1);
                     $user->setIdRole(2);
@@ -137,20 +119,14 @@ class User extends Database
 
                     $user->save();
 
-                    Email::sendEmail("C&C - Confirmation du compte", $email, "Veuillez confirmer votre compte", "http://".$_SERVER['SERVER_NAME']."/confirmation-inscription?tkn=".$token,"Confimer mon compte", "/");
-
-
+                    Email::sendEmail("C&C - Confirmation du compte", $_POST['email'], "Veuillez confirmer votre compte", "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/confirmation-inscription?tkn=".$token,"Confimer mon compte", "/");
+                    $_SESSION['successRegister'] = "Merci pour votre inscription. Un email vous a été envoyé";
                     header('location:/connexion');
-                }else{
-                    array_push($errors, "Le mot de passe de confirmation ne correspond pas");
+            }else{
                     $view->assign("errors", $errors);
-                }
-            } else {
-                $view->assign("errors", $errors);
             }
         }
 	}
-
 
 	// CLIENTS //
 
@@ -213,7 +189,7 @@ class User extends Database
                     $view->assign("message", $message);
 
                     if($formStatus == Database::NEW_OBJECT){
-                        Email::sendEmail("C&C - Creation de votre compte",$client->getEmail(), "Votre mot de passe : " . $pwd, "http://".$_SERVER['SERVER_NAME']."/confirmation-inscription?tkn=".$token,"Confirmer votre compte", "/admin/liste-client");
+                        Email::sendEmail("C&C - Creation de votre compte",$client->getEmail(), "Votre mot de passe : " . $pwd, "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/confirmation-inscription?tkn=".$token,"Confirmer votre compte", "/admin/liste-client");
                     }
                 }else{
                     http_response_code(400);
@@ -330,7 +306,7 @@ class User extends Database
                 $user->setToken($token);
                 $user->save();
 
-                Email::sendEmail("C&C - Creation de votre compte",$user->getEmail(), "Votre mot de passe : " . $_POST['pwd'], "http://".$_SERVER['SERVER_NAME']."/confirmation-inscription?tkn=".$token,"Confirmer mon compte", "/admin/liste-utilisateurs");
+                Email::sendEmail("C&C - Creation de votre compte",$user->getEmail(), "Votre mot de passe : " . $_POST['pwd'], "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/confirmation-inscription?tkn=".$token,"Confirmer mon compte", "/admin/liste-utilisateurs");
 
                 $view->assign("success", "L'utilisateur a bien été créé !");
             } else {
@@ -462,7 +438,7 @@ class User extends Database
 
             $_SESSION['successChangePwd'] = "Mot de passe modifié !";
 
-            Email::sendEmail("C&C - Changement de mot de passe",$user->getEmail(), "Votre nouveau mot de passe : " . $pwd, "http://".$_SERVER['SERVER_NAME']."/admin/dashboard","Dashboard", "/admin/modification-utilisateur?id=" . $_GET['id']);
+            Email::sendEmail("C&C - Changement de mot de passe",$user->getEmail(), "Votre nouveau mot de passe : " . $pwd, "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/admin/dashboard","Dashboard", "/admin/modification-utilisateur?id=" . $_GET['id']);
 
         }else{
             header("Location: /admin/liste-utilisateurs");
@@ -483,18 +459,19 @@ class User extends Database
 
         $form = $user->formBuilderCreateClient();
 
+        $getInfo = $user->select('email,pwd,token,isConfirmed,id_role')->where("id = :id ")->setParams(["id" => $_SESSION['user']['id']])->get();
+
         if(!empty($_POST)) {
 
-            $error = FormValidator::checkClient($form, $_POST, trim($_POST['email']) === $_SESSION['user']["email"]);
+
+            $error = FormValidator::checkClient($form, $_POST, trim($_POST['email']) === $getInfo[0]['email']);
 
             if (empty($error)) {
-
+                $user->populate($_POST);
                 $user->setId($_SESSION['user']['id']);
-                $getInfo = $user->select('pwd,token,isConfirmed,id_role')->where("id = :id ")->setParams(["id" => $_SESSION['user']['id']])->get();
                 $user->setPwd($getInfo[0]['pwd']);
                 $user->setToken($getInfo[0]['token']);
                 $user->setIsConfirmed($getInfo[0]['isConfirmed']);
-                $user->populate($_POST);
                 $user->setStatus(1);
                 $user->setIdRole($getInfo[0]['id_role']);
                 $user->save();

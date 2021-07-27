@@ -6,7 +6,12 @@ RewriteCond %{REQUEST_FILENAME} !-d
 
 Options -Indexes
 
-RedirectMatch \.(env|yml|yaml)$ /
+RedirectMatch \.(env|yml|yaml|htaccess)$ /
+
+RedirectMatch 403 ^/Autoload.php$
+RedirectMatch 403 ^/clickcreate.sql$
+RedirectMatch 403 ^/insert-clickcreate.sql$
+
 
 RewriteCond %{REQUEST_URI} !^/sitemap.xml$
 RewriteCond %{REQUEST_URI} !^/config.env$

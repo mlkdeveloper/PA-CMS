@@ -82,7 +82,7 @@ class Terms extends Database
                     "type"=>"text",
                     "required"=>true,
                     "error"=>"Le nom doit faire entre 2 et 30 caractères et ne doit pas comporter de caractères spéciaux",
-                    "regex"=>"/^[A-Za-z-_]{2,30}$/",
+                    "regex"=>"/^[A-Za-z-_]{1,30}$/",
                 ]
             ]
         ];
