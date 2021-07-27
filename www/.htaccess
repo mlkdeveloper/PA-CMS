@@ -6,7 +6,7 @@ RewriteCond %{REQUEST_FILENAME} !-d
 
 Options -Indexes
 
-RedirectMatch \.(env|yml|yaml|htaccess)$ /
+RedirectMatch \.(env|yml|yaml|htaccess|sql)$ /
 
 RedirectMatch 403 ^/Autoload.php$
 RedirectMatch 403 ^/clickcreate.sql$
@@ -21,5 +21,14 @@ RewriteRule . /index.php [L]
 RewriteCond %{REQUEST_URI} ^/sitemap.xml$
 RewriteRule ^sitemap\.xml$ sitemap.php [L]
 RewriteRule ^sitemap.php/  - [L]
+
+RewriteRule ^Controllers/(.*)$ /
+RewriteRule ^Core/(.*)$ /
+RewriteRule ^Models/(.*)$ /
+RewriteRule ^publisher/templatesPublisher(.*)$ /
+RewriteRule ^Views/(.*)$ /
+
+RewriteRule ^Autoload.php$ /
+
 
 ErrorDocument 403 /error

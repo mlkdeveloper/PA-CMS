@@ -184,7 +184,7 @@ class Security
                 $user->setPwd($pwdHash);
                 $user->setToken($newToken);
                 $user->setIsConfirmed($userSelect[0]['isConfirmed']);
-                $user->setIdRole($userSelect[0]['idRole']);
+                $user->setIdRole($userSelect[0]['id_role']);
                 $user->save();
 
                 header('location:/connexion');

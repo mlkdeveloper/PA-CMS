@@ -654,7 +654,7 @@ function showMenu(){
         {
             start: function() {
                 $("#btnShowMenu").hide();
-                $(".container-body").css("width", "calc(100% - 210px)");
+                $(".container-body").css("width", "calc(100% - 220px)");
             },
             step: function(now) {
                 if (now > 90){
