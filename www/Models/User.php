@@ -380,9 +380,9 @@ class User extends Database
                     "label"=>"Votre email",
                     "required"=>true,
                     "class"=>"input",
-                    "minLength"=>2,
-                    "maxLength"=>50,
-                    "error"=>"Votre prénom doit faire entre 2 et 50 caractères"
+                    "minLength"=>8,
+                    "maxLength"=>320,
+                    "error"=>"Votre email doit faire entre 8 et 320 caractères"
                 ],
             ]
 
@@ -409,8 +409,8 @@ class User extends Database
                     "label"=>"Votre mot de passe",
                     "required"=>true,
                     "class"=>"input",
-                    "minLength"=>5,
-                    "error"=>"Votre mot de passe doit faire au minimum 7 caractères et doit être composé de lettres et de chiffres"
+                    "regex"=>"/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]){8,}/",
+                    "error"=>"Votre mot de passe doit faire au minimum 8 caractères, contenir une majuscule et un chiffre."
                 ],
 
                 "pwdConfirm"=>[
@@ -519,8 +519,6 @@ class User extends Database
         ];
     }
 
-
-
     public function formUsers(){
         return [
 
@@ -533,15 +531,13 @@ class User extends Database
                 "lastname"=>[
                     "type"=>"text",
                     "required"=>true,
-                    "minLength"=>2,
-                    "maxLength"=>100,
+                    "regex" => "/^[a-zA-Z-\séèàêïî]{2,100}$/",
                     "error"=>"Le nom doit faire entre 2 et 100 caractères."
                 ],
                 "firstName"=>[
                     "type"=>"text",
                     "required"=>true,
-                    "minLength"=>2,
-                    "maxLength"=>50,
+                    "regex" => "/^[a-zA-Z-\séèàêïî]{2,50}$/",
                     "error"=>"Le prénom doit faire entre 2 et 50 caractères."
                 ],
 
@@ -557,7 +553,7 @@ class User extends Database
                     "type"=>"password",
                     "required"=>true,
                     "regex"=>"/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]){8,}/",
-                    "errorRegex"=>"Votre mot de passe doit faire au minimum 8 caractères, contenir une majuscule et un chiffre."
+                    "error"=>"Votre mot de passe doit faire au minimum 8 caractères, contenir une majuscule et un chiffre."
                 ],
 
                 "idRole"=>[
@@ -584,15 +580,13 @@ class User extends Database
                 "lastname"=>[
                     "type"=>"text",
                     "required"=>true,
-                    "minLength"=>2,
-                    "maxLength"=>100,
+                    "regex" => "/^[a-zA-Z-\séèàêïî]{2,100}$/",
                     "error"=>"Le nom doit faire entre 2 et 100 caractères."
                 ],
                 "firstName"=>[
                     "type"=>"text",
                     "required"=>true,
-                    "minLength"=>2,
-                    "maxLength"=>50,
+                    "regex" => "/^[a-zA-Z-\séèàêïî]{2,50}$/",
                     "error"=>"Le prénom doit faire entre 2 et 50 caractères."
                 ],
 
@@ -635,8 +629,7 @@ class User extends Database
                     "label"=>"Prénom",
                     "required"=>true,
                     "class"=>"input",
-                    "minLength"=>2,
-                    "maxLength"=>50,
+                    "regex" => "/^[a-zA-Z-\séèàêïî]{2,50}$/",
                     "error"=>"Votre prénom doit faire entre 2 et 50 caractères"
                 ],
                 "lastname"=>[
@@ -646,8 +639,7 @@ class User extends Database
                     "label"=>"Nom",
                     "required"=>true,
                     "class"=>"input",
-                    "minLength"=>2,
-                    "maxLength"=>100,
+                    "regex" => "/^[a-zA-Z-\séèàêïî]{2,100}$/",
                     "error"=>"Votre nom doit faire entre 2 et 100 caractères"
                 ],
 
@@ -669,8 +661,8 @@ class User extends Database
                     "label"=>"Mot de passe",
                     "required"=>true,
                     "class"=>"input",
-                    "minLength"=>8,
-                    "error"=>"Votre mot de passe doit faire au minimum 8 caractères"
+                    "regex"=>"/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]){8,}/",
+                    "error"=>"Votre mot de passe doit faire au minimum 8 caractères, contenir une majuscule et un chiffre."
                 ],
                 "pwdConfirm"=>[
                     "type"=>"password",

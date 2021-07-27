@@ -17,8 +17,6 @@ class FormValidator
     public static function check($config,$data)
     {
         $errors = [];
-        $regex =  "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]){7,}/";
-        $regex_telephone = "/(0|\\+33|0033)[1-9][0-9]{8}/";
         if( count($data) != count($config["inputs"]) ){
             $errors[] = "Tentative de HACK - Faille XSS";
 
@@ -29,7 +27,7 @@ class FormValidator
 
                 if(!empty($configInputs["minLength"])
                     && is_numeric($configInputs["minLength"])
-                    && strlen($data[$name]) < $configInputs["minLength"]){
+                    && strlen(trim($data[$name])) < $configInputs["minLength"]){
 
                     $errors[] = $configInputs["error"];
 
@@ -37,26 +35,18 @@ class FormValidator
 
                 if(!empty($configInputs["maxLength"])
                     && is_numeric($configInputs["maxLength"])
-                    && strlen($data[$name]) > $configInputs["maxLength"]){
+                    && strlen(trim($data[$name])) > $configInputs["maxLength"]){
 
                     $errors[] = $configInputs["error"];
 
                 }
 
-                if($configInputs["type"] === "password"
-                    && !preg_match($regex,$data[$name])
-                ){
+                if(!empty($configInputs["regex"])
+                    && !preg_match($configInputs["regex"],$data[$name])){
 
                     $errors[] = $configInputs["error"];
                 }
 
-                if(!empty($configInputs["data-format"])
-                    && $configInputs["data-format"] === "telephone"
-                    && !preg_match($regex_telephone,$data[$name])
-                ){
-
-                    $errors[] = $configInputs["error"];
-                }
 
                 if(!empty($configInputs["confirm"])
                     && $data[$name] != $data[$configInputs["confirm"]]
@@ -64,18 +54,11 @@ class FormValidator
                     $errors[] = $configInputs["error"];
                 }
 
-                if (!empty($configInputs["required"])
-                    && $configInputs["required"] == true
-                    && strlen($data[$name]) <= 0
-
-                ){
-                    $errors[] = $configInputs["error"];
-                }
 
             }
         }
 
-        return $errors; //[] vide si ok
+        return $errors;
     }
 
     public static function checkPage($config, $data, $isUpdatedName, $isUpdatedSlug){
@@ -328,6 +311,13 @@ class FormValidator
                     && !preg_match($configInputs["regex"], $data[$name])){
                     $errors[] = $configInputs["error"];
                 }
+
+                if (!empty($configInputs["maxLength"])
+                    && is_numeric($configInputs["maxLength"])
+                    && strlen(trim($data[$name])) > $configInputs["maxLength"]) {
+
+                    $errors[] = $configInputs["error"];
+                }
             }
         }
         return $errors;
@@ -534,14 +524,14 @@ class FormValidator
 
                 if(	!empty($configInputs["minLength"])
                     && is_numeric($configInputs["minLength"])
-                    && strlen($data[$name]) < $configInputs["minLength"]){
+                    && strlen(trim($data[$name])) < $configInputs["minLength"]){
 
                     $errors[] = $configInputs["errorLength"];
                 }
 
                 if(	!empty($configInputs["maxLength"])
                     && is_numeric($configInputs["maxLength"])
-                    && strlen($data[$name]) > $configInputs["maxLength"]){
+                    && strlen(trim($data[$name])) > $configInputs["maxLength"]){
 
                     $errors[] = $configInputs["errorLength"];
                 }
@@ -593,14 +583,14 @@ class FormValidator
 
                 if(	!empty($configInputs["minLength"])
                     && is_numeric($configInputs["minLength"])
-                    && strlen($data[$name]) < $configInputs["minLength"]){
+                    && strlen(trim($data[$name])) < $configInputs["minLength"]){
 
                     $errors[] = $configInputs["errorLength"];
                 }
 
                 if(	!empty($configInputs["maxLength"])
                     && is_numeric($configInputs["maxLength"])
-                    && strlen($data[$name]) > $configInputs["maxLength"]){
+                    && strlen(trim($data[$name])) > $configInputs["maxLength"]){
 
                     $errors[] = $configInputs["errorLength"];
                 }

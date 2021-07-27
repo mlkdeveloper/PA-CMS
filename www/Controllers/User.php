@@ -98,7 +98,6 @@ class User extends Database
 
                     $token = openssl_random_pseudo_bytes(32);
                     $token = bin2hex($token);
-
                     $pwdHash = password_hash($_POST['pwd'], PASSWORD_BCRYPT);
                     $user->populate($_POST);
                     $user->setPwd($pwdHash);
@@ -115,7 +114,6 @@ class User extends Database
             }
         }
 	}
-
 
 	// CLIENTS //
 
