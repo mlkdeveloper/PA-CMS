@@ -22,20 +22,13 @@ RewriteCond %{REQUEST_URI} ^/sitemap.xml$
 RewriteRule ^sitemap\.xml$ sitemap.php [L]
 RewriteRule ^sitemap.php/  - [L]
 
-#RewriteRule ^Controllers/(.*)$ /
-#RewriteRule ^Core/(.*)$ /
-#RewriteRule ^dist/(.*)$ /
-#RewriteRule ^captcha/(.*)$ /
-#RewriteRule ^images/(.*)$ /
-#RewriteRule ^fpdf/(.*)$ /
-#RewriteRule ^Models/(.*)$ /
-#RewriteRule ^PHPMailer/(.*)$ /
-#RewriteRule ^public/(.*)$ /
-#RewriteRule ^publisher/(.*)$ /
-#RewriteRule ^vendor/(.*)$ /
-#ewriteRule ^Views/(.*)$ /
+RewriteRule ^Controllers/(.*)$ /
+RewriteRule ^Core/(.*)$ /
+RewriteRule ^Models/(.*)$ /
+RewriteRule ^publisher/templatesPublisher(.*)$ /
+RewriteRule ^Views/(.*)$ /
 
-#RewriteRule ^Autoload.php$ /
+RewriteRule ^Autoload.php$ /
 
 
 ErrorDocument 403 /error
