@@ -67,8 +67,6 @@ class Uploader{
         $destination .= "." . $this->getExtension();
 
 
-        print_r($this->getExtension());
-
         return $destination;
     }
 

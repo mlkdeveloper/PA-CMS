@@ -398,7 +398,7 @@ class FormValidator
                 $errors[] = "Le prix de la variante #$key doit être saisi correctement"; 
             }
             
-            if($stock <= 0 
+            if($stock < 0
                 && empty($stock)
                 && !is_int($stock) && is_numeric($stock)
             ){
