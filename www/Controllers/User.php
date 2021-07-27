@@ -105,7 +105,7 @@ class User extends Database
 
         if(!empty($_POST)){
 
-            $errors = FormValidator::checkClient($form, $_POST,false);
+            $errors = FormValidator::checkClient($form, $_POST,false, true);
             if(empty($errors)) {
 
                     $token = openssl_random_pseudo_bytes(32);
@@ -120,6 +120,7 @@ class User extends Database
                     $user->save();
 
                     Email::sendEmail("C&C - Confirmation du compte", $_POST['email'], "Veuillez confirmer votre compte", "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT']."/confirmation-inscription?tkn=".$token,"Confimer mon compte", "/");
+                    $_SESSION['successRegister'] = "Merci pour votre inscription. Un email vous a été envoyé";
                     header('location:/connexion');
             }else{
                     $view->assign("errors", $errors);

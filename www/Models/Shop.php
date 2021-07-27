@@ -206,7 +206,7 @@ class Shop extends Database
                     "value"=>$values['description'],
                     "divClass"=> "form_align--top",
                     "placeholder"=>"Votre description",
-                    "required"=>true,
+                    "required"=> '',
                     "class"=>"input input--textarea",
                     "maxLength"=>255,
                     "error"=>"La description doit être inférieur à 255 caractères."

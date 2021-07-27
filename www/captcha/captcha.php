@@ -6,7 +6,7 @@ header("Content-type: image/png");
 $image = imagecreate(300, 100);
 
 
-$charAuthorized = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
+$charAuthorized = "ABCDEFGHIJKLMNPQRSTUVWXYZ123456789";
 $lenghtCaptcha = rand(5, 6);
 $charAuthorized = str_shuffle($charAuthorized);
 $captcha = substr($charAuthorized, 0, $lenghtCaptcha);
