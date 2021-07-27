@@ -60,7 +60,7 @@ class FormBuilder
         }
 
 
-        $html .= "<input type='submit' class='".($config["config"]["classButton"]??"")."' value=\"".($config["config"]["submit"]??"Valider")."\">";
+        $html .= "<input type='submit' class='".($config["config"]["classButton"]??"")." mt-2' value=\"".($config["config"]["submit"]??"Valider")."\">";
 		$html .= "</form>";
 
 

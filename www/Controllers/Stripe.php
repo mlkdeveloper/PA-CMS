@@ -30,7 +30,7 @@ class Stripe
 
         header('Content-Type: application/json');
 
-        $YOUR_DOMAIN = 'http://'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'];
+        $YOUR_DOMAIN = 'http://'.$_SERVER['SERVER_NAME'];
 
 
         $checkout_session = \Stripe\Checkout\Session::create([
