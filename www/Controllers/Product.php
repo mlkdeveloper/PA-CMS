@@ -1013,9 +1013,11 @@ class Product
 
 
                 foreach ($sqlVariant as $value) {
-                    empty($getVariant[$value["variant"]]) ?
-                        $getVariant[$value["variant"]] = [$value["idTerm"] => $value["name"]]
-                        : array_push($getVariant[$value["variant"]], $value["name"]);
+                    if (empty($getVariant[$value["variant"]])){
+                        $getVariant[$value["variant"]] = [$value["idTerm"] => $value["name"]];
+                    }else{
+                        $getVariant[$value["variant"]][$value["idTerm"]] = $value["name"];
+                    }
                 }
 
                 $view = new View('infoProduct.front');
