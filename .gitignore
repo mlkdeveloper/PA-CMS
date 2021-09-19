@@ -1,7 +1,4 @@
-db_data
-site
-server
 .idea
-docker-compose.yml
 www/webpack
+www/node_modules
 .DS_Store
