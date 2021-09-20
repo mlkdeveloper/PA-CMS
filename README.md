@@ -20,7 +20,13 @@ Pour pouvoir commencer avec notre projet, il vous faudra :
 Pour pouvoir installer notre projet, télécharger le repository avec la commande git clone.
 
 ```
-$ git clone https://github.com/samysab/PA_click-Collect
+$ git clone https://github.com/mlk-chess/PA-CMS.git
+```
+
+Pour partager les données avec le conteneur mysql, il vous suffit de créer un dossier db_data :
+
+```
+$ mkdir db_data
 ```
 
 Puis tapez la commande suivante afin de créer les différents conteneurs :
