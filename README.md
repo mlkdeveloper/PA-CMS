@@ -26,7 +26,7 @@ $ git clone https://github.com/mlk-chess/PA-CMS.git
 Pour partager les données avec le conteneur mysql, il vous suffit de créer un dossier db_data :
 
 ```
-$ mkdir db_data
+$ cd PA-CMS && mkdir db_data
 ```
 
 Puis tapez la commande suivante afin de créer les différents conteneurs :
@@ -42,11 +42,12 @@ Pour lancer le projet, il faut tout simplement taper la commande :
 ```
 $ docker compose up -d
 ```
+et se diriger vers localhost:8080 (ou <nom_domain>:8080) sur votre navigateur.
 
-Vous tomberez ensuite sur l'installeur du CMS pour initialiser toutes les données et les charger directement dans le fichier .env.
+Vous tomberez alors sur l'installeur du CMS pour initialiser toutes les données et les charger directement dans le fichier .env.
 Il faudra changer l'adresse de la base de données en ```database```.
 
-N'oubliez pas de créer la base de données avant !
+N'oubliez pas de créer la base de données avant ! (localhost:8888 pour avoir accès à phpmyadmin)
 
 <img width="700" alt="install" src="https://user-images.githubusercontent.com/32839831/127748501-7940c7b5-21e7-478f-88f0-ea1a06b00ea0.png">
 
