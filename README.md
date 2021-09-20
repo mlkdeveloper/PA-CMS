@@ -2,6 +2,8 @@
 
 Projet annuel permettant de créer un CMS from scratch sur le thème du click & collect.
 
+Pour éviter de configurer votre serveur distant pour un test et que vous voulez simplement voir le résultat, il suffit de vous rendre sur http://www.mlkchess.fr:8080
+
 ## Les fonctionnalités
 
 Click & Create est CMS vous permettant de créer votre propre site d'e-commerce avec les produits de votre choix. 
