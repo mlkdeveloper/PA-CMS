@@ -32,7 +32,7 @@ $ git clone https://github.com/mlk-chess/PA-CMS.git
 Pour partager les données avec le conteneur mysql, il vous suffit de créer un dossier db_data :
 
 ```
-$ cd PA-CMS && mkdir db_data
+$ cd PA-CMS && mkdir db_data && mkdir www/images/products
 ```
 
 Puis tapez la commande suivante afin de créer les différents conteneurs :
