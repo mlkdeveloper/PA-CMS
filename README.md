@@ -4,6 +4,10 @@ Projet annuel permettant de créer un CMS from scratch sur le thème du click & 
 
 Pour éviter de configurer votre serveur distant pour un test et que vous voulez simplement voir le résultat, il suffit de vous rendre sur http://www.mlkchess.fr:8080
 
+Informations compte admin:
+admin@gmail.com
+Waseem6
+
 ## Les fonctionnalités
 
 Click & Create est CMS vous permettant de créer votre propre site d'e-commerce avec les produits de votre choix. 
@@ -19,7 +23,7 @@ Pour pouvoir commencer avec notre projet, il vous faudra :
 
 ### Installation 
 
-Pour pouvoir installer notre projet, télécharger le repository avec la commande git clone.
+Pour pouvoir installer notre projet, téléchargez le repository avec la commande git clone.
 
 ```
 $ git clone https://github.com/mlk-chess/PA-CMS.git
@@ -44,12 +48,12 @@ Pour lancer le projet, il faut tout simplement taper la commande :
 ```
 $ docker compose up -d
 ```
-et se diriger vers localhost:8080 (ou <nom_domain>:8080) sur votre navigateur.
+et se diriger vers <nom_domain>:8080 sur votre navigateur.
 
 Vous tomberez alors sur l'installeur du CMS pour initialiser toutes les données et les charger directement dans le fichier .env.
 Il faudra changer l'adresse de la base de données en ```database```.
 
-N'oubliez pas de créer la base de données avant ! (localhost:8888 pour avoir accès à phpmyadmin)
+N'oubliez pas de créer la base de données avant ! (normalement, elle se crée automatiquement avec docker-compose)
 
 <img width="700" alt="install" src="https://user-images.githubusercontent.com/32839831/127748501-7940c7b5-21e7-478f-88f0-ea1a06b00ea0.png">
 
